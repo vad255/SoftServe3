@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScrumMaker", "ScrumMaker\Sc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{F1D475C9-F114-436D-8F33-2EC4816784E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBaseGenerator", "DataBaseGenerator\DataBaseGenerator.csproj", "{BA1BDAFA-2AA3-4CEA-B69E-B3826A3F4E95}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{F1D475C9-F114-436D-8F33-2EC4816784E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1D475C9-F114-436D-8F33-2EC4816784E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1D475C9-F114-436D-8F33-2EC4816784E1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BA1BDAFA-2AA3-4CEA-B69E-B3826A3F4E95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BA1BDAFA-2AA3-4CEA-B69E-B3826A3F4E95}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BA1BDAFA-2AA3-4CEA-B69E-B3826A3F4E95}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BA1BDAFA-2AA3-4CEA-B69E-B3826A3F4E95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
