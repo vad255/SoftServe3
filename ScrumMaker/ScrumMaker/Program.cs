@@ -17,14 +17,11 @@ namespace ScrumMaker
     {
         public static void Main(string[] args)
         {
-            FillDB(args,10);
+            // FillDB(args,10);
+            //DataBaseGenerator.FillDataBase(10);
+            //BuildWebHost(args).Run();
 
-           // BuildWebHost(args).Run();
-        }
 
-
-        public static void FillDB(string[] args, int quantity)
-        {
             var host = BuildWebHost(args);
 
             using (var scope = host.Services.CreateScope())
@@ -32,8 +29,7 @@ namespace ScrumMaker
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<DataContext>();
-                    DataBaseGenerator.FillDataBase(context, quantity);
+                    DataBaseGenerator.FillDataBase(10);
                 }
                 catch (Exception ex)
                 {
@@ -43,7 +39,31 @@ namespace ScrumMaker
             }
 
             host.Run();
+
         }
+
+
+        //public static void FillDB(string[] args, int quantity)
+        //{
+        //    var host = BuildWebHost(args);
+
+        //    using (var scope = host.Services.CreateScope())
+        //    {
+        //        var services = scope.ServiceProvider;
+        //        try
+        //        {
+        //            var context = services.GetRequiredService<DataContext>();
+        //            DataBaseGenerator.FillDataBase(context, quantity);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            var logger = services.GetRequiredService<ILogger<Program>>();
+        //            logger.LogError(ex, "An error occurred while seeding the database.");
+        //        }
+        //    }
+
+        //    host.Run();
+        //}
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)

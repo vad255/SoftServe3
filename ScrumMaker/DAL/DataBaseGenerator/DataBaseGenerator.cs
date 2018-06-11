@@ -2,22 +2,47 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using DAL.Access.IRepositoryImplementation;
+using DAL.Access;
 
 namespace DAL.DataBaseGenerator
 {
     public static class DataBaseGenerator
     {
-        public static void FillDataBase(DataContext context, int quantity)
+        // (DataContext context, int quantity)
+        public static void FillDataBase(int quantity)
         {
-            context.Database.EnsureCreated();
+            //context.Database.EnsureCreated();
 
+            IRepository<User> db = new Repository<User>();
+            IRepository<Story> db2 = new Repository<Story>();
+
+            //if (quantity >= 0 && quantity < int.MaxValue)
+            //{
+            //    for (int i = 0; i < quantity; i++)
+            //    {
+            //        var user = new User() { Login = "user " + i.ToString() + "@gmail.com", Password = i.ToString() };
+            //        context.Users.Add(user);
+
+            //        var story = new Story()
+            //        {
+            //            Name = "user" + i.ToString(),
+            //            Description = "defualt description of user",
+            //            Status = StoryStatus.InProgress,
+            //        };
+
+            //        context.Stories.Add(story);
+            //    }
+
+            //    context.SaveChanges();
+            //}
 
             if (quantity >= 0 && quantity < int.MaxValue)
             {
                 for (int i = 0; i < quantity; i++)
                 {
                     var user = new User() { Login = "user " + i.ToString() + "@gmail.com", Password = i.ToString() };
-                    context.Users.Add(user);
+                    db.Create(user);
 
                     var story = new Story()
                     {
@@ -26,11 +51,14 @@ namespace DAL.DataBaseGenerator
                         Status = StoryStatus.InProgress,
                     };
 
-                    context.Stories.Add(story);
+                    db2.Create(story);
                 }
 
-                context.SaveChanges();
+                db.Save();
+                db2.Save();
+                
             }
+
             else
             {
                 throw new Exception("quantity was out of range");
