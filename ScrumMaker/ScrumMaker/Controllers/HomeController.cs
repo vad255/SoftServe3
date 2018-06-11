@@ -18,13 +18,13 @@ namespace ScrumMaker.Controllers
         }
         public IActionResult Index()
         {
-            List<DAL.Models.User> list = null;
+            //List<DAL.Models.User> list = null;
 
 
-            list = _repository.Get().ToList();
+            //list = _repository.Get().ToList();
             
 
-            ViewData["users"] = list;
+            //ViewData["users"] = list;
 
             return View();
         }
