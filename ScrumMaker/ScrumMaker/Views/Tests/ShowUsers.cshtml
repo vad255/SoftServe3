@@ -1,0 +1,13 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{
+    foreach (var item in (List<DAL.Models.User>)ViewData["users"])
+    {
+        string s = $"{item.UserId}\t{item.Login}\t{item.Password}\n";
+        @Html.Raw(s);
+        @:<br/>
+    }
+
+ }
