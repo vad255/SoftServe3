@@ -30,7 +30,7 @@ namespace ScrumMaker
         public void ConfigureServices(IServiceCollection services)
         {
             string connectionStr = Configuration.GetConnectionString("Default");
-            //connectionStr = "Server=.\\SQLEXPRESS;Database=ScrumMaker;Trusted_Connection=True;MultipleActiveResultSets=true";
+
             services.AddDbContext<DAL.DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
             services.AddScoped(typeof(DbContext), typeof(DAL.DataContext));
             services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
@@ -56,26 +56,6 @@ namespace ScrumMaker
             }
 
             app.UseStaticFiles();
-
-            app.Use(async (context, next) =>
-            {
-                var color = ConsoleColor.DarkMagenta;
-                Write("Hello from 1st MW", color);
-                await next.Invoke();
-                Write("Goodbye from 1st MW", color);
-
-            });
-
-
-
-            app.Use(async (context, next) =>
-            {
-                var color = ConsoleColor.DarkCyan;
-                Write("Hello from 2nt MW", color);
-                await next.Invoke();
-                Write("Goodbye from 2nd MW", color);
-
-            });
 
 
             app.UseMvc(routes =>
