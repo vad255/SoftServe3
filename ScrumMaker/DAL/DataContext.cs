@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DAL.Models;
+
 using System.Threading.Tasks;
 
 namespace DAL
@@ -17,6 +17,13 @@ namespace DAL
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
         //    optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=ScrumMaker;Trusted_Connection=True;MultipleActiveResultSets=true");
+        //}
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<User>().ToTable("Users");
+        //    modelBuilder.Entity<Story>().ToTable("Stories");
+
         //}
 
 
