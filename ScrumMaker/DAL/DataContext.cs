@@ -28,7 +28,8 @@ namespace DAL
 
         public DbSet<User> Users { get; set; }
 
-
         public DbSet<Story> Stories { get; set; }
+
+        public DbSet<Defect> Defects { get; set; }
     }
 }

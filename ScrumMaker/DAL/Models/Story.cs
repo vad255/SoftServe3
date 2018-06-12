@@ -59,7 +59,7 @@ namespace DAL.Models
 
 
         [NotMapped]
-        public List<Defect> Defects { get; set; }
+        public int DefectId { get; set; }
 
 
 
