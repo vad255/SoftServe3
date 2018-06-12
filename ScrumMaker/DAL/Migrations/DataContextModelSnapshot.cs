@@ -57,6 +57,10 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasMaxLength(20);
 
+                    b.Property<int>("Role");
+
+                    b.Property<int>("TeamId");
+
                     b.HasKey("UserId");
 
                     b.ToTable("Users");

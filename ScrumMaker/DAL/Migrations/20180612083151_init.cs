@@ -3,10 +3,26 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAL.Migrations
 {
-    public partial class Stories : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Login = table.Column<string>(maxLength: 20, nullable: false),
+                    Password = table.Column<string>(maxLength: 20, nullable: false),
+                    TeamId = table.Column<int>(nullable: false),
+                    Role = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.UserId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Stories",
                 columns: table => new
@@ -39,6 +55,9 @@ namespace DAL.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Stories");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

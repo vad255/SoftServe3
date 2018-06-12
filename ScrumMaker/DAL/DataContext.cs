@@ -21,8 +21,11 @@ namespace DAL
 
 
         public DbSet<User> Users { get; set; }
-
-
         public DbSet<Story> Stories { get; set; }
+        public DbSet<Role> Roles { get; set; } 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Role>().HasIndex(x => x.Name).IsUnique();
+        }
     }
 }

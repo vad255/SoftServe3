@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,13 +19,11 @@ namespace ScrumMaker.Controllers
         }
         public IActionResult Index()
         {
-            List<DAL.Models.User> list = null;
-
-
-            list = _repository.Get().ToList();
-            
-
-            ViewData["users"] = list;
+            var optionsBuilder = new DbContextOptionsBuilder<DataContext>();
+            var options = optionsBuilder.UseSqlServer(@"Server=DESKTOP-OVQI0E0;Database=Scrum;Trusted_Connection=True;MultipleActiveResultSets=true").Options;
+            DataContext db = new DataContext(options);
+            db.Users.Add(new DAL.Models.User { Login = "Bla", Password = "BlaBla", TeamId =1, Role = 1, Activity=false});
+            db.SaveChanges();
 
             return View();
         }
