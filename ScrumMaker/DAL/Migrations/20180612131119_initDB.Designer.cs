@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180611085731_Stories")]
-    partial class Stories
+    [Migration("20180612131119_initDB")]
+    partial class initDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,48 @@ namespace DAL.Migrations
                 .HasAnnotation("ProductVersion", "2.1.0-rtm-30799")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("DAL.Models.Defect", b =>
+                {
+                    b.Property<int>("DefectId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ActualResults");
+
+                    b.Property<string>("AssignedTo");
+
+                    b.Property<string>("Attachments");
+
+                    b.Property<int>("Blocked");
+
+                    b.Property<string>("Chat");
+
+                    b.Property<string>("DefectName");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500);
+
+                    b.Property<string>("ExpectedResults");
+
+                    b.Property<string>("FixResults");
+
+                    b.Property<string>("Priority");
+
+                    b.Property<string>("ProgramIncrement");
+
+                    b.Property<string>("Sprint");
+
+                    b.Property<string>("State");
+
+                    b.Property<int>("Status");
+
+                    b.Property<string>("StepsToReproduse");
+
+                    b.HasKey("DefectId");
+
+                    b.ToTable("Defects");
+                });
 
             modelBuilder.Entity("DAL.Models.Story", b =>
                 {
