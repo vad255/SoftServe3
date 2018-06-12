@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using DAL.Access;
+using DAL.Models;
 
 namespace ScrumMaker.Controllers
 {
@@ -13,6 +16,33 @@ namespace ScrumMaker.Controllers
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
+
+        private DbContext _context;
+
+        public SampleDataController(DbContext context)
+        {
+
+            _context = context;
+        }
+
+        [HttpGet("[action]")]
+        public IEnumerable<Sprint> GetSprints()
+        {
+            var sprints = _context.Set<Sprint>().Include(s => s.History).Include(s => s.Team);           
+
+            //Console.WriteLine(sprints.GetById(3).History.Initiated);
+
+            List<Sprint> result = sprints.ToList();
+
+            return result;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+            base.Dispose(disposing);
+        }
+
 
         [HttpGet("[action]")]
         public IEnumerable<WeatherForecast> WeatherForecasts()

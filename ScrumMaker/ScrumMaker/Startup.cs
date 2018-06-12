@@ -35,7 +35,11 @@ namespace ScrumMaker
             services.AddScoped(typeof(DbContext), typeof(DAL.DataContext));
             services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
 
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+                options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

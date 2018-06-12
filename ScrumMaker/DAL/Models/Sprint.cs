@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using DAL.Models;
+using System.ComponentModel.DataAnnotations.Schema;
 using DAL.Stubs;
 
 
@@ -18,6 +19,7 @@ namespace DAL.Models
 
         public ICollection<Story> Backlog { get; set; }
 
+        [NotMapped]
         public ICollection<Defect> Defects { get; set; }
 
 

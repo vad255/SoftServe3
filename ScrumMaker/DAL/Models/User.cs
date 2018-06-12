@@ -14,8 +14,6 @@ namespace DAL.Models
         [MaxLength(20)]
         public string Login { get; set; }
 
-        public int TeamId { get; set; }
-
 
         [Required]
         [MaxLength(20)]
