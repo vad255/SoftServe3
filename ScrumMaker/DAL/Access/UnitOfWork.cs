@@ -7,24 +7,25 @@ using DAL.Models;
 namespace DAL.Access
 {
     /// <summary>
-    /// Represent DataBase transaction.QUESTION OF SYNCRONIZATION  IS OPEN 
+    /// Represent DataBase transaction. QUESTION OF SYNCRONIZATION  IS OPEN 
+    /// Probably, need DI
     /// </summary>
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork
     {
         DbContext _context;
 
-        INotCommitableRepository<User> _users;
-        INotCommitableRepository<Story> _stories;
+        IRepository<User> _users;
+        IRepository<Team> _teams;
+        IRepository<Story> _stories;
+        IRepository<Sprint> _sprints;
+
 
         public UnitOfWork(DbContext context)
         {
             _context = context;
         }
 
-
-        /// <summary>
-        /// need to create same property for everyone model
-        /// </summary>
+     
         public INotCommitableRepository<User> Users
         {
             get
@@ -35,7 +36,15 @@ namespace DAL.Access
             }
         }
 
-
+        public INotCommitableRepository<Team> Teams
+        {
+            get
+            {
+                if (_teams == null)
+                    _teams = new EFRepository<Team>(_context);
+                return _teams;
+            }
+        }
 
         public INotCommitableRepository<Story> Stories
         {
@@ -47,6 +56,17 @@ namespace DAL.Access
             }
         }
 
+        public INotCommitableRepository<Sprint> Sprints
+        {
+            get
+            {
+                if (_sprints == null)
+                    _sprints = new EFRepository<Sprint>(_context);
+                return _sprints;
+            }
+        }
+        
+
         public void Save()
         {
             _context.SaveChanges();
@@ -54,21 +74,8 @@ namespace DAL.Access
 
         public void Dispose()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-
-
-        private void Dispose(bool disposing)
-        {
-
-            if (!disposing)
-                return;
-
             _context?.Dispose();
             _context = null;
-
         }
    
     }
