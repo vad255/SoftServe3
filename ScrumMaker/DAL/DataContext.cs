@@ -28,6 +28,8 @@ namespace DAL
 
         public DbSet<Sprint> Sprints { get; set; }
 
+        public DbSet<ScrumTask> Tasks { get; set; }
+
 
 
         public DbSet<Role> Roles { get; set; } 
