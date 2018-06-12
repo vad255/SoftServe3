@@ -29,10 +29,13 @@ namespace ScrumMaker.Controllers
 
         }
 
-        public ActionResult MiddleWareDemo()
+        protected override void Dispose(bool disposing)
         {
-            ViewData["data"] = "Hello from controller";
-            return View();
+            if (disposing)
+                _repository.Dispose();
+            _repository = null;
+
+            base.Dispose(disposing);
         }
 
     }

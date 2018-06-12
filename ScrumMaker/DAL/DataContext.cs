@@ -19,9 +19,25 @@ namespace DAL
         //    optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=ScrumMaker;Trusted_Connection=True;MultipleActiveResultSets=true");
         //}
 
-
         public DbSet<User> Users { get; set; }
+        
+        public DbSet<Role> Roles { get; set; } 
+        
+        public DbSet<Team> Teams { get; set; }
+        
         public DbSet<Story> Stories { get; set; }
+
+        public DbSet<ScrumTask> Tasks { get; set; }
+
+        public DbSet<Sprint> Sprints { get; set; }
+
         public DbSet<Feature> Features { get; set; }
+
+        
+        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Role>().HasIndex(x => x.Name).IsUnique();
+        }
     }
 }
