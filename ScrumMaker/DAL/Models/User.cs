@@ -8,9 +8,15 @@ namespace DAL.Models
     public class User
     {
         public int UserId { get; set; }
+
+
         [Required]
         [MaxLength(20)]
         public string Login { get; set; }
+
+        public int TeamId { get; set; }
+
+
         [Required]
         [MaxLength(20)]
         public string Password { get; set; }
