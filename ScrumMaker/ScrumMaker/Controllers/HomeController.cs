@@ -13,13 +13,6 @@ namespace ScrumMaker.Controllers
     {
         public IActionResult Index()
         {
-=======
-            var optionsBuilder = new DbContextOptionsBuilder<DataContext>();
-            var options = optionsBuilder.UseSqlServer(@"Server=DESKTOP-OVQI0E0;Database=Scrum;Trusted_Connection=True;MultipleActiveResultSets=true").Options;
-            DataContext db = new DataContext(options);
-            db.Users.Add(new DAL.Models.User { Login = "Bla", Password = "BlaBla", TeamId =1, Role = 1, Activity=false});
-            db.SaveChanges();
-
             return View();
         }
 

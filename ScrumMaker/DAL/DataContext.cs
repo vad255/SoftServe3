@@ -27,6 +27,9 @@ namespace DAL
         public DbSet<Story> Stories { get; set; }
 
         public DbSet<Sprint> Sprints { get; set; }
+
+
+
         public DbSet<Role> Roles { get; set; } 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
