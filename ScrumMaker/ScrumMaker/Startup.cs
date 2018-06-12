@@ -31,7 +31,7 @@ namespace ScrumMaker
         {
             string connectionStr = Configuration.GetConnectionString("Default");
             //connectionStr = "Server=.\\SQLEXPRESS;Database=ScrumMaker;Trusted_Connection=True;MultipleActiveResultSets=true";
-            services.AddDbContext<DAL.DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
+            services.AddDbContext<DAL.DataContext>(options => options.UseSqlServer("Server=DESKTOP-IEFU6KF;Database=ScrumMaker;Trusted_Connection=True;MultipleActiveResultSets=true", b => b.UseRowNumberForPaging()));
             services.AddScoped(typeof(DbContext), typeof(DAL.DataContext));
             services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
 

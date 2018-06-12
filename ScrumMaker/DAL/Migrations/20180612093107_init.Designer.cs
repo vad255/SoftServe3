@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180611085731_Stories")]
-    partial class Stories
+    [Migration("20180612093107_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,46 @@ namespace DAL.Migrations
                 .HasAnnotation("ProductVersion", "2.1.0-rtm-30799")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("DAL.Models.ScrumTask", b =>
+                {
+                    b.Property<int>("TaskId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ActualHours");
+
+                    b.Property<int>("AssignedToUserId");
+
+                    b.Property<string>("Blocked")
+                        .HasMaxLength(500);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500);
+
+                    b.Property<int>("NameId");
+
+                    b.Property<int>("PlannedHours");
+
+                    b.Property<int>("RemainingHours");
+
+                    b.Property<string>("State");
+
+                    b.Property<string>("Type")
+                        .IsRequired();
+
+                    b.Property<string>("WorkNotes")
+                        .HasMaxLength(500);
+
+                    b.HasKey("TaskId");
+
+                    b.HasIndex("AssignedToUserId");
+
+                    b.HasIndex("NameId");
+
+                    b.ToTable("Tasks");
+                });
 
             modelBuilder.Entity("DAL.Models.Story", b =>
                 {
@@ -62,6 +102,19 @@ namespace DAL.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("DAL.Models.ScrumTask", b =>
+                {
+                    b.HasOne("DAL.Models.User", "AssignedTo")
+                        .WithMany()
+                        .HasForeignKey("AssignedToUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("DAL.Models.Story", "Name")
+                        .WithMany()
+                        .HasForeignKey("NameId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("DAL.Models.Story", b =>
