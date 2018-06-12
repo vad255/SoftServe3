@@ -25,9 +25,9 @@ namespace DAL.Models
         public StoryStatus Status { get; set; }
 
 
-        // in future, we will need to use more specific type, like TeamMember or etc.
+      
         [NotMapped]
-        public User AssignedTo { get; set; }
+        public User AssignedToUser { get; set; }
 
 
         [NotMapped]
@@ -38,7 +38,7 @@ namespace DAL.Models
         public ProgramIncrement ProgramIncrement { get; set; }
 
 
-        [NotMapped]
+        [Required]
         public Team Team { get; set; }
 
 

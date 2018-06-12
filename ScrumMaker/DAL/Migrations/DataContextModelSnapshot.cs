@@ -25,8 +25,6 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AssignedToUserId");
-
                     b.Property<string>("Description")
                         .HasMaxLength(500);
 
@@ -36,11 +34,24 @@ namespace DAL.Migrations
 
                     b.Property<int>("Status");
 
+                    b.Property<int>("TeamId");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("AssignedToUserId");
+                    b.HasIndex("TeamId");
 
                     b.ToTable("Stories");
+                });
+
+            modelBuilder.Entity("DAL.Models.Team", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Team");
                 });
 
             modelBuilder.Entity("DAL.Models.User", b =>
@@ -48,6 +59,9 @@ namespace DAL.Migrations
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
 
                     b.Property<string>("Login")
                         .IsRequired()
@@ -60,13 +74,36 @@ namespace DAL.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("User");
+                });
+
+            modelBuilder.Entity("DAL.Stubs.TeamMember", b =>
+                {
+                    b.HasBaseType("DAL.Models.User");
+
+                    b.Property<int?>("TeamId");
+
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("TeamMember");
+
+                    b.HasDiscriminator().HasValue("TeamMember");
                 });
 
             modelBuilder.Entity("DAL.Models.Story", b =>
                 {
-                    b.HasOne("DAL.Models.User", "AssignedTo")
+                    b.HasOne("DAL.Models.Team", "Team")
                         .WithMany()
-                        .HasForeignKey("AssignedToUserId");
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DAL.Stubs.TeamMember", b =>
+                {
+                    b.HasOne("DAL.Models.Team")
+                        .WithMany("Members")
+                        .HasForeignKey("TeamId");
                 });
 #pragma warning restore 612, 618
         }
