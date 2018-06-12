@@ -18,6 +18,8 @@ namespace DAL.Models
 
         public ICollection<Story> Backlog { get; set; }
 
+        public ICollection<Defect> Defects { get; set; }
+
 
         public ICollection<DailyScrumInfo> DailyScrums { get; set; }
 
