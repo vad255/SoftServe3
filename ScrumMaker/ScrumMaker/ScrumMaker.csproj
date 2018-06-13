@@ -29,6 +29,7 @@
   <ItemGroup>
     <None Remove="ClientApp\components\AddUser.tsx" />
     <None Remove="ClientApp\components\MailSender.tsx" />
+    <None Remove="ClientApp\components\SprintsGrid.tsx" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,13 +38,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\AddUser.tsx" />
-    <TypeScriptCompile Include="ClientApp\components\MailSender.tsx" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="Views\Tests\MiddleWareDemo.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
+    <TypeScriptCompile Include="ClientApp\components\SprintsGrid.tsx" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

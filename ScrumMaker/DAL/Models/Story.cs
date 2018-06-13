@@ -26,7 +26,6 @@ namespace DAL.Models
 
 
         // in future, we will need to use more specific type, like TeamMember or etc.
-        [NotMapped]
         public User AssignedTo { get; set; }
 
 
@@ -38,12 +37,10 @@ namespace DAL.Models
         public ProgramIncrement ProgramIncrement { get; set; }
 
 
-        [NotMapped]
         public Team Team { get; set; }
 
 
-        [NotMapped]
-        public Sprint Sprint { get; set; }
+        public string Sprint { get; set; }
 
 
         [NotMapped]
@@ -55,11 +52,11 @@ namespace DAL.Models
 
 
         [NotMapped]
-        public List<AcceptanceCriteria> AC { get; set; }
+        public ICollection<AcceptanceCriteria> AC { get; set; }
 
 
         [NotMapped]
-        public int DefectId { get; set; }
+        public ICollection<Defect> Defects { get; set; }
 
 
 
