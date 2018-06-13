@@ -1,9 +1,8 @@
-﻿using DAL.Models;
+using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DAL.Models;
 using System.Threading.Tasks;
 
 namespace DAL
@@ -19,12 +18,19 @@ namespace DAL
         //    optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=ScrumMaker;Trusted_Connection=True;MultipleActiveResultSets=true");
         //}
 
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<User>().ToTable("Users");
+        //    modelBuilder.Entity<Story>().ToTable("Stories");
+
+        //}
+
 
         public DbSet<User> Users { get; set; }
 
         public DbSet<Team> Teams { get; set; }
 
-        public DbSet<Story> Stories { get; set; }
+        public DbSet<Defect> Defects { get; set; }
 
         public DbSet<Sprint> Sprints { get; set; }
     }
