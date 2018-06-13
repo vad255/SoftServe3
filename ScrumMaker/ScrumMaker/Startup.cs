@@ -34,6 +34,7 @@ namespace ScrumMaker
             string connectionStr = Configuration.GetConnectionString("Default");
 
             services.AddDbContext<DAL.DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
+
             services.AddScoped(typeof(DbContext), typeof(DAL.DataContext));
             services.AddScoped(typeof(IRepository<>),typeof(Repository<>));
             //services.Configure<DatabaseOptions>(Configuration.GetSection("Data:Default"));
