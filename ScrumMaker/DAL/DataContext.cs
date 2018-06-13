@@ -1,9 +1,8 @@
-﻿using DAL.Models;
+using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DAL.Models;
 using System.Threading.Tasks;
 
 namespace DAL
@@ -26,6 +25,9 @@ namespace DAL
         public DbSet<Team> Teams { get; set; }
         
         public DbSet<Story> Stories { get; set; }
+
+
+        public DbSet<Defect> Defects { get; set; }
 
         public DbSet<ScrumTask> Tasks { get; set; }
 

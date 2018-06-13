@@ -7,6 +7,7 @@ namespace DAL.Models
 {
     public class User
     {
+        [Key]
         public int UserId { get; set; }
 
 
@@ -18,8 +19,15 @@ namespace DAL.Models
         [Required]
         [MaxLength(20)]
         public string Password { get; set; }
+<<<<<<< HEAD
         public int TeamId { get; set; }
         public int Role { get; set; }
         public bool Activity { get; set; }
+=======
+        [Required]
+        public int RoleId { get; set; }
+
+
+>>>>>>> master
     }
 }

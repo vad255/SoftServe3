@@ -11,9 +11,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 using Microsoft.AspNetCore.Http;
 using System.Text;
+using DAL;
 using DAL.Access;
+using DAL.Access.IRepositoryImplementation;
 using DAL.Models;
-
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace ScrumMaker
 {
@@ -34,9 +36,14 @@ namespace ScrumMaker
             services.AddDbContext<DAL.DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
 
             services.AddScoped(typeof(DbContext), typeof(DAL.DataContext));
-            services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
+            services.AddScoped(typeof(IRepository<>),typeof(Repository<>));
+            //services.Configure<DatabaseOptions>(Configuration.GetSection("Data:Default"));
 
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+                options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
