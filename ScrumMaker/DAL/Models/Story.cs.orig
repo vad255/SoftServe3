@@ -26,6 +26,7 @@ namespace DAL.Models
 
 
         // in future, we will need to use more specific type, like TeamMember or etc.
+        [NotMapped]
         public User AssignedTo { get; set; }
 
 
@@ -56,7 +57,11 @@ namespace DAL.Models
 
 
         [NotMapped]
+<<<<<<< HEAD
         public ICollection<Defect> Defects { get; set; }
+=======
+        public int DefectId { get; set; }
+>>>>>>> master
 
 
 

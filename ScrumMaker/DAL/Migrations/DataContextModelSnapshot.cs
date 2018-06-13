@@ -19,6 +19,48 @@ namespace DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("DAL.Models.Defect", b =>
+                {
+                    b.Property<int>("DefectId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ActualResults");
+
+                    b.Property<string>("AssignedTo");
+
+                    b.Property<string>("Attachments");
+
+                    b.Property<int>("Blocked");
+
+                    b.Property<string>("Chat");
+
+                    b.Property<string>("DefectName");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500);
+
+                    b.Property<string>("ExpectedResults");
+
+                    b.Property<string>("FixResults");
+
+                    b.Property<string>("Priority");
+
+                    b.Property<string>("ProgramIncrement");
+
+                    b.Property<string>("Sprint");
+
+                    b.Property<string>("State");
+
+                    b.Property<int>("Status");
+
+                    b.Property<string>("StepsToReproduse");
+
+                    b.HasKey("DefectId");
+
+                    b.ToTable("Defects");
+                });
+
             modelBuilder.Entity("DAL.Models.Story", b =>
                 {
                     b.Property<int>("Id")

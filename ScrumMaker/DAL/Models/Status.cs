@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DAL.Stubs
+namespace DAL.Models
 {
-    public class Defect
+    public enum status
     {
+        open, close
     }
 }
