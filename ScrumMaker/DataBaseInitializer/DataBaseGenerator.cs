@@ -4,16 +4,16 @@ using System.Collections.Generic;
 using System.Text;
 using DAL.Access;
 using Microsoft.EntityFrameworkCore;
+using DAL.Models;
 
-
-namespace DAL.DataBaseGenerator
+namespace DataBaseInitializer
 {
     public static class DataBaseGenerator
     {
-        public static void FillDataBase(int quantity, DbContext context)
+        public static void FillDataBase( DbContext context, int quantity)
         {
 
-            IRepository<User> db = new Repository<User>( context);
+            IRepository<User> db = new Repository<User>(context);
             IRepository<Story> db2 = new Repository<Story>(context);
 
             //if (quantity >= 0 && quantity < int.MaxValue)
@@ -35,19 +35,24 @@ namespace DAL.DataBaseGenerator
 
             //    context.SaveChanges();
             //}
-
+            Random rand = new Random();
             if (quantity >= 0 && quantity < int.MaxValue)
             {
                 for (int i = 0; i < quantity; i++)
                 {
-                    var user = new User() { Login = "user " + i.ToString() + "@gmail.com", Password = i.ToString() };
+                    var user = new User() {
+                        Login = "user " + i.ToString() + "@gmail.com",
+                        Password = i.ToString(),
+                        Activity = true,
+                    Role =Role.User,
+                };
                     db.Create(user);
 
                     var story = new Story()
                     {
-                        Name = "user" + i.ToString(),
-                        Description = "defualt description of user",
-                        Status = StoryStatus.InProgress,
+                        Name = "story" + i.ToString(),
+                        Description = "defualt description of stor",
+                        Status = (StoryStatus)rand.Next(6),
                         Team = new Team()
                     };
 
@@ -56,7 +61,7 @@ namespace DAL.DataBaseGenerator
 
                 db.Save();
                 db2.Save();
-                
+
             }
 
             else

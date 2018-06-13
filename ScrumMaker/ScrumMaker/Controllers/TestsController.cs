@@ -21,7 +21,7 @@ namespace ScrumMaker.Controllers
 
         public ActionResult ShowUsers()
         {
-            List<User> users = _repository.Get().ToList();
+            List<User> users = _repository.GetList().ToList();
 
             ViewData["users"] = users;
 

@@ -26,42 +26,42 @@ namespace DAL.Access
         }
 
      
-        public INotCommitableRepository<User> Users
+        public IRepository<User> Users
         {
             get
             {
                 if (_users == null)
-                    _users = new EFRepository<User>(_context);
+                    _users = new Repository<User>(_context);
                 return _users;
             }
         }
 
-        public INotCommitableRepository<Team> Teams
+        public IRepository<Team> Teams
         {
             get
             {
                 if (_teams == null)
-                    _teams = new EFRepository<Team>(_context);
+                    _teams = new Repository<Team>(_context);
                 return _teams;
             }
         }
 
-        public INotCommitableRepository<Story> Stories
+        public IRepository<Story> Stories
         {
             get
             {
                 if (_stories == null)
-                    _stories = new EFRepository<Story>(_context);
+                    _stories = new Repository<Story>(_context);
                 return _stories;
             }
         }
 
-        public INotCommitableRepository<Sprint> Sprints
+        public IRepository<Sprint> Sprints
         {
             get
             {
                 if (_sprints == null)
-                    _sprints = new EFRepository<Sprint>(_context);
+                    _sprints = new Repository<Sprint>(_context);
                 return _sprints;
             }
         }

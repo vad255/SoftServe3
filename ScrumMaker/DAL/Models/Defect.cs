@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace DAL.Models
@@ -21,6 +22,7 @@ namespace DAL.Models
 
         public status Status { get; set; }
 
+        [NotMapped]
         public string ProgramIncrement { get; set; }
 
         public string AssignedTo { get; set; }

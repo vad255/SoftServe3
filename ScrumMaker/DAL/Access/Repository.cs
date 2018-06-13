@@ -4,26 +4,26 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-namespace DAL.Access.IRepositoryImplementation
+namespace DAL.Access
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private DataContext db;
+        private DbContext _context;
         private DbSet<T> dbSet;
 
 
-        public Repository()
+        public Repository(DbContext context)
         {
-            var optionBuilder = new DbContextOptionsBuilder<DataContext>();
-            var options = optionBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=ScrumMaker1;User ID=DESKTOP-L397JUD/tprystaiko@gmail.com pwd=4815162342t; Trusted_Connection=True;MultipleActiveResultSets=true").Options;
-            this.db = new DataContext(options);
-            dbSet = db.Set<T>();
+            _context = context;
+            dbSet = _context.Set<T>();
         }
+
+
+
         public IEnumerable<T> GetList()
         {
             return dbSet.ToList<T>();
         }
-
         public T GetById(int id)
         {
             return dbSet.Find(id);
@@ -35,7 +35,7 @@ namespace DAL.Access.IRepositoryImplementation
         }
         public void Update(T obj)
         {
-            db.Entry(obj).State = EntityState.Modified;
+            _context.Entry(obj).State = EntityState.Modified;
         }
         public void Delete(int Id)
         {
@@ -44,7 +44,7 @@ namespace DAL.Access.IRepositoryImplementation
         }
         public void Save()
         {
-            db.SaveChanges();
+            _context.SaveChanges();
         }
         private bool disposed = false;
 
@@ -54,7 +54,7 @@ namespace DAL.Access.IRepositoryImplementation
             {
                 if (disposing)
                 {
-                    db.Dispose();
+                    _context.Dispose();
                 }
 
                 this.disposed = true;

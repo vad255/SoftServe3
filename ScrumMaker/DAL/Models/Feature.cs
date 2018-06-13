@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using DAL.Stubs;
 
@@ -20,6 +21,7 @@ namespace DAL.Models
 
         public FeatureState State { get; set; }
 
+        [NotMapped]
         public ProgramIncrement ProgramIncrement { get; set; }
 
         public User Owner { get; set; }

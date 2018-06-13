@@ -24,7 +24,7 @@ namespace ReactCrudDemo.Controllers
             //Need to create new User because i have not database
             Console.WriteLine(user.Login);
             Console.WriteLine(user.Password);
-            Console.WriteLine(user.RoleId);
+            Console.WriteLine(user.Role);
 
         }
     }

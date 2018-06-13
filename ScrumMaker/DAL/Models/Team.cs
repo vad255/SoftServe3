@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 
 
@@ -13,8 +14,8 @@ namespace DAL.Models
         public int Id { get; private set; }
 
 
-        [Required]      
-        public ICollection<User> Members { get; set; }
+        [Required]    
+        public virtual ICollection<User> Members { get; set; }
 
 
         [Required]

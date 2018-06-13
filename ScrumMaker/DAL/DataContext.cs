@@ -39,7 +39,7 @@ namespace DAL
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Role>().HasIndex(x => x.Name).IsUnique();
+            //modelBuilder.Entity<Role>().HasIndex(x => x.Name).IsUnique();
         }
     }
 }
