@@ -22,7 +22,13 @@ namespace DAL.Models
         public string Password { get; set; }
 
 
-        public Role Role { get; set; }
+        public Team Team { get; set; }
+
+        [Required]
+        [ForeignKey("Role")]
+        public int RoleId { get; set; }
+
+
         public bool Activity { get; set; }
 
     }

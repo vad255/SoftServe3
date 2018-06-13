@@ -29,7 +29,6 @@ namespace DAL.Models
         public User AssignedTo { get; set; }
 
 
-        [NotMapped]
         public Feature Feature { get; set; }
 
 
@@ -40,7 +39,7 @@ namespace DAL.Models
         public Team Team { get; set; }
 
 
-        public string Sprint { get; set; }
+        public Sprint Sprint { get; set; }
 
 
         [NotMapped]
@@ -55,7 +54,6 @@ namespace DAL.Models
         public ICollection<AcceptanceCriteria> AC { get; set; }
 
 
-        [NotMapped]
         public ICollection<Defect> Defects { get; set; }
 
 
