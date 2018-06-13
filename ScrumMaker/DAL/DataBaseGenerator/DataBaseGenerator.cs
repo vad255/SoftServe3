@@ -49,6 +49,7 @@ namespace DAL.DataBaseGenerator
                         Name = "user" + i.ToString(),
                         Description = "defualt description of user",
                         Status = StoryStatus.InProgress,
+                        Team = new Team()
                     };
 
                     db2.Create(story);

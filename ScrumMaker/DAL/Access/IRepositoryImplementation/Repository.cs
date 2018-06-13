@@ -15,7 +15,7 @@ namespace DAL.Access.IRepositoryImplementation
         public Repository()
         {
             var optionBuilder = new DbContextOptionsBuilder<DataContext>();
-            var options = optionBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=ScrumMaker;Trusted_Connection=True;MultipleActiveResultSets=true").Options;
+            var options = optionBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=ScrumMaker1;User ID=DESKTOP-L397JUD/tprystaiko@gmail.com pwd=4815162342t; Trusted_Connection=True;MultipleActiveResultSets=true").Options;
             this.db = new DataContext(options);
             dbSet = db.Set<T>();
         }

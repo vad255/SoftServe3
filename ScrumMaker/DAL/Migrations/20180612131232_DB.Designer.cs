@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180612131119_initDB")]
-    partial class initDB
+    [Migration("20180612131232_DB")]
+    partial class DB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,55 +21,11 @@ namespace DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DAL.Models.Defect", b =>
-                {
-                    b.Property<int>("DefectId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ActualResults");
-
-                    b.Property<string>("AssignedTo");
-
-                    b.Property<string>("Attachments");
-
-                    b.Property<int>("Blocked");
-
-                    b.Property<string>("Chat");
-
-                    b.Property<string>("DefectName");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(500);
-
-                    b.Property<string>("ExpectedResults");
-
-                    b.Property<string>("FixResults");
-
-                    b.Property<string>("Priority");
-
-                    b.Property<string>("ProgramIncrement");
-
-                    b.Property<string>("Sprint");
-
-                    b.Property<string>("State");
-
-                    b.Property<int>("Status");
-
-                    b.Property<string>("StepsToReproduse");
-
-                    b.HasKey("DefectId");
-
-                    b.ToTable("Defects");
-                });
-
             modelBuilder.Entity("DAL.Models.Story", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("AssignedToUserId");
 
                     b.Property<string>("Description")
                         .HasMaxLength(500);
@@ -80,11 +36,24 @@ namespace DAL.Migrations
 
                     b.Property<int>("Status");
 
+                    b.Property<int>("TeamId");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("AssignedToUserId");
+                    b.HasIndex("TeamId");
 
                     b.ToTable("Stories");
+                });
+
+            modelBuilder.Entity("DAL.Models.Team", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Team");
                 });
 
             modelBuilder.Entity("DAL.Models.User", b =>
@@ -92,6 +61,9 @@ namespace DAL.Migrations
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
 
                     b.Property<string>("Login")
                         .IsRequired()
@@ -104,13 +76,36 @@ namespace DAL.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("User");
+                });
+
+            modelBuilder.Entity("DAL.Stubs.TeamMember", b =>
+                {
+                    b.HasBaseType("DAL.Models.User");
+
+                    b.Property<int?>("TeamId");
+
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("TeamMember");
+
+                    b.HasDiscriminator().HasValue("TeamMember");
                 });
 
             modelBuilder.Entity("DAL.Models.Story", b =>
                 {
-                    b.HasOne("DAL.Models.User", "AssignedTo")
+                    b.HasOne("DAL.Models.Team", "Team")
                         .WithMany()
-                        .HasForeignKey("AssignedToUserId");
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DAL.Stubs.TeamMember", b =>
+                {
+                    b.HasOne("DAL.Models.Team")
+                        .WithMany("Members")
+                        .HasForeignKey("TeamId");
                 });
 #pragma warning restore 612, 618
         }
