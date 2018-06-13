@@ -35,7 +35,7 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
         super();
         this.state = { sprints: [], loading: true };
 
-        fetch('api/SampleData/GetSprints')
+        fetch('api/Grids/GetSprints')
             .then(response => response.json() as Promise<Sprint[]>)
             .then(data => {
                 this.setState({ sprints: data, loading: false });
