@@ -10,19 +10,13 @@ namespace DAL.Models
     {
         [Key]
         public int UserId { get; set; }
-
-
         [Required]
         [MaxLength(20)]
         public string Login { get; set; }
-
-
         [Required]
         [MaxLength(20)]
         public string Password { get; set; }
-
-
-        public Role Role { get; set; }
+        public int RoleId { get; set; }
         public bool Activity { get; set; }
 
     }
