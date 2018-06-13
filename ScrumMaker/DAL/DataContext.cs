@@ -43,7 +43,7 @@ namespace DAL
 
             modelBuilder.Entity<User>().HasOne(u => u.Team);
             modelBuilder.Entity<Team>().HasMany(t => t.Members).WithOne(u => u.Team);
-            modelBuilder.Entity<Team>().HasOne(t => t.ScrumMaster);
+       
         }
     }
 }
