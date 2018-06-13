@@ -14,11 +14,11 @@ namespace DAL.Models
         public int Id { get; private set; }
 
 
-        [Required]    
-        public List<User> Members { get; set; }
-
-
         [Required]
-        public User ScrumMaster { get; set; }
+        public string Name { get; set; }
+
+        [Required]    
+        public virtual List<User> Members { get; set; }
+
     }
 }
