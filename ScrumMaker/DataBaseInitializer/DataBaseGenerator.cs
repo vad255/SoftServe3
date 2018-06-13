@@ -44,7 +44,7 @@ namespace DataBaseInitializer
                         Login = "user " + i.ToString() + "@gmail.com",
                         Password = i.ToString(),
                         Activity = true,
-                    RoleId = 1,
+                        RoleId = 1,
                 };
                     db.Create(user);
 
