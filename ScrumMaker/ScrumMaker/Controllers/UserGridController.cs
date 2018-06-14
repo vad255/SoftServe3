@@ -12,15 +12,26 @@ namespace ScrumMaker.Controllers
     [Route("api/[controller]")]
     public class UserGrid : Controller
     {
+        private DataContext _db;
+        public UserGrid(DataContext db)
+        {
+            _db = db;
+        }
         [HttpGet("[action]")]
         public List<User> GetUser()
         {
-            var optionsBuilder = new DbContextOptionsBuilder<DataContext>();
-            optionsBuilder.UseSqlServer("Server = DESKTOP-OVQI0E0; Database = ScrumMaker; Trusted_Connection = True; MultipleActiveResultSets = true");
-            DataContext db = new DataContext(optionsBuilder.Options);
-            //db.Users.Add(new User { Login = "BLa", Activity = true, Password = "BlaBla", RoleId = 1 });
-            //db.SaveChanges();
-            return db.Users.ToList();
+            //using (_db)
+            //{
+            //    _db.Roles.Add(new Role { Name = "Admin" });
+            //    _db.Users.Add(new User { Login = "BLa", Activity = true, Password = "BlaBla", RoleId = 1 });
+            //    _db.SaveChanges();
+            //}
+            return _db.Users.ToList();
+        }
+        [HttpGet("[action]")]
+        public List<Role> GetRoles()
+        {
+            return _db.Roles.ToList();
         }
     }
 }
