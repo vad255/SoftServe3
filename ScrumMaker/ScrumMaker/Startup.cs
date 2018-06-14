@@ -30,14 +30,15 @@ namespace ScrumMaker
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connectionStr = Configuration.GetConnectionString("Dmytro");
+            string connectionStr = Configuration.GetConnectionString("Viktor");
 
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
 
             services.AddScoped(typeof(DbContext), typeof(DAL.DataContext));
             services.AddScoped(typeof(IRepository<>),typeof(Repository<>));
-            //services.Configure<DatabaseOptions>(Configuration.GetSection("Data:Default"));
 
+
+            // Represent enums in Json as string
             services.AddMvc().AddJsonOptions(options =>
             {
                 options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
