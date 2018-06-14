@@ -25,7 +25,7 @@ namespace ScrumMaker.Controllers
         [HttpGet("[action]")]
         public IEnumerable<Feature> FeatureGet()
         {
-            var result = featureRepository.GetList();
+            var result = featureRepository.GetAll();
             return result;
         }
     }
