@@ -20,7 +20,6 @@ namespace ScrumMaker.Controllers
 
         public GridsController(DbContext context)
         {
-
             _context = context;
         }
 
