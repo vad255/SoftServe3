@@ -16,7 +16,10 @@ namespace DAL.Models
         [Required]
         [MaxLength(20)]
         public string Password { get; set; }
+        [ForeignKey("Role")]
         public int RoleId { get; set; }
+        public Role Role { get; set; }
+
         public bool Activity { get; set; }
 
     }

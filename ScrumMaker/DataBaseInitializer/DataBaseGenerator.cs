@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Text;
 using DAL.Access;
 using Microsoft.EntityFrameworkCore;
-using DAL.Models;
 
 namespace DataBaseInitializer
 {
