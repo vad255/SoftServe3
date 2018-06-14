@@ -7,6 +7,5 @@ namespace DAL.Models
     {
         public int RoleId { get; set; }
         public string Name { get; set; }
-
     }
 }

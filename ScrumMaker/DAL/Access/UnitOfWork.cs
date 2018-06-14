@@ -10,7 +10,7 @@ namespace DAL.Access
     /// Represent DataBase transaction. QUESTION OF SYNCRONIZATION  IS OPEN 
     /// Probably, need DI
     /// </summary>
-    public class UnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         DbContext _context;
 
@@ -18,6 +18,9 @@ namespace DAL.Access
         IRepository<Team> _teams;
         IRepository<Story> _stories;
         IRepository<Sprint> _sprints;
+        IRepository<Defect> _defects;
+        IRepository<Feature> _features;
+
 
 
         public UnitOfWork(DbContext context)
@@ -65,9 +68,30 @@ namespace DAL.Access
                 return _sprints;
             }
         }
-        
 
-        public void Save()
+        public IRepository<Defect> Defects
+        {
+            get
+            {
+                if (_defects == null)
+                    _defects = new Repository<Defect>(_context);
+                return _defects;
+            }
+        }
+
+        public IRepository<Feature> Features
+        {
+            get
+            {
+                if (_features == null)
+                    _features = new Repository<Feature>(_context);
+                return _features;
+            }
+        }
+
+  
+
+        public void Commit()
         {
             _context.SaveChanges();
         }

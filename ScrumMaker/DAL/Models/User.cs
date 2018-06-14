@@ -19,7 +19,6 @@ namespace DAL.Models
         [ForeignKey("Role")]
         public int RoleId { get; set; }
         public Role Role { get; set; }
-
         public bool Activity { get; set; }
 
     }

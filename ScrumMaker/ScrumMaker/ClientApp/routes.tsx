@@ -7,6 +7,8 @@ import { Counter } from './components/Counter';
 import { AddUser } from './components/AddUser';
 import { SprintsGrid } from './components/SprintsGrid';
 import { UserGrid } from './components/UserGrid';
+import { StoryGrid } from './components/StoryGrid';
+import { FeatureGrid } from './components/FeatureGrid';
 
 
 export const routes = <Layout>
@@ -16,5 +18,6 @@ export const routes = <Layout>
     <Route path='/fetchdata' component={ FetchData } />
     <Route path='/Sprints' component={SprintsGrid} />
     <Route path='/usergrid' component={UserGrid} />
-
+    <Route path='/Stories' component={StoryGrid} />
+    <Route path='/feature' component={FeatureGrid} />
 </Layout>;
