@@ -36,8 +36,9 @@ namespace ScrumMaker
 
             services.AddScoped(typeof(DbContext), typeof(DataContext));
             services.AddScoped(typeof(IRepository<>),typeof(Repository<>));
-            //services.Configure<DatabaseOptions>(Configuration.GetSection("Data:Default"));
 
+
+            // Represent enums in Json as string
             services.AddMvc().AddJsonOptions(options =>
             {
                 options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());

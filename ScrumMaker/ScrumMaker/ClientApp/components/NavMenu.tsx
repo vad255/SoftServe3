@@ -4,8 +4,8 @@ import { Link, NavLink } from 'react-router-dom';
 export class NavMenu extends React.Component<{}, {}> {
     public render() {
         return <div className='main-nav'>
-                <div className='navbar navbar-inverse'>
-                <div className='navbar-header'>
+                <div className='navbar navbar-inverse navbar-brand'>
+                <div className='navbar-header navbar-left'>
                     <button type='button' className='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
                         <span className='sr-only'>Toggle navigation</span>
                         <span className='icon-bar'></span>

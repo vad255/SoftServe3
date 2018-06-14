@@ -32,6 +32,8 @@ namespace ScrumMaker.Controllers
 
             List<Sprint> result = sprints.ToList();
 
+            result = sprints.ToList();
+        
             return result;
         }
 
