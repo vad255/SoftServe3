@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
+
 
 namespace DAL.Access
 {
@@ -11,7 +13,7 @@ namespace DAL.Access
     /// <typeparam name="T"></typeparam>
     public interface IRepository<T> : IDisposable where T : class
     {
-        IEnumerable<T> GetList();
+        IQueryable<T> GetAll();
         T GetById(int id);
         void Create(T item);
         void Delete(int enId);
