@@ -20,7 +20,6 @@ namespace ScrumMaker.Controllers
 
         public GridsController(DbContext context)
         {
-
             _context = context;
         }
 
@@ -31,10 +30,10 @@ namespace ScrumMaker.Controllers
         {
             var sprints = _context.Set<Sprint>().Include(s => s.History).Include(s => s.Team);
 
-            //Console.WriteLine(sprints.GetById(3).History.Initiated);
+            List<Sprint> result = null;
 
-            List<Sprint> result = sprints.ToList();
-
+            result = sprints.ToList();
+        
             return result;
         }
 

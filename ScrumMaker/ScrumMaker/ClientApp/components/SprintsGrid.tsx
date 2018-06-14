@@ -2,26 +2,122 @@
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 
-interface Sprint {
+interface ISprint {
+     id: number;
+     stage: string;
+     history: ISprintHistory
+     backlog: string;
+     defects: string;
+     dailyScrums: string;
+     review: string;
+     retrospective: string;
+
+    // public constructor(params: any)
+    // {
+    //     //super(params);
+    //     this.id = params.id;
+    //     this.stage = params.stage;
+    //     //this.history = params.history;
+    //     this.backlog = params.backlog;
+    //     this.defects = params.defects;
+    //     this.dailyScrums = params.deilyScrums;
+    //     this.review = params.review;
+    //     this.retrospective = params.retrospective;
+    // }
+
+    // public render()
+    // {
+    //     return <td>Hello</td>
+
+    // }
+}
+interface ISprintHistory
+{
+    id: number;
+    initiated: string;
+    planned: string;
+    begined: string;
+    reviewDone: string;
+    retrospectiveDone: string;
+}
+
+class Sprint{
     id: number;
     stage: string;
-    history: ISprintHistory
+    history: SprintHistory
     backlog: string;
     defects: string;
     dailyScrums: string;
     review: string;
     retrospective: string;
+
+   public constructor(params: ISprint)
+   {
+       //super(params);
+       this.id = params.id;
+       this.stage = params.stage;
+       this.history = new SprintHistory(params.history);
+       this.backlog = params.backlog;
+       this.defects = params.defects;
+       this.dailyScrums = params.dailyScrums;
+       this.review = params.review;
+       this.retrospective = params.retrospective;
+   }
+
+    public renderAsTableRow()
+    {
+        return (<tr key={this.id}>
+                     <td>{this.id}</td>
+                     <td>{this.stage}</td>
+                     <td>{this.review}</td>
+                     <td>{this.history.renderAsList()}</td>
+                     <td>{this.retrospective}</td>
+                 </tr>);
+              
+
+    }
 }
 
-interface ISprintHistory
-{
-    id:number;
-    initiated: string;
-    planned: string;
-    beginned: string;
-    reviewDone: string;
-    retrospectiveDone: string;
-    
+class SprintHistory{
+    constructor(params: ISprintHistory) {
+        if (params == null || params == undefined)
+        {
+            this.empty = true;
+            return;
+        }
+        this.empty = false;
+        this.id = params.id;
+        this.initiated = params.initiated;
+        this.planned = params.planned;
+        this.begined = params.begined;
+        this.reviewDone = params.reviewDone;
+        this.retrospectiveDone = params.retrospectiveDone;
+    }
+
+    empty: boolean;
+
+    public id :number;
+    public initiated: string;
+    public planned: string;
+    public begined: string;
+    public reviewDone: string;
+    public retrospectiveDone: string;
+
+    public renderAsList() {
+
+        if (this.empty)
+            return <p>No Data</p>;
+        else
+            return (
+            <ul>
+                <li>Initiated   {this.initiated}</li>
+                <li>Planned     {this.planned}</li>
+                <li>Beginned    {this.begined}</li>
+                <li>Reviev      {this.reviewDone}</li>
+                <li>Retrospective {this.retrospectiveDone}</li>
+            </ul>);
+
+    }
 }
 
 
@@ -35,10 +131,14 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
         super();
         this.state = { sprints: [], loading: true };
 
-        fetch('api/Grids/GetSprints')
-            .then(response => response.json() as Promise<Sprint[]>)
+        fetch('api/Grids/Sprints')
+            .then(response => response.json() as Promise<ISprint[]>)
             .then(data => {
-                this.setState({ sprints: data, loading: false });
+                var sprints = [];
+                for (var i = 0; i < data.length; i++)
+                    sprints[i] = new Sprint(data[i]);
+
+                this.setState({ sprints: sprints, loading: false });
             });
     }
 
@@ -67,61 +167,20 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
             </thead>
             <tbody>
                 {sprints.map(sprint =>
-                    <tr key={sprint.id}>
-                        <td>{sprint.id}</td>
-                        <td>{sprint.stage}</td>
-                        <td>{sprint.review}</td>
-                        <td>{SprintsGrid.renderHistory(sprint.history)}</td>
-                        <td>{sprint.retrospective}</td>
-                    </tr>
+                    // <tr key={sprint.id}>
+                    //     <td>{sprint.id}</td>
+                    //     <td>{sprint.stage}</td>
+                    //     <td>{sprint.review}</td>
+                    //     <td>{sprint.history}</td>
+                    //     <td>{sprint.retrospective}</td>
+                    // </tr>
+                    sprint.renderAsTableRow()
                 )}
             </tbody>
         </table>;
     }
-
-    private static renderHistory(history: ISprintHistory)
-    {
-        if(!history)
-        {
-            return <p>NULL</p>
-        }
-        else{
-            return(<ul>
-                <li>Initiated {history.initiated}</li>
-                <li>Planned {history.planned}</li>
-                <li>Beginned {history.beginned}</li>
-                <li>Reviev{history.reviewDone}</li>
-                <li>Retrospective {history.retrospectiveDone}</li>
-            </ul>);
-        }
-    }
-    
 }
 
 
-class SprintHistory extends React.Component<ISprintHistory>{
-    constructor() {
-        super();
-        this.state;
-        
-    }
-
-    public render() {
-
-    return (<p>Hello</p>);
-
-    }
-
-    private static renderEventsList(eventLog: any) {
-    return (<p>Hello</p>);
-        // <ul>
-        //     <li>Initiated {eventLog.initiated}</li>
-        //     <li>Planned {eventLog.planned}</li>
-        //     <li>Beginned {eventLog.beginned}</li>
-        //     <li> Reviev{eventLog.reviewDone}</li>
-        //     <li> Retrospective {eventLog.retrospectiveDone}</li>
-        // </ul>;
-    }
-}
 
 
