@@ -31,16 +31,10 @@ namespace ScrumMaker.Controllers
         {
             var sprints = _context.Set<Sprint>().Include(s => s.History).Include(s => s.Team);
 
-            //Console.WriteLine(sprints.GetById(3).History.Initiated);
             List<Sprint> result = null;
-            try
-            {
-                result = sprints.ToList();
-            }
-            catch (Exception e)
-            {
-                ;
-            }
+
+            result = sprints.ToList();
+        
             return result;
         }
 
