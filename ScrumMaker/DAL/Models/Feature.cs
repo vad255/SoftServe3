@@ -24,6 +24,7 @@ namespace DAL.Models
         [NotMapped]
         public ProgramIncrement ProgramIncrement { get; set; }
 
+        [NotMapped]
         public User Owner { get; set; }
 
         [Required]
