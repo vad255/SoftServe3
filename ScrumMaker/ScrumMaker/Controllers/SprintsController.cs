@@ -28,7 +28,7 @@ namespace ScrumMaker.Controllers
         [HttpGet("[action]")]
         public IEnumerable<Sprint> Get()
         {
-            var sprints = _sprints.GetAll().Include(s => s.History).Include(s => s.Team); 
+            var sprints = _sprints.GetAll().Include(s => s.History).Include(s => s.Team).Include(s => s.Team.Members);
 
             List<Sprint> result = sprints.ToList();
 
