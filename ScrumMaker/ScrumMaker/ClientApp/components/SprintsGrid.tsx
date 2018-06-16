@@ -17,7 +17,7 @@ class SprintHistory {
     constructor(params: any) {
 
 
-        if (params == null || params == undefined) {
+        if (params === null || params === undefined) {
             this.empty = true;
             return;
         }
@@ -61,7 +61,7 @@ class User {
 
     empty: boolean = true;
     constructor(params: any) {
-        if (params == null || params == undefined) {
+        if (params === null || params === undefined) {
             return;
         }
 
@@ -103,7 +103,7 @@ class Team {
     members: User[] = [];
 
     constructor(params: any) {
-        if (params == null || params == undefined) {
+        if (params === null || params === undefined) {
             return;
         }
         this.name = params.name;
