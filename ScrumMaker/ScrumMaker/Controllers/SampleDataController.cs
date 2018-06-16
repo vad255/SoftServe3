@@ -22,7 +22,25 @@ namespace ScrumMaker.Controllers
         public IEnumerable<Story> GetStories()
         {
             List<Story> db = new List<Story>();
-            db.Add(new Story(){AssignedTo = new User(), Sprint = new Sprint(), Feature = new Feature(),Name = "Name",Description = "Description",Status = StoryStatus.InProgress,});
+            db.Add(new Story()
+            {
+                AssignedTo = new User(),
+                Sprint = new Sprint(),
+                Feature = new Feature(),
+                Name = "Name",
+                Description = "Description",
+                Status = StoryStatus.InProgress
+            });
+
+            db.Add(new Story()
+            {
+                AssignedTo = new User(),
+                Sprint = new Sprint(),
+                Feature = new Feature(),
+                Name = "Name",
+                Description = "Description",
+                Status = StoryStatus.InProgress
+            });
             return db;
         }
 
