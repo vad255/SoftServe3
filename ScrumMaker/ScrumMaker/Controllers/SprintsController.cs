@@ -38,6 +38,28 @@ namespace ScrumMaker.Controllers
         }
 
 
+        [HttpPost("[action]")]
+        public IActionResult Create(Sprint sprint)
+        {
+            ;
+            return NoContent();
+        }
+
+
+
+        [HttpPut("[action]")]
+        public IActionResult Update(Sprint sprint)
+        {
+            Console.WriteLine(sprint.Team.Name);
+            return NoContent();
+        }
+
+        [HttpDelete("[action]")]
+        public IActionResult Delete(int id)
+        {
+            return NoContent();
+        }
+     
 
         protected override void Dispose(bool disposing)
         {

@@ -1,11 +1,11 @@
 ﻿import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
+import axios from 'axios'
 
+class SprintHistory extends React.Component {
 
-class SprintHistory {
-
-    public empty: boolean;
+    public empty: boolean = true;
 
     public id: number = -1;
     initiated: Date;
@@ -15,43 +15,34 @@ class SprintHistory {
     retrospectiveDone: Date;
 
     constructor(params: any) {
-
-
+        super(params);
         if (params === null || params === undefined) {
-            this.empty = true;
             return;
         }
         this.empty = false;
         this.id = params.id;
 
-
         this.initiated = new Date(params.initiated);
-        try {
-            this.planned = new Date(params.planned);
-            this.begined = new Date(params.begined);
-            this.reviewDone = new Date(params.reviewDone);
-            this.retrospectiveDone = new Date(params.retrospectiveDone);
-        } catch (e) { alert(e) }
+        this.planned = new Date(params.planned);
+        this.begined = new Date(params.begined);
+        this.reviewDone = new Date(params.reviewDone);
+        this.retrospectiveDone = new Date(params.retrospectiveDone);
     }
 
-
-
-
     public renderAsMenu() {
-
         if (this.empty)
-            return <p>No Data</p>;
+            return  <div id="{this.id}" role="button" data-toggle="dropdown" className="btn btn-default"> No Data </div>
         else
             return <div className="dropdown">
                 <div id="{this.id}" role="button" data-toggle="dropdown" className="btn btn-primary" >
                     History <span className="caret"></span>
                 </div>
                 <ul className="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-                    <li className="list-group-item"><pre>Initiated   {this.initiated.toLocaleDateString()}</pre></li>
-                    <li className="list-group-item"><pre>Planned     {this.planned.toLocaleDateString()}</pre></li>
-                    <li className="list-group-item"><pre>Beginned    {this.begined.toLocaleDateString()}</pre></li>
-                    <li className="list-group-item"><pre>Review      {this.reviewDone.toLocaleDateString()}</pre></li>
-                    <li className="list-group-item"><pre>Retrospective {this.retrospectiveDone.toLocaleDateString()}</pre></li>
+                    <li className="list-group-item"><pre>Initiated:     {this.initiated.toLocaleDateString()}</pre></li>
+                    <li className="list-group-item"><pre>Planned:       {this.planned.toLocaleDateString()}</pre></li>
+                    <li className="list-group-item"><pre>Beginned:      {this.begined.toLocaleDateString()}</pre></li>
+                    <li className="list-group-item"><pre>Review:        {this.reviewDone.toLocaleDateString()}</pre></li>
+                    <li className="list-group-item"><pre>Retrospective: {this.retrospectiveDone.toLocaleDateString()}</pre></li>
                 </ul>
             </div>
     }
@@ -91,7 +82,7 @@ class User {
                 <li className="dropdown-item"><b><pre>Activity:{this.activity ? "true" : "false"}</pre></b> </li>
                 <li className="dropdown-item"><b><pre>RoleId:  {this.roleId}</pre></b> </li>
             </ul>
-        </li>          
+        </li>
     }
 }
 
@@ -124,7 +115,7 @@ class Team {
 
     renderAsMenu() {
         if (this.empty)
-            return "NoData"
+            return <div id="{this.id}" role="button" data-toggle="dropdown" className="btn btn-default"> No Data </div>
         return <div className="dropdown">
             <div id="{this.id}" role="button" data-toggle="dropdown" className="btn btn-primary" >
                 {this.name} <span className="caret"></span>
@@ -136,7 +127,7 @@ class Team {
     }
 }
 
-class Sprint {
+class Sprint extends React.Component{
     id: number;
     stage: string;
     history: SprintHistory
@@ -146,8 +137,18 @@ class Sprint {
     review: string;
     retrospective: string;
     team: Team;
+    
+    empty: boolean = true;
 
     public constructor(params: any) {
+
+        super(params);
+
+        if(params === null || params === undefined)
+        {
+            return;
+        }
+
         this.id = params.id;
         this.stage = params.stage;
         this.history = new SprintHistory(params.history);
@@ -157,7 +158,34 @@ class Sprint {
         this.review = params.review;
         this.retrospective = params.retrospective;
         this.team = new Team(params.team);
+
+        this.empty = false;
+        //this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+      
+    // public SentdItem() {
+    //     fetch('api/sprints/post',
+    //     {
+    //         method:'POST',
+    //         body: this
+    //     }).then((r) => alert("sended"));
+    // }
+
+    public SentdItem() {
+        var data = {hello:'test',world:'test'}
+        fetch('api/sprints/create',
+        {
+            method:'POST',
+            body: JSON.stringify(this.props) 
+         }).then((r) => alert('sended'));
+    }  
+
+    // public render()
+    // {
+    //     return <form><text>Hello</text><button>Submit</button></form>
+
+    // }
 
     public renderAsTableRow() {
         return <tr key={this.id}>
@@ -167,12 +195,14 @@ class Sprint {
             <td>{this.review}</td>
             <td>{this.history.renderAsMenu()}</td>
             <td>{this.retrospective}</td>
+            <td><div>
+            <div id={this.id.toString()} role="button" data-toggle="dropdown" className="btn btn-default" onClick={this.SentdItem.bind(this)}> 
+            Sending test </div>
+            </div></td>
         </tr>;
-
     }
+
 }
-
-
 
 
 interface SprintDataFetchingState {
@@ -188,13 +218,11 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
         fetch('api/Sprints/Get')
             .then(response => response.json() as Promise<Sprint[]>)
             .then(data => {
-                var sprints = [];
-                for (var i = 0; i < data.length; i++)
-                    sprints[i] = new Sprint(data[i]);
-
+                var sprints = data.map(s => new Sprint(s));
+                sprints.sort((a, b) => (a.id - b.id));
                 this.setState({ sprints: sprints, loading: false });
             });
-    }
+    } 
 
     public render() {
         let contents = this.state.loading
@@ -205,10 +233,16 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
             <h1>Sprints</h1>
             <p>Here represented all sprints from the database.</p>
             {contents}
-        </div>;
+            </div>
     }
 
     private static renderSprintsTable(sprints: Sprint[]) {
+        //var table = "";
+        //for (var i = 0; i < sprints.length; i++) {
+        //    table += sprints[i].renderAsTableRow()
+        //    //table += + "<td>hello</td>";
+        //}
+
         return <table className='table'>
             <thead>
                 <tr>
@@ -217,11 +251,12 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
                     <th>Stage</th>
                     <th>Review</th>
                     <th>History</th>
-                    <th>retrospective</th>
+                    <th>Retrospective</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                {sprints.map(sprint => sprint.renderAsTableRow())}
+                {sprints.map(s => s.renderAsTableRow())}
             </tbody>
         </table>;
     }
