@@ -20,12 +20,12 @@ namespace ScrumMaker.Controllers
         [HttpGet("[action]")]
         public List<User> GetUser()
         {
-            //using (_db)
-            //{
-            //    _db.Roles.Add(new Role { Name = "Admin" });
-            //    _db.Users.Add(new User { Login = "BLa", Activity = true, Password = "BlaBla", RoleId = 1 });
-            //    _db.SaveChanges();
-            //}
+            using (_db)
+            {
+                _db.Roles.Add(new Role { Name = "Admin" });
+                _db.Users.Add(new User { Login = "BLa", Activity = true, Password = "BlaBla", RoleId = 1 });
+                _db.SaveChanges();
+            }
             return _db.Users.ToList();
         }
         [HttpGet("[action]")]

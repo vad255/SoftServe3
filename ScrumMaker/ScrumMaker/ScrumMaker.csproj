@@ -35,6 +35,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="ClientApp\css\navMenu.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj" />
     <ProjectReference Include="..\ScrumMaker.Logger\ScrumMaker.Logger.csproj" />
   </ItemGroup>

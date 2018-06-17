@@ -96,12 +96,12 @@ class SprintHistory{
 
     empty: boolean;
 
-    public id :number;
-    public initiated: string;
-    public planned: string;
-    public begined: string;
-    public reviewDone: string;
-    public retrospectiveDone: string;
+    public id :number | undefined;
+    public initiated: string | undefined;
+    public planned: string | undefined;
+    public begined: string | undefined;
+    public reviewDone: string | undefined;
+    public retrospectiveDone: string | undefined;
 
     public renderAsList() {
 
