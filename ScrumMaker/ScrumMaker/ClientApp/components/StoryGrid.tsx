@@ -25,33 +25,33 @@ export class StoryGrid extends React.Component<RouteComponentProps<{}>, StoryDat
             : StoryGrid.renderStoriesTable(this.state.stories);
 
         return <div>
-                   <h1>Stories</h1>
-                   <p>This component demonstrates Stories from the server.</p>
-                   {contents}
-               </div>;
+            <h1>Stories</h1>
+            <p>This component demonstrates Stories from the server.</p>
+            {contents}
+        </div>;
     }
 
     private static renderStoriesTable(stories: Story[]) {
-        return <table className='table'>
-                   <thead>
-                   <tr>
-                       <th>Id</th>
-                       <th>Name</th>
-                       <th>Descrition</th>
-                       <th>Status</th>
-                   </tr>
-                   </thead>
-                   <tbody>
-                   {stories.map(story =>
-                       <tr>
-                           <td>{story.id}</td>
-                           <td>{story.name}</td>
-                           <td>{story.description}</td>
-                           <td>{story.status}</td>
-                       </tr>
-                   )}
-                   </tbody>
-               </table>;
+        return <table className="table">
+            <thead className="thead-dark">
+                <tr className="d-table-row">
+                    <th >Id</th>
+                    <th >Name</th>
+                    <th >Descrition</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {stories.map(story =>
+                    <tr className="d-table-row">
+                        <td className="d-table-cell">{story.id}</td>
+                        <td className="d-table-cell">{story.name}</td>
+                        <td className="d-table-cell">{story.description}</td>
+                        <td className="d-table-cell">{story.status}</td>
+                    </tr>
+                )}
+            </tbody>
+        </table>;
     }
 }
 
