@@ -12,7 +12,7 @@ export class StoryGrid extends React.Component<RouteComponentProps<{}>, StoryDat
         super();
         this.state = { stories: [], loading: true };
 
-        fetch('api/SampleData/GetStories')
+        fetch('api/StoryGrid/GetStories')
             .then(response => response.json() as Promise<Story[]>)
             .then(data => {
                 this.setState({ stories: data, loading: false });
@@ -32,22 +32,22 @@ export class StoryGrid extends React.Component<RouteComponentProps<{}>, StoryDat
     }
 
     private static renderStoriesTable(stories: Story[]) {
-        return <table className="table">
-            <thead className="thead-dark">
-                <tr className="d-table-row">
-                    <th >Id</th>
-                    <th >Name</th>
-                    <th >Descrition</th>
+        return <table className="table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Descrition</th>
                     <th>Status</th>
                 </tr>
             </thead>
             <tbody>
                 {stories.map(story =>
-                    <tr className="d-table-row">
-                        <td className="d-table-cell">{story.id}</td>
-                        <td className="d-table-cell">{story.name}</td>
-                        <td className="d-table-cell">{story.description}</td>
-                        <td className="d-table-cell">{story.status}</td>
+                    <tr>
+                        <td>{story.id}</td>
+                        <td>{story.name}</td>
+                        <td>{story.description}</td>
+                        <td>{story.status}</td>
                     </tr>
                 )}
             </tbody>
