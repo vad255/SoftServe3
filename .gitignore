@@ -556,3 +556,4 @@ typings/
 # End of https://www.gitignore.io/api/csharp,aspnetcore,visualstudio
 ScrumMaker/.vs/ScrumMaker/v15/.suo
 ScrumMaker/.vs/ScrumMaker/v15/.suo
+ScrumMaker/ScrumMaker/wwwroot/Thumbs.db

@@ -18,16 +18,7 @@ namespace ScrumMaker.Controllers
         };
 
 
-        [HttpGet("[action]")]
-        public IEnumerable<Story> GetStories()
-        {
-            List<Story> db = new List<Story>();
-            db.Add(new Story(){AssignedTo = new User(), Sprint = new Sprint(), Feature = new Feature(),Name = "Name",Description = "Description",Status = StoryStatus.InProgress,});
-            return db;
-        }
-
-
-        [HttpGet("[action]")]
+       [HttpGet("[action]")]
         public IEnumerable<WeatherForecast> WeatherForecasts()
         {
             var rng = new Random();
