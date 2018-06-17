@@ -33,10 +33,7 @@ class SprintHistory {
             this.retrospectiveDone = new Date(params.retrospectiveDone);
         } catch (e) { alert(e) }
     }
-
-
-
-
+  
     public renderAsMenu() {
 
         if (this.empty)
