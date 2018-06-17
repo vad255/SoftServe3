@@ -19,8 +19,10 @@ namespace DataBaseInitializer
 
             DbContext context = new DataContext(options);
 
-            DataBaseGenerator.FillDataBase(context, 100);
+            DataBaseGenerator.FillDataBase(context);
 
+            Console.WriteLine("DataBase is generated");
+            Console.ReadKey();
         }
     }
 }
