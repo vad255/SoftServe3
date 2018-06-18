@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using DAL;
+using DAL.Access;
 using DAL.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,15 +17,17 @@ using ScrumMaker.Authentication;
 
 namespace ScrumMaker.Controllers
 {
-    public class IdentiryController : Controller
+    public class IdentityController : Controller
     {
-        private DataContext _db;
-        public IdentiryController(DataContext db)
+        private IRepository<User> _users;
+
+        public IdentityController(IRepository<User> users)
         {
-            _db = db; 
+            _users = users;
         }
 
-        [HttpPost("/token")]
+        [Route("/token")]
+        [HttpPost]
         public async Task Token([FromBody] LoginViewModel loginViewModel)
         {
             var login = loginViewModel.Login;
@@ -39,7 +42,7 @@ namespace ScrumMaker.Controllers
             }
 
             var now = DateTime.UtcNow;
-            // создаем JWT-токен
+            // create JWT-token
             var jwt = new JwtSecurityToken(
                     issuer: AuthOptions.ISSUER,
                     audience: AuthOptions.AUDIENCE,
@@ -61,8 +64,8 @@ namespace ScrumMaker.Controllers
         }
         private ClaimsIdentity GetIdentity(string login, string password)
         {
-            List<User> users = _db.Users.ToList();
-            User user = users.FirstOrDefault(x => x.Login == login && x.Password == password);
+            IEnumerable<User> Users = _users.GetList();
+            User user = Users.FirstOrDefault(x => x.Login == login && x.Password == password);
             if (user != null)
             {
                 var claims = new List<Claim>
