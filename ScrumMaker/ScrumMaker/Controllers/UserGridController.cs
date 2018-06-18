@@ -10,22 +10,16 @@ using Microsoft.EntityFrameworkCore;
 namespace ScrumMaker.Controllers
 {
     [Route("api/[controller]")]
-    public class UserGrid : Controller
+    public class UserGridController : Controller
     {
         private DataContext _db;
-        public UserGrid(DataContext db)
+        public UserGridController(DataContext db)
         {
             _db = db;
         }
         [HttpGet("[action]")]
         public List<User> GetUser()
         {
-            //using (_db)
-            //{
-            //    _db.Roles.Add(new Role { Name = "Admin" });
-            //    _db.Users.Add(new User { Login = "BLa", Activity = true, Password = "BlaBla", RoleId = 1 });
-            //    _db.SaveChanges();
-            //}
             return _db.Users.ToList();
         }
         [HttpGet("[action]")]

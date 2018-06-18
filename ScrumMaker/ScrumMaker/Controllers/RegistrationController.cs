@@ -9,23 +9,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using DAL.Models;
-
+using DAL;
 
 namespace ReactCrudDemo.Controllers
 {
     public class RegistartionController : Controller
     {
+        private DataContext _db;
+        public RegistartionController(DataContext db)
+        {
+            _db = db;
+        }
 
         [HttpPost]
         [Route("api/User/Create")]
-        public void Create(User user)
+        public RedirectResult Create(User user)
         {
-
-            //Need to create new User because i have not database
-            Console.WriteLine(user.Login);
-            Console.WriteLine(user.Password);
-            Console.WriteLine(user.RoleId);
-
+            _db.Users.Add(user);
+            _db.SaveChanges();
+            return Redirect("");
         }
     }
 }
