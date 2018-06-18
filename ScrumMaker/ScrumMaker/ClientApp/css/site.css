@@ -1,3 +1,5 @@
+.
+
 .main-nav li .glyphicon {
     margin-right: 10px;
 }
@@ -19,12 +21,11 @@
     z-index: 1;
 }
 
-@media (max-width: 767px) {
+/*@media (max-width: 767px) {
     /* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */
     body {
         padding-top: 50px;
     }
-}
 
 @media (min-width: 768px) {
     /* On small screens, convert the nav menu to a vertical sidebar */
@@ -56,11 +57,11 @@
         padding: 10px 16px;
         border-radius: 4px;
     }
-    .main-nav .navbar a {
-        /* If a menu item's text is too long, truncate it */
-        width: 100%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+        .main-nav .navbar a {
+            /* If a menu item's text is too long, truncate it */
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 }

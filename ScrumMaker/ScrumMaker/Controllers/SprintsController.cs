@@ -13,24 +13,24 @@ namespace ScrumMaker.Controllers
 {
 
     [Route("api/[controller]")]
-    public class GridsController : Controller
+    public class SprintsController : Controller
     {
 
-        private DbContext _context;
+        private IRepository<Sprint> _sprints;
 
-        public GridsController(DbContext context)
+        public SprintsController(IRepository<Sprint> repository)
         {
-            _context = context;
+            _sprints = repository;
         }
 
 
 
         [HttpGet("[action]")]
-        public IEnumerable<Sprint> Sprints()
+        public IEnumerable<Sprint> Get()
         {
-            var sprints = _context.Set<Sprint>().Include(s => s.History).Include(s => s.Team);
+            var sprints = _sprints.GetAll().Include(s => s.History).Include(s => s.Team).Include(s => s.Team.Members);
 
-            List<Sprint> result = null;
+            List<Sprint> result = sprints.ToList();
 
             result = sprints.ToList();
         
@@ -41,7 +41,7 @@ namespace ScrumMaker.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            _context.Dispose();
+            _sprints.Dispose();
             base.Dispose(disposing);
         }
 

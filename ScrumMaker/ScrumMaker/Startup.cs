@@ -54,7 +54,7 @@ namespace ScrumMaker
 
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
 
-            services.AddScoped(typeof(DbContext), typeof(DAL.DataContext));
+            services.AddScoped(typeof(DbContext), typeof(DataContext));
             services.AddScoped(typeof(IRepository<>),typeof(Repository<>));
 
 
