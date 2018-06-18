@@ -26,7 +26,6 @@ export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDa
 
         return <div>
             <h1>Registration</h1>
-            <hr />
             {contents}
         </div>;
     }

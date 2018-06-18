@@ -30,8 +30,10 @@
 
   <ItemGroup>
     <None Remove="ClientApp\components\AddUser.tsx" />
+    <None Remove="ClientApp\components\EditUser.tsx" />
     <None Remove="ClientApp\components\MailSender.tsx" />
     <None Remove="ClientApp\components\SprintsGrid.tsx" />
+    <None Remove="ClientApp\css\editUser.css" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,7 +48,9 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\AddUser.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\EditUser.tsx" />
     <TypeScriptCompile Include="ClientApp\components\SprintsGrid.tsx" />
+    <TypeScriptCompile Include="ClientApp\css\editUser.css" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
