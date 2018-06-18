@@ -12,6 +12,14 @@ using DAL.Access;
 namespace ScrumMaker.Controllers
 {
 
+    public class TestModel
+    {
+        public int PropA { get; set; }
+
+        public string PropB { get; set; }
+
+    }
+
     [Route("api/[controller]")]
     public class SprintsController : Controller
     {
@@ -27,7 +35,7 @@ namespace ScrumMaker.Controllers
 
         [HttpGet("[action]")]
         public IEnumerable<Sprint> Get()
-        {
+       {
             var sprints = _sprints.GetAll().Include(s => s.History).Include(s => s.Team).Include(s => s.Team.Members);
 
             List<Sprint> result = sprints.ToList();
@@ -39,24 +47,26 @@ namespace ScrumMaker.Controllers
 
 
         [HttpPost("[action]")]
-        public IActionResult Create(Sprint sprint)
+        public IActionResult Create([FromBody] Sprint sprint)
         {
-            ;
+            Console.WriteLine(sprint.Id);
             return NoContent();
         }
 
 
 
         [HttpPut("[action]")]
-        public IActionResult Update(Sprint sprint)
+        public IActionResult Update([FromBody] Sprint sprint)
         {
-            Console.WriteLine(sprint.Team.Name);
+            Console.WriteLine(sprint.Id);
+
             return NoContent();
         }
 
-        [HttpDelete("[action]")]
-        public IActionResult Delete(int id)
+        [HttpDelete("{id}")]
+        public IActionResult Delete([FromForm] int id)
         {
+            Console.WriteLine(id);
             return NoContent();
         }
      

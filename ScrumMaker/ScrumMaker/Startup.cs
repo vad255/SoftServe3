@@ -65,6 +65,13 @@ namespace ScrumMaker
 
             app.UseStaticFiles();
 
+            app.Use(
+               async (r, next) =>
+                {
+                    Write(r.Request.Method,ConsoleColor.Magenta);
+                    await next.Invoke();
+                }
+                );
 
             app.UseMvc(routes =>
             {

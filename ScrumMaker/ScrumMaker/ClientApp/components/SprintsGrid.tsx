@@ -1,7 +1,13 @@
 ﻿import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
-import axios from 'axios'
+
+enum DisplayMod
+{
+    read,
+    noData,
+    edit
+}
 
 class SprintHistory extends React.Component {
 
@@ -138,7 +144,7 @@ class Sprint extends React.Component{
     retrospective: string;
     team: Team;
     
-    empty: boolean = true;
+    mod: DisplayMod= DisplayMod.noData;
 
     public constructor(params: any) {
 
@@ -159,33 +165,68 @@ class Sprint extends React.Component{
         this.retrospective = params.retrospective;
         this.team = new Team(params.team);
 
-        this.empty = false;
-        //this.handleSubmit = this.handleSubmit.bind(this);
+        this.mod = DisplayMod.read;
     }
 
-      
-    // public SentdItem() {
-    //     fetch('api/sprints/post',
-    //     {
-    //         method:'POST',
-    //         body: this
-    //     }).then((r) => alert("sended"));
-    // }
+    updateButtonClick(event: any)
+    {
+        this.SendItem();
+        this.setState(this.mod = DisplayMod.edit);
+    }
 
-    public SentdItem() {
-        var data = {hello:'test',world:'test'}
+    saveButtonClick(event: any)
+    {
+
+
+    }
+
+    cancelButtonClick(event: any)
+    {
+       this.setState(this.mod = DisplayMod.read) 
+    }
+
+    deleteButtonClick(event: any)
+    {
+        //alert('call');
+        //this.SentItem();
+        fetch('api/sprints/delete',
+        {
+            method:'DELETE',
+            headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+            dataType: "json"},
+            body: JSON.stringify({id: this.id})
+         });
+
+        this.setState(this.mod = DisplayMod.noData);
+    }
+
+    public SendItem() {
         fetch('api/sprints/create',
         {
             method:'POST',
+            headers: {'Content-Type': 'application/json; charset=utf-8'},
             body: JSON.stringify(this.props) 
-         }).then((r) => alert('sended'));
+         });
     }  
 
-    // public render()
-    // {
-    //     return <form><text>Hello</text><button>Submit</button></form>
+     public render()
+     {
+         switch(this.mod)
+         {
+            case DisplayMod.read:
+                return this.renderAsTableRow();
+                
+            //case DisplayMod.edit:
+            //    return this.renderAsInput();
+                
+            case DisplayMod.noData:
+                return (null);   
 
-    // }
+         }
+         return <form><text>Hello</text><button>Submit</button></form>
+
+     }
 
     public renderAsTableRow() {
         return <tr key={this.id}>
@@ -196,8 +237,12 @@ class Sprint extends React.Component{
             <td>{this.history.renderAsMenu()}</td>
             <td>{this.retrospective}</td>
             <td><div>
-            <div id={this.id.toString()} role="button" data-toggle="dropdown" className="btn btn-default" onClick={this.SentdItem.bind(this)}> 
-            Sending test </div>
+            <div id={this.id.toString()} role="button" data-toggle="dropdown" className="btn btn-default btn-upd" onClick={this.updateButtonClick.bind(this)}>
+                <img src='/images/update_btn_128.ico' alt='upd' className="btn-img" /> 
+            </div> &nbsp;
+            <div id={this.id.toString()} role="button" data-toggle="dropdown" className="btn btn-default btn-del" onClick={this.deleteButtonClick.bind(this)}> 
+            <   img src='/images/delete_btn_128.ico' alt='upd' className="btn-img" /> 
+            </div>
             </div></td>
         </tr>;
     }
@@ -235,14 +280,16 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
             {contents}
             </div>
     }
-
+    public static SendItem() {
+        alert('call');
+        fetch('api/sprints/create',
+        {
+            method:'POST',
+            //headers: {'Content-Type': 'application/json; charset=utf-8'},
+            body: JSON.stringify({test: 'test'}) 
+         }).then(t => alert('sent'));
+    }  
     private static renderSprintsTable(sprints: Sprint[]) {
-        //var table = "";
-        //for (var i = 0; i < sprints.length; i++) {
-        //    table += sprints[i].renderAsTableRow()
-        //    //table += + "<td>hello</td>";
-        //}
-
         return <table className='table'>
             <thead>
                 <tr>
@@ -256,9 +303,22 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
                 </tr>
             </thead>
             <tbody>
-                {sprints.map(s => s.renderAsTableRow())}
+                {sprints.map(s => s.renderAsTableRow())} 
             </tbody>
-        </table>;
+            <tfoot>
+                <tr>
+                    <td colSpan={7}>
+                        <div className="text-center">
+                            <div role='button' className='btn btn-primary' 
+                            onClick={SprintsGrid.SendItem.bind}>
+                                Add new
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+
     }
 }
 
