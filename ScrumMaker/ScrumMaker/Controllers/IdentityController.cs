@@ -21,7 +21,7 @@ namespace ScrumMaker.Controllers
         private DataContext _db;
         public IdentiryController(DataContext db)
         {
-            _db = db;
+            _db = db; 
         }
 
         [HttpPost("/token")]
