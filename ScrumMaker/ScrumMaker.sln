@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScrumMaker.Logger", "ScrumM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataBaseInitializer", "DataBaseInitializer\DataBaseInitializer.csproj", "{5329E1E3-CC0E-4106-B1C9-A4601F8ADC0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BL", "BL\BL.csproj", "{569DB5C4-BE71-4BC9-A152-EF23EAA53107}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "BL\BL.csproj", "{569DB5C4-BE71-4BC9-A152-EF23EAA53107}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{80E08076-3AD6-4C64-A7B1-78FAD873A20C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{569DB5C4-BE71-4BC9-A152-EF23EAA53107}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{569DB5C4-BE71-4BC9-A152-EF23EAA53107}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{569DB5C4-BE71-4BC9-A152-EF23EAA53107}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80E08076-3AD6-4C64-A7B1-78FAD873A20C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80E08076-3AD6-4C64-A7B1-78FAD873A20C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80E08076-3AD6-4C64-A7B1-78FAD873A20C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80E08076-3AD6-4C64-A7B1-78FAD873A20C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
