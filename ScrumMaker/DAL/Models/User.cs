@@ -11,10 +11,10 @@ namespace DAL.Models
         [Key]
         public int UserId { get; set; }
         [Required]
-        [MaxLength(20)]
+        [MaxLength(50)]
         public string Login { get; set; }
         [Required]
-        [MaxLength(20)]
+        [MaxLength(50)]
         public string Password { get; set; }
         [ForeignKey("Role")]
         public int RoleId { get; set; }

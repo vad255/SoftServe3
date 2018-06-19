@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Linq.Expressions;
 
 namespace DAL.Access
 {
@@ -18,12 +18,11 @@ namespace DAL.Access
             dbSet = _context.Set<T>();
         }
 
-
-
-        public IEnumerable<T> GetList()
+        public IQueryable<T> GetAll()
         {
-            return dbSet.ToList<T>();
+            return dbSet;
         }
+
         public T GetById(int id)
         {
             return dbSet.Find(id);
