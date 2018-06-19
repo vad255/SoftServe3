@@ -23,12 +23,12 @@ namespace ScrumMaker.Controllers
         [HttpGet("[action]")]
         public IEnumerable<User> GetUser()
         {
-            return _users.GetList();
+            return _users.GetAll();
         }
         [HttpGet("[action]")]
         public IEnumerable<Role> GetRoles()
         {
-            return _roles.GetList();
+            return _roles.GetAll();
         }
     }
 }
