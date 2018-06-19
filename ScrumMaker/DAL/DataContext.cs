@@ -41,8 +41,9 @@ namespace DAL
         {
             modelBuilder.Entity<Role>().HasIndex(x => x.Name).IsUnique();
 
-            modelBuilder.Entity<User>().HasOne(u => u.Team);
-            modelBuilder.Entity<Team>().HasMany(t => t.Members).WithOne(u => u.Team);
+            //I will add Team in future
+            //modelBuilder.Entity<User>().HasOne(u => u.Team);
+            //modelBuilder.Entity<Team>().HasMany(t => t.Members).WithOne(u => u.Team);
        
         }
     }
