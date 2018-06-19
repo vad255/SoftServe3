@@ -1,6 +1,8 @@
 ﻿using NLog;
 using System;
 using System.IO;
+using System.Net;
+using System.Net.Mail;
 using System.Reflection;
 using System.Xml;
 
@@ -9,30 +11,30 @@ namespace ScrumMaker.Logger
     public class Logger
     {
         private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
-
-        public static void LogFatal(string massage)
+       
+        public static void LogFatal(string message)
         {
-            log.Fatal(massage);
+            log.Fatal(message);
         }
 
-        public static void LogError(string massage)
+        public static void LogError(string message)
         {
-            log.Error(massage);
+            log.Error(message);
         }
 
-        public static void LogWarn(string massage)
+        public static void LogWarn(string message)
         {
-            log.Warn(massage);
+            log.Warn(message);
         }
 
-        public static void LogInfo(string massage)
+        public static void LogInfo(string message)
         {
-            log.Info(massage);
+            log.Info(message);
         }
 
-        public static void LogDebug(string massage)
+        public static void LogDebug(string message)
         {
-            log.Debug(massage);
+            log.Debug(message);
         }
     }
 }
