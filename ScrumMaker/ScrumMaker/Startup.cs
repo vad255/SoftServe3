@@ -15,6 +15,7 @@ using DAL;
 using DAL.Access;
 using DAL.Models;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using BL;
 
 namespace ScrumMaker
 {
@@ -30,13 +31,19 @@ namespace ScrumMaker
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connectionStr = Configuration.GetConnectionString("Viktor");
+            string connectionStr = Configuration.GetConnectionString("Mikle");
 
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
 
             services.AddScoped(typeof(DbContext), typeof(DataContext));
             services.AddScoped(typeof(IRepository<>),typeof(Repository<>));
 
+            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+            services.AddScoped(typeof(ISprintManager), typeof(SprintManager));
+            services.AddScoped(typeof(IFeaturesManager), typeof(FeaturesManager));
+            services.AddScoped(typeof(IDefectsManager), typeof(DefectsManager));
+            services.AddScoped(typeof(IUserManager), typeof(UserManager));
+            services.AddScoped(typeof(ITasksManager), typeof(TasksManager));
 
             // Represent enums in Json as string
             services.AddMvc().AddJsonOptions(options =>

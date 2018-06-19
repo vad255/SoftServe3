@@ -16,18 +16,18 @@ namespace DAL.Models
         [MaxLength(500)]
         public string Description { get; set; }
                 
-        public string Priority { get; set; }
+        public priority Priority { get; set; }
 
-        public string State { get; set; }
+        public state State { get; set; }
 
         public status Status { get; set; }
 
         [NotMapped]
         public string ProgramIncrement { get; set; }
 
-        public string AssignedTo { get; set; }
+        public User AssignedTo { get; set; }
 
-        public string Sprint { get; set; }
+        public Sprint Sprint { get; set; }
 
         public string StepsToReproduse { get; set; }
 
@@ -41,7 +41,7 @@ namespace DAL.Models
 
         public blocked Blocked { get; set; }
 
-        public string Chat { get; set; }
+       // public string Chat { get; set; }
 
     }
 }

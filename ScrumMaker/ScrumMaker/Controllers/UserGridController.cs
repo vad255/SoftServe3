@@ -6,16 +6,20 @@ using DAL;
 using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using BL;
 
 namespace ScrumMaker.Controllers
 {
     [Route("api/[controller]")]
     public class UserGrid : Controller
     {
+        private IUserManager _manager;
         private DataContext _db;
-        public UserGrid(DataContext db)
+
+        public UserGrid(DataContext db, IUserManager manager)
         {
             _db = db;
+            _manager = manager;
         }
         [HttpGet("[action]")]
         public List<User> GetUser()
