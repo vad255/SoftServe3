@@ -15,6 +15,7 @@ using DAL;
 using DAL.Access;
 using DAL.Models;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using BL;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using BL.Authentication;
@@ -52,11 +53,18 @@ namespace ScrumMaker
             services.AddMvc();
             string connectionStr = Configuration.GetConnectionString("Dmytro");
 
+
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
 
             services.AddScoped(typeof(DbContext), typeof(DataContext));
             services.AddScoped(typeof(IRepository<>),typeof(Repository<>));
 
+            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+            services.AddScoped(typeof(ISprintManager), typeof(SprintManager));
+            services.AddScoped(typeof(IFeaturesManager), typeof(FeaturesManager));
+            services.AddScoped(typeof(IDefectsManager), typeof(DefectsManager));
+            services.AddScoped(typeof(IUserManager), typeof(UserManager));
+            services.AddScoped(typeof(ITasksManager), typeof(TasksManager));
 
             // Represent enums in Json as string
             services.AddMvc().AddJsonOptions(options =>

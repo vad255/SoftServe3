@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DAL.Models
+namespace BL
 {
-    public enum Blocked
+    public interface IRolesManager
     {
-         Yes, No
     }
 }
