@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace BL
 {
-    class TeamsManager
+    class TeamsManager: ITeamsManager
     {
         public IUnitOfWork _unit;
 

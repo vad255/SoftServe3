@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace BL
 {
-    public class SprintManager
+    public class SprintManager: ISprintManager
     {
         public IUnitOfWork _unit;
 

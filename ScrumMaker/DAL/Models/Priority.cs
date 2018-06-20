@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DAL.Models
 {
-    public enum priority
+    public enum Priority
     {
         Resolve_immediately, High_attention, Normal, Low
     }

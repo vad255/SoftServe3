@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DAL.Models
 {
-    public enum status
+    public enum Status
     {
         open, close
     }

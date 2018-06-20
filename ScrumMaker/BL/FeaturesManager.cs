@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace BL
 {
-    public class FeaturesManager:IFeaturesManager
+    public class FeaturesManager: IFeaturesManager
     {
         public IUnitOfWork _unit;
 

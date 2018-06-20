@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DAL.Models
 {
-    public enum state
+    public enum State
     {
         Active, In_work, Pending_test, Fixed, Not_a_bug, Postponed
     }

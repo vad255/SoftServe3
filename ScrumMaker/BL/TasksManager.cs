@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace BL
 {
-    public class TasksManager:ITasksManager
+    public class TasksManager: ITasksManager
     {        
         public IUnitOfWork _unit;
 

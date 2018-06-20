@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace BL
 {
-    class RolesManager
+    class RolesManager: IRolesManager
     {
         public IUnitOfWork _unit;
 
