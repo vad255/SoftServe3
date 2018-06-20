@@ -24,11 +24,7 @@ using Microsoft.OData.Edm;
 using DAL;
 using DAL.Access;
 using DAL.Models;
-
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using BL;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using BL.Authentication;
 
 namespace ScrumMaker
@@ -74,6 +70,8 @@ namespace ScrumMaker
             services.AddScoped(typeof(IDefectsManager), typeof(DefectsManager));
             services.AddScoped(typeof(IUserManager), typeof(UserManager));
             services.AddScoped(typeof(ITasksManager), typeof(TasksManager));
+
+            services.AddMvc();
 
             services.AddOData();
 
