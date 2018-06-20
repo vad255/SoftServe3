@@ -16,7 +16,7 @@ export class NavMenu extends React.Component<{}, {}> {
                             <li><a href="/usergrid">Users</a></li>
                             <li><a href="/Stories">Stories</a></li>
                             <li><a href="/feature">Features</a></li>
-                            <li><a href="/sprints">Sprints</a></li>
+                            <li><a href="/Sprints">Sprints</a></li>
                         </ul>
                     </li>
                 </ul>

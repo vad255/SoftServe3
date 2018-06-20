@@ -1,22 +1,29 @@
 using System;
+using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-
 using Microsoft.AspNetCore.Http;
-using System.Text;
-using DAL;
-using DAL.Access;
-using DAL.Models;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Mvc;
+
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNet.OData.Builder;
+using Microsoft.AspNet.OData.Extensions;
+using Microsoft.OData.Edm;
+
+using DAL;
+using DAL.Access;
+using DAL.Models;
 using BL.Authentication;
 
 namespace ScrumMaker
@@ -50,7 +57,10 @@ namespace ScrumMaker
                     });
 
             services.AddMvc();
-            string connectionStr = Configuration.GetConnectionString("Dmytro");
+
+            //services.AddOData();
+
+            string connectionStr = Configuration.GetConnectionString("Viktor");
 
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
 
@@ -63,7 +73,8 @@ namespace ScrumMaker
             {
                 options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
                 options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
-            });
+            }).
+            SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -91,17 +102,18 @@ namespace ScrumMaker
 
             app.UseMvc(routes =>
             {
+                //routes.Select().Expand().Filter().OrderBy().MaxTop(100).Count();
+
+                //routes.MapODataServiceRoute("odata", "odata", Odata.EdmModelBuilder.GetEdmModel());
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-
-                routes.MapSpaFallbackRoute(
-                    name: "spa-fallback",
-                    defaults: new { controller = "Home", action = "Index" });
             });
 
         }
 
+    
         private static void Write(string message, ConsoleColor color = ConsoleColor.Gray)
         {
             lock (typeof(Console))
@@ -114,7 +126,5 @@ namespace ScrumMaker
             }
 
         }
-
-
     }
 }
