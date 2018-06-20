@@ -25,7 +25,8 @@ namespace ScrumMaker.Controllers
         [HttpGet("[action]")]
         public IEnumerable<Feature> FeatureGet()
         {
-            var result = featureRepository.GetAll();
+            var result = featureRepository.GetAll()
+                .Include(f => f.Stories).ThenInclude(s => s.Team);
             return result;
         }
     }
