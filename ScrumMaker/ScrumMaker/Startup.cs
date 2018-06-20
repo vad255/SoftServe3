@@ -38,7 +38,8 @@ namespace ScrumMaker
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -57,7 +58,7 @@ namespace ScrumMaker
                         };
                     });
 
-          
+
             string connectionStr = Configuration.GetConnectionString("Viktor");
 
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
@@ -70,8 +71,6 @@ namespace ScrumMaker
             services.AddScoped(typeof(IDefectsManager), typeof(DefectsManager));
             services.AddScoped(typeof(IUserManager), typeof(UserManager));
             services.AddScoped(typeof(ITasksManager), typeof(TasksManager));
-
-            services.AddMvc();
 
             services.AddOData();
 
@@ -87,7 +86,8 @@ namespace ScrumMaker
                 SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -112,11 +112,15 @@ namespace ScrumMaker
             {
                 routes.Select().Expand().Filter().OrderBy().MaxTop(100).Count();
 
-                routes.MapODataServiceRoute("odata", "odata", Odata.EdmModelBuilder.GetEdmModel());
+                routes.MapODataServiceRoute("odata", "odata", EdmModelBuilder.GetEdmModel());
 
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapSpaFallbackRoute(
+                    name: "spa-fallback",
+                    defaults: new { controller = "Home", action = "Index" });
             });
 
         }

@@ -6,7 +6,7 @@ using Microsoft.AspNet.OData.Builder;
 using Microsoft.OData.Edm;
 using DAL.Models;
 
-namespace ScrumMaker.Odata
+namespace ScrumMaker
 {
     public class EdmModelBuilder
     {
