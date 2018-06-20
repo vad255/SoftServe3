@@ -25,15 +25,13 @@ class SprintHistory {
         this.id = params.id;
 
 
-        this.initiated = new Date(params.initiated);
-        try {
-            this.planned = new Date(params.planned);
-            this.begined = new Date(params.begined);
-            this.reviewDone = new Date(params.reviewDone);
-            this.retrospectiveDone = new Date(params.retrospectiveDone);
-        } catch (e) { alert(e) }
+        this.initiated = new Date(params.Initiated);
+        this.planned = new Date(params.Planned);
+        this.begined = new Date(params.Begined);
+        this.reviewDone = new Date(params.ReviewDone);
+        this.retrospectiveDone = new Date(params.RetrospectiveDone);
     }
-  
+
     public renderAsMenu() {
 
         if (this.empty)
@@ -62,11 +60,11 @@ class User {
             return;
         }
 
-        this.activity = params.activity;
-        this.login = params.login;
-        this.password = params.password;
-        this.roleId = params.roleId;
-        this.userId = params.userId;
+        this.activity = params.Activity;
+        this.login = params.Login;
+        this.password = params.Password;
+        this.roleId = params.RoleId;
+        this.userId = params.UserId;
         this.empty = false;
     }
 
@@ -88,7 +86,7 @@ class User {
                 <li className="dropdown-item"><b><pre>Activity:{this.activity ? "true" : "false"}</pre></b> </li>
                 <li className="dropdown-item"><b><pre>RoleId:  {this.roleId}</pre></b> </li>
             </ul>
-        </li>          
+        </li>
     }
 }
 
@@ -103,14 +101,14 @@ class Team {
         if (params === null || params === undefined) {
             return;
         }
-        this.name = params.name;
-        this.id = params.id;
+        this.name = params.Name;
+        this.id = params.Id;
         this.empty = false;
 
         //var members = params.members.map( u => new User(u));
         var members = [];
-        for (var i = 0; i < params.members.length; i++) {
-            members[i] = new User(params.members[i]);
+        for (var i = 0; i < params.Members.length; i++) {
+            members[i] = new User(params.Members[i]);
 
         }
 
@@ -145,15 +143,15 @@ class Sprint {
     team: Team;
 
     public constructor(params: any) {
-        this.id = params.id;
-        this.stage = params.stage;
-        this.history = new SprintHistory(params.history);
-        this.backlog = params.backlog;
-        this.defects = params.defects;
-        this.dailyScrums = params.dailyScrums;
-        this.review = params.review;
-        this.retrospective = params.retrospective;
-        this.team = new Team(params.team);
+        this.id = params.Id;
+        this.stage = params.Stage;
+        this.history = new SprintHistory(params.History);
+        this.backlog = params.Backlog;
+        this.defects = params.Defects;
+        this.dailyScrums = params.DailyScrums;
+        this.review = params.Review;
+        this.retrospective = params.Retrospective;
+        this.team = new Team(params.Team);
     }
 
     public renderAsTableRow() {
@@ -183,11 +181,12 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
         this.state = { sprints: [], loading: true };
 
         fetch('odata/sprints?$expand=Team($expand=members),history')
-            .then(response => response.json() as Promise<{value:Sprint[]}>)
+            .then(response => response.json() as any)
             .then(data => {
                 var sprints = [];
-                for (var i = 0; i < data.value.length; i++)
-                    sprints[i] = new Sprint(data.value[i]);
+
+                for (var i = 0; i < data['value'].length; i++)
+                    sprints[i] = new Sprint(data["value"][i]);
 
                 this.setState({ sprints: sprints, loading: false });
             });

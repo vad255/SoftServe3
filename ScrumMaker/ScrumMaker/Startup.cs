@@ -56,25 +56,28 @@ namespace ScrumMaker
                         };
                     });
 
-            services.AddMvc();
 
-            //services.AddOData();
 
             string connectionStr = Configuration.GetConnectionString("Viktor");
 
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
-
             services.AddScoped(typeof(DbContext), typeof(DataContext));
-            services.AddScoped(typeof(IRepository<>),typeof(Repository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 
-            // Represent enums in Json as string
-            services.AddMvc().AddJsonOptions(options =>
-            {
-                options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
-                options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
-            }).
-            SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddOData();
+
+
+            services.AddMvc().
+                // Represent enums in Json as string
+                AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+                    options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+                }).
+                //for OData
+                SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -97,33 +100,17 @@ namespace ScrumMaker
             app.UseStaticFiles();
 
             app.UseAuthentication();
-            app.UseMvc();
-
 
             app.UseMvc(routes =>
             {
-                //routes.Select().Expand().Filter().OrderBy().MaxTop(100).Count();
+                routes.Select().Expand().Filter().OrderBy().MaxTop(100).Count();
 
-                //routes.MapODataServiceRoute("odata", "odata", Odata.EdmModelBuilder.GetEdmModel());
+                routes.MapODataServiceRoute("odata", "odata", Odata.EdmModelBuilder.GetEdmModel());
 
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
-        }
-
-    
-        private static void Write(string message, ConsoleColor color = ConsoleColor.Gray)
-        {
-            lock (typeof(Console))
-            {
-                var temp = Console.ForegroundColor;
-
-                Console.ForegroundColor = color;
-                Console.WriteLine(message);
-                Console.ForegroundColor = temp;
-            }
 
         }
     }
