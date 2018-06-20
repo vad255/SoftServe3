@@ -24,6 +24,11 @@ using Microsoft.OData.Edm;
 using DAL;
 using DAL.Access;
 using DAL.Models;
+
+using Microsoft.AspNetCore.Cors.Infrastructure;
+using BL;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using BL.Authentication;
 
 namespace ScrumMaker
@@ -58,15 +63,22 @@ namespace ScrumMaker
 
 
 
+            services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
+
             string connectionStr = Configuration.GetConnectionString("Viktor");
 
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
             services.AddScoped(typeof(DbContext), typeof(DataContext));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
+            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+            services.AddScoped(typeof(ISprintManager), typeof(SprintManager));
+            services.AddScoped(typeof(IFeaturesManager), typeof(FeaturesManager));
+            services.AddScoped(typeof(IDefectsManager), typeof(DefectsManager));
+            services.AddScoped(typeof(IUserManager), typeof(UserManager));
+            services.AddScoped(typeof(ITasksManager), typeof(TasksManager));
 
             services.AddOData();
-
 
             services.AddMvc().
                 // Represent enums in Json as string
@@ -74,10 +86,10 @@ namespace ScrumMaker
                 {
                     options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
                     options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 }).
                 //for OData
                 SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

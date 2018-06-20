@@ -4,8 +4,8 @@ using System.Text;
 
 namespace DAL.Models
 {
-    public enum Blocked
+    public enum State
     {
-         Yes, No
+        Active, InWork, PendingTest, Fixed, NotaBug, Postponed
     }
 }

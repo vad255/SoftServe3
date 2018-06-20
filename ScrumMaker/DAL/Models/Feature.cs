@@ -10,7 +10,7 @@ namespace DAL.Models
     public class Feature
     {
         [Key]
-        public int FeatureId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [MaxLength(30)]

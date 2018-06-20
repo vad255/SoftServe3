@@ -4,8 +4,9 @@ using System.Text;
 
 namespace DAL.Models
 {
-    public enum Blocked
+    public enum Priority
     {
-         Yes, No
+        ResolveImmediately, HighAttention, Normal, Low
     }
+    
 }
