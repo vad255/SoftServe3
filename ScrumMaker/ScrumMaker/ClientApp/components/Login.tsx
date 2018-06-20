@@ -2,27 +2,16 @@
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 
-interface AddUserDataState {
-    id: number;
+interface LoginViewModel {
     login: string;
     password: string;
-    roles: Role[];
-}
-interface Role {
-    roleId: number;
-    name: string;
 }
 
-export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDataState> {
+export class Login extends React.Component<RouteComponentProps<any>, LoginViewModel> {
     constructor(props: any) {
         super(props);
 
-        this.state = { id: 0, login: "", password: "", roles: [] };
-        fetch('api/UserGrid/GetRoles')
-            .then(response => response.json() as Promise<Role[]>)
-            .then(data => {
-                this.setState({ roles: data});
-            });
+        this.state = {login: "", password: "" };
         this.handleSave = this.handleSave.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
     }
@@ -30,10 +19,11 @@ export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDa
     public render() {
         let contents = this.state.login
             ? <p><em>Loading...</em></p>
-            : this.renderCreateForm(this.state.roles);
+            : this.renderCreateForm();
 
         return <div>
             <h1>Registration</h1>
+            <hr />
             {contents}
         </div>;
     }
@@ -59,12 +49,9 @@ export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDa
         this.props.history.push("/");
     }
 
-    private renderCreateForm(cityList: Array<any>) {
+    private renderCreateForm() {
         return (
             <form onSubmit={this.handleSave} >
-                <div className="form-group row" >
-                    <input type="hidden" name="employeeId" value={this.state.id} />
-                </div>
                 < div className="form-group row" >
                     <label className=" control-label col-md-12" htmlFor="Login">Login</label>
                     <div className="col-md-4">
@@ -77,18 +64,8 @@ export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDa
                         <input className="form-control" type="password" name="password" defaultValue={this.state.password} required />
                     </div>
                 </div>
-                <div className="form-group row">
-                    <label className="control-label col-md-12" htmlFor="roleid">Role</label>
-                    <div className="col-md-4">
-                        <select className="form-control" data-val="true" name="roleid" required>
-                            <option value="">-- Select Role --</option>
-                            {this.state.roles.map(x => <option value={x.roleId}>{x.name}</option>)}
-                        </select>
-                    </div>
-                </div >
-
                 <div className="form-group">
-                    <button type="submit" className="btn btn-default">Register</button>
+                    <button type="submit" className="btn btn-default">Login</button>
                     <button className="btn" onClick={this.handleCancel}>Cancel</button>
                 </div >
             </form >

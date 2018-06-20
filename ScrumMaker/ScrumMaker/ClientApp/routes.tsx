@@ -9,6 +9,7 @@ import { SprintsGrid } from './components/SprintsGrid';
 import { UserGrid } from './components/UserGrid';
 import { StoryGrid } from './components/StoryGrid';
 import { FeatureGrid } from './components/FeatureGrid';
+import { EditUser } from './components/EditUser';
 
 
 export const routes = <Layout>
@@ -20,4 +21,5 @@ export const routes = <Layout>
     <Route path='/Sprints' component={SprintsGrid} />
     <Route path='/Stories' component={StoryGrid} />
     <Route path='/feature' component={FeatureGrid} />
+    <Route path='/editUser' component={EditUser} />
 </Layout>;
