@@ -6,7 +6,7 @@ namespace DAL.Models
 {
     public enum Priority
     {
-        Resolve_immediately, High_attention, Normal, Low
+        ResolveImmediately, HighAttention, Normal, Low
     }
     
 }

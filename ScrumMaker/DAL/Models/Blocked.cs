@@ -6,6 +6,6 @@ namespace DAL.Models
 {
     public enum Blocked
     {
-         yes, no
+         Yes, No
     }
 }
