@@ -1,23 +1,30 @@
 using System;
+using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Mvc;
 
-using Microsoft.AspNetCore.Http;
-using System.Text;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNet.OData.Builder;
+using Microsoft.AspNet.OData.Extensions;
+using Microsoft.OData.Edm;
+
 using DAL;
 using DAL.Access;
 using DAL.Models;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using BL;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using BL.Authentication;
 
 namespace ScrumMaker
@@ -31,7 +38,8 @@ namespace ScrumMaker
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -50,14 +58,12 @@ namespace ScrumMaker
                         };
                     });
 
-            services.AddMvc();
-            string connectionStr = Configuration.GetConnectionString("Dmytro");
 
+            string connectionStr = Configuration.GetConnectionString("Viktor");
 
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
-
             services.AddScoped(typeof(DbContext), typeof(DataContext));
-            services.AddScoped(typeof(IRepository<>),typeof(Repository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
             services.AddScoped(typeof(ISprintManager), typeof(SprintManager));
@@ -66,16 +72,22 @@ namespace ScrumMaker
             services.AddScoped(typeof(IUserManager), typeof(UserManager));
             services.AddScoped(typeof(ITasksManager), typeof(TasksManager));
 
-            // Represent enums in Json as string
-            services.AddMvc().AddJsonOptions(options =>
-            {
-                options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
-                options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-            });
+            services.AddOData();
+
+            services.AddMvc().
+                // Represent enums in Json as string
+                AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+                    options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                }).
+                //for OData
+                SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -95,11 +107,13 @@ namespace ScrumMaker
             app.UseStaticFiles();
 
             app.UseAuthentication();
-            app.UseMvc();
-
 
             app.UseMvc(routes =>
             {
+                routes.Select().Expand().Filter().OrderBy().MaxTop(100).Count();
+
+                routes.MapODataServiceRoute("odata", "odata", EdmModelBuilder.GetEdmModel());
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
@@ -110,20 +124,5 @@ namespace ScrumMaker
             });
 
         }
-
-        private static void Write(string message, ConsoleColor color = ConsoleColor.Gray)
-        {
-            lock (typeof(Console))
-            {
-                var temp = Console.ForegroundColor;
-
-                Console.ForegroundColor = color;
-                Console.WriteLine(message);
-                Console.ForegroundColor = temp;
-            }
-
-        }
-
-
     }
 }
