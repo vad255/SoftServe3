@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using DAL;
+using DAL.Models;
 using DAL.Access;
 using Microsoft.EntityFrameworkCore;
 
@@ -210,19 +211,19 @@ namespace DataBaseInitializer
                     {
                         Description = "description",
                         ActualResults = "result",
-                        Blocked = blocked.no,
+                        Blocked = Blocked.No,
                         DefectName = "Defect Name",
-                        AssignedTo = _dbUsers.GetById(5).Login,
-                        Priority = "high"
-                    },
+                        AssignedTo = _dbUsers.GetById(5),
+                        Priority = Priority.HighAttention
+                        },
                     new Defect()
                     {
                         Description = "description2",
                         ActualResults = "result2",
-                        Blocked = blocked.no,
+                        Blocked = Blocked.No,
                         DefectName = "Defect Name2",
-                        AssignedTo = _dbUsers.GetById(6).Login,
-                        Priority = "low"
+                        AssignedTo = _dbUsers.GetById(6),
+                        Priority = Priority.Low
                     }
                 };
 
