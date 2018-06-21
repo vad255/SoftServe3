@@ -24,12 +24,18 @@ class SprintHistory {
         this.empty = false;
         this.id = params.id;
 
-
+        
         this.initiated = new Date(params.Initiated);
         this.planned = new Date(params.Planned);
         this.begined = new Date(params.Begined);
         this.reviewDone = new Date(params.ReviewDone);
         this.retrospectiveDone = new Date(params.RetrospectiveDone);
+    }
+
+    public toString() : string {
+        if (this.empty)
+            return "";
+        return this.initiated.toLocaleDateString();
     }
 
     public renderAsMenu() {
@@ -74,6 +80,12 @@ class User {
     roleId: number = -1;
     userId: number = -1;
 
+    public toString() : string {
+        if (this.empty)
+            return "";
+        return this.login;
+    }
+
     render() {
         if (this.empty)
             return "NoData";
@@ -115,7 +127,11 @@ class Team {
         this.members = members;
     }
 
-
+    public toString() : string {
+        if (this.empty)
+            return "";
+        return this.name;
+    }
 
     renderAsMenu() {
         if (this.empty)
@@ -154,6 +170,10 @@ class Sprint {
         this.team = new Team(params.Team);
     }
 
+    public toString() : string {
+        return this.id.toString();
+    }
+
     public renderAsTableRow() {
         return <tr key={this.id}>
             <td>{this.id}</td>
@@ -183,19 +203,19 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
         fetch('odata/sprints?$expand=Team($expand=members),history')
             .then(response => response.json() as any)
             .then(data => {
-                var sprints = [];
+                var sprintsTemp = [];
 
                 for (var i = 0; i < data['value'].length; i++)
-                    sprints[i] = new Sprint(data["value"][i]);
+                sprintsTemp[i] = new Sprint(data["value"][i]);
 
-                this.setState({ sprints: sprints, loading: false });
+                this.setState({ sprints: sprintsTemp, loading: false });
             });
     }
 
     public render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
-            : SprintsGrid.renderSprintsTable(this.state.sprints);
+            : this.renderSprintsTable(this.state.sprints);
 
         return <div>
             <h1>Sprints</h1>
@@ -204,22 +224,67 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
         </div>;
     }
 
-    private static renderSprintsTable(sprints: Sprint[]) {
+    private renderSprintsTable(sprints: Sprint[]) {
         return <table className='table'>
             <thead>
                 <tr>
-                    <th>Database ID</th>
-                    <th>Team</th>
-                    <th>Stage</th>
-                    <th>Review</th>
-                    <th>History</th>
-                    <th>retrospective</th>
+                    <th className="well well-sm" onClick={() => this.OrderBy("id")}>Database ID</th>
+                    <th className="well well-sm" onClick={() => this.OrderBy("team")}>Team</th>
+                    <th className="well well-sm" onClick={() => this.OrderBy("stage")}>Stage</th>
+                    <th className="well well-sm" onClick={() => this.OrderBy("review")}>Review</th>
+                    <th className="well well-sm" onClick={() => this.OrderBy("history")}>History</th>
+                    <th className="well well-sm" onClick={() => this.OrderBy("retrospective")}>Retrospective</th>
                 </tr>
             </thead>
             <tbody>
                 {sprints.map(sprint => sprint.renderAsTableRow())}
             </tbody>
         </table>;
+    }
+
+
+    private lastOrderingArg : string = "";
+    private lastOrderingDir : boolean = false;
+
+    private OrderBy(arg: string)
+    {
+        try{
+            var sprintsN = [];
+            sprintsN = this.state.sprints as any[];
+            
+
+            if (this.lastOrderingArg === arg)
+                this.lastOrderingDir = !this.lastOrderingDir;
+            else
+                this.lastOrderingDir=false;
+
+            
+
+            if (!this.lastOrderingDir)
+                sprintsN.sort((a,b) => {
+                    if (a === undefined || a===null || b === undefined || b === null ||
+                        a[arg] === undefined || a[arg] === null || b[arg]=== undefined || b[arg] === null) 
+                        return 0
+                     else 
+                        return a[arg].toString().localeCompare(b[arg].toString());
+                    })
+            else
+                sprintsN.sort((a,b) => {
+                    if (a === undefined || a===null || b === undefined || b === null ||
+                        a[arg] === undefined || a[arg] === null || b[arg]=== undefined || b[arg] === null) 
+                        return 0
+                     else 
+                        return -a[arg].toString().localeCompare(b[arg].toString());
+                    })
+
+                    //alert('ok');
+                    this.lastOrderingArg = arg;
+                    this.setState({sprints : sprintsN as Sprint[], loading : this.state.loading});
+        }catch(e)
+        {
+            alert(e)
+        }
+        
     }
 }
 
