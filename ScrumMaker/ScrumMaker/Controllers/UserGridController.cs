@@ -3,35 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DAL;
+using DAL.Access;
 using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using BL;
 
 namespace ScrumMaker.Controllers
 {
     [Route("api/[controller]")]
-    public class UserGrid : Controller
+    public class UserGridController : Controller
     {
-        private DataContext _db;
-        public UserGrid(DataContext db)
+        private IUserManager _manager;
+        private IRepository<User> _users;
+        private IRepository<Role> _roles;
+        public UserGridController(IRepository<User> users, IRepository<Role> roles, IUserManager manager)
         {
-            _db = db;
+            _manager = manager;
+            _users = users;
+            _roles = roles;
         }
         [HttpGet("[action]")]
-        public List<User> GetUser()
+        public IEnumerable<User> GetUser()
         {
-            //using (_db)
-            //{
-            //    _db.Roles.Add(new Role { Name = "Admin" });
-            //    _db.Users.Add(new User { Login = "BLa", Activity = true, Password = "BlaBla", RoleId = 1 });
-            //    _db.SaveChanges();
-            //}
-            return _db.Users.ToList();
+            return _users.GetAll();
         }
         [HttpGet("[action]")]
-        public List<Role> GetRoles()
+        public IEnumerable<Role> GetRoles()
         {
-            return _db.Roles.ToList();
+            return _roles.GetAll();
         }
     }
 }

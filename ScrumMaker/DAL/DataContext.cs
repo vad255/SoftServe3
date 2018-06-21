@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DAL.Models;
+
 
 namespace DAL
 {
@@ -41,6 +41,9 @@ namespace DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Role>().HasIndex(x => x.Name).IsUnique();
+            //I will add Team in future
+            //modelBuilder.Entity<User>().HasOne(u => u.Team);
+            //modelBuilder.Entity<Team>().HasMany(t => t.Members).WithOne(u => u.Team);
         }
     }
 }

@@ -1,5 +1,8 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.IO;
+using System.Net;
+using System.Net.Mail;
 using System.Reflection;
 using System.Xml;
 
@@ -7,50 +10,31 @@ namespace ScrumMaker.Logger
 {
     public class Logger
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(typeof(Logger));
-
-        static Logger()
+        private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
+       
+        public static void LogFatal(string message)
         {
-            XmlDocument log4netConfig = new XmlDocument();
-            log4netConfig.Load(File.OpenRead(Path.Combine(GetExecutenDirectory(), "log4net.config")));
-
-            var repo = log4net.LogManager.CreateRepository(
-                Assembly.GetEntryAssembly(), typeof(log4net.Repository.Hierarchy.Hierarchy));
-
-            log4net.Config.XmlConfigurator.Configure(repo, log4netConfig["log4net"]);
+            log.Fatal(message);
         }
 
-        public static void LogFatal(string massage)
+        public static void LogError(string message)
         {
-            log.Fatal(massage);
+            log.Error(message);
         }
 
-        public static void LogError(string massage)
+        public static void LogWarn(string message)
         {
-            log.Error(massage);
+            log.Warn(message);
         }
 
-        public static void LogWarn(string massage)
+        public static void LogInfo(string message)
         {
-            log.Warn(massage);
+            log.Info(message);
         }
 
-        public static void LogInfo(string massage)
+        public static void LogDebug(string message)
         {
-            log.Info(massage);
-        }
-
-        public static void LogDebug(string massage)
-        {
-            log.Debug(massage);
-        }
-
-        private static string GetExecutenDirectory()
-        {
-            string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-            UriBuilder uri = new UriBuilder(codeBase);
-            string path = Uri.UnescapeDataString(uri.Path);
-            return Path.GetDirectoryName(path);
+            log.Debug(message);
         }
     }
 }

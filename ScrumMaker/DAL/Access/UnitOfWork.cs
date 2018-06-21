@@ -22,7 +22,6 @@ namespace DAL.Access
         IRepository<Feature> _features;
 
 
-
         public UnitOfWork(DbContext context)
         {
             _context = context;

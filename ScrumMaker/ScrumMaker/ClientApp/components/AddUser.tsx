@@ -6,15 +6,23 @@ interface AddUserDataState {
     id: number;
     login: string;
     password: string;
-    roleList: Array<any>;
+    roles: Role[];
+}
+interface Role {
+    roleId: number;
+    name: string;
 }
 
 export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDataState> {
     constructor(props: any) {
         super(props);
 
-        this.state = { id: 0, login: "", password: "", roleList: [] };
-
+        this.state = { id: 0, login: "", password: "", roles: [] };
+        fetch('api/UserGrid/GetRoles')
+            .then(response => response.json() as Promise<Role[]>)
+            .then(data => {
+                this.setState({ roles: data});
+            });
         this.handleSave = this.handleSave.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
     }
@@ -22,11 +30,10 @@ export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDa
     public render() {
         let contents = this.state.login
             ? <p><em>Loading...</em></p>
-            : this.renderCreateForm(this.state.roleList);
+            : this.renderCreateForm(this.state.roles);
 
         return <div>
             <h1>Registration</h1>
-            <hr />
             {contents}
         </div>;
     }
@@ -73,10 +80,9 @@ export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDa
                 <div className="form-group row">
                     <label className="control-label col-md-12" htmlFor="roleid">Role</label>
                     <div className="col-md-4">
-                        <select className="form-control" data-val="true" name="roleid" defaultValue={this.state.roleList} required>
+                        <select className="form-control" data-val="true" name="roleid" required>
                             <option value="">-- Select Role --</option>
-                            <option value="1">Admin</option>
-                            <option value="0">User</option>
+                            {this.state.roles.map(x => <option value={x.roleId}>{x.name}</option>)}
                         </select>
                     </div>
                 </div >

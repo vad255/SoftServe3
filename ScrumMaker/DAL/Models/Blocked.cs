@@ -4,8 +4,8 @@ using System.Text;
 
 namespace DAL.Models
 {
-    public enum blocked
+    public enum Blocked
     {
-         yes, no
+         Yes, No
     }
 }

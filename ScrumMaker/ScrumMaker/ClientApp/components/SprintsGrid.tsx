@@ -28,11 +28,18 @@ class SprintHistory extends React.Component {
         this.empty = false;
         this.id = params.id;
 
-        this.initiated = new Date(params.initiated);
-        this.planned = new Date(params.planned);
-        this.begined = new Date(params.begined);
-        this.reviewDone = new Date(params.reviewDone);
-        this.retrospectiveDone = new Date(params.retrospectiveDone);
+        
+        this.initiated = new Date(params.Initiated);
+        this.planned = new Date(params.Planned);
+        this.begined = new Date(params.Begined);
+        this.reviewDone = new Date(params.ReviewDone);
+        this.retrospectiveDone = new Date(params.RetrospectiveDone);
+    }
+
+    public toString() : string {
+        if (this.empty)
+            return "";
+        return this.initiated.toLocaleDateString();
     }
 
     public renderAsMenu() {
@@ -62,11 +69,11 @@ class User {
             return;
         }
 
-        this.activity = params.activity;
-        this.login = params.login;
-        this.password = params.password;
-        this.roleId = params.roleId;
-        this.userId = params.userId;
+        this.activity = params.Activity;
+        this.login = params.Login;
+        this.password = params.Password;
+        this.roleId = params.RoleId;
+        this.userId = params.UserId;
         this.empty = false;
     }
 
@@ -75,6 +82,12 @@ class User {
     password: string = "";
     roleId: number = -1;
     userId: number = -1;
+
+    public toString() : string {
+        if (this.empty)
+            return "";
+        return this.login;
+    }
 
     render() {
         if (this.empty)
@@ -103,21 +116,25 @@ class Team {
         if (params === null || params === undefined) {
             return;
         }
-        this.name = params.name;
-        this.id = params.id;
+        this.name = params.Name;
+        this.id = params.Id;
         this.empty = false;
 
         //var members = params.members.map( u => new User(u));
         var members = [];
-        for (var i = 0; i < params.members.length; i++) {
-            members[i] = new User(params.members[i]);
+        for (var i = 0; i < params.Members.length; i++) {
+            members[i] = new User(params.Members[i]);
 
         }
 
         this.members = members;
     }
 
-
+    public toString() : string {
+        if (this.empty)
+            return "";
+        return this.name;
+    }
 
     renderAsMenu() {
         if (this.empty)
@@ -155,17 +172,21 @@ class Sprint extends React.Component{
             return;
         }
 
-        this.id = params.id;
-        this.stage = params.stage;
-        this.history = new SprintHistory(params.history);
-        this.backlog = params.backlog;
-        this.defects = params.defects;
-        this.dailyScrums = params.dailyScrums;
-        this.review = params.review;
-        this.retrospective = params.retrospective;
-        this.team = new Team(params.team);
+        this.id = params.Id;
+        this.stage = params.Stage;
+        this.history = new SprintHistory(params.History);
+        this.backlog = params.Backlog;
+        this.defects = params.Defects;
+        this.dailyScrums = params.DailyScrums;
+        this.review = params.Review;
+        this.retrospective = params.Retrospective;
+        this.team = new Team(params.Team);
 
         this.mod = DisplayMod.read;
+    }
+
+    public toString() : string {
+        return this.id.toString();
     }
 
     updateButtonClick(event: any)
@@ -260,19 +281,22 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
         super();
         this.state = { sprints: [], loading: true };
 
-        fetch('api/Sprints/Get')
-            .then(response => response.json() as Promise<Sprint[]>)
+        fetch('odata/sprints?$expand=Team($expand=members),history&$orderby=id')
+            .then(response => response.json() as any)
             .then(data => {
-                var sprints = data.map(s => new Sprint(s));
-                sprints.sort((a, b) => (a.id - b.id));
-                this.setState({ sprints: sprints, loading: false });
+                var sprintsTemp = [];
+
+                for (var i = 0; i < data['value'].length; i++)
+                    sprintsTemp[i] = new Sprint(data["value"][i]);
+
+                this.setState({ sprints: sprintsTemp, loading: false });
             });
     } 
 
     public render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
-            : SprintsGrid.renderSprintsTable(this.state.sprints);
+            : this.renderSprintsTable(this.state.sprints);
 
         return <div>
             <h1>Sprints</h1>
@@ -280,6 +304,7 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
             {contents}
             </div>
     }
+
     public static SendItem() {
         alert('call');
         fetch('api/sprints/create',
@@ -289,17 +314,17 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
             body: JSON.stringify({test: 'test'}) 
          }).then(t => alert('sent'));
     }  
-    private static renderSprintsTable(sprints: Sprint[]) {
+
+    private renderSprintsTable(sprints: Sprint[]) {
         return <table className='table'>
             <thead>
                 <tr>
-                    <th>Database ID</th>
-                    <th>Team</th>
-                    <th>Stage</th>
-                    <th>Review</th>
-                    <th>History</th>
-                    <th>Retrospective</th>
-                    <th></th>
+                    <th className="well well-sm" onClick={() => this.OrderBy("id")}>Database ID</th>
+                    <th className="well well-sm" onClick={() => this.OrderBy("team")}>Team</th>
+                    <th className="well well-sm" onClick={() => this.OrderBy("stage")}>Stage</th>
+                    <th className="well well-sm" onClick={() => this.OrderBy("review")}>Review</th>
+                    <th className="well well-sm" onClick={() => this.OrderBy("history")}>History</th>
+                    <th className="well well-sm" onClick={() => this.OrderBy("retrospective")}>Retrospective</th>
                 </tr>
             </thead>
             <tbody>
@@ -319,6 +344,51 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
             </tfoot>
         </table>
 
+    }
+
+
+    private lastOrderingArg : string = "";
+    private lastOrderingDir : boolean = false;
+
+    private OrderBy(arg: string)
+    {
+        try{
+            var sprintsN = [];
+            sprintsN = this.state.sprints as any[];
+            
+
+            if (this.lastOrderingArg === arg)
+                this.lastOrderingDir = !this.lastOrderingDir;
+            else
+                this.lastOrderingDir=false;
+
+            
+
+            if (!this.lastOrderingDir)
+                sprintsN.sort((a,b) => {
+                    if (a === undefined || a===null || b === undefined || b === null ||
+                        a[arg] === undefined || a[arg] === null || b[arg]=== undefined || b[arg] === null) 
+                        return 0
+                     else 
+                        return a[arg].toString().localeCompare(b[arg].toString());
+                    })
+            else
+                sprintsN.sort((a,b) => {
+                    if (a === undefined || a===null || b === undefined || b === null ||
+                        a[arg] === undefined || a[arg] === null || b[arg]=== undefined || b[arg] === null) 
+                        return 0
+                     else 
+                        return -a[arg].toString().localeCompare(b[arg].toString());
+                    })
+
+                    //alert('ok');
+                    this.lastOrderingArg = arg;
+                    this.setState({sprints : sprintsN as Sprint[], loading : this.state.loading});
+        }catch(e)
+        {
+            alert(e)
+        }
+        
     }
 }
 
