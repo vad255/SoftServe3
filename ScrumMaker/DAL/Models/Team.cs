@@ -17,6 +17,7 @@ namespace DAL.Models
         [Required]
         public string Name { get; set; }
 
+
         [Required]    
         public virtual List<User> Members { get; set; }
 

@@ -29,6 +29,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\images\Thumbs.db" />
+    <Content Remove="wwwroot\img\ScrumMakerLogo.jpg" />
+    <Content Remove="wwwroot\img\______________2018_06_12____15_33_52_fdV_icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="ClientApp\components\AddUser.tsx" />
     <None Remove="ClientApp\components\MailSender.tsx" />
     <None Remove="ClientApp\components\SprintsGrid.tsx" />
@@ -47,6 +53,11 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\img\ScrumMakerLogo.jpg" />
+    <None Include="wwwroot\img\______________2018_06_12____15_33_52_fdV_icon.png" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

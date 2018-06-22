@@ -48,3 +48,30 @@
 .text-center {
   text-align:center
 }
+
+.dropListItem{
+  height: 40px; 
+  padding: 5px 5px 5px 5px;
+}
+
+table td input {
+  width: 100%;   
+ }
+
+table tr td{
+  vertical-align: baseline
+}
+
+/* .searchInput{
+     width: initial; 
+     padding: 0%;
+     margin: 0%;
+     /* box-sizing: border-box;
+     -webkit-box-sizing:border-box;
+     -moz-box-sizing: border-box; 
+}
+
+.myTd{
+  padding: 0%;
+  margin: 0%;
+} */

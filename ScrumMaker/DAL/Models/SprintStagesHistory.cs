@@ -8,10 +8,10 @@ namespace DAL.Models
     {
         public int Id { get; set; }
 
-        public DateTime Initiated { get; set; }
-        public DateTime Planned { get; set; }
-        public DateTime Begined { get; set; }
-        public DateTime ReviewDone { get; set; }
-        public DateTime RetrospectiveDone { get; set; }
+        public DateTime? Initiated { get; set; }
+        public DateTime? Planned { get; set; }
+        public DateTime? Begined { get; set; }
+        public DateTime? ReviewDone { get; set; }
+        public DateTime? RetrospectiveDone { get; set; }
     }
 }

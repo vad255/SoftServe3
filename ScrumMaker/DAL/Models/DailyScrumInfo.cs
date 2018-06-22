@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models
 {
@@ -18,5 +18,11 @@ namespace DAL.Models
 
         [Required]
         public DateTime Сonducted { get; set; }
+
+
+        [ForeignKey("Sprint")]
+        public int SprintId { get; set; }
+
+        public virtual Sprint Sprint{ get; set; }
     }
 }
