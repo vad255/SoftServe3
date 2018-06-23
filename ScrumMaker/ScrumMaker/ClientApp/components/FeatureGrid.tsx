@@ -89,7 +89,7 @@ class Feature {
         if (this.stories === null || this.stories === undefined || this.stories.length < 1)
             return <p>No stories</p>
         return <div className="dropdown">
-            <div id="{this.id}" role="button" data-toggle="dropdown" className="btn btn-primary" >
+            <div id="{this.id}" role="button" data-toggle="dropdown" className="btn-dropdown" >
                 Stories<span className="caret"></span>
             </div>
             <ul className="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
@@ -134,7 +134,7 @@ export class FeatureGrid extends React.Component<RouteComponentProps<{}>, FetchF
     }
 
     private static featuresTable(features: Feature[]) {
-        return <table className='table scrum-table'>
+        return <table className='table table-scrum table-hover td-scrum'>
             <thead>
                 <tr>
                     <th>Id</th>
