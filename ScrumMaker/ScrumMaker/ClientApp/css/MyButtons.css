@@ -1,3 +1,18 @@
+.btn {
+  color: black;
+  border: 1px solid black;
+  padding: 0.5em 1em;
+  text-decoration: none;
+  margin: 0.8em 0.3em;
+  display: contents;
+  cursor: pointer;
+}
+
+.nowrap {
+  white-space:nowrap;
+}
+
+
 .btn-sq-lg {
   width: 150px !important;
   height: 150px !important;
@@ -58,8 +73,8 @@ table td input {
   width: 100%;   
  }
 
-table tr td{
-  vertical-align: baseline
+.myTd{
+  vertical-align: baseline !important;
 }
 
 /* .searchInput{

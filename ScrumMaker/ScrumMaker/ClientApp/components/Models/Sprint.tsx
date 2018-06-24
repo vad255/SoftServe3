@@ -13,6 +13,7 @@ enum DisplayMod
 
 export class Sprint extends React.Component{
     id: number = -1;
+    name: string = '';
     stage: string = '';
     history: SprintHistory;
     backlog: string = '';
@@ -34,6 +35,7 @@ export class Sprint extends React.Component{
         }
 
         this.id = params.Id;
+        this.name = params.Name;
         this.stage = params.Stage;
         this.history = new SprintHistory(params.History);
         this.backlog = params.Backlog;
@@ -113,6 +115,7 @@ export class Sprint extends React.Component{
     public renderAsTableRow() {
         return <tr key={this.id}>
             <td>{this.id}</td>
+            <td>{this.name}</td>
             <td>{this.team.renderAsMenu()}</td>
             <td>{this.stage}</td>
             <td>{this.review}</td>
@@ -122,7 +125,7 @@ export class Sprint extends React.Component{
             <div id={this.id.toString()} role="button" className="btn btn-default btn-upd" onClick={this.updateButtonClick.bind(this)}>
                 <img src='/images/update_btn_128.ico' alt='upd' className="btn-img" /> 
             </div> &nbsp;
-            <div id={this.id.toString()} role="button" className="btn btn-default btn-del" onClick={this.deleteButtonClick.bind(this)}> 
+            <div id={this.id.toString()} role="button" className="btn m-btn-default btn-del" onClick={this.deleteButtonClick.bind(this)}> 
                 <img src='/images/delete_btn_128.ico' alt='upd' className="btn-img" /> 
             </div>
          </td>

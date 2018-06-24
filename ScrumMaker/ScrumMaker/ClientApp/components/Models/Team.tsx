@@ -38,7 +38,7 @@ export class Team{
 
     renderAsMenu() {
         if (this.empty)
-            return <div id="{this.id}" role="button" data-toggle="dropdown" className="btn btn-sm btn-default"> No Data </div>
+            return <div id="{this.id}" role="button" data-toggle="dropdown" className="btn btn-sm "> No Data </div>
         return <div className="dropdown">
             <div id="{this.id}" role="button" data-toggle="dropdown" className="btn btn-sm btn-primary" >
                 {this.name} <span className="caret"></span>
