@@ -5,17 +5,19 @@ import 'isomorphic-fetch';
 interface StoryDataExampleState {
     stories: Story[];
     loading: boolean;
+    storiesMap: Story[];
 }
 
 export class StoryGrid extends React.Component<RouteComponentProps<{}>, StoryDataExampleState> {
     constructor() {
         super();
-        this.state = { stories: [], loading: true };
+        this.state = { stories: [], loading: true, storiesMap: []};
+        this.handleSesarch = this.handleSesarch.bind(this);
 
-        fetch('api/StoryGrid/GetStories')
+        fetch('odata/Stories')
             .then(response => response.json() as Promise<Story[]>)
             .then(data => {
-                this.setState({ stories: data, loading: false });
+                this.setState({ stories: data, loading: false, storiesMap: data  });
             });
     }
 
@@ -27,12 +29,31 @@ export class StoryGrid extends React.Component<RouteComponentProps<{}>, StoryDat
         return <div>
             <h1>Stories</h1>
             <p>This component demonstrates Stories from the server.</p>
+            <input type="text" placeholder="Find by name" className="input-sm" onChange={this.handleSesarch}></input>
             {contents}
         </div>;
     }
 
+    handleSesarch(event: any) {
+        var searchQuery = event.target.value;
+
+        fetch("odata/stories()?$filter=contains(Name, '" + searchQuery + "')")
+            .then(response => response.json() as Promise<Story[]>)
+            .then(data => {
+                if (searchQuery === "" || searchQuery === null || searchQuery === " ") {
+                    this.setState({ stories: this.state.storiesMap });
+                } else {
+                    this.setState({ stories: data });
+                }
+
+            });
+
+
+    }
+
+
     private static renderStoriesTable(stories: Story[]) {
-        return <table className="table table-striped">
+        return <table className="table table-scrum table-hover td-scrum">
             <thead>
                 <tr>
                     <th>Id</th>
