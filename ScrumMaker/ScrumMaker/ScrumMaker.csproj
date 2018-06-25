@@ -33,11 +33,20 @@
     <None Remove="ClientApp\components\EditUser.tsx" />
     <None Remove="ClientApp\components\MailSender.tsx" />
     <None Remove="ClientApp\components\SprintsGrid.tsx" />
+    <None Remove="ClientApp\components\TeamGrid.tsx" />
     <None Remove="ClientApp\css\editUser.css" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="ClientApp\css\navMenu.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\img\28883217.jpg" />
+    <None Include="wwwroot\img\face.jpg" />
+    <None Include="wwwroot\img\mid_246485_6469.jpg" />
+    <None Include="wwwroot\img\ScrumMakerLogo.jpg" />
+    <None Include="wwwroot\img\______________2018_06_12____15_33_52_fdV_icon.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -50,6 +59,7 @@
     <TypeScriptCompile Include="ClientApp\components\AddUser.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditUser.tsx" />
     <TypeScriptCompile Include="ClientApp\components\SprintsGrid.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\TeamGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\css\editUser.css" />
   </ItemGroup>
 

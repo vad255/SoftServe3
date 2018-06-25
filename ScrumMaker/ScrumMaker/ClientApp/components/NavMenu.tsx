@@ -9,14 +9,13 @@ export class NavMenu extends React.Component<{}, {}> {
                 <ul>
                     <li><a href="/">Home</a></li>
                     <li><a href="/adduser">Registration New User</a></li>
-                    <li><a href="/fetchdata">Fetch data</a></li>
-                    <li><a href="/counter">Counter</a></li>
                     <li><a>Grids<span className="arrow-left"></span></a>
                         <ul className="dropdown">
-                            <li><a href="/usergrid">Users</a></li>
-                            <li><a href="/Stories">Stories</a></li>
-                            <li><a href="/feature">Features</a></li>
-                            <li><a href="/sprints">Sprints</a></li>
+                            <li><Link to="/usergrid">Users</Link></li>
+                            <li><Link to="/Stories">Stories</Link></li>
+                            <li><Link to="/feature">Features</Link></li>
+                            <li><Link to="/sprints">Sprints</Link></li>
+                            <li><Link to="/teamgrid">Team</Link></li>
                         </ul>
                     </li>
                 </ul>

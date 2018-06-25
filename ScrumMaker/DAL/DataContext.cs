@@ -27,7 +27,6 @@ namespace DAL
         
         public DbSet<Story> Stories { get; set; }
 
-
         public DbSet<Defect> Defects { get; set; }
 
         public DbSet<ScrumTask> Tasks { get; set; }

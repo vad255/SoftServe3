@@ -20,6 +20,8 @@ namespace DAL.Models
         public int RoleId { get; set; }
         public Role Role { get; set; }
         public bool Activity { get; set; }
+        public byte[] Photo { get; set; }
+        public int TeamId { get; set; }
 
     }
 }

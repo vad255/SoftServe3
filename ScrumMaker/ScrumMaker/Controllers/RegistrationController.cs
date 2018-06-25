@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using DAL.Models;
-
+using System.Reflection.Metadata;
 
 namespace ReactCrudDemo.Controllers
 {
@@ -20,11 +20,6 @@ namespace ReactCrudDemo.Controllers
         [Route("api/User/Create")]
         public void Create(User user)
         {
-
-            //Need to create new User because i have not database
-            Console.WriteLine(user.Login);
-            Console.WriteLine(user.Password);
-            Console.WriteLine(user.RoleId);
 
         }
     }
