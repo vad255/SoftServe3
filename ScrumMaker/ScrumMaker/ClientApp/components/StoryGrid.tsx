@@ -53,7 +53,7 @@ export class StoryGrid extends React.Component<RouteComponentProps<{}>, StoryDat
 
 
     private static renderStoriesTable(stories: Story[]) {
-        return <table className="table table-striped">
+        return <table className="table table-scrum table-hover td-scrum">
             <thead>
                 <tr>
                     <th>Id</th>

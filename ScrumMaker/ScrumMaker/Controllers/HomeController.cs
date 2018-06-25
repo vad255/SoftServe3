@@ -13,7 +13,6 @@ namespace ScrumMaker.Controllers
     {
         public IActionResult Index()
         {
-          
             return View();
         }
 
