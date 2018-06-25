@@ -16,18 +16,22 @@ namespace DAL.Models
         [MaxLength(500)]
         public string Description { get; set; }
                 
-        public string Priority { get; set; }
+        public Priority Priority { get; set; }
 
-        public string State { get; set; }
+        public State State { get; set; }
 
-        public status Status { get; set; }
+        public Status Status { get; set; }
 
         [NotMapped]
         public string ProgramIncrement { get; set; }
 
-        public string AssignedTo { get; set; }
+        [ForeignKey("User")]
+        public int? AssignedToId { get; set; }
+        public virtual User AssignedTo { get; set; }
 
-        public string Sprint { get; set; }
+        [ForeignKey("Sprint")]
+        public int? SprintId { get; set; }
+        public virtual Sprint Sprint { get; set; }
 
         public string StepsToReproduse { get; set; }
 
@@ -39,9 +43,9 @@ namespace DAL.Models
 
         public string Attachments { get; set; }
 
-        public blocked Blocked { get; set; }
+        public Blocked Blocked { get; set; }
 
-        public string Chat { get; set; }
+       // public string Chat { get; set; }
 
     }
 }

@@ -9,23 +9,27 @@ using DAL;
 using DAL.Models;
 using DAL.Access;
 using Microsoft.Extensions.DependencyInjection;
+using BL;
 
 namespace ScrumMaker.Controllers
 {
     [Route("api/[controller]")]
     public class FeatureController : Controller 
     {
+        private IFeaturesManager _manager;
         private IRepository<DAL.Models.Feature> featureRepository;
 
-        public FeatureController(IServiceProvider serviceProvider)
+        public FeatureController(IServiceProvider serviceProvider, IFeaturesManager manager)
         {
-            featureRepository = serviceProvider.GetService<IRepository<DAL.Models.Feature>>();
+            featureRepository = serviceProvider.GetService<IRepository<Feature>>();
+            _manager = manager;
         }
 
         [HttpGet("[action]")]
         public IEnumerable<Feature> FeatureGet()
         {
-            var result = featureRepository.GetAll();
+            var result = featureRepository.GetAll()
+                .Include(f => f.Stories).ThenInclude(s => s.Team);
             return result;
         }
     }
