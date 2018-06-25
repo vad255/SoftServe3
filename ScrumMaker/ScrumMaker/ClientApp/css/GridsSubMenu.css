@@ -7,6 +7,15 @@
     /*border: 1px solid #ddd;*/
 }
 
+.dropdown-emptyMenu {
+    position: relative;
+    display: block;
+    color:lightgray;
+    padding: 5px 10px;
+    margin-bottom: -1px;
+    background-color: #fff;
+
+}
 
 .dropdown-submenu {
     position: relative;

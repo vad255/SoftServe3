@@ -22,11 +22,10 @@ namespace ScrumMaker.Controllers
             _sprints = repository;
         }
 
-
         [EnableQuery]
         public IActionResult Get()
         {
             return Ok(_sprints.GetAll());
-        }
+        }       
     }
 }

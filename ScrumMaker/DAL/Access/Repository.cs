@@ -32,19 +32,23 @@ namespace DAL.Access
         {
             dbSet.Add(obj);
         }
+
         public void Update(T obj)
         {
             _context.Entry(obj).State = EntityState.Modified;
         }
+
         public void Delete(int Id)
         {
             T getObjById = dbSet.Find(Id);
             dbSet.Remove(getObjById);
         }
+
         public void Save()
         {
             _context.SaveChanges();
         }
+
         private bool disposed = false;
 
         public virtual void Dispose(bool disposing)

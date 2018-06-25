@@ -21,7 +21,7 @@ namespace ScrumMaker.Controllers
 
         public FeatureController(IServiceProvider serviceProvider, IFeaturesManager manager)
         {
-            featureRepository = serviceProvider.GetService<IRepository<DAL.Models.Feature>>();
+            featureRepository = serviceProvider.GetService<IRepository<Feature>>();
             _manager = manager;
         }
 

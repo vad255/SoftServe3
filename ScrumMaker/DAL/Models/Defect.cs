@@ -25,9 +25,13 @@ namespace DAL.Models
         [NotMapped]
         public string ProgramIncrement { get; set; }
 
-        public User AssignedTo { get; set; }
+        [ForeignKey("User")]
+        public int? AssignedToId { get; set; }
+        public virtual User AssignedTo { get; set; }
 
-        public Sprint Sprint { get; set; }
+        [ForeignKey("Sprint")]
+        public int? SprintId { get; set; }
+        public virtual Sprint Sprint { get; set; }
 
         public string StepsToReproduse { get; set; }
 

@@ -1,214 +1,43 @@
 ﻿import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
-
-
-class SprintHistory {
-
-    public empty: boolean;
-
-    public id: number = -1;
-    initiated: Date;
-    planned: Date;
-    begined: Date;
-    reviewDone: Date;
-    retrospectiveDone: Date;
-
-    constructor(params: any) {
-
-
-        if (params === null || params === undefined) {
-            this.empty = true;
-            return;
-        }
-        this.empty = false;
-        this.id = params.id;
-
-        
-        this.initiated = new Date(params.Initiated);
-        this.planned = new Date(params.Planned);
-        this.begined = new Date(params.Begined);
-        this.reviewDone = new Date(params.ReviewDone);
-        this.retrospectiveDone = new Date(params.RetrospectiveDone);
-    }
-
-    public toString() : string {
-        if (this.empty)
-            return "";
-        return this.initiated.toLocaleDateString();
-    }
-
-    public renderAsMenu() {
-
-        if (this.empty)
-            return <p>No Data</p>;
-        else
-            return <div className="dropdown">
-                <div id="{this.id}" role="button" data-toggle="dropdown" className="btn btn-primary" >
-                    History <span className="caret"></span>
-                </div>
-                <ul className="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-                    <li className="list-group-item"><pre>Initiated   {this.initiated.toLocaleDateString()}</pre></li>
-                    <li className="list-group-item"><pre>Planned     {this.planned.toLocaleDateString()}</pre></li>
-                    <li className="list-group-item"><pre>Beginned    {this.begined.toLocaleDateString()}</pre></li>
-                    <li className="list-group-item"><pre>Review      {this.reviewDone.toLocaleDateString()}</pre></li>
-                    <li className="list-group-item"><pre>Retrospective {this.retrospectiveDone.toLocaleDateString()}</pre></li>
-                </ul>
-            </div>
-    }
-}
-
-class User {
-
-    empty: boolean = true;
-    constructor(params: any) {
-        if (params === null || params === undefined) {
-            return;
-        }
-
-        this.activity = params.Activity;
-        this.login = params.Login;
-        this.password = params.Password;
-        this.roleId = params.RoleId;
-        this.userId = params.UserId;
-        this.empty = false;
-    }
-
-    activity: boolean = false;
-    login: string = "";
-    password: string = "";
-    roleId: number = -1;
-    userId: number = -1;
-
-    public toString() : string {
-        if (this.empty)
-            return "";
-        return this.login;
-    }
-
-    render() {
-        if (this.empty)
-            return "NoData";
-        return <li className="dropdown-submenu">
-            <div > {this.login} </div>
-            <ul className="dropdown-menu">
-                <li className="dropdown-item"><b><pre>UserID:  {this.userId}</pre></b>  </li>
-                <li className="dropdown-item"><b><pre>Login:   {this.login}</pre></b> </li>
-                <li className="dropdown-item"><b><pre>Password:{this.password}</pre></b> </li>
-                <li className="dropdown-item"><b><pre>Activity:{this.activity ? "true" : "false"}</pre></b> </li>
-                <li className="dropdown-item"><b><pre>RoleId:  {this.roleId}</pre></b> </li>
-            </ul>
-        </li>
-    }
-}
-
-class Team {
-
-    empty: boolean = true;
-    name: string = "";
-    id: number = -1;
-    members: User[] = [];
-
-    constructor(params: any) {
-        if (params === null || params === undefined) {
-            return;
-        }
-        this.name = params.Name;
-        this.id = params.Id;
-        this.empty = false;
-
-        //var members = params.members.map( u => new User(u));
-        var members = [];
-        for (var i = 0; i < params.Members.length; i++) {
-            members[i] = new User(params.Members[i]);
-
-        }
-
-        this.members = members;
-    }
-
-    public toString() : string {
-        if (this.empty)
-            return "";
-        return this.name;
-    }
-
-    renderAsMenu() {
-        if (this.empty)
-            return "NoData"
-        return <div className="dropdown">
-            <div id="{this.id}" role="button" data-toggle="dropdown" className="btn btn-primary" >
-                {this.name} <span className="caret"></span>
-            </div>
-            <ul className="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-                {this.members.map(u => u.render())}
-            </ul>
-        </div>
-    }
-}
-
-class Sprint {
-    id: number;
-    stage: string;
-    history: SprintHistory
-    backlog: string;
-    defects: string;
-    dailyScrums: string;
-    review: string;
-    retrospective: string;
-    team: Team;
-
-    public constructor(params: any) {
-        this.id = params.Id;
-        this.stage = params.Stage;
-        this.history = new SprintHistory(params.History);
-        this.backlog = params.Backlog;
-        this.defects = params.Defects;
-        this.dailyScrums = params.DailyScrums;
-        this.review = params.Review;
-        this.retrospective = params.Retrospective;
-        this.team = new Team(params.Team);
-    }
-
-    public toString() : string {
-        return this.id.toString();
-    }
-
-    public renderAsTableRow() {
-        return <tr key={this.id}>
-            <td>{this.id}</td>
-            <td>{this.team.renderAsMenu()}</td>
-            <td>{this.stage}</td>
-            <td>{this.review}</td>
-            <td>{this.history.renderAsMenu()}</td>
-            <td>{this.retrospective}</td>
-        </tr>;
-
-    }
-}
-
+import { Sprint } from './Models/Sprint';
+import * as ReactDOM from 'react-dom';
 
 
 
 interface SprintDataFetchingState {
     sprints: Sprint[];
+    filters: any;
     loading: boolean;
 }
 
 export class SprintsGrid extends React.Component<RouteComponentProps<{}>, SprintDataFetchingState> {
+
+    static readonly URL_BASE : string = 'odata/sprints';
+    static readonly URL_EXPANDS : string = '?$expand=Team($expand=members),history'
+    static readonly URL_ORDERING : string = '&$orderby=id'
+
     constructor() {
         super();
-        this.state = { sprints: [], loading: true };
+        this.state = { sprints: [], loading: true, filters: []};
 
-        fetch('odata/sprints?$expand=Team($expand=members),history')
+        this.LoadData();
+    } 
+
+    private lastOrderingArg : string = "";
+    private lastOrderingDir : boolean = false;
+    private fileteringOn : boolean = false;
+    private filterString : string = "";
+
+    private LoadData() {
+        fetch(this.getURL())
             .then(response => response.json() as any)
             .then(data => {
                 var sprintsTemp = [];
-
                 for (var i = 0; i < data['value'].length; i++)
-                sprintsTemp[i] = new Sprint(data["value"][i]);
-
-                this.setState({ sprints: sprintsTemp, loading: false });
+                    sprintsTemp[i] = new Sprint(data["value"][i]);
+                this.setState({ sprints: sprintsTemp, loading: false, filters: this.state.filters });
             });
     }
 
@@ -221,30 +50,134 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
             <h1>Sprints</h1>
             <p>Here represented all sprints from the database.</p>
             {contents}
-        </div>;
+            </div>
     }
+
+  
 
     private renderSprintsTable(sprints: Sprint[]) {
+
         return <table className='table'>
-            <thead>
-                <tr>
-                    <th className="well well-sm" onClick={() => this.OrderBy("id")}>Database ID</th>
-                    <th className="well well-sm" onClick={() => this.OrderBy("team")}>Team</th>
-                    <th className="well well-sm" onClick={() => this.OrderBy("stage")}>Stage</th>
-                    <th className="well well-sm" onClick={() => this.OrderBy("review")}>Review</th>
-                    <th className="well well-sm" onClick={() => this.OrderBy("history")}>History</th>
-                    <th className="well well-sm" onClick={() => this.OrderBy("retrospective")}>Retrospective</th>
-                </tr>
-            </thead>
+            {this.GetHeader()}
             <tbody>
-                {sprints.map(sprint => sprint.renderAsTableRow())}
+                {this.getFiltersLine()}
+                {this.state.sprints.map(s => s.renderAsTableRow())}
             </tbody>
-        </table>;
+            <tfoot>
+                {this.RenderFooter()}
+            </tfoot>
+        </table>
+
+    }
+    
+
+    private GetHeader() {
+        return <thead>
+            <tr>
+                <th className="well well-sm" onClick={() => this.OrderBy("id")}><span className="nowrap">Database ID</span></th>
+                <th className="well well-sm" onClick={() => this.OrderBy("name")}>Name</th>
+                <th className="well well-sm" onClick={() => this.OrderBy("team")}>Team</th>
+                <th className="well well-sm" onClick={() => this.OrderBy("stage")}>Stage</th>
+                <th className="well well-sm" onClick={() => this.OrderBy("review")}>Review</th>
+                <th className="well well-sm" onClick={() => this.OrderBy("history")}>History</th>
+                <th className="well well-sm" onClick={() => this.OrderBy("retrospective")}>Retrospective</th>
+                <th className="well well-sm">
+                    <div onClick={this.FilterButtonClick.bind(this)}>
+                    <span className="nowrap">Show Filters<span className="caret"></span></span> 
+                    </div>
+                </th>
+            </tr>
+        </thead>;
+    }
+    private getFiltersLine()
+    {
+        if (!this.fileteringOn)
+            return "";
+        return <tr>
+        <td className="myTd">
+            <input className="searchInput" type="text"  onChange={((e : any) => this.FilterChanged("id", e)).bind(this)}/>
+        </td>
+        <td className="myTd">
+            <input className="searchInput" type="text" onChange={((e : any) => this.FilterChanged("name", e)).bind(this)}/>
+        </td>
+        <td className="myTd">
+            <input className="searchInput" type="text" onChange={((e : any) => this.FilterChanged("team/name", e)).bind(this)}/>
+        </td>
+        <td className="myTd">
+            <input className="searchInput" type="text" onChange={((e : any) => this.FilterChanged("stage", e)).bind(this)}/>
+        </td>
+        <td className="myTd">
+            <input className="searchInput" type="text" onChange={((e : any) => this.FilterChanged("review", e)).bind(this)}/>
+        </td>
+        <td className="myTd">
+            <input className="searchInput" type="text" onChange={((e : any) => this.FilterChanged("history/initiated", e)).bind(this)}/>
+        </td>
+        <td className="myTd">
+            <input className="searchInput" type="text" onChange={((e : any) => this.FilterChanged("retrospective", e)).bind(this)}/>
+        </td>
+        <td className="myTd">
+        <div className="btn bnt-xs" onClick={this.ApplyFiltersClick.bind(this)}>
+                        Apply filters 
+                    </div>
+        </td>
+    </tr>
+
     }
 
+    private RenderFooter() {
+        return <tr>
+            <td colSpan={8}>
+                <div className="text-center">
+                    <div role='button' className='btn btn-primary'>
+                       Add new
+                    </div>
+                </div>
+            </td>
+        </tr>;
+    }
 
-    private lastOrderingArg : string = "";
-    private lastOrderingDir : boolean = false;
+    private getURL() : string{
+        var result = SprintsGrid.URL_BASE;
+        result += SprintsGrid.URL_EXPANDS;
+
+        if (this.filterString != '')
+            result += this.filterString;
+        result += SprintsGrid.URL_ORDERING;
+        return result;
+    }
+
+    private FilterChanged(key: string, e: any){
+        this.state.filters[key] = e.target.value;
+    }
+
+    private ApplyFiltersClick(e : any){
+        this.filterString = "&$filter=";
+        var i = 0;
+        for (let iterator in this.state.filters) {
+            i++;
+            console.log(iterator);
+            this.filterString += 'contains(' + iterator + ', \'' + this.state.filters[iterator] + '\') and ';
+        }
+        
+        // remove excessive ' and '. If no filters - return
+        if (i > 0)
+            this.filterString =  this.filterString.substring(0, this.filterString.length - 5);
+        else
+        {
+            this.filterString = '';
+            return;
+        }
+        //alert('ok');
+        this.LoadData();
+    
+    }
+
+    private FilterButtonClick(e : any)
+    {
+        this.fileteringOn = !this.fileteringOn
+        this.forceUpdate(); 
+
+    }
 
     private OrderBy(arg: string)
     {
@@ -256,35 +189,40 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
             if (this.lastOrderingArg === arg)
                 this.lastOrderingDir = !this.lastOrderingDir;
             else
-                this.lastOrderingDir=false;
+                this.lastOrderingDir = false;
 
             
 
             if (!this.lastOrderingDir)
                 sprintsN.sort((a,b) => {
-                    if (a === undefined || a===null || b === undefined || b === null ||
-                        a[arg] === undefined || a[arg] === null || b[arg]=== undefined || b[arg] === null) 
-                        return 0
+                    if (a === undefined || b === undefined ||
+                        a[arg] === undefined || b[arg] === undefined ) 
+                        return 0;
                      else 
-                        return a[arg].toString().localeCompare(b[arg].toString());
+                        return this.Compare(a[arg],b[arg])
                     })
             else
                 sprintsN.sort((a,b) => {
-                    if (a === undefined || a===null || b === undefined || b === null ||
-                        a[arg] === undefined || a[arg] === null || b[arg]=== undefined || b[arg] === null) 
-                        return 0
+                    if (a === undefined || b === undefined ||
+                        a[arg] === undefined || b[arg] === undefined) 
+                        return 0;
                      else 
-                        return -a[arg].toString().localeCompare(b[arg].toString());
+                        return -this.Compare(a[arg], b[arg])
                     })
 
-                    //alert('ok');
-                    this.lastOrderingArg = arg;
-                    this.setState({sprints : sprintsN as Sprint[], loading : this.state.loading});
+            this.lastOrderingArg = arg;
+            this.setState({sprints : sprintsN as Sprint[], loading : this.state.loading});
         }catch(e)
         {
-            alert(e)
-        }
-        
+            alert(e);
+        } 
+    }
+
+    private Compare(a: any, b: any): number{
+        if(typeof a === 'number' && typeof b === 'number')
+            return a - b;
+        else
+            return a.toString().localeCompare(b.toString());
     }
 }
 
