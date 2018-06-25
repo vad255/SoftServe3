@@ -71,6 +71,7 @@ namespace ScrumMaker
             services.AddScoped(typeof(IDefectsManager), typeof(DefectsManager));
             services.AddScoped(typeof(IUserManager), typeof(UserManager));
             services.AddScoped(typeof(ITasksManager), typeof(TasksManager));
+            services.AddScoped(typeof(IStoriesManager), typeof(StoriesManager));
 
             services.AddOData();
 

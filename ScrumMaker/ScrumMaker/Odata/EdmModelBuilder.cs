@@ -21,7 +21,7 @@ namespace ScrumMaker
                 builder.EntitySet<SprintStagesHistory>("SprintStagesLog").EntityType.HasKey(s => s.Id);
                 builder.EntitySet<Team>("Teams").EntityType.HasKey(t => t.Id);
                 builder.EntitySet<User>("Users");
-                
+                builder.EntitySet<Story>("Stories").EntityType.HasKey(k => k.Id);
                 _model = builder.GetEdmModel();
             }
 
