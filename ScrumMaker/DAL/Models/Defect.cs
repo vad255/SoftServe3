@@ -33,7 +33,6 @@ namespace DAL.Models
         public int? SprintId { get; set; }
         public virtual Sprint Sprint { get; set; }
 
-
         public string StepsToReproduse { get; set; }
 
         public string ExpectedResults { get; set; }

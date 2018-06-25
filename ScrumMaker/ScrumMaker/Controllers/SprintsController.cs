@@ -26,32 +26,6 @@ namespace ScrumMaker.Controllers
         public IActionResult Get()
         {
             return Ok(_sprints.GetAll());
-        }
-
-
-        [HttpPost("[action]")]
-        public IActionResult Create([FromBody] Sprint sprint)
-        {
-            Console.WriteLine(sprint.Id);
-            return NoContent();
-        }
-
-
-
-        [HttpPut("[action]")]
-        public IActionResult Update([FromBody] Sprint sprint)
-        {
-            Console.WriteLine(sprint.Id);
-
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public IActionResult Delete([FromForm] int id)
-        {
-            Console.WriteLine(id);
-            return NoContent();
-        }
-           
+        }       
     }
 }

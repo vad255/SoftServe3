@@ -167,7 +167,7 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
             this.filterString = '';
             return;
         }
-        alert('ok');
+        //alert('ok');
         this.LoadData();
     
     }

@@ -24,15 +24,11 @@ namespace DAL.Models
 
         public virtual ICollection<Defect> Defects { get; set; }
 
-
         public virtual ICollection<DailyScrumInfo> DailyScrums { get; set; }
-
 
         public string Review { get; set; }
 
-
         public string Retrospective { get; set; }
-
 
         public virtual Team Team { get; set; }
     }

@@ -11,14 +11,11 @@ namespace DAL.Models
         [Key]
         public string Id { get; private set; }
 
-
         [Required]
         public string Description { get; set; }
 
-
         [Required]
         public DateTime Сonducted { get; set; }
-
 
         [ForeignKey("Sprint")]
         public int SprintId { get; set; }
