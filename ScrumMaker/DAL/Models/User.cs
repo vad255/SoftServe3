@@ -32,7 +32,5 @@ namespace DAL.Models
 
         public bool Activity { get; set; }
         public byte[] Photo { get; set; }
-        public int TeamId { get; set; }
-
     }
 }
