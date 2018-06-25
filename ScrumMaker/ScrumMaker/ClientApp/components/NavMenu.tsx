@@ -9,8 +9,6 @@ export class NavMenu extends React.Component<{}, {}> {
                 <ul>
                     <li><a href="/">Home</a></li>
                     <li><a href="/adduser">Registration New User</a></li>
-                    <li><a href="/fetchdata">Fetch data</a></li>
-                    <li><a href="/counter">Counter</a></li>
                     <li><a>Grids<span className="arrow-left"></span></a>
                         <ul className='dropdown nav navbar-nav'>
                             <li>

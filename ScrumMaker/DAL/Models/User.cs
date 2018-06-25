@@ -27,11 +27,10 @@ namespace DAL.Models
 
 
         [ForeignKey("Team")]
-        public int? TeamId { get; set; }
-        public virtual Team Team { get; set; }
-
+        public int TeamId { get; set; }
+        public Team Team { get; set; }
 
         public bool Activity { get; set; }
-
+        public byte[] Photo { get; set; }
     }
 }
