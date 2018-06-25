@@ -10,12 +10,27 @@ export class NavMenu extends React.Component<{}, {}> {
                     <li><a href="/">Home</a></li>
                     <li><a href="/adduser">Registration New User</a></li>
                     <li><a>Grids<span className="arrow-left"></span></a>
-                        <ul className="dropdown">
-                            <li><Link to="/usergrid">Users</Link></li>
-                            <li><Link to="/Stories">Stories</Link></li>
-                            <li><Link to="/feature">Features</Link></li>
-                            <li><Link to="/sprints">Sprints</Link></li>
-                            <li><Link to="/teamgrid">Team</Link></li>
+                        <ul className='dropdown nav navbar-nav'>
+                            <li>
+                                <NavLink to={'/sprints'} activeClassName='active'>
+                                    <span className='glyphicon glyphicon-th-list'></span> Sprints
+                            </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to={'/usergrid'} activeClassName='active'>
+                                    <span className='glyphicon glyphicon-th-list'></span> Users
+                            </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to={'/Stories'} activeClassName='active'>
+                                    <span className='glyphicon glyphicon-th-list'></span> Stories
+                            </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to={'/feature'} activeClassName='active'>
+                                    <span className='glyphicon glyphicon-th-list'></span> Features
+                            </NavLink>
+                            </li>
                         </ul>
                     </li>
                 </ul>

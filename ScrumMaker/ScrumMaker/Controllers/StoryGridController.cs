@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BL;
+using DAL;
 using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +12,15 @@ namespace ScrumMaker.Controllers
     [Route("api/[controller]")]
     public class StoryGridController : Controller
     {
+        private IStoriesManager _manager;
+        private DataContext _db;
+
+        public StoryGridController(DataContext db, IStoriesManager manager)
+        {
+            _db = db;
+            _manager = manager;
+        }
+
         [HttpGet("[action]")]
         public IEnumerable<Story> GetStories()
         {
@@ -33,6 +44,7 @@ namespace ScrumMaker.Controllers
                 Description = "Description",
                 Status = StoryStatus.InProgress
             });
+
             return db;
         }
     }

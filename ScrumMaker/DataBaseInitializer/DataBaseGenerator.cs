@@ -1,5 +1,6 @@
 ﻿using DAL.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using DAL;
 using DAL.Access;
@@ -21,6 +22,13 @@ namespace DataBaseInitializer
         static IRepository<SprintStagesHistory> _dbHisories;
         static IRepository<Sprint> _dbSprints;
 
+        static Random _rand = new Random(1);
+
+
+        static List<string> _names = new List<string>()
+                {
+                    "First", "Second", "Main", "Core", "TestName", "Poker", "Mouse", "Unicorns", "Party", "Movie"
+                };
 
         // generated 
         public static void FillDataBase(DbContext context)
@@ -120,6 +128,57 @@ namespace DataBaseInitializer
                     },
 
 
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(1),
+                        Activity = true,
+                        Login = "hello@com",
+                        Password = "admin123"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(2),
+                        Activity = true,
+                        Login = "scrumgmail.",
+                        Password = "Master123"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(1),
+                        Activity = true,
+                        Login = "user@ukr.com",
+                        Password = "321user123"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(3),
+                        Activity = true,
+                        Login = "ermailcom",
+                        Password = "ffer456"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(3),
+                        Activity = true,
+                        Login = "usoFrm",
+                        Password = "user789"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(3),
+                        Activity = true,
+                        Login = "Worldmail.nom",
+                        Password = "useror101"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(3),
+                        Activity = true,
+                        Login = "userator",
+                        Password = "usrrr222"
+                    },
+
+
                 };
 
                 foreach (var user in users)
@@ -137,64 +196,38 @@ namespace DataBaseInitializer
 
             _dbTeams = new Repository<Team>(_context);
 
-            if (_dbTeams.GetAll().Count() == 0)
+            if (_dbTeams.GetAll().Count() != 0)
+                return;
+
+
+            List<User> users = _dbUsers.GetAll().ToList();
+
+
+            List<Team> teams = new List<Team>();
+            
+            for (int i = 0; i < 4; i++)
             {
-                Team[] teams = new Team[]
+                var team = new Team()
                 {
-                    new Team()
-                    {
-                       Name = "ScumMaker team",
-                       Members = _dbUsers.GetAll().ToList()
-                    }
+                    Name = _names[_rand.Next(_names.Count)],
                 };
+                teams.Add(team);
 
-                foreach (var team in teams)
+                var members = GetRandomCollection(users, _rand, 4, 8);
+                foreach (var item in members)
                 {
-                    _dbTeams.Create(team);
-                }
-
-                _dbTeams.Save();
+                    _dbUsers.GetById(item.UserId).Team = team;
+                }    
             }
+            foreach (var item in teams)
+            {
+                _dbTeams.Create(item);
+            }
+
+            _dbTeams.Save();
         }
 
 
-
-        public static void FillDailyScrumData()
-        {
-            _dbDailyInfo = new Repository<DailyScrumInfo>(_context);
-
-            if (_dbDailyInfo.GetAll().Count() == 0)
-            {
-
-
-                DailyScrumInfo[] infos = new DailyScrumInfo[]
-                {
-                    new DailyScrumInfo()
-                    {
-                        Description = "DailyDescription1",
-                        Сonducted = DateTime.Now
-                    },
-                    new DailyScrumInfo()
-                    {
-                        Description = "DailyDescription2",
-                        Сonducted = DateTime.Now + new TimeSpan(24,0,0)
-                    },
-                    new DailyScrumInfo()
-                    {
-                        Description = "DailyDescription3",
-                        Сonducted = DateTime.Now + new TimeSpan(48,0,0)
-                    }
-
-                };
-
-                foreach (var info in infos)
-                {
-                    _dbDailyInfo.Create(info);
-                }
-
-                _dbDailyInfo.Save();
-            }
-        }
 
         public static void FillDefectsData()
         {
@@ -210,19 +243,19 @@ namespace DataBaseInitializer
                     {
                         Description = "description",
                         ActualResults = "result",
-                        Blocked = blocked.no,
+                        Blocked = Blocked.No,
                         DefectName = "Defect Name",
-                        AssignedTo = _dbUsers.GetById(5).Login,
-                        Priority = "high"
-                    },
+                        AssignedTo = _dbUsers.GetById(5),
+                        Priority = Priority.HighAttention
+                        },
                     new Defect()
                     {
                         Description = "description2",
                         ActualResults = "result2",
-                        Blocked = blocked.no,
+                        Blocked = Blocked.No,
                         DefectName = "Defect Name2",
-                        AssignedTo = _dbUsers.GetById(6).Login,
-                        Priority = "low"
+                        AssignedTo = _dbUsers.GetById(6),
+                        Priority = Priority.Low
                     }
                 };
 
@@ -241,8 +274,6 @@ namespace DataBaseInitializer
             _dbStories = new Repository<Story>(_context);
             if (_dbStories.GetAll().Count() == 0)
             {
-
-
                 Story[] stories = new Story[]
                 {
                     new Story()
@@ -426,41 +457,86 @@ namespace DataBaseInitializer
         {
             _dbSprints = new Repository<Sprint>(_context);
 
-            if (_dbSprints.GetAll().Count() == 0)
+            if (_dbSprints.GetAll().Count() != 0)
+                return;
+
+
+            var teams = _dbTeams.GetAll().ToList();
+            var logs = _dbHisories.GetAll().ToList();
+            var defectsRep = _dbDefects.GetAll().ToList();
+            var scrums = _dbDailyInfo.GetAll().ToList();
+            var stories = _dbStories.GetAll().ToList();
+
+            List<Sprint> sprints = new List<Sprint>();
+
+            for (int i = 0; i < 20; i++)
             {
-
-
-                Sprint[] sprints = new Sprint[]
+                var sprint = new Sprint()
                 {
-                    new Sprint()
-                    {
-                        Team = _dbTeams.GetById(1),
-                        Defects = _dbDefects.GetAll().ToList(),
-                        Backlog = _dbStories.GetAll().ToList(),
-                        DailyScrums = _dbDailyInfo.GetAll().ToList(),
-                        Retrospective = "Sprint Retrospective",
-                        Review = "Sprint Review", Stage = SprintStage.Progress,
-                        History = _dbHisories.GetById(1)
-                    },
-                    new Sprint()
-                    {
-                        Team = _dbTeams.GetById(1),
-                        Defects = _dbDefects.GetAll().ToList(),
-                        Backlog = _dbStories.GetAll().ToList(),
-                        DailyScrums = _dbDailyInfo.GetAll().ToList(),
-                        Retrospective = "Sprint Retrospective",
-                        Review = "Sprint Review", Stage = SprintStage.Planning,
-                        History = _dbHisories.GetById(1)
-                    }
+                    Team = teams[_rand.Next(teams.Count)],
+                    Name = _names[_rand.Next(_names.Count)],
+                    Retrospective = "Sprint Retrospective " + _names[_rand.Next(_names.Count)] + " " + _names[_rand.Next(_names.Count)],
+                    Review = "Sprint Review" + _names[_rand.Next(_names.Count)] + " " + _names[_rand.Next(_names.Count)],
+                    Stage = (SprintStage)_rand.Next(Enum.GetValues(typeof(SprintStage)).Length),
+                    History = logs[_rand.Next(logs.Count)]
                 };
 
-                foreach (var sprint in sprints)
-                {
-                    _dbSprints.Create(sprint);
-                }
-
-                _dbSprints.Save();
+                sprints.Add(sprint);
             }
+
+
+
+            foreach (var sprint in sprints)
+            {
+                _dbSprints.Create(sprint);
+            }
+
+            _dbSprints.Save();
+
+        }
+
+        public static void FillDailyScrumData()
+        {
+            _dbDailyInfo = new Repository<DailyScrumInfo>(_context);
+            _dbSprints = new Repository<Sprint>(_context);
+
+            if (_dbDailyInfo.GetAll().Count() != 0)
+                return;
+
+
+            foreach (var item in _dbSprints.GetAll())
+            {
+                List<DailyScrumInfo> infos = new List<DailyScrumInfo>()
+                {
+                    new DailyScrumInfo()
+                    {
+                        Description = "DailyDescription1",
+                        Сonducted = DateTime.Now - new TimeSpan(48,0,0)
+                    },
+                    new DailyScrumInfo()
+                    {
+                        Description = "DailyDescription2",
+                        Сonducted = DateTime.Now - new TimeSpan(24,0,0)
+                    },
+                    new DailyScrumInfo()
+                    {
+                        Description = "DailyDescription3",
+                        Сonducted = DateTime.Now
+                    }
+
+                };
+                item.DailyScrums = infos;
+            }
+            
+            _dbSprints.Save();
+            
+        }
+
+        static List<T> GetRandomCollection<T>(IEnumerable<T> source, Random rand, int minElems, int maxElems)
+        {
+            List<T> result = new List<T>(source);
+            result.Sort((a, b) => rand.Next(3) - 1);
+            return result.GetRange(0, minElems + rand.Next(maxElems - minElems));
         }
     }
 }
