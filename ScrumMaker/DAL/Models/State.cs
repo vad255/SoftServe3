@@ -6,6 +6,11 @@ namespace DAL.Models
 {
     public enum State
     {
-        Active, InWork, PendingTest, Fixed, NotaBug, Postponed
+        Active,
+        InWork,
+        PendingTest,
+        Fixed,
+        NotaBug,
+        Postponed
     }
 }

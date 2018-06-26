@@ -23,12 +23,12 @@ namespace DAL.Models
 
         [ForeignKey("Role")]
         public int RoleId { get; set; }
-        public Role Role { get; set; }
+        public virtual Role Role { get; set; }
 
 
         [ForeignKey("Team")]
-        public int TeamId { get; set; }
-        public Team Team { get; set; }
+        public int? TeamId { get; set; }
+        public virtual Team Team { get; set; }
 
         public bool Activity { get; set; }
         public byte[] Photo { get; set; }
