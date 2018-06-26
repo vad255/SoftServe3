@@ -4,7 +4,7 @@ import { RouteComponentProps } from "react-router";
 import axios from "axios";
 
 interface FileLoad {
-    imagePreviewUrl: './img/face.jpg'
+    imagePreviewUrl: './img/unknown.jpg'
     file: ''
     password: ""
     repeatPassword: ""
@@ -15,7 +15,7 @@ export class EditUser extends Component<RouteComponentProps<any>, FileLoad> {
         super(props);
         this.state = {
             file: '',
-            imagePreviewUrl: './img/face.jpg',
+            imagePreviewUrl: './img/unknown.jpg',
             password: "",
             repeatPassword: ""
         };
@@ -69,7 +69,7 @@ export class EditUser extends Component<RouteComponentProps<any>, FileLoad> {
                 <div className='myDiv'>{$imagePreview}</div>
                 <form onSubmit={this._handleSubmit} asp-controller="UserEdit" asp-action="UploadFile" method="post">
                     <div className="file-upload">
-                        <label>
+                        <label className="chooseLabel">
                             <input type="file" className="fileInput" name="file" onChange={this._handleImageChange} />
                             <span>Choose</span>
                         </label>

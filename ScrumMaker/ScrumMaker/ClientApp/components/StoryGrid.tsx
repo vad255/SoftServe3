@@ -28,7 +28,6 @@ export class StoryGrid extends React.Component<RouteComponentProps<{}>, StoryDat
 
         return <div>
             <h1>Stories</h1>
-            <p>This component demonstrates Stories from the server.</p>
             <input type="text" placeholder="Find by name" className="input-sm" onChange={this.handleSesarch}></input>
             {contents}
         </div>;

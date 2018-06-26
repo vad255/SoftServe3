@@ -48,7 +48,6 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
 
         return <div>
             <h1>Sprints</h1>
-            <p>Here represented all sprints from the database.</p>
             {contents}
             </div>
     }
