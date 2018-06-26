@@ -16,6 +16,7 @@ export class User {
         this.password = params.Password;
         this.roleId = params.RoleId;
         this.userId = params.UserId;
+        
         this.empty = false;
     }
 
@@ -33,9 +34,9 @@ export class User {
 
     renderAsDropDown() {
         if (this.empty)
-            return "NoData";
-        return <li className="dropdown-submenu">
-            <div > {this.login} </div>
+           return <li key="undefined" id="undefined"><div> undefined </div></li>;
+        return <li key={this.userId.toString()} className="dropdown-submenu">
+            <div> {this.login} </div>
             <ul className="dropdown-menu">
                 <li className="dropListItem"><b><pre>UserID:  {this.userId}</pre></b> </li>
                 <li className="dropListItem"><b><pre>Login:   {this.login}</pre></b> </li>

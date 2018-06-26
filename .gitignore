@@ -557,3 +557,6 @@ typings/
 ScrumMaker/.vs/ScrumMaker/v15/.suo
 ScrumMaker/.vs/ScrumMaker/v15/.suo
 ScrumMaker/ScrumMaker/wwwroot/Thumbs.db
+*.db
+
+ScrumMaker/ScrumMaker/wwwroot/images/Thumbs.db
