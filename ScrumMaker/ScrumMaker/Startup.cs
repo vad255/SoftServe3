@@ -42,7 +42,7 @@ namespace ScrumMaker
 
         public void ConfigureServices(IServiceCollection services)
         {
-            string connectionStr = Configuration.GetConnectionString("Pasha");
+            string connectionStr = Configuration.GetConnectionString("Viktor");
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
                     {
