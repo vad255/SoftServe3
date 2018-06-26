@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180617100745_init")]
-    partial class init
+    [Migration("20180626091502_migration")]
+    partial class migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,7 +29,7 @@ namespace DAL.Migrations
                     b.Property<string>("Description")
                         .IsRequired();
 
-                    b.Property<int?>("SprintId");
+                    b.Property<int>("SprintId");
 
                     b.Property<DateTime>("Сonducted");
 
@@ -48,13 +48,11 @@ namespace DAL.Migrations
 
                     b.Property<string>("ActualResults");
 
-                    b.Property<string>("AssignedTo");
+                    b.Property<int?>("AssignedToId");
 
                     b.Property<string>("Attachments");
 
                     b.Property<int>("Blocked");
-
-                    b.Property<string>("Chat");
 
                     b.Property<string>("DefectName");
 
@@ -65,11 +63,11 @@ namespace DAL.Migrations
 
                     b.Property<string>("FixResults");
 
-                    b.Property<string>("Priority");
+                    b.Property<int>("Priority");
 
-                    b.Property<string>("Sprint");
+                    b.Property<int?>("SprintId");
 
-                    b.Property<string>("State");
+                    b.Property<int>("State");
 
                     b.Property<int>("Status");
 
@@ -79,6 +77,10 @@ namespace DAL.Migrations
 
                     b.HasKey("DefectId");
 
+                    b.HasIndex("AssignedToId");
+
+                    b.HasIndex("SprintId");
+
                     b.HasIndex("StoryId");
 
                     b.ToTable("Defects");
@@ -86,7 +88,7 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Models.Feature", b =>
                 {
-                    b.Property<int>("FeatureId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -101,7 +103,7 @@ namespace DAL.Migrations
 
                     b.Property<int>("State");
 
-                    b.HasKey("FeatureId");
+                    b.HasKey("Id");
 
                     b.ToTable("Features");
                 });
@@ -171,6 +173,9 @@ namespace DAL.Migrations
 
                     b.Property<int?>("HistoryId");
 
+                    b.Property<string>("Name")
+                        .IsRequired();
+
                     b.Property<string>("Retrospective");
 
                     b.Property<string>("Review");
@@ -194,15 +199,15 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("Begined");
+                    b.Property<DateTime?>("Begined");
 
-                    b.Property<DateTime>("Initiated");
+                    b.Property<DateTime?>("Initiated");
 
-                    b.Property<DateTime>("Planned");
+                    b.Property<DateTime?>("Planned");
 
-                    b.Property<DateTime>("RetrospectiveDone");
+                    b.Property<DateTime?>("RetrospectiveDone");
 
-                    b.Property<DateTime>("ReviewDone");
+                    b.Property<DateTime?>("ReviewDone");
 
                     b.HasKey("Id");
 
@@ -269,11 +274,13 @@ namespace DAL.Migrations
 
                     b.Property<string>("Login")
                         .IsRequired()
-                        .HasMaxLength(20);
+                        .HasMaxLength(50);
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(20);
+                        .HasMaxLength(50);
+
+                    b.Property<byte[]>("Photo");
 
                     b.Property<int>("RoleId");
 
@@ -290,13 +297,22 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Models.DailyScrumInfo", b =>
                 {
-                    b.HasOne("DAL.Models.Sprint")
+                    b.HasOne("DAL.Models.Sprint", "Sprint")
                         .WithMany("DailyScrums")
-                        .HasForeignKey("SprintId");
+                        .HasForeignKey("SprintId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("DAL.Models.Defect", b =>
                 {
+                    b.HasOne("DAL.Models.User", "AssignedTo")
+                        .WithMany()
+                        .HasForeignKey("AssignedToId");
+
+                    b.HasOne("DAL.Models.Sprint", "Sprint")
+                        .WithMany("Defects")
+                        .HasForeignKey("SprintId");
+
                     b.HasOne("DAL.Models.Story")
                         .WithMany("Defects")
                         .HasForeignKey("StoryId");
@@ -352,7 +368,7 @@ namespace DAL.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("DAL.Models.Team")
+                    b.HasOne("DAL.Models.Team", "Team")
                         .WithMany("Members")
                         .HasForeignKey("TeamId");
                 });

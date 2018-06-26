@@ -1,10 +1,23 @@
-﻿.navigation {
+﻿#userLogin{
+    margin-left: 10px;
+}
+
+.columnGrid {
+    width: 50px;
+}
+
+.fontFamily {
+    font-family: 'Times New Roman';
+}
+
+.navigation {
     margin-top: 6%;
-     display: flex;
-     background: #009788;
-     border-radius: 3px;
-     height: auto;
-     width: 100%;
+    display: flex;
+    background: #232526;
+    background: -webkit-linear-gradient(to right, #232526, #414345);
+    background: linear-gradient(to right, #232526, #414345);
+    height: auto;
+    width: 100%;
 }
 
 
@@ -24,8 +37,13 @@
 }
 
 #rigthUl {
-    margin-top: -2%;
+    background: RGBA(249, 201, 16, 0);
+    margin-top: -5%;
     height: 50px;
+}
+
+#aColor {
+    background: RGBA(249, 201, 16, 0);
 }
 
 #myDropdown {
@@ -47,15 +65,14 @@
 }
 
 
-.navigation li a {
-     padding: 10px 25px;
-     font-size: 18px;
-     color: #def1f0;
-     display: inline-block;
-     outline: 0;
-     font-weight: 400;
-    
-}
+    .navigation li a {
+        padding: 10px 25px;
+        font-size: 18px;
+        color: lightgray;
+        display: inline-block;
+        outline: 0;
+        font-weight: 400;
+    }
 
 
 .navigation li:hover ul.dropdown {
@@ -66,8 +83,8 @@
     .navigation li ul.dropdown {
         position: absolute;
         display: none;
-        width: 188%;
-        background: #00695b;
+        width: 150%;
+        background-color: gray;
         box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
         padding-top: 0;
         z-index: 1000;
@@ -84,7 +101,7 @@
 .navigation li ul.dropdown li a {
      padding: 10px;
      font-size: 15px;
-     color: #fff;
+     color: snow;
      display: block;
      border-bottom: 1px solid #005c4d;
      font-weight: 400;
@@ -97,11 +114,11 @@
 }
 
 
-.navigation li:hover a {
-    background: #00695b;
-    color: #fff !important;
-
-}
+    .navigation li:hover a {
+        width: auto;
+        background-color: gray;
+        color: snow !important;
+    }
 
 
 .navigation li:first-child:hover a {
@@ -110,7 +127,7 @@
 
 
 .navigation li ul.dropdown li:hover a {
-    background: #56b5ae;
+    background-color: lightgray;
 }
 
 
@@ -122,7 +139,9 @@
     width: 100%;
     height: 60px;
     display: flex;
-    background: #009788;
+    background: #232526;
+    background: -webkit-linear-gradient(to right, #232526, #414345);
+    background: linear-gradient(to right, #232526, #414345);
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
     border-radius: 3px;
     margin-top: -2%;
@@ -130,7 +149,8 @@
 }
 
 .myLogo {
-    margin: 0.3%;
+    margin-top: 0.5%;
+    margin-left: 2%;
     border-radius: 20px;
     float: right;
 }
@@ -138,7 +158,7 @@
     height: 0px;
     position: absolute;
     right: 30px;
-    color: #def1f0;
+    color: snow;
     height: 10px;
 }
 
@@ -165,7 +185,7 @@
 
 @media (max-width: 768px) and (min-width: 0px){
     #myUl {
-        height: 100px;
+        height: auto;
     }
 }
 

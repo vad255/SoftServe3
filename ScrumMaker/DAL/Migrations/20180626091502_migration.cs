@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAL.Migrations
 {
-    public partial class init : Migration
+    public partial class migration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,7 @@ namespace DAL.Migrations
                 name: "Features",
                 columns: table => new
                 {
-                    FeatureId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     FeatureName = table.Column<string>(maxLength: 30, nullable: false),
                     Description = table.Column<string>(maxLength: 500, nullable: true),
@@ -21,7 +21,7 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Features", x => x.FeatureId);
+                    table.PrimaryKey("PK_Features", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -43,11 +43,11 @@ namespace DAL.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Initiated = table.Column<DateTime>(nullable: false),
-                    Planned = table.Column<DateTime>(nullable: false),
-                    Begined = table.Column<DateTime>(nullable: false),
-                    ReviewDone = table.Column<DateTime>(nullable: false),
-                    RetrospectiveDone = table.Column<DateTime>(nullable: false)
+                    Initiated = table.Column<DateTime>(nullable: true),
+                    Planned = table.Column<DateTime>(nullable: true),
+                    Begined = table.Column<DateTime>(nullable: true),
+                    ReviewDone = table.Column<DateTime>(nullable: true),
+                    RetrospectiveDone = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -73,6 +73,7 @@ namespace DAL.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: false),
                     Stage = table.Column<int>(nullable: false),
                     HistoryId = table.Column<int>(nullable: true),
                     Review = table.Column<string>(nullable: true),
@@ -102,11 +103,12 @@ namespace DAL.Migrations
                 {
                     UserId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Login = table.Column<string>(maxLength: 20, nullable: false),
-                    Password = table.Column<string>(maxLength: 20, nullable: false),
+                    Login = table.Column<string>(maxLength: 50, nullable: false),
+                    Password = table.Column<string>(maxLength: 50, nullable: false),
                     RoleId = table.Column<int>(nullable: false),
+                    TeamId = table.Column<int>(nullable: true),
                     Activity = table.Column<bool>(nullable: false),
-                    TeamId = table.Column<int>(nullable: true)
+                    Photo = table.Column<byte[]>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -132,7 +134,7 @@ namespace DAL.Migrations
                     Id = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: false),
                     Сonducted = table.Column<DateTime>(nullable: false),
-                    SprintId = table.Column<int>(nullable: true)
+                    SprintId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -142,7 +144,7 @@ namespace DAL.Migrations
                         column: x => x.SprintId,
                         principalTable: "Sprints",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -172,7 +174,7 @@ namespace DAL.Migrations
                         name: "FK_Stories_Features_FeatureId",
                         column: x => x.FeatureId,
                         principalTable: "Features",
-                        principalColumn: "FeatureId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Stories_Sprints_SprintId",
@@ -196,23 +198,34 @@ namespace DAL.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     DefectName = table.Column<string>(nullable: true),
                     Description = table.Column<string>(maxLength: 500, nullable: true),
-                    Priority = table.Column<string>(nullable: true),
-                    State = table.Column<string>(nullable: true),
+                    Priority = table.Column<int>(nullable: false),
+                    State = table.Column<int>(nullable: false),
                     Status = table.Column<int>(nullable: false),
-                    AssignedTo = table.Column<string>(nullable: true),
-                    Sprint = table.Column<string>(nullable: true),
+                    AssignedToId = table.Column<int>(nullable: true),
+                    SprintId = table.Column<int>(nullable: true),
                     StepsToReproduse = table.Column<string>(nullable: true),
                     ExpectedResults = table.Column<string>(nullable: true),
                     ActualResults = table.Column<string>(nullable: true),
                     FixResults = table.Column<string>(nullable: true),
                     Attachments = table.Column<string>(nullable: true),
                     Blocked = table.Column<int>(nullable: false),
-                    Chat = table.Column<string>(nullable: true),
                     StoryId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Defects", x => x.DefectId);
+                    table.ForeignKey(
+                        name: "FK_Defects_Users_AssignedToId",
+                        column: x => x.AssignedToId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Defects_Sprints_SprintId",
+                        column: x => x.SprintId,
+                        principalTable: "Sprints",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Defects_Stories_StoryId",
                         column: x => x.StoryId,
@@ -258,6 +271,16 @@ namespace DAL.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_DailyScrumInfo_SprintId",
                 table: "DailyScrumInfo",
+                column: "SprintId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Defects_AssignedToId",
+                table: "Defects",
+                column: "AssignedToId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Defects_SprintId",
+                table: "Defects",
                 column: "SprintId");
 
             migrationBuilder.CreateIndex(

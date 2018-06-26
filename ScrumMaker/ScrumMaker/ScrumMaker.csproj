@@ -10,14 +10,13 @@
   <ItemGroup>
     <PackageReference Include="bootstrap" Version="4.1.1" />
     <PackageReference Include="bootstrap.sass" Version="4.1.1" />
-    <PackageReference Include="JWT" Version="5.0.0-beta2" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.OData" Version="7.0.0-beta4" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.2.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,15 +34,28 @@
 
   <ItemGroup>
     <None Remove="ClientApp\components\AddUser.tsx" />
-    <None Remove="ClientApp\components\Login.tsx" />
     <None Remove="ClientApp\components\EditUser.tsx" />
     <None Remove="ClientApp\components\MailSender.tsx" />
     <None Remove="ClientApp\components\SprintsGrid.tsx" />
+    <None Remove="ClientApp\components\TeamGrid.tsx" />
     <None Remove="ClientApp\css\editUser.css" />
+    <Content Remove="wwwroot\images\Thumbs.db" />
+    <Content Remove="wwwroot\img\ScrumMakerLogo.jpg" />
+    <Content Remove="wwwroot\img\______________2018_06_12____15_33_52_fdV_icon.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="ClientApp\css\navMenu.css" />
+    <None Remove="ClientApp\components\AddUser.tsx" />
+    <None Remove="ClientApp\components\MailSender.tsx" />
+    <None Remove="ClientApp\components\SprintsGrid.tsx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\img\28883217.jpg" />
+    <None Include="wwwroot\img\face.jpg" />
+    <None Include="wwwroot\img\mid_246485_6469.jpg" />
+    <None Include="wwwroot\img\ScrumMakerLogo.jpg" />
+    <None Include="wwwroot\img\______________2018_06_12____15_33_52_fdV_icon.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -54,10 +66,18 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\AddUser.tsx" />
-    <TypeScriptCompile Include="ClientApp\components\Login.tsx" />
-    <TypeScriptCompile Include="ClientApp\components\EditUser.tsx" />
     <TypeScriptCompile Include="ClientApp\components\SprintsGrid.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\TeamGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\css\editUser.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\img\ScrumMakerLogo.jpg" />
+    <None Include="wwwroot\img\______________2018_06_12____15_33_52_fdV_icon.png" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

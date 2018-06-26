@@ -1,0 +1,41 @@
+﻿.table-scrum {
+    /*border: 1px solid black;*/
+    border-collapse: collapse;
+    width: 100%;
+    background-color: rgba(229, 229, 229, 0.63);
+    border-radius: 3px 3px 3px 3px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.td-scrum tbody tr td {
+    border-top: solid 1px #808080;
+}
+
+.td-scrum tbody {
+    border-top: solid 3px #808080;
+}
+
+.td-scrum thead tr th {
+    background-color: rgba(200, 200, 200, 0.63);
+    text-align: center;
+}
+
+.td-scrum thead tr th:first-child {
+    border-radius: 3px 0px 0px 0px;
+}
+
+.td-scrum thead tr th:last-child {
+    border-radius: 0px 3px 0px 0px;
+}
+
+.btn-dropdown {
+    border: 2px solid #808080;
+    border-radius: 3px;
+    background-color: rgba(200, 200, 200, 0.63);
+}
+
+.btn-dropdown:hover {
+    background-color: white;
+    color: black;
+}

@@ -1,0 +1,96 @@
+.btn {
+  color: black;
+  border: 1px solid black;
+  padding: 0.5em 1em;
+  text-decoration: none;
+  margin-top: 8px;
+  display: contents;
+  cursor: pointer;
+}
+
+.nowrap {
+  white-space:nowrap;
+}
+
+.nodisplay{
+  display: none;
+}
+
+.btn-sq-lg {
+  width: 150px !important;
+  height: 150px !important;
+}
+
+.btn-sq {
+  width: 100px !important;
+  height: 100px !important;
+  font-size: 10px;
+}
+
+.btn-sq-sm {
+  width: 50px !important;
+  height: 50px !important;
+  font-size: 10px;
+}
+
+.btn-sq-xs {
+  width: 25px !important;
+  height: 25px !important;
+  display: contents !important;
+  padding:2px;
+}
+
+.btn-del {
+  width: 25px !important;
+  height: 25px !important;
+  padding:2px;
+}
+
+.btn-upd {
+  width: 25px !important;
+  height: 25px !important;
+  padding:2px;
+}
+
+.btn-img {
+  width: 25px;
+  height: 25px;
+}
+
+.center-block {
+  margin-left:auto;
+  margin-right:auto;
+  display:block;
+}
+
+
+.text-center {
+  text-align:center
+}
+
+.dropListItem{
+  height: 40px; 
+  padding: 5px 5px 5px 5px;
+}
+
+table td input {
+  width: 100%;   
+ }
+
+.align-base{
+  vertical-align: baseline !important;
+}
+
+/* .searchInput{
+     width: initial; 
+     padding: 0%;
+     margin: 0%;
+     /* box-sizing: border-box;
+     -webkit-box-sizing:border-box;
+     -moz-box-sizing: border-box; 
+}
+
+.myTd{
+  padding: 0%;
+  margin: 0%;
+} */
