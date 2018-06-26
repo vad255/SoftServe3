@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAL.Migrations
 {
-    public partial class mig : Migration
+    public partial class @new : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -107,7 +107,8 @@ namespace DAL.Migrations
                     Password = table.Column<string>(maxLength: 50, nullable: false),
                     RoleId = table.Column<int>(nullable: false),
                     TeamId = table.Column<int>(nullable: true),
-                    Activity = table.Column<bool>(nullable: false)
+                    Activity = table.Column<bool>(nullable: false),
+                    Photo = table.Column<byte[]>(nullable: true)
                 },
                 constraints: table =>
                 {
