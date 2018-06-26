@@ -11,6 +11,7 @@ import { StoryGrid } from './components/StoryGrid';
 import { FeatureGrid } from './components/FeatureGrid';
 import { EditUser } from './components/EditUser';
 import { TeamGrid } from './components/TeamGrid';
+import { DefectGrid } from './components/DefectGrid';
 
 
 export const routes = <Layout>
@@ -24,4 +25,5 @@ export const routes = <Layout>
     <Route path='/feature' component={FeatureGrid} />
     <Route path='/edituser' component={EditUser} />
     <Route path='/teamgrid' component={TeamGrid} />
+    <Route path='/defects' component={DefectGrid} />
 </Layout>;
