@@ -5,6 +5,65 @@ import { Sprint } from './Models/Sprint';
 import * as ReactDOM from 'react-dom';
 
 
+export interface IFilterConfiguration {
+    filterKey: string;
+    onFilterChanged: Function;
+}
+
+export abstract class Filter extends React.Component<IFilterConfiguration, IFilterConfiguration> {
+
+    public static readonly QUERY_HEAD: string = "&$filter="
+    public static readonly CONSTRAIN_DIVIDER: string = " and "
+
+    constructor(params: IFilterConfiguration) {
+        super();
+        this.state = { onFilterChanged: params.onFilterChanged, filterKey: params.filterKey }
+    }
+
+    public Reset() {
+        this.forceUpdate();
+    }
+
+    public render() {
+        return <input type="text" />
+    }
+}
+
+export class TextFilter extends Filter {
+    constructor(params: IFilterConfiguration) {
+        super(params);
+    }
+
+    filteringString: string = '';
+
+    private OnChangeHandler(e: any) {
+        this.filteringString = 'contains(' + this.state.filterKey + ', \'' + e.target.value + '\')'
+
+        this.state.onFilterChanged(this.state.filterKey, this.filteringString);
+    }
+
+    public render() {
+        return <input type="text" onChange={((e: any) => this.OnChangeHandler(e)).bind(this)} />
+    }
+}
+
+export class IntFilter extends Filter {
+    constructor(params: IFilterConfiguration) {
+        super(params);
+    }
+
+    filteringString: string = '';
+
+    private OnChangeHandler(e: any) {
+        this.filteringString = 'contains(cast(' + this.state.filterKey + ', \'Edm.String\'), \'' + e.target.value + '\')'
+        this.state.onFilterChanged(this.state.filterKey, this.filteringString);
+    }
+
+    public render() {
+        return <input type="text" onChange={((e: any) => this.OnChangeHandler(e)).bind(this)} />
+    }
+}
+
 
 interface SprintDataFetchingState {
     sprints: Sprint[];
@@ -14,21 +73,21 @@ interface SprintDataFetchingState {
 
 export class SprintsGrid extends React.Component<RouteComponentProps<{}>, SprintDataFetchingState> {
 
-    static readonly URL_BASE : string = 'odata/sprints';
-    static readonly URL_EXPANDS : string = '?$expand=Team($expand=members),history'
-    static readonly URL_ORDERING : string = '&$orderby=id'
+    static readonly URL_BASE: string = 'odata/sprints';
+    static readonly URL_EXPANDS: string = '?$expand=Team($expand=members),history'
+    static readonly URL_ORDERING: string = '&$orderby=id'
 
     constructor() {
         super();
-        this.state = { sprints: [], loading: true, filters: []};
+        this.state = { sprints: [], loading: true, filters: [] };
 
         this.LoadData();
-    } 
+    }
 
-    private lastOrderingArg : string = "";
-    private lastOrderingDir : boolean = false;
-    private fileteringOn : boolean = false;
-    private filterString : string = "";
+    private lastOrderingArg: string = "";
+    private lastOrderingDir: boolean = false;
+    private fileteringOn: boolean = false;
+    private filterString: string = "";
 
     private LoadData() {
         fetch(this.getURL())
@@ -49,17 +108,18 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
         return <div>
             <h1>Sprints</h1>
             {contents}
-            </div>
+        </div>
     }
 
-  
+
 
     private renderSprintsTable(sprints: Sprint[]) {
 
         return <table className='table table-scrum table-hover td-scrum'>
             {this.GetHeader()}
+            {this.getFiltersLine()}
             <tbody>
-                {this.getFiltersLine()}
+
                 {this.state.sprints.map(s => s.renderAsTableRow())}
             </tbody>
             <tfoot>
@@ -68,7 +128,7 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
         </table>
 
     }
-    
+
 
     private GetHeader() {
         return <thead>
@@ -82,69 +142,61 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
                 <th className="well well-sm" onClick={() => this.OrderBy("retrospective")}>Retrospective</th>
                 <th className="well well-sm">
                     <div onClick={this.FilterButtonClick.bind(this)}>
-                    <span className="nowrap">Show Filters<span className="caret"></span></span> 
+                        <span className="nowrap">Show Filters<span className="caret"></span></span>
                     </div>
                 </th>
             </tr>
         </thead>;
     }
-    private getFiltersLine()
-    {
-        if (!this.fileteringOn)
-            return <tr><td colSpan={8} className="nodisplay"><div className="container"><img src='/images/loading.gif'/></div></td></tr>
-        return <tr>
-        <td className="align-base">
-            <input className="searchInput"  type="text"  id="idFilter" 
-            onChange={((e : any) => this.FilterChanged("id", e)).bind(this)}/>
-        </td>
-        <td className="align-base">
-            <input className="searchInput" type="text"  id="nameFilter"
-            onChange={((e : any) => this.FilterChanged("name", e)).bind(this)}/>
-        </td>
-        <td className="align-base">
-            <input className="searchInput" type="text"  id="teamFilter"
-            onChange={((e : any) => this.FilterChanged("team/name", e)).bind(this)}/>
-        </td>
-        <td className="align-base">
-            <input className="searchInput" type="text"  id="stageFilter" />
-        </td>
-        <td className="align-base">
-            <input className="searchInput" type="text"  id="reviewFilter"
-            onChange={((e : any) => this.FilterChanged("review", e)).bind(this)}/>
-        </td>
-        <td className="align-base">
-            <input className="searchInput" type="text"  id="historyFilter"
-            onChange={((e : any) => this.FilterChanged("history/initiated", e)).bind(this)}/>
-        </td>
-        <td className="align-base">
-            <input className="searchInput" type="text"  id="retrospectiveFilter"
-            onChange={((e : any) => this.FilterChanged("retrospective", e)).bind(this)}/>
-        </td>
-        <td className="align-base">
-        <div  role="button" className="btn btn-sq-xs" onClick={this.CancelFiltersClick.bind(this)}>
-                <img src='/images/cancel_256.png' alt='upd' className="btn-img" /> 
-            </div> &nbsp;
-            <div role="button" className="btn btn-sq-xs" onClick={this.ApplyFiltersClick.bind(this)}> 
-                <img src='/images/ok_512.png' alt='Apply' className="btn-img" /> 
-            </div>
-
-        </td>
-    </tr>
+    private getFiltersLine() {
+        return <tr className={this.fileteringOn ? "" : "nodisplay"}>
+            <td>
+                <IntFilter filterKey = 'id' onFilterChanged={this.FilterChanged.bind(this)}/>
+            </td>
+            <td>
+                <TextFilter filterKey='name' onFilterChanged={this.FilterChanged.bind(this)} />
+            </td>
+            <td>
+                <TextFilter filterKey='team/name' onFilterChanged={this.FilterChanged.bind(this)} />
+            </td>
+            <td>
+               
+            </td>
+            <td>
+                <TextFilter filterKey='review' onFilterChanged={this.FilterChanged.bind(this)} />
+            </td>
+            <td >
+               
+            </td>
+            <td>
+                <TextFilter filterKey='retrospective' onFilterChanged={this.FilterChanged.bind(this)} />
+            </td>
+            <td>
+                <div role="button" className="btn btn-sq-xs align-base " onClick={this.CancelFiltersClick.bind(this)}>
+                    <span className="glyphicon glyphicon-remove-circle dark" aria-hidden="true"></span>
+                </div>
+                &nbsp;&nbsp;
+            <div role="button" className="btn btn-sq-xs align-base" onClick={this.ApplyFiltersClick.bind(this)}>
+                    <span className="glyphicon glyphicon-ok dark" aria-hidden="true"></span>
+                </div>
+            </td>
+        </tr>
     }
+
 
     private RenderFooter() {
         return <tr>
             <td colSpan={8}>
                 <div className="text-center">
                     <div role='button' className='btn btn-primary'>
-                       Add new
+                        Add new
                     </div>
                 </div>
             </td>
         </tr>;
     }
 
-    private getURL() : string{
+    private getURL(): string {
         var result = SprintsGrid.URL_BASE;
         result += SprintsGrid.URL_EXPANDS;
 
@@ -154,91 +206,82 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
         return result;
     }
 
-    private FilterChanged(key: string, e: any){
-        this.state.filters[key] = e.target.value;
+    private FilterChanged(key: string, filter: string) {
+
+        this.state.filters[key] = filter;
     }
 
-    private ApplyFiltersClick(e : any){
-        this.filterString = "&$filter=";
+    private ApplyFiltersClick(e: any) {
+        this.filterString = Filter.QUERY_HEAD;
         var i = 0;
         for (let iterator in this.state.filters) {
             if (this.state.filters[iterator] === '')
                 continue;
 
             i++;
-            console.log(iterator);
-            this.filterString += 'contains(' + iterator + ', \'' + this.state.filters[iterator] + '\') and ';
+            if (i !== 1)
+                this.filterString += Filter.CONSTRAIN_DIVIDER;
+            this.filterString += this.state.filters[iterator];
         }
-        
-        if (i > 0)
-        {
-            this.filterString =  this.filterString.substring(0, this.filterString.length - 5);
-        }
-        else
-        {
-            console.log("NoFilters");
+
+        if (i === 0) {
             this.filterString = '';
         }
 
         this.LoadData();
-    
+
     }
 
 
-    private CancelFiltersClick(e: any){
-       (document.getElementById("idFilter") as any).value = '';
-       (document.getElementById("nameFilter") as any).value = '';
-       (document.getElementById("teamFilter") as any).value = '';
-       (document.getElementById("stageFilter") as any).value = '';
-       (document.getElementById("reviewFilter") as any).value = '';
-       (document.getElementById("historyFilter") as any).value = '';
-       (document.getElementById("retrospectiveFilter") as any).value = '';
+    private CancelFiltersClick(e: any) {
+        (document.getElementById("idFilter") as any).value = '';
+        (document.getElementById("nameFilter") as any).value = '';
+        (document.getElementById("teamFilter") as any).value = '';
+        (document.getElementById("stageFilter") as any).value = '';
+        (document.getElementById("reviewFilter") as any).value = '';
+        (document.getElementById("historyFilter") as any).value = '';
+        (document.getElementById("retrospectiveFilter") as any).value = '';
     }
 
-    private FilterButtonClick(e : any)
-    {
+    private FilterButtonClick(e: any) {
         this.fileteringOn = !this.fileteringOn
-        this.forceUpdate(); 
-
+        this.forceUpdate();
     }
 
-    private OrderBy(arg: string)
-    {
-        try{
+    private OrderBy(arg: string) {
+        try {
             var sprintsN = [];
             sprintsN = this.state.sprints as any[];
-            
+
 
             if (this.lastOrderingArg === arg)
                 this.lastOrderingDir = !this.lastOrderingDir;
             else
                 this.lastOrderingDir = false;
-           
+
 
             if (!this.lastOrderingDir)
-                sprintsN.sort((a,b) => this.SecureCompare(a,b,arg))
+                sprintsN.sort((a, b) => this.SafeCompare(a, b, arg))
             else
-                sprintsN.sort((a,b) => -this.SecureCompare(a,b,arg))
+                sprintsN.sort((a, b) => -this.SafeCompare(a, b, arg))
 
             this.lastOrderingArg = arg;
-            this.setState({sprints : sprintsN as Sprint[], loading : this.state.loading});
-        }catch(e)
-        {
+            this.setState({ sprints: sprintsN as Sprint[], loading: this.state.loading });
+        } catch (e) {
             alert(e);
-        } 
+        }
     }
 
-    private SecureCompare(a : any, b : any, arg: string)
-    {
+    private SafeCompare(a: any, b: any, arg: string) {
         if (a === undefined || b === undefined ||
-            a[arg] === undefined || b[arg] === undefined) 
+            a[arg] === undefined || b[arg] === undefined)
             return 0;
-         else 
+        else
             return this.Compare(a[arg], b[arg])
     }
 
-    private Compare(a: any, b: any): number{
-        if(typeof a === 'number' && typeof b === 'number')
+    private Compare(a: any, b: any): number {
+        if (typeof a === 'number' && typeof b === 'number')
             return a - b;
         else
             return a.toString().localeCompare(b.toString());

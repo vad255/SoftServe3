@@ -16,6 +16,10 @@
   display: none;
 }
 
+.dark{
+  color: rgb(26, 26, 26);
+}
+
 .btn-sq-lg {
   width: 150px !important;
   height: 150px !important;
