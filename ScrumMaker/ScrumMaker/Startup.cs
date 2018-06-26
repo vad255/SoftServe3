@@ -42,6 +42,7 @@ namespace ScrumMaker
 
         public void ConfigureServices(IServiceCollection services)
         {
+            string connectionStr = Configuration.GetConnectionString("Mikle");
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
                     {
@@ -58,9 +59,6 @@ namespace ScrumMaker
                         };
                     });
 
-
-            string connectionStr = Configuration.GetConnectionString("Viktor");
-
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
             services.AddScoped(typeof(DbContext), typeof(DataContext));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
@@ -71,6 +69,7 @@ namespace ScrumMaker
             services.AddScoped(typeof(IDefectsManager), typeof(DefectsManager));
             services.AddScoped(typeof(IUserManager), typeof(UserManager));
             services.AddScoped(typeof(ITasksManager), typeof(TasksManager));
+            services.AddScoped(typeof(IStoriesManager), typeof(StoriesManager));
 
             services.AddOData();
 

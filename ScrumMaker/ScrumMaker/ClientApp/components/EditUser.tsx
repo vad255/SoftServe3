@@ -1,75 +1,106 @@
-﻿import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
-import { Link } from 'react-router-dom';
+﻿import { Component } from "react";
+import * as React from "react";
+import { RouteComponentProps } from "react-router";
+import axios from "axios";
 
-interface AddUserDataState {
-    id: number;
-    login: string;
-    password: string;
-    roleList: Array<any>;
+interface FileLoad {
+    imagePreviewUrl: './img/unknown.jpg'
+    file: ''
+    password: ""
+    repeatPassword: ""
 }
 
-export class EditUser extends React.Component<RouteComponentProps<any>, AddUserDataState> {
+export class EditUser extends Component<RouteComponentProps<any>, FileLoad> {
     constructor(props: any) {
         super(props);
-
-        this.state = { id: 0, login: "", password: "", roleList: [] };
-
-        this.handleSave = this.handleSave.bind(this);
-        this.handleCancel = this.handleCancel.bind(this);
+        this.state = {
+            file: '',
+            imagePreviewUrl: './img/unknown.jpg',
+            password: "",
+            repeatPassword: ""
+        };
+        this._handleImageChange = this._handleImageChange.bind(this);
+        this._handleSubmit = this._handleSubmit.bind(this);
     }
 
-    public render() {
-        let contents = this.state.login
-            ? <p><em>Loading...</em></p>
-            : this.renderCreateForm(this.state.roleList);
-
-        return <div>
-            <h1>Edit User</h1>
-            {contents}
-        </div>;
-    }
-
-    // This will handle the submit form event.
-    private handleSave(event: any) {
-        event.preventDefault();
-        const data = new FormData(event.target);
-
-        fetch('api/User/Create', {
+    _handleSubmit(event: any) {
+        const formData = new FormData(event.target)
+        //formData.append('File', this.state.file, 'some value user types')
+        //axios.post('api/User/EditPhoto', formData, ).then(res => {
+        //    console.log(res);
+        //});
+        fetch('api/User/EditPhoto', {
             method: 'POST',
-            body: data,
-
-        }).then((response) => response.json())
-            .then((responseJson) => {
-                this.props.history.push("/");
-            })
+            body: formData,
+        })
     }
 
-    // This will handle Cancel button click event.
-    private handleCancel(e: any) {
-        e.preventDefault();
-        this.props.history.push("/");
+    _handleImageChange(e: any) {
+        let reader = new FileReader();
+        let file = e.target.files[0];
+
+        reader.onloadend = () => {
+            this.setState({
+                file: file,
+                imagePreviewUrl: reader.result
+            });
+        }
+        reader.readAsDataURL(file)
     }
 
-    private renderCreateForm(cityList: Array<any>) {
+    private handleSave(event: any) {
+        const data = new FormData(event.target);
+            fetch('api/User/EditPassword', {
+                method: 'POST',
+                body: data,
+        })
+    }
+
+
+    render() {
+        let { imagePreviewUrl } = this.state;
+        let $imagePreview = null;
+        if (imagePreviewUrl) {
+            $imagePreview = (<img width="200px" height="200px" src={imagePreviewUrl} />);
+        }
+
         return (
             <main className="page">
-                <h2>Upload ,Crop and save.</h2>
-                <div className="box">
-                    <input type="file" id="file-input" />
-                </div>
-                <div className="box-2">
-                    <div className="result"></div>
-                </div>
-                <div className="box-2 img-result hide">
-                    <img className="cropped" src="" alt="" />
-                </div>
-                <div className="box">
-                    <button className="btn save hide">Save</button>
-                </div>
+                <div className='myDiv'>{$imagePreview}</div>
+                <form onSubmit={this._handleSubmit} asp-controller="UserEdit" asp-action="UploadFile" method="post">
+                    <div className="file-upload">
+                        <label className="chooseLabel">
+                            <input type="file" className="fileInput" name="file" onChange={this._handleImageChange} />
+                            <span>Choose</span>
+                        </label>
+                    </div>
+                    <button type="submit" className="btn save" onClick={this._handleSubmit}>Upload Image</button>
+                </form>
+
+                <p>____________________________________________________________________________________________</p>
+
+                <form onSubmit={this.handleSave}>
+                    <div className='fildsDiv'>
+                        <div className="form-group row" >
+                            <input type="hidden" name="employeeId" />
+                        </div>
+                        <div className="form-group row">
+                            <label className="control-label col-md-12" htmlFor="password" >New password</label>
+                            <div className="col-md-4">
+                                <input className="form-control" type="password" name="password" defaultValue={this.state.password} required />
+                            </div>
+                        </div>
+                        <div className="form-group row">
+                            <label className="control-label col-md-12" htmlFor="repeatpassword" >Repeat password</label>
+                            <div className="col-md-4">
+                                <input className="form-control" type="password" name="repeatpassword" defaultValue={this.state.repeatPassword} required />
+                            </div>
+                        </div>
+                        <button type="submit" className="btn save" onClick={this._handleSubmit}>Change password</button>
+                    </div>
+                </form>
             </main>
         )
     }
-
 }
-    
+   

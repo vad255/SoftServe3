@@ -3,7 +3,7 @@
   border: 1px solid black;
   padding: 0.5em 1em;
   text-decoration: none;
-  margin: 0.8em 0.3em;
+  margin-top: 8px;
   display: contents;
   cursor: pointer;
 }
@@ -12,6 +12,9 @@
   white-space:nowrap;
 }
 
+.nodisplay{
+  display: none;
+}
 
 .btn-sq-lg {
   width: 150px !important;
@@ -33,6 +36,7 @@
 .btn-sq-xs {
   width: 25px !important;
   height: 25px !important;
+  display: contents !important;
   padding:2px;
 }
 
@@ -73,7 +77,7 @@ table td input {
   width: 100%;   
  }
 
-.myTd{
+.align-base{
   vertical-align: baseline !important;
 }
 

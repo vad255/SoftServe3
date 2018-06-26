@@ -1,15 +1,81 @@
-﻿.page {
+﻿.file-upload {
+    position: relative; /* Даем возможность делать позиционирование, внутри данного элемента */
+    overflow: hidden; /* Все что выходит за пределы - скрываем */
+    width: 100%; /* Задаем ширину кнопки выбора файла */
+    height: 30px; /* Задаем высоту кнопки выбора файла */
+    background: #232526;
+    background: -webkit-linear-gradient(to right, #232526, #414345);
+    background: linear-gradient(to right, #232526, #414345);
+    border-radius: 3px;
+    padding: 8px 4px;
+    color: white;
+    text-align: center;
+    margin-top: 5px;
+    text-decoration: none;
+    font-family: 'Times New Roman';
+    font-weight: normal;
+}
+.chooseLabel {
+    font-weight: normal;
+    width: 150px;
+}
+
+.file-upload:hover {
+    color: lightgray;
+}
+
+    .file-upload input[type="file"] {
+        display: none;
+    }
+
+    .file-upload label {
+        /* Растягиваем label на всю возможную площадь блока .file-upload */
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+    }
+
+    .file-upload span {
+        line-height: 36px; /* Делаем вертикальное выравнивание текста, который написан на кнопке */
+    }
+
+.form-control {
+    width: 200px;
+    border: 1px solid lightgray;
+    background: #232526;
+    background: -webkit-linear-gradient(to right, #232526, #414345);
+    background: linear-gradient(to right, #232526, #414345);
+    color: white;
+}
+
+.myDiv {
+    height: 200px;
+    width: 800px;
+    border-radius: 20px;
+}
+
+.fildsDiv {
+    float:left;
+}
+
+.page {
     margin: 1em auto;
     max-width: 768px;
     display: flex;
     align-items: flex-start;
     flex-wrap: wrap;
     height: 100%;
+    width: 100%;
+    float: left;
 }
 
 .box {
     padding: 0.5em;
-    width: 100%;
+    width: 40%;
     margin: 0.5em;
 }
 
@@ -23,13 +89,17 @@
     width: 4em;
     padding: 0.5em 1em;
 }
-.btn{
-    background: white;
-    color: black;
-    border: 1px solid black;
+.btn {
+    width: 150px;
+    font-family: 'Times New Roman';
+    background: #232526;
+    background: -webkit-linear-gradient(to right, #232526, #414345);
+    background: linear-gradient(to right, #232526, #414345);
+    color: white;
+    border: 1px solid lightgray;
     padding: 0.5em 1em;
     text-decoration: none;
-    margin: 0.8em 0.3em;
+    margin-top: 5px;
     display: inline-block;
     cursor: pointer;
 }
@@ -40,4 +110,8 @@
 
 img {
     max-width: 100%;
+    border: 1px solid lightgray;
+}
+.btn:hover {
+    color: lightgray;
 }

@@ -16,6 +16,8 @@ export class User {
         this.password = params.Password;
         this.roleId = params.RoleId;
         this.userId = params.UserId;
+
+        this.teamId = params.TeamId;
         this.empty = false;
     }
 
@@ -23,6 +25,7 @@ export class User {
     login: string = "";
     password: string = "";
     roleId: number = -1;
+    teamId: number = -1;
     userId: number = -1;
 
     public toString() : string {
@@ -33,9 +36,9 @@ export class User {
 
     renderAsDropDown() {
         if (this.empty)
-            return "NoData";
-        return <li className="dropdown-submenu">
-            <div > {this.login} </div>
+           return <li key="nodata"><div> nodata </div></li>;
+        return <li key={this.userId.toString()} className="dropdown-submenu">
+            <div> {this.login} </div>
             <ul className="dropdown-menu">
                 <li className="dropListItem"><b><pre>UserID:  {this.userId}</pre></b> </li>
                 <li className="dropListItem"><b><pre>Login:   {this.login}</pre></b> </li>

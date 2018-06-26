@@ -1,5 +1,4 @@
-﻿
-import * as React from 'react';
+﻿import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 
@@ -33,7 +32,6 @@ export class UserGrid extends React.Component<RouteComponentProps<{}>, UserState
 
         return <div>
             <h1>User Grid</h1>
-            <p>This component demonstrates userGrid from the database.</p>
             {contents}
         </div>;
     }

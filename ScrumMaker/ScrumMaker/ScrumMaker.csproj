@@ -29,6 +29,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\components\AddUser.tsx" />
+    <None Remove="ClientApp\components\EditUser.tsx" />
+    <None Remove="ClientApp\components\MailSender.tsx" />
+    <None Remove="ClientApp\components\SprintsGrid.tsx" />
+    <None Remove="ClientApp\components\TeamGrid.tsx" />
+    <None Remove="ClientApp\css\editUser.css" />
     <Content Remove="wwwroot\images\Thumbs.db" />
     <Content Remove="wwwroot\img\ScrumMakerLogo.jpg" />
     <Content Remove="wwwroot\img\______________2018_06_12____15_33_52_fdV_icon.png" />
@@ -41,6 +47,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\img\28883217.jpg" />
+    <None Include="wwwroot\img\face.jpg" />
+    <None Include="wwwroot\img\mid_246485_6469.jpg" />
+    <None Include="wwwroot\img\ScrumMakerLogo.jpg" />
+    <None Include="wwwroot\img\______________2018_06_12____15_33_52_fdV_icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BL\BL.csproj" />
     <ProjectReference Include="..\DAL\DAL.csproj" />
     <ProjectReference Include="..\ScrumMaker.Logger\ScrumMaker.Logger.csproj" />
@@ -49,6 +63,8 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\AddUser.tsx" />
     <TypeScriptCompile Include="ClientApp\components\SprintsGrid.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\TeamGrid.tsx" />
+    <TypeScriptCompile Include="ClientApp\css\editUser.css" />
   </ItemGroup>
 
   <ItemGroup>

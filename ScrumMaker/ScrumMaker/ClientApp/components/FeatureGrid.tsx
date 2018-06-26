@@ -133,7 +133,6 @@ export class FeatureGrid extends React.Component<RouteComponentProps<{}>, FetchF
 
         return <div>
             <h1>Feature screen</h1>
-            <p>This component demonstrates Feature from the database.</p>
             {contents}
         </div>;
     }

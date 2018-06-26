@@ -1,13 +1,13 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="~/dist/bootstrap.css" />
+    @*<link rel="stylesheet" href="~/dist/bootstrap.css" />*@
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/css/bootstrap.css" />
+      @*  <link rel="stylesheet" href="~/lib/css/bootstrap.css" />*@
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="~/lib/css/bootstrap.min.css" />
+        @*<link rel="stylesheet" href="~/lib/css/bootstrap.min.css" />*@
     </environment>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -25,8 +25,8 @@
     <script src="~/dist/vendor.js" asp-append-version="true"></script>
     @RenderSection("scripts", required: false)
     <environment include="Development">
-        <script src="~/lib/js/jquery-3.3.1.js"></script>
-        <script src="~/lib/js/bootstrap.bundle.js"></script>
+        @*<script src="~/lib/js/jquery-3.3.1.js"></script>
+        <script src="~/lib/js/bootstrap.bundle.js"></script>*@
     </environment>
     <environment exclude="Development">
     </environment>
