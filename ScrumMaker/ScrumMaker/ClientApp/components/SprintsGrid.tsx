@@ -57,7 +57,7 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
 
     private renderSprintsTable(sprints: Sprint[]) {
 
-        return <table className='table'>
+        return <table className='table table-scrum table-hover td-scrum'>
             {this.GetHeader()}
             <tbody>
                 {this.getFiltersLine()}
