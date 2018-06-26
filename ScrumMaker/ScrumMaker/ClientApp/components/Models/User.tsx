@@ -16,6 +16,7 @@ export class User {
         this.password = params.Password;
         this.roleId = params.RoleId;
         this.userId = params.UserId;
+        this.teamId = params.TeamId;
         this.empty = false;
     }
 
@@ -23,6 +24,7 @@ export class User {
     login: string = "";
     password: string = "";
     roleId: number = -1;
+    teamId: number = -1;
     userId: number = -1;
 
     public toString() : string {

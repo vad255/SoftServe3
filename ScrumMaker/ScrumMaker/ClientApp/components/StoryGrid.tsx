@@ -26,7 +26,6 @@ export class StoryGrid extends React.Component<RouteComponentProps<{}>, StoryDat
 
         return <div>
             <h1>Stories</h1>
-            <p>This component demonstrates Stories from the server.</p>
             {contents}
         </div>;
     }

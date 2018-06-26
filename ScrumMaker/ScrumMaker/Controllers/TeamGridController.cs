@@ -5,29 +5,24 @@ using System.Threading.Tasks;
 using DAL;
 using DAL.Access;
 using DAL.Models;
+using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ScrumMaker.Controllers
 {
-    [Route("api/[controller]")]
-    public class TeamGrid : Controller
+    public class TeamsController : ODataController
     {
-        private DataContext _db;
-        public TeamGrid(DataContext db)
+        private IRepository<Team> _teams;
+
+        public TeamsController(IRepository<Team> repository)
         {
-            _db = db;
+            _teams = repository;
         }
 
-        [HttpGet("[action]")]
-        public List<Team> GetTeam()
+        [EnableQuery]
+        public IActionResult Get()
         {
-            return _db.Teams.ToList();
-        }
-
-        [HttpGet("[action]")]
-        public List<User> GetUser()
-        {
-            return _db.Users.ToList();
+            return Ok(_teams.GetAll());
         }
     }
 }
