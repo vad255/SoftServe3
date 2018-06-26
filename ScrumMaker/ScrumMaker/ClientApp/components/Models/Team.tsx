@@ -38,9 +38,9 @@ export class Team{
 
     renderAsMenu() {
         if (this.empty)
-            return <div id="{this.id}" role="button" data-toggle="dropdown" className="btn btn-sm "> No Data </div>
+            return <div id="nodata" role="button" data-toggle="dropdown" className="btn btn-sm "> No Data </div>
         return <div className="dropdown">
-            <div id="{this.id}" role="button" data-toggle="dropdown" className="btn btn-sm btn-primary" >
+            <div id={this.id.toString()} role="button" data-toggle="dropdown" className="btn btn-sm btn-primary" >
                 {this.name} <span className="caret"></span>
             </div>
             <ul className="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
