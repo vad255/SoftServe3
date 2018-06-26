@@ -88,7 +88,7 @@ export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDa
                 </div >
 
                 <div className="form-group">
-                    <button type="submit" className="btn btn-default">Register</button>
+                    <button type="submit" className="btn">Register</button>
                     <button className="btn" onClick={this.handleCancel}>Cancel</button>
                 </div >
             </form >

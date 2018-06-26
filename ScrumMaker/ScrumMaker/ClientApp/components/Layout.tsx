@@ -10,11 +10,11 @@ export class Layout extends React.Component<LayoutProps, {}> {
     public render() {
         return <div className='container-fluid'>
             <div className='header'>
-                <img src="./img/ScrumMakerLogo.jpg" width="45" height="45" className="myLogo"/>
+                <img src="./img/ScrumMakerLogo.jpg" width="59" height="50" className="myLogo"/>
                 <div id='mySettings'>
-                    <div className="navigation">
+                    <div className="navigation fontFamily" id="aColor">
                         <ul id="rigthUl">
-                            <li><a>Settings<span className="arrow-left"></span></a>
+                            <li><a className="aColor">Settings<span className="arrow-left"></span></a>
                                 <ul className="dropdown">
                                     <li><Link to="/usergrid">Users</Link></li>
                                     <li><Link to="/Stories">Stories</Link></li>
@@ -22,7 +22,7 @@ export class Layout extends React.Component<LayoutProps, {}> {
                                     <li><Link to="/sprints">Sprints</Link></li>
                                 </ul>
                             </li>
-                            <li><a> <img src="./img/ScrumMakerLogo.jpg" width="40px" height="40px" alt="lorem" className="userAvatar"></img><span className="arrow-down">Login</span></a>
+                            <li><a> <img src="./img/ScrumMakerLogo.jpg" width="40px" height="40px" alt="lorem" className="userAvatar"></img><span id="userLogin">Login</span></a>
                                 <ul className="dropdown">
                                     <li><Link to="/edituser">Edit user</Link></li>
                                     <li><Link to="/#">About</Link></li>

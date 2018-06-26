@@ -22,6 +22,7 @@ namespace ScrumMaker
                 builder.EntitySet<Team>("Teams").EntityType.HasKey(t => t.Id);
                 builder.EntitySet<User>("Users");
                 builder.EntitySet<Story>("Stories").EntityType.HasKey(k => k.Id);
+                builder.EntitySet<Defect>("Defects").EntityType.HasKey(k => k.DefectId);
                 _model = builder.GetEdmModel();
             }
 
