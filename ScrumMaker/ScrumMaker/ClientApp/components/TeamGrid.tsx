@@ -2,6 +2,8 @@
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
+import { Team } from './Models/Team';
+import { User } from './Models/User';
 
 interface UserState {
     teams: Team[];
@@ -10,21 +12,26 @@ interface UserState {
 }
 
 export class TeamGrid extends React.Component<RouteComponentProps<{}>, UserState> {
+
+    static readonly URL_BASE: string = 'odata/teams';
+    static readonly URL_EXPANDS: string = '?$expand=members'
+    static readonly URL_ORDERING: string = '&$orderby=id'
+
     constructor() {
         super();
         this.state = { users: [], teams: [], loading: true };
 
-        fetch('api/TeamGrid/GetUser')
-            .then(response => response.json() as Promise<User[]>)
+        fetch(this.getURL())
+            .then(response => response.json() as any)
             .then(data => {
-                this.setState({ users: data, loading: false });
-            });
-        fetch('api/TeamGrid/GetTeam')
-            .then(response => response.json() as Promise<Team[]>)
-            .then(data => {
-                this.setState({ teams: data, loading: false });
+                var teamsTemp = [];
+                for (var i = 0; i < data['value'].length; i++)
+                    teamsTemp[i] = new Team(data["value"][i]);
+                this.setState({ teams: teamsTemp, loading: false });
             });
     }
+
+    private filterString: string = "";
 
     public render() {
         let contents = this.state.loading
@@ -78,6 +85,16 @@ export class TeamGrid extends React.Component<RouteComponentProps<{}>, UserState
 
     }
 
+    private getURL(): string {
+        var result = TeamGrid.URL_BASE;
+        result += TeamGrid.URL_EXPANDS;
+
+        if (this.filterString != '')
+            result += this.filterString;
+        result += TeamGrid.URL_ORDERING;
+        return result;
+    }
+
     private renderForecastsTable(users: User[], teams: Team[]) {
         return <table className='table table-sml table-striped table-dark'>
             <caption>List of team</caption>
@@ -93,11 +110,11 @@ export class TeamGrid extends React.Component<RouteComponentProps<{}>, UserState
                     <tr key={t.id}>
                         <td>{t.id}</td>
                         <th scope="row">{t.name}</th>
-                        <select className="optionGrid">
-                            {users.map(u =>
-                                u.teamId == t.id ? <option>{u.login}</option> : null
+                        <select className="btn btn-sm btn-primary" role="button" data-toggle="dropdown">
+                            {t.members.map(u =>
+                                <option>{u.login}</option>
                             )}
-                        </select>
+                        </select>   
                     </tr>
                 )}
             </tbody>
@@ -105,17 +122,3 @@ export class TeamGrid extends React.Component<RouteComponentProps<{}>, UserState
     }
 }
 
-interface Team {
-    id: number;
-    name: string;
-}
-
-interface User {
-    userId: number;
-    login: string;
-    password: string;
-    roleId: number;
-    activity: boolean;
-    photo: number[];
-    teamId: number;
-}
