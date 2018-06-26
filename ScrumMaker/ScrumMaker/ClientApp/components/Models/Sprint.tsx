@@ -114,20 +114,21 @@ export class Sprint extends React.Component{
 
     public renderAsTableRow() {
         return <tr key={this.id}>
-            <td>{this.id}</td>
-            <td>{this.name}</td>
-            <td>{this.team.renderAsMenu()}</td>
-            <td>{this.stage}</td>
-            <td>{this.review}</td>
-            <td>{this.history.renderAsMenu()}</td>
-            <td>{this.retrospective}</td>
-            <td>
-            <div id={this.id.toString()} role="button" className="btn btn-default btn-upd" onClick={this.updateButtonClick.bind(this)}>
-                <img src='/images/update_btn_128.ico' alt='upd' className="btn-img" /> 
-            </div> &nbsp;
-            <div id={this.id.toString()} role="button" className="btn m-btn-default btn-del" onClick={this.deleteButtonClick.bind(this)}> 
-                <img src='/images/delete_btn_128.ico' alt='upd' className="btn-img" /> 
-            </div>
+            <td className="align-base">{this.id}</td>
+            <td className="align-base">{this.name}</td>
+            <td className="align-base">{this.team.renderAsMenu()}</td>
+            <td className="align-base">{this.stage}</td>
+            <td className="align-base">{this.review}</td>
+            <td className="align-base">{this.history.renderAsMenu()}</td>
+            <td className="align-base">{this.retrospective}</td>
+            <td className="align-base">
+                <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base " onClick={this.updateButtonClick.bind(this)}>
+                    <img src='/images/update_btn_128.ico' alt='upd' className="btn-img" /> 
+                </div> 
+                &nbsp;
+                <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base" onClick={this.deleteButtonClick.bind(this)}> 
+                    <img src='/images/delete_btn_128.ico' alt='upd' className="btn-img" /> 
+                </div>
          </td>
         </tr>;
     }
@@ -149,15 +150,15 @@ export class SprintHistory extends React.Component {
         if (params === null || params === undefined) {
             return;
         }
-        this.empty = false;
-        this.id = params.id;
-
-        
+   
         this.initiated = new Date(params.Initiated);
         this.planned = new Date(params.Planned);
         this.begined = new Date(params.Begined);
         this.reviewDone = new Date(params.ReviewDone);
         this.retrospectiveDone = new Date(params.RetrospectiveDone);
+        
+        this.id = params.Id;
+        this.empty = false;
     }
 
     public toString() : string {
@@ -168,10 +169,10 @@ export class SprintHistory extends React.Component {
 
     public renderAsMenu() {
         if (this.empty)
-            return  <div id="{this.id}" role="button" data-toggle="dropdown" className="btn btn-sm btn-default"> No Data </div>
+            return  <div id="nodata" role="button" data-toggle="dropdown" className="btn btn-sm btn-default"> No Data </div>
         else
             return <div className="dropdown">
-                <div id="{this.id}" role="button" data-toggle="dropdown" className="btn btn-sm btn-primary" >
+                <div id={this.id.toString()} role="button" data-toggle="dropdown" className="btn btn-sm btn-primary" >
                     History <span className="caret"></span>
                 </div>
                 <ul className="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">

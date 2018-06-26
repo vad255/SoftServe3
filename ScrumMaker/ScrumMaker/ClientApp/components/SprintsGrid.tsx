@@ -57,7 +57,7 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
 
     private renderSprintsTable(sprints: Sprint[]) {
 
-        return <table className='table'>
+        return <table className='table table-scrum table-hover td-scrum'>
             {this.GetHeader()}
             <tbody>
                 {this.getFiltersLine()}
@@ -92,36 +92,45 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
     private getFiltersLine()
     {
         if (!this.fileteringOn)
-            return "";
+            return <tr><td colSpan={8} className="nodisplay"><div className="container"><img src='/images/loading.gif'/></div></td></tr>
         return <tr>
-        <td className="myTd">
-            <input className="searchInput" type="text"  onChange={((e : any) => this.FilterChanged("id", e)).bind(this)}/>
+        <td className="align-base">
+            <input className="searchInput"  type="text"  id="idFilter" 
+            onChange={((e : any) => this.FilterChanged("id", e)).bind(this)}/>
         </td>
-        <td className="myTd">
-            <input className="searchInput" type="text" onChange={((e : any) => this.FilterChanged("name", e)).bind(this)}/>
+        <td className="align-base">
+            <input className="searchInput" type="text"  id="nameFilter"
+            onChange={((e : any) => this.FilterChanged("name", e)).bind(this)}/>
         </td>
-        <td className="myTd">
-            <input className="searchInput" type="text" onChange={((e : any) => this.FilterChanged("team/name", e)).bind(this)}/>
+        <td className="align-base">
+            <input className="searchInput" type="text"  id="teamFilter"
+            onChange={((e : any) => this.FilterChanged("team/name", e)).bind(this)}/>
         </td>
-        <td className="myTd">
-            <input className="searchInput" type="text" onChange={((e : any) => this.FilterChanged("stage", e)).bind(this)}/>
+        <td className="align-base">
+            <input className="searchInput" type="text"  id="stageFilter" />
         </td>
-        <td className="myTd">
-            <input className="searchInput" type="text" onChange={((e : any) => this.FilterChanged("review", e)).bind(this)}/>
+        <td className="align-base">
+            <input className="searchInput" type="text"  id="reviewFilter"
+            onChange={((e : any) => this.FilterChanged("review", e)).bind(this)}/>
         </td>
-        <td className="myTd">
-            <input className="searchInput" type="text" onChange={((e : any) => this.FilterChanged("history/initiated", e)).bind(this)}/>
+        <td className="align-base">
+            <input className="searchInput" type="text"  id="historyFilter"
+            onChange={((e : any) => this.FilterChanged("history/initiated", e)).bind(this)}/>
         </td>
-        <td className="myTd">
-            <input className="searchInput" type="text" onChange={((e : any) => this.FilterChanged("retrospective", e)).bind(this)}/>
+        <td className="align-base">
+            <input className="searchInput" type="text"  id="retrospectiveFilter"
+            onChange={((e : any) => this.FilterChanged("retrospective", e)).bind(this)}/>
         </td>
-        <td className="myTd">
-        <div className="btn bnt-xs" onClick={this.ApplyFiltersClick.bind(this)}>
-                        Apply filters 
-                    </div>
+        <td className="align-base">
+        <div  role="button" className="btn btn-sq-xs" onClick={this.CancelFiltersClick.bind(this)}>
+                <img src='/images/cancel_256.png' alt='upd' className="btn-img" /> 
+            </div> &nbsp;
+            <div role="button" className="btn btn-sq-xs" onClick={this.ApplyFiltersClick.bind(this)}> 
+                <img src='/images/ok_512.png' alt='Apply' className="btn-img" /> 
+            </div>
+
         </td>
     </tr>
-
     }
 
     private RenderFooter() {
@@ -154,22 +163,37 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
         this.filterString = "&$filter=";
         var i = 0;
         for (let iterator in this.state.filters) {
+            if (this.state.filters[iterator] === '')
+                continue;
+
             i++;
             console.log(iterator);
             this.filterString += 'contains(' + iterator + ', \'' + this.state.filters[iterator] + '\') and ';
         }
         
-        // remove excessive ' and '. If no filters - return
         if (i > 0)
+        {
             this.filterString =  this.filterString.substring(0, this.filterString.length - 5);
+        }
         else
         {
+            console.log("NoFilters");
             this.filterString = '';
-            return;
         }
-        //alert('ok');
+
         this.LoadData();
     
+    }
+
+
+    private CancelFiltersClick(e: any){
+       (document.getElementById("idFilter") as any).value = '';
+       (document.getElementById("nameFilter") as any).value = '';
+       (document.getElementById("teamFilter") as any).value = '';
+       (document.getElementById("stageFilter") as any).value = '';
+       (document.getElementById("reviewFilter") as any).value = '';
+       (document.getElementById("historyFilter") as any).value = '';
+       (document.getElementById("retrospectiveFilter") as any).value = '';
     }
 
     private FilterButtonClick(e : any)
@@ -190,25 +214,12 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
                 this.lastOrderingDir = !this.lastOrderingDir;
             else
                 this.lastOrderingDir = false;
-
-            
+           
 
             if (!this.lastOrderingDir)
-                sprintsN.sort((a,b) => {
-                    if (a === undefined || b === undefined ||
-                        a[arg] === undefined || b[arg] === undefined ) 
-                        return 0;
-                     else 
-                        return this.Compare(a[arg],b[arg])
-                    })
+                sprintsN.sort((a,b) => this.SecureCompare(a,b,arg))
             else
-                sprintsN.sort((a,b) => {
-                    if (a === undefined || b === undefined ||
-                        a[arg] === undefined || b[arg] === undefined) 
-                        return 0;
-                     else 
-                        return -this.Compare(a[arg], b[arg])
-                    })
+                sprintsN.sort((a,b) => -this.SecureCompare(a,b,arg))
 
             this.lastOrderingArg = arg;
             this.setState({sprints : sprintsN as Sprint[], loading : this.state.loading});
@@ -216,6 +227,15 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
         {
             alert(e);
         } 
+    }
+
+    private SecureCompare(a : any, b : any, arg: string)
+    {
+        if (a === undefined || b === undefined ||
+            a[arg] === undefined || b[arg] === undefined) 
+            return 0;
+         else 
+            return this.Compare(a[arg], b[arg])
     }
 
     private Compare(a: any, b: any): number{
