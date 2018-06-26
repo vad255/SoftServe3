@@ -34,7 +34,7 @@ export class User {
 
     renderAsDropDown() {
         if (this.empty)
-           return <li key="undefined" id="undefined"><div> undefined </div></li>;
+           return <li key="nodata"><div> nodata </div></li>;
         return <li key={this.userId.toString()} className="dropdown-submenu">
             <div> {this.login} </div>
             <ul className="dropdown-menu">

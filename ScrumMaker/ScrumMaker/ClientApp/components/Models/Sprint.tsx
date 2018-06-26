@@ -169,7 +169,7 @@ export class SprintHistory extends React.Component {
 
     public renderAsMenu() {
         if (this.empty)
-            return  <div id="undefined" role="button" data-toggle="dropdown" className="btn btn-sm btn-default"> No Data </div>
+            return  <div id="nodata" role="button" data-toggle="dropdown" className="btn btn-sm btn-default"> No Data </div>
         else
             return <div className="dropdown">
                 <div id={this.id.toString()} role="button" data-toggle="dropdown" className="btn btn-sm btn-primary" >
