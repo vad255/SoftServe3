@@ -7,8 +7,8 @@ class Team {
     name: string = "";
 
     constructor(params: any) {
-        this.id = params.id;
-        this.name = params.name;
+        this.id = params.Id;
+        this.name = params.Name;
     }
 }
 
@@ -24,15 +24,15 @@ class Story {
         if (params === null || params === undefined)
             return;
 
-        this.id = params.id;
-        this.name = params.name;
-        this.description = params.description;
-        this.status = params.status;
+        this.id = params.Id;
+        this.name = params.Name;
+        this.description = params.Description;
+        this.status = params.Status;
         this.empty = false;
-        if (params.team === null || params.team === undefined)
+        if (params.Team === null || params.Team === undefined)
             return;
 
-        this.team = new Team(params.team);
+        this.team = new Team(params.Team);
     }
 
     renderAsMenu() {
@@ -59,17 +59,17 @@ class Feature {
     stories: Story[]=[];
 
     public constructor(params: any) {
-        this.id = params.id;
-        this.featureName = params.featureName;
-        this.state = params.state;
-        this.description = params.description;
-        this.blocked = params.blocked;
-        if (params.stories === null || params.stories === undefined)
+        this.id = params.Id;
+        this.featureName = params.FeatureName;
+        this.state = params.State;
+        this.description = params.Description;
+        this.blocked = params.Blocked;
+        if (params.Stories === null || params.Stories === undefined)
             return;
         
         var stories = [];
-        for (var i = 0; i < params.stories.length; i++)
-            stories[i] = new Story(params.stories[i]);
+        for (var i = 0; i < params.Stories.length; i++)
+            stories[i] = new Story(params.Stories[i]);
         
         this.stories = stories;
     }
@@ -102,21 +102,26 @@ class Feature {
 interface FetchFeatures {
     feat: Feature[];
     loading: boolean;
+
 }
 
 export class FeatureGrid extends React.Component<RouteComponentProps<{}>, FetchFeatures> {
+    static readonly URL_BASE: string = 'odata/feature';
+    static readonly URL_EXPANDS: string = '?$expand=stories($expand=team)';
+
     constructor() {
         super();
-        this.state = { feat: [], loading: true };
-
-        fetch('api/Feature/FeatureGet')
-            .then(response => response.json() as Promise<Feature[]>)
+        this.state = { feat: [], loading: true }
+        this.LoadData();
+        };
+    
+    private LoadData() {
+        fetch(this.getURL())
+            .then(response => response.json() as any)
             .then(data => {
                 var features = [];
-                for (var i = 0; i < data.length; i++)
-                    features[i] = new Feature(data[i]);
-
-                console.log(features);
+                for (var i = 0; i < data['value'].length; i++)
+                    features[i] = new Feature(data["value"][i]);
                 this.setState({ feat: features, loading: false });
             });
     }
@@ -124,7 +129,7 @@ export class FeatureGrid extends React.Component<RouteComponentProps<{}>, FetchF
     public render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
-            : FeatureGrid.featuresTable(this.state.feat);
+            : this.featuresTable(this.state.feat);
 
         return <div>
             <h1>Feature screen</h1>
@@ -133,23 +138,31 @@ export class FeatureGrid extends React.Component<RouteComponentProps<{}>, FetchF
         </div>;
     }
 
-    private static featuresTable(features: Feature[]) {
+    private featuresTable(features: Feature[]) {
         return <table className='table table-scrum table-hover td-scrum'>
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Stories</th>
-                    <th>State</th>
-                    <th>Blocked</th>
-                </tr>
-            </thead>
+            {this.GetHeader()}
             <tbody>
-                {
-                    features.map(feature => feature.renderAsTableRow())
-                }
+                {this.state.feat.map(f => f.renderAsTableRow())}
             </tbody>
         </table>
+    }
+
+    private GetHeader() {
+        return <thead>
+            <tr>
+                <th><span className="nowrap">Id</span></th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Stories</th>
+                <th>State</th>
+                <th>Blocked</th>
+            </tr>
+        </thead>
+    }
+
+    private getURL(): string {
+        var result = FeatureGrid.URL_BASE;
+        result += FeatureGrid.URL_EXPANDS;
+        return result;
     }
 }
