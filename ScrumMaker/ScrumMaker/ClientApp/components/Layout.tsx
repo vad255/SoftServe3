@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {Link} from 'react-router-dom'
 import { NavMenu } from './NavMenu';
 
 export interface LayoutProps {
@@ -15,7 +16,7 @@ export class Layout extends React.Component<LayoutProps, {}> {
                         <ul id="rigthUl">
                             <li><a>Settings<span className="arrow-left"></span></a>
                                 <ul className="dropdown">
-                                    <li><a href="/usergrid">Users</a></li>
+                                    <li><Link to="/usergrid">Users</Link></li>
                                     <li><a href="/Stories">Stories</a></li>
                                     <li><a href="/feature">Features</a></li>
                                     <li><a href="/sprints">Sprints</a></li>

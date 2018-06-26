@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { Home } from './components/Home';
 import { FetchData } from './components/FetchData';
@@ -10,16 +10,29 @@ import { UserGrid } from './components/UserGrid';
 import { StoryGrid } from './components/StoryGrid';
 import { FeatureGrid } from './components/FeatureGrid';
 import { EditUser } from './components/EditUser';
+import { Login } from './components/Login'
+
+const LayoutRoute = ({ ...props }) => {
+    return (
+        <Layout>
+            <Route {...props} />
+        </Layout>
+        );
+};
+
+export const routes = <BrowserRouter >
+    <Switch>
+            <LayoutRoute exact path='/' component={ Home } />
 
 
-export const routes = <Layout>
-    <Route exact path='/' component={ Home } />
-    <Route path='/counter' component={Counter} />
-    <Route path='/adduser' component={AddUser} />
-    <Route path='/fetchdata' component={ FetchData } />
-    <Route path='/usergrid' component={UserGrid} />
-    <Route path='/Sprints' component={SprintsGrid} />
-    <Route path='/Stories' component={StoryGrid} />
-    <Route path='/feature' component={FeatureGrid} />
-    <Route path='/editUser' component={EditUser} />
-</Layout>;
+            <LayoutRoute path='/counter' component={Counter} />
+            <LayoutRoute path='/adduser' component={AddUser} />
+            <LayoutRoute path='/fetchdata' component={FetchData} />
+            <LayoutRoute path='/usergrid' component={UserGrid} />
+            <LayoutRoute path='/Sprints' component={SprintsGrid} />
+            <LayoutRoute path='/Stories' component={StoryGrid} />
+            <LayoutRoute path='/feature' component={FeatureGrid} />
+            <LayoutRoute path='/editUser' component={EditUser} />
+            <Route path='/login' component={Login} />
+</Switch>
+</BrowserRouter  >;
