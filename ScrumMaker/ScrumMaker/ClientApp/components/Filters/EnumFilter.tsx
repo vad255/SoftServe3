@@ -14,34 +14,51 @@ export class EnumFilter extends Filter {
 
     enumType: {} = [];
     filteringString: string = '';
+    label: string = 'All'
+    dispalyItems: boolean = false;
 
     private OnChangeHandler(e: any) {
-
         this.filteringString = "";
+        let selectedCount = 0;
 
         for (let i = 0; i < e.target.options.length; i++) {
 
             let enumVal = e.target.options[i]
 
-
             if (!enumVal.selected)
                 continue;
 
-            if (this.filteringString.length != 0)
+            selectedCount++;
+
+            if (selectedCount > 1)
                 this.filteringString += ' or '
 
             this.filteringString +=
-                this.state.filterKey.toString() +' eq \'' +
+                this.state.filterKey.toString() + ' eq \'' +
                 enumVal.value.toString() +
                 '\'';
         }
+        this.label = selectedCount === 0 ?
+            "All" :
+            selectedCount === 1 ?
+                selectedCount + ' type' :
+                selectedCount + ' types';
+
+        this.forceUpdate();
         this.state.onFilterChanged(this.state.filterKey, '(' + this.filteringString + ')');
+    }
+
+
+
+    onDpopdownClick() {
+        this.dispalyItems = !this.dispalyItems;
+        this.forceUpdate();
     }
 
     public render() {
         return <div className="dropdown">
-            <div data-toggle="dropdown" >
-                Selector<span className="caret"></span>
+            <div className="light" onClick={this.onDpopdownClick.bind(this)}>
+                {this.label}<span className="caret"></span>
             </div>
             {this.renderSelect()}
         </div>
@@ -63,7 +80,11 @@ export class EnumFilter extends Filter {
         }
 
 
-        return <select className="dropdown-menu autooverflow" multiple={true}
+        return <select
+            className={this.dispalyItems ?
+                "dropdown-menu autooverflow display" :
+                "dropdown-menu autooverflow"}
+            multiple={true}
             onChange={this.OnChangeHandler.bind(this)}>
             {items}
         </select>

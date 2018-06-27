@@ -2,10 +2,10 @@
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { Sprint } from './Models/Sprint';
-import { Filter, IFilterConfiguration } from './Fliters/Filter'
-import { TextFilter } from './Fliters/TextFilter'
-import { IntFilter } from './Fliters/IntFilter'
-import { EnumFilter } from './Fliters/EnumFilter'
+import { Filter, IFilterConfiguration } from './Filters/Filter'
+import { TextFilter } from './Filters/TextFilter'
+import { IntFilter } from './Filters/IntFilter'
+import { EnumFilter } from './Filters/EnumFilter'
 import { SprintStage } from './Models/SprintStage'
 
 
@@ -93,7 +93,8 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
         </thead>;
     }
     private getFiltersLine() {
-        return <tr className={this.fileteringOn ? "" : "nodisplay"}>
+        //className={this.fileteringOn ? "" : "nodisplay"}
+        return <tr >
             <td>
                 <IntFilter filterKey='id' onFilterChanged={this.FilterChanged.bind(this)} />
             </td>
