@@ -2,67 +2,11 @@
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { Sprint } from './Models/Sprint';
-import * as ReactDOM from 'react-dom';
-
-
-export interface IFilterConfiguration {
-    filterKey: string;
-    onFilterChanged: Function;
-}
-
-export abstract class Filter extends React.Component<IFilterConfiguration, IFilterConfiguration> {
-
-    public static readonly QUERY_HEAD: string = "&$filter="
-    public static readonly CONSTRAIN_DIVIDER: string = " and "
-
-    constructor(params: IFilterConfiguration) {
-        super();
-        this.state = { onFilterChanged: params.onFilterChanged, filterKey: params.filterKey }
-    }
-
-    public Reset() {
-        this.forceUpdate();
-    }
-
-    public render() {
-        return <input type="text" />
-    }
-}
-
-export class TextFilter extends Filter {
-    constructor(params: IFilterConfiguration) {
-        super(params);
-    }
-
-    filteringString: string = '';
-
-    private OnChangeHandler(e: any) {
-        this.filteringString = 'contains(' + this.state.filterKey + ', \'' + e.target.value + '\')'
-
-        this.state.onFilterChanged(this.state.filterKey, this.filteringString);
-    }
-
-    public render() {
-        return <input type="text" onChange={((e: any) => this.OnChangeHandler(e)).bind(this)} />
-    }
-}
-
-export class IntFilter extends Filter {
-    constructor(params: IFilterConfiguration) {
-        super(params);
-    }
-
-    filteringString: string = '';
-
-    private OnChangeHandler(e: any) {
-        this.filteringString = 'contains(cast(' + this.state.filterKey + ', \'Edm.String\'), \'' + e.target.value + '\')'
-        this.state.onFilterChanged(this.state.filterKey, this.filteringString);
-    }
-
-    public render() {
-        return <input type="text" onChange={((e: any) => this.OnChangeHandler(e)).bind(this)} />
-    }
-}
+import { Filter, IFilterConfiguration } from './Fliters/Filter'
+import { TextFilter } from './Fliters/TextFilter'
+import { IntFilter } from './Fliters/IntFilter'
+import { EnumFilter } from './Fliters/EnumFilter'
+import { SprintStage } from './Models/SprintStage'
 
 
 interface SprintDataFetchingState {
@@ -151,7 +95,7 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
     private getFiltersLine() {
         return <tr className={this.fileteringOn ? "" : "nodisplay"}>
             <td>
-                <IntFilter filterKey = 'id' onFilterChanged={this.FilterChanged.bind(this)}/>
+                <IntFilter filterKey='id' onFilterChanged={this.FilterChanged.bind(this)} />
             </td>
             <td>
                 <TextFilter filterKey='name' onFilterChanged={this.FilterChanged.bind(this)} />
@@ -160,13 +104,13 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
                 <TextFilter filterKey='team/name' onFilterChanged={this.FilterChanged.bind(this)} />
             </td>
             <td>
-               
+                <EnumFilter filterKey='stage' enumType={SprintStage} onFilterChanged={this.FilterChanged.bind(this)} />
             </td>
             <td>
                 <TextFilter filterKey='review' onFilterChanged={this.FilterChanged.bind(this)} />
             </td>
             <td >
-               
+
             </td>
             <td>
                 <TextFilter filterKey='retrospective' onFilterChanged={this.FilterChanged.bind(this)} />
