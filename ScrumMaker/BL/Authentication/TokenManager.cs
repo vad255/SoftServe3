@@ -38,7 +38,7 @@ namespace BL.Authentication
         }
         public JwtSecurityToken CreateToken(ClaimsIdentity identity)
         {
-            var now = DateTime.UtcNow;
+            var now = DateTime.Now;
             JwtSecurityToken jwt = new JwtSecurityToken(
                     issuer: AuthOptions.ISSUER,
                     audience: AuthOptions.AUDIENCE,
@@ -49,6 +49,7 @@ namespace BL.Authentication
                     SecurityAlgorithms.HmacSha256));
             return jwt;
         }
+
     }
     public class AuthOptions
     {
