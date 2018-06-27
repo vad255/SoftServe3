@@ -2,11 +2,8 @@
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { Sprint } from './Models/Sprint';
-import { Filter, IFilterConfiguration } from './Filters/Filter'
-import { TextFilter } from './Filters/TextFilter'
-import { IntFilter } from './Filters/IntFilter'
-import { EnumFilter } from './Filters/EnumFilter'
 import { SprintStage } from './Models/SprintStage'
+import { SprintsFiltersRow } from './Filters/SprintsFiltersRow'
 
 
 interface SprintDataFetchingState {
@@ -61,9 +58,10 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
 
         return <table className='table table-scrum table-hover td-scrum'>
             {this.GetHeader()}
-            {this.getFiltersLine()}
+            <SprintsFiltersRow 
+            display = {this.fileteringOn}
+            onApply={this.ApplyFiltersHandler.bind(this)} />
             <tbody>
-
                 {this.state.sprints.map(s => s.renderAsTableRow())}
             </tbody>
             <tfoot>
@@ -92,42 +90,6 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
             </tr>
         </thead>;
     }
-    private getFiltersLine() {
-        //className={this.fileteringOn ? "" : "nodisplay"}
-        return <tr >
-            <td>
-                <IntFilter filterKey='id' onFilterChanged={this.FilterChanged.bind(this)} />
-            </td>
-            <td>
-                <TextFilter filterKey='name' onFilterChanged={this.FilterChanged.bind(this)} />
-            </td>
-            <td>
-                <TextFilter filterKey='team/name' onFilterChanged={this.FilterChanged.bind(this)} />
-            </td>
-            <td>
-                <EnumFilter filterKey='stage' enumType={SprintStage} onFilterChanged={this.FilterChanged.bind(this)} />
-            </td>
-            <td>
-                <TextFilter filterKey='review' onFilterChanged={this.FilterChanged.bind(this)} />
-            </td>
-            <td >
-
-            </td>
-            <td>
-                <TextFilter filterKey='retrospective' onFilterChanged={this.FilterChanged.bind(this)} />
-            </td>
-            <td>
-                <div role="button" className="btn btn-sq-xs align-base " onClick={this.CancelFiltersClick.bind(this)}>
-                    <span className="glyphicon glyphicon-remove-circle dark" aria-hidden="true"></span>
-                </div>
-                &nbsp;&nbsp;
-            <div role="button" className="btn btn-sq-xs align-base" onClick={this.ApplyFiltersClick.bind(this)}>
-                    <span className="glyphicon glyphicon-ok dark" aria-hidden="true"></span>
-                </div>
-            </td>
-        </tr>
-    }
-
 
     private RenderFooter() {
         return <tr>
@@ -151,48 +113,19 @@ export class SprintsGrid extends React.Component<RouteComponentProps<{}>, Sprint
         return result;
     }
 
-    private FilterChanged(key: string, filter: string) {
-
-        this.state.filters[key] = filter;
-    }
-
-    private ApplyFiltersClick(e: any) {
-        this.filterString = Filter.QUERY_HEAD;
-        var i = 0;
-        for (let iterator in this.state.filters) {
-            if (this.state.filters[iterator] === '')
-                continue;
-
-            i++;
-            if (i !== 1)
-                this.filterString += Filter.CONSTRAIN_DIVIDER;
-            this.filterString += this.state.filters[iterator];
-        }
-
-        if (i === 0) {
-            this.filterString = '';
-        }
-
-        this.LoadData();
-
-    }
-
-
-    private CancelFiltersClick(e: any) {
-        (document.getElementById("idFilter") as any).value = '';
-        (document.getElementById("nameFilter") as any).value = '';
-        (document.getElementById("teamFilter") as any).value = '';
-        (document.getElementById("stageFilter") as any).value = '';
-        (document.getElementById("reviewFilter") as any).value = '';
-        (document.getElementById("historyFilter") as any).value = '';
-        (document.getElementById("retrospectiveFilter") as any).value = '';
-    }
-
     private FilterButtonClick(e: any) {
         this.fileteringOn = !this.fileteringOn
         this.forceUpdate();
     }
 
+    private ApplyFiltersHandler(e: any) {
+        this.filterString = e;
+        this.LoadData();
+    }
+
+
+   
+ 
     private OrderBy(arg: string) {
         try {
             var sprintsN = [];

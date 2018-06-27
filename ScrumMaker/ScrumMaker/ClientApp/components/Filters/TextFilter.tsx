@@ -8,6 +8,12 @@ export class TextFilter extends Filter {
 
     filteringString: string = '';
 
+    public Reset(): void {
+        (document.getElementById(this.state.filterKey+"Filter") as any).value = '';
+        this.filteringString = '';
+        this.state.onFilterChanged(this.state.filterKey, this.filteringString);
+    }
+
     private OnChangeHandler(e: any) {
         this.filteringString = 'contains(' + this.state.filterKey + ', \'' + e.target.value + '\')'
 
@@ -15,6 +21,6 @@ export class TextFilter extends Filter {
     }
 
     public render() {
-        return <input type="text" onChange={((e: any) => this.OnChangeHandler(e)).bind(this)} />
+        return <input id={this.state.filterKey+"Filter"} type="text" onChange={((e: any) => this.OnChangeHandler(e)).bind(this)} />
     }
 }

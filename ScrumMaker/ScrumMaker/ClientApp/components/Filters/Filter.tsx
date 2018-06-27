@@ -14,16 +14,13 @@ export abstract class Filter extends React.Component<any, IFilterConfiguration> 
 
     constructor(params: IFilterConfiguration) {
         super();
-        this.state = { 
-            onFilterChanged: params.onFilterChanged, 
-            filterKey: params.filterKey }
+        this.state = {
+            onFilterChanged: params.onFilterChanged,
+            filterKey: params.filterKey
+        }
     }
 
-    public Reset() {
-        this.forceUpdate();
-    }
+    public abstract Reset() : void
 
-    public render() {
-        return <input type="text" />
-    }
+    public abstract render(): JSX.Element
 }
