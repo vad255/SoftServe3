@@ -28,7 +28,7 @@ export class UserGrid extends React.Component<RouteComponentProps<{}>, UserState
     public render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
-            : UserGrid.renderForecastsTable(this.state.forecasts, this.state.roles);
+            : this.renderForecastsTable(this.state.forecasts, this.state.roles);
 
         return <div>
             <h1>User Grid</h1>
@@ -36,7 +36,7 @@ export class UserGrid extends React.Component<RouteComponentProps<{}>, UserState
         </div>;
     }
 
-    private static renderForecastsTable(forecasts: User[], roles: Role[]) {
+    private renderForecastsTable(forecasts: User[], roles: Role[]) {
         return <table className='table table-sml table-striped table-dark'>
             <caption>List of users</caption>
             <thead className=''>

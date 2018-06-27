@@ -5,13 +5,14 @@ import { Link } from 'react-router-dom';
 interface LoginViewModel {
     login: string;
     password: string;
+    grant_type: string;
 }
 
 export class Login extends React.Component<RouteComponentProps<any>, LoginViewModel> {
     constructor(props: any) {
         super(props);
 
-        this.state = {login: "", password: "" };
+        this.state = { login: "", password: "", grant_type: "password" };
         this.handleSave = this.handleSave.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
     }
@@ -22,7 +23,7 @@ export class Login extends React.Component<RouteComponentProps<any>, LoginViewMo
             : this.renderCreateForm();
 
         return <div>
-            <h1>Registration</h1>
+            <h1>Login Page</h1>
             <hr />
             {contents}
         </div>;
@@ -32,15 +33,13 @@ export class Login extends React.Component<RouteComponentProps<any>, LoginViewMo
     private handleSave(event: any) {
         event.preventDefault();
         const data = new FormData(event.target);
-
-        fetch('api/User/Create', {
+        fetch('/token', {
             method: 'POST',
-            body: data,
-
-        }).then((response) => response.json())
-            .then((responseJson) => {
-                this.props.history.push("/");
-            })
+            body: data
+           
+        }).then(res => res.json())
+            .then(data => document.cookie = `Authorization=${data.access_token};expires=` + new Date(Date.now() + data.expires))
+            .then(err => this.props.history.push('/'));
     }
 
     // This will handle Cancel button click event.
