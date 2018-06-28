@@ -5,7 +5,7 @@ import { Home } from './components/Home';
 import { FetchData } from './components/FetchData';
 import { Counter } from './components/Counter';
 import { AddUser } from './components/AddUser';
-import { SprintsGrid } from './components/SprintsGrid';
+import { SprintsGrid } from './components/Grids/SprintsGrid';
 import { UserGrid } from './components/UserGrid';
 import { StoryGrid } from './components/StoryGrid';
 import { FeatureGrid } from './components/FeatureGrid';
@@ -25,8 +25,6 @@ const LayoutRoute = ({ ...props }) => {
 export const routes = <BrowserRouter >
     <Switch>
             <LayoutRoute exact path='/' component={ Home } />
-
-
             <LayoutRoute path='/counter' component={Counter} />
             <LayoutRoute path='/adduser' component={AddUser} />
             <LayoutRoute path='/fetchdata' component={FetchData} />
