@@ -1,7 +1,8 @@
 ﻿import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
-import { Filter, IFilterConfiguration } from './Filters/file';
+import { FeaturesFiltersRow } from './Filters/FeaturesFiltersRow'
+import { State } from './Models/FeatureState';
 
 class Team {
     id: number = -1;
@@ -51,10 +52,10 @@ class Story {
     }
 }
 
-class Feature {
+export class Feature {
     id: number;
     featureName: string;
-    state: number;
+    state: State;
     description: string;
     blocked: boolean;
     stories: Story[]=[];
@@ -83,6 +84,7 @@ class Feature {
             <td>{this.renderStories()}</td>
             <td>{this.state}</td>
             <td>{this.blocked === true ? "true" : "false"}</td>
+            <td></td>
         </tr>;
     }
 
@@ -130,7 +132,7 @@ export class FeatureGrid extends React.Component<RouteComponentProps<{}>, FetchF
                 var features = [];
                 for (var i = 0; i < data['value'].length; i++)
                     features[i] = new Feature(data['value'][i]);
-                this.setState({ feat: features, loading: false });
+                this.setState({ feat: features, loading: false, filters: this.state.filters});
             });
     }
 
@@ -148,7 +150,9 @@ export class FeatureGrid extends React.Component<RouteComponentProps<{}>, FetchF
     private featuresTable(features: Feature[]) {
         return <table className='table table-scrum table-hover td-scrum'>
             {this.GetHeader()}
-           
+            <FeaturesFiltersRow
+                display={this.filteringOn}
+                onApply={this.ApplyFiltersHandler.bind(this)} />
             <tbody>
                 {this.state.feat.map(f => f.renderAsTableRow())}
             </tbody>
@@ -159,52 +163,34 @@ export class FeatureGrid extends React.Component<RouteComponentProps<{}>, FetchF
     private GetHeader() {
         return <thead>
             <tr>
-                <th><span className="nowrap">Id</span></th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Stories</th>
-                <th>State</th>
-                <th>Blocked</th>
-                <th className="well well-sm">
+                <th className="well well-sm col-md-1" onClick={() => this.OrderBy("id")}>
+                    <span className="nowrap"><a className="menu_links">ID</a></span>
+                </th>
+                <th className="well well-sm col-md-2" onClick={() => this.OrderBy("featureName")}>
+                    <a className="menu_links">Name</a>
+                    </th>
+                <th className="well well-sm col-md-3" onClick={() => this.OrderBy("description")}>
+                    <a className="menu_links">Description</a>
+                        </th>
+                    <th className="well well-sm col-md-2" onClick={() => this.OrderBy("stories")}>
+                    <a className="menu_links">Stories</a>
+                        </th>
+                    <th className="well well-sm col-md-2" onClick={() => this.OrderBy("state")}>
+                    <a className="menu_links">State</a>
+                        </th>
+                    <th className="well well-sm col-md-1" onClick={() => this.OrderBy("blocked")}>
+                    <a className="menu_links">Blocked</a>
+                        </th>
+                <th className="well well-sm col-md-1">
                     <div onClick={this.FilterButtonClick.bind(this)}>
-                        <span className="nowrap">Show filters<span className="caret"></span></span>
+                            <span className="nowrap">
+                            <a className="menu_links">Show filters</a>
+                            <span className="caret"></span></span>
                     </div>
                 </th>
             </tr>
         </thead>
     }
-
-    //private getFiltersLine() {
-    //    return <tr className={this.filteringOn ? "" : "nodisplay"}>
-    //        <td>
-    //            <IntFilter filterKey='id' onFilterChanged={this.FilterChanged.bind(this)} />
-    //        </td>
-    //        <td>
-    //            <TextFilter filterKey='name' onFilterChanged={this.FilterChanged.bind(this)} />
-    //        </td>
-    //        <td>
-    //            <TextFilter filterKey='description' onFilterChanged={this.FilterChanged.bind(this)} />
-    //        </td>
-    //        <td>
-    //            <TextFilter filterKey='story' onFilterChanged={this.FilterChanged.bind(this)} />
-    //        </td>
-    //        <td>
-    //            <EnumFilter filterKey='state' enumType={State} onFilterChanged={this.FilterChanged.bind(this)} />
-    //        </td>
-    //        <td>
-    //            <TextFilter filterKey='blocked' onFilterChanged={this.FilterChanged.bind(this)} />
-    //        </td>
-    //        <td>
-    //            <div role="button" className="btn btn-sq-xs align-base " onClick={this.CancelFiltersClick.bind(this)}>
-    //                <span className="glyphicon glyphicon-remove-circle dark" aria-hidden="true"></span>
-    //            </div>
-    //            &nbsp;&nbsp;
-    //        <div role="button" className="btn btn-sq-xs align-base" onClick={this.ApplyFiltersClick.bind(this)}>
-    //                <span className="glyphicon glyphicon-ok dark" aria-hidden="true"></span>
-    //            </div>
-    //        </td>
-    //    </tr>
-    //}
 
     private getURL(): string {
         var result = FeatureGrid.URL_BASE;
@@ -215,39 +201,35 @@ export class FeatureGrid extends React.Component<RouteComponentProps<{}>, FetchF
         return result;
     }
 
-    private ApplyFiltersClick(e: any) {
-        this.filterString = Filter.QUERY_HEAD;
-        var i = 0;
-        for (let iterator in this.state.filters) {
-            if (this.state.filters[iterator] === '')
-                continue;
-
-            i++;
-            if (i !== 1)
-                this.filterString += Filter.CONSTRAIN_DIVIDER;
-            this.filterString += this.state.filters[iterator];
-        }
-
-        if (i === 0) {
-            this.filterString = '';
-        }
-
-        this.LoadData();
-
-    }
-
-    private CancelFiltersClick(e: any) {
-        (document.getElementById("idFilter") as any).value = '';
-        (document.getElementById("nameFilter") as any).value = '';
-        (document.getElementById("descriptionFilter") as any).value = '';
-        (document.getElementById("storiesFilter") as any).value = '';
-        (document.getElementById("stateFilter") as any).value = '';
-        (document.getElementById("blockedFilter") as any).value = '';
-    }
-
     private FilterButtonClick(e: any) {
         this.filteringOn = !this.filteringOn
         this.forceUpdate();
+    }
+
+    private ApplyFiltersHandler(e: any) {
+        this.filterString = e;
+        this.LoadData();
+    }
+
+    private OrderBy(arg: string) {
+        try {
+            var featN = [];
+            featN = this.state.feat as any[];
+            if (this.lastOrderingArg === arg)
+                this.lastOrderingDir = !this.lastOrderingDir;
+            else
+                this.lastOrderingDir = false;
+
+            if (!this.lastOrderingDir)
+                featN.sort((a, b) => this.SafeCompare(a, b, arg))
+            else
+                featN.sort((a, b) => -this.SafeCompare(a, b, arg))
+
+            this.lastOrderingArg = arg;
+            this.setState({ feat: featN as Feature[], loading: this.state.loading });
+        } catch (e) {
+            alert(e);
+        }
     }
 
     private SafeCompare(a: any, b: any, arg: string) {

@@ -6,7 +6,7 @@ namespace DAL.Models
 {
     public enum FeatureState
     {
-        PendingApproval = 0,
+        PendingApproval = 1,
         ReadyToStart,
         InProgress,
         DevComplete,
