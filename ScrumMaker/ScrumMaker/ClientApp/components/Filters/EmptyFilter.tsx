@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Filter, IFilterConfiguration } from './Filter'
+import { Filter } from './Filter'
 
 
 export class EmptyFilter extends Filter {
