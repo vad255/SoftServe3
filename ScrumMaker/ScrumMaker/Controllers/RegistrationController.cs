@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using DAL.Models;
 using System.Reflection.Metadata;
 using DAL;
+using ScrumMaker.Logger;
 
 namespace ReactCrudDemo.Controllers
 {
@@ -26,8 +27,11 @@ namespace ReactCrudDemo.Controllers
         [Route("api/User/Create")]
         public RedirectResult Create(User user)
         {
-            _db.Users.Add(user);
-            _db.SaveChanges();
+            try {
+                Logger.LogInfo("Registration was successful!");
+                _db.Users.Add(user);
+                _db.SaveChanges(); }
+            catch{ Logger.LogError("Registration was not successful. Something went wrong!"); }
             return Redirect("");
         }
     }

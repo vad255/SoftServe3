@@ -1,6 +1,7 @@
 ﻿import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
+import { Filter, IFilterConfiguration } from './Filters/file';
 
 class Team {
     id: number = -1;
@@ -102,18 +103,25 @@ class Feature {
 interface FetchFeatures {
     feat: Feature[];
     loading: boolean;
+    filters: any;
 
 }
 
 export class FeatureGrid extends React.Component<RouteComponentProps<{}>, FetchFeatures> {
     static readonly URL_BASE: string = 'odata/feature';
     static readonly URL_EXPANDS: string = '?$expand=stories($expand=team)';
+    static readonly URL_ORDERING: string = '&$orderby=id';
 
     constructor() {
         super();
-        this.state = { feat: [], loading: true }
+        this.state = { feat: [], loading: true, filters: [] }
         this.LoadData();
-        };
+    };
+
+    private filteringOn: boolean = false;
+    private filterString: string = "";
+    private lastOrderingArg: string = "";
+    private lastOrderingDir: boolean = false;
     
     private LoadData() {
         fetch(this.getURL())
@@ -121,7 +129,7 @@ export class FeatureGrid extends React.Component<RouteComponentProps<{}>, FetchF
             .then(data => {
                 var features = [];
                 for (var i = 0; i < data['value'].length; i++)
-                    features[i] = new Feature(data["value"][i]);
+                    features[i] = new Feature(data['value'][i]);
                 this.setState({ feat: features, loading: false });
             });
     }
@@ -140,10 +148,12 @@ export class FeatureGrid extends React.Component<RouteComponentProps<{}>, FetchF
     private featuresTable(features: Feature[]) {
         return <table className='table table-scrum table-hover td-scrum'>
             {this.GetHeader()}
+           
             <tbody>
                 {this.state.feat.map(f => f.renderAsTableRow())}
             </tbody>
         </table>
+           
     }
 
     private GetHeader() {
@@ -155,13 +165,103 @@ export class FeatureGrid extends React.Component<RouteComponentProps<{}>, FetchF
                 <th>Stories</th>
                 <th>State</th>
                 <th>Blocked</th>
+                <th className="well well-sm">
+                    <div onClick={this.FilterButtonClick.bind(this)}>
+                        <span className="nowrap">Show filters<span className="caret"></span></span>
+                    </div>
+                </th>
             </tr>
         </thead>
     }
 
+    //private getFiltersLine() {
+    //    return <tr className={this.filteringOn ? "" : "nodisplay"}>
+    //        <td>
+    //            <IntFilter filterKey='id' onFilterChanged={this.FilterChanged.bind(this)} />
+    //        </td>
+    //        <td>
+    //            <TextFilter filterKey='name' onFilterChanged={this.FilterChanged.bind(this)} />
+    //        </td>
+    //        <td>
+    //            <TextFilter filterKey='description' onFilterChanged={this.FilterChanged.bind(this)} />
+    //        </td>
+    //        <td>
+    //            <TextFilter filterKey='story' onFilterChanged={this.FilterChanged.bind(this)} />
+    //        </td>
+    //        <td>
+    //            <EnumFilter filterKey='state' enumType={State} onFilterChanged={this.FilterChanged.bind(this)} />
+    //        </td>
+    //        <td>
+    //            <TextFilter filterKey='blocked' onFilterChanged={this.FilterChanged.bind(this)} />
+    //        </td>
+    //        <td>
+    //            <div role="button" className="btn btn-sq-xs align-base " onClick={this.CancelFiltersClick.bind(this)}>
+    //                <span className="glyphicon glyphicon-remove-circle dark" aria-hidden="true"></span>
+    //            </div>
+    //            &nbsp;&nbsp;
+    //        <div role="button" className="btn btn-sq-xs align-base" onClick={this.ApplyFiltersClick.bind(this)}>
+    //                <span className="glyphicon glyphicon-ok dark" aria-hidden="true"></span>
+    //            </div>
+    //        </td>
+    //    </tr>
+    //}
+
     private getURL(): string {
         var result = FeatureGrid.URL_BASE;
         result += FeatureGrid.URL_EXPANDS;
+        if (this.filterString != '')
+            result += this.filterString;
+        result += FeatureGrid.URL_ORDERING;
         return result;
+    }
+
+    private ApplyFiltersClick(e: any) {
+        this.filterString = Filter.QUERY_HEAD;
+        var i = 0;
+        for (let iterator in this.state.filters) {
+            if (this.state.filters[iterator] === '')
+                continue;
+
+            i++;
+            if (i !== 1)
+                this.filterString += Filter.CONSTRAIN_DIVIDER;
+            this.filterString += this.state.filters[iterator];
+        }
+
+        if (i === 0) {
+            this.filterString = '';
+        }
+
+        this.LoadData();
+
+    }
+
+    private CancelFiltersClick(e: any) {
+        (document.getElementById("idFilter") as any).value = '';
+        (document.getElementById("nameFilter") as any).value = '';
+        (document.getElementById("descriptionFilter") as any).value = '';
+        (document.getElementById("storiesFilter") as any).value = '';
+        (document.getElementById("stateFilter") as any).value = '';
+        (document.getElementById("blockedFilter") as any).value = '';
+    }
+
+    private FilterButtonClick(e: any) {
+        this.filteringOn = !this.filteringOn
+        this.forceUpdate();
+    }
+
+    private SafeCompare(a: any, b: any, arg: string) {
+        if (a === undefined || b === undefined ||
+            a[arg] === undefined || b[arg] === undefined)
+            return 0;
+        else
+            return this.Compare(a[arg], b[arg])
+    }
+
+    private Compare(a: any, b: any): number {
+        if (typeof a === 'number' && typeof b === 'number')
+            return a - b;
+        else
+            return a.toString().localeCompare(b.toString());
     }
 }

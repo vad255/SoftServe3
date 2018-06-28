@@ -10,7 +10,7 @@ namespace DataBaseInitializer
     class Program
     {
         public const string CONNECTION_STRING =
-            "Server=(localdb)\\mssqllocaldb;Database=ScrumMaker;Trusted_Connection=True;MultipleActiveResultSets=true";
+            "Data Source=.\\SQLEXPRESS;Initial Catalog=ScrumMaker;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
         static void Main(string[] args)
         {

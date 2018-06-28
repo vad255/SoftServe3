@@ -15,7 +15,7 @@ using Microsoft.AspNet.OData;
 namespace ScrumMaker.Controllers
 {
     [Route("api/[controller]")]
-    public class FeatureController : Controller 
+    public class FeatureController : ODataController 
     {
         private IRepository<Feature> featureRepository;
 
