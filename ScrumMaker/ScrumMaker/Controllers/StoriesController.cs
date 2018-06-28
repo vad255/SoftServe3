@@ -12,26 +12,25 @@ using Microsoft.AspNetCore.Mvc;
 namespace ScrumMaker.Controllers
 {
     [Route("api/[controller]")]
-    public class DefectsController : ODataController
+    public class StoriesController : ODataController
     {
-        private IDefectsManager _manager;
-        private IRepository<Defect> _defect;
+        private IRepository<Story> _stories;
+        private IStoriesManager _manager;
         private DataContext _db;
 
-        public DefectsController(DataContext db, IRepository<Defect> repository, IDefectsManager manager)
+        public StoriesController(DataContext db, IStoriesManager manager, IRepository<Story> stories)
         {
             _db = db;
-            _defect = repository;
             _manager = manager;
+            _stories = stories;
         }
 
         [EnableQuery]
-        public IQueryable GetDefects()
-        {            
-            var result = _defect.GetAll();
-            
-            return result;
+        public IQueryable GetStories()
+        {
+            return _stories.GetAll();
         }
+
+
     }
-    
 }

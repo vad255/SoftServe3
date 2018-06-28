@@ -28,7 +28,7 @@ namespace ScrumMaker.Controllers
 
         [Route("/token")]
         [HttpPost]
-        public async Task Token([FromBody] LoginViewModel loginViewModel)
+        public async Task Token(LoginViewModel loginViewModel)
         {
             TokenManager tokenManager = new TokenManager(_users);
             ClaimsIdentity identity = tokenManager.GetIdentity(loginViewModel.Login, loginViewModel.Password);
@@ -47,7 +47,7 @@ namespace ScrumMaker.Controllers
                 expires = AuthOptions.LIFETIME,
                 status = StatusCode(200).StatusCode
             };
-
+            
             Response.ContentType = "application/json";
             await Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
         }
