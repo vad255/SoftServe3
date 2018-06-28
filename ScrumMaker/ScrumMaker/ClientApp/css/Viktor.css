@@ -13,7 +13,27 @@
 }
 
 .nodisplay{
-  display: none;
+  display: none !important;
+}
+
+.display{
+  display:inherit !important;
+}
+
+.dark{
+  color: rgb(26, 26, 26) !important;
+}
+
+.light{
+  background-color: rgb(255, 255, 255) !important;
+}
+
+.parent{
+  color: transparent !important;
+}
+
+.autooverflow{
+  overflow: auto;
 }
 
 .btn-sq-lg {

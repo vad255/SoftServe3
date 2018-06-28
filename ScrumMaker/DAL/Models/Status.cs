@@ -6,6 +6,7 @@ namespace DAL.Models
 {
     public enum Status
     {
-        Open, Close
+        Open,
+        Close
     }
 }
