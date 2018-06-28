@@ -3,16 +3,12 @@
     overflow: hidden; /* Все что выходит за пределы - скрываем */
     width: 100%; /* Задаем ширину кнопки выбора файла */
     height: 30px; /* Задаем высоту кнопки выбора файла */
-    background: #232526;
-    background: -webkit-linear-gradient(to right, #232526, #414345);
-    background: linear-gradient(to right, #232526, #414345);
     border-radius: 3px;
     padding: 8px 4px;
     color: white;
     text-align: center;
     margin-top: 5px;
     text-decoration: none;
-    font-family: 'Times New Roman';
     font-weight: normal;
 }
 .chooseLabel {
@@ -46,9 +42,6 @@
 .form-control {
     width: 200px;
     border: 1px solid lightgray;
-    background: #232526;
-    background: -webkit-linear-gradient(to right, #232526, #414345);
-    background: linear-gradient(to right, #232526, #414345);
     color: white;
 }
 
@@ -91,10 +84,6 @@
 }
 .btn {
     width: 150px;
-    font-family: 'Times New Roman';
-    background: #232526;
-    background: -webkit-linear-gradient(to right, #232526, #414345);
-    background: linear-gradient(to right, #232526, #414345);
     color: white;
     border: 1px solid lightgray;
     padding: 0.5em 1em;

@@ -5,7 +5,7 @@ import { ButtonToolbar, DropdownButton, MenuItem, Button } from 'react-bootstrap
 export class NavMenu extends React.Component<{}, {}> {
     public render() {
         return <nav>
-            <div id='myUl' className="navigation fontFamily">
+            <div id='myUl' className="navigation fontFamily siteColor">
                 <ul>
                     <li><a href="/">Home</a></li>
                     <li><a href="/adduser">Registration</a></li>

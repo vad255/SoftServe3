@@ -9,8 +9,8 @@ export interface LayoutProps {
 export class Layout extends React.Component<LayoutProps, {}> {
     public render() {
         return <div className='container-fluid'>
-            <div className='header'>
-                <img src="./img/ScrumMakerLogo.jpg" width="59" height="50" className="myLogo"/>
+            <div className='header siteColor'>
+                <img src="./img/NewLogo.png" width="150" height="50" className="myLogo"/>
                 <div id='mySettings'>
                     <div className="navigation fontFamily" id="aColor">
                         <ul id="rigthUl">
@@ -37,7 +37,7 @@ export class Layout extends React.Component<LayoutProps, {}> {
                 <div className='col-sm-2'>
                     <NavMenu />
                 </div>
-                <div className='col-sm-8'>
+                <div className='col-sm-9'>
                     {this.props.children}
                 </div>
             </div>
