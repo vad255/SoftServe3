@@ -68,13 +68,13 @@ export class EditUser extends Component<RouteComponentProps<any>, FileLoad> {
             <main className="page">
                 <div className='myDiv'>{$imagePreview}</div>
                 <form onSubmit={this._handleSubmit} asp-controller="UserEdit" asp-action="UploadFile" method="post">
-                    <div className="file-upload">
+                    <div className="file-upload siteColor">
                         <label className="chooseLabel">
                             <input type="file" className="fileInput" name="file" onChange={this._handleImageChange} />
                             <span>Choose</span>
                         </label>
                     </div>
-                    <button type="submit" className="btn save" onClick={this._handleSubmit}>Upload Image</button>
+                    <button type="submit" className="btn save siteColor" onClick={this._handleSubmit}>Upload Image</button>
                 </form>
 
                 <p>____________________________________________________________________________________________</p>
@@ -87,16 +87,16 @@ export class EditUser extends Component<RouteComponentProps<any>, FileLoad> {
                         <div className="form-group row">
                             <label className="control-label col-md-12" htmlFor="password" >New password</label>
                             <div className="col-md-4">
-                                <input className="form-control" type="password" name="password" defaultValue={this.state.password} required />
+                                <input className="form-control siteColor" type="password" name="password" defaultValue={this.state.password} required />
                             </div>
                         </div>
                         <div className="form-group row">
                             <label className="control-label col-md-12" htmlFor="repeatpassword" >Repeat password</label>
                             <div className="col-md-4">
-                                <input className="form-control" type="password" name="repeatpassword" defaultValue={this.state.repeatPassword} required />
+                                <input className="form-control siteColor" type="password" name="repeatpassword" defaultValue={this.state.repeatPassword} required />
                             </div>
                         </div>
-                        <button type="submit" className="btn save" onClick={this._handleSubmit}>Change password</button>
+                        <button type="submit" className="btn save siteColor" onClick={this._handleSubmit}>Change password</button>
                     </div>
                 </form>
             </main>

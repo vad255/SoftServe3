@@ -1,0 +1,17 @@
+﻿.fontFamily {
+    font-family: 'Times New Roman';
+}
+
+.siteColor {
+    background: #232526;
+    background: -webkit-linear-gradient(to right, #232526, #414345);
+    background: linear-gradient(to right, #232526, #414345);
+    font-family: 'Times New Roman';
+}
+
+.btn {
+    background: #232526;
+    background: -webkit-linear-gradient(to right, #232526, #414345);
+    background: linear-gradient(to right, #232526, #414345);
+    font-family: 'Times New Roman';
+}
