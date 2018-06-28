@@ -1,33 +1,21 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
-import { Filter, IFilterConfiguration } from './Filter'
 import { TextFilter } from './TextFilter'
 import { IntFilter } from './IntFilter'
 import { EnumFilter } from './EnumFilter'
 import { SprintStage } from '../Models/SprintStage'
 import { EmptyFilter } from './EmptyFilter';
+import {FiltersRow, IFilterRow} from './FiltersRow'
 
 
-export interface IFilterString {
-    onApply: Function;
-    display: boolean
-}
 
-
-export class SprintsFiltersRow extends React.Component<IFilterString, IFilterString> {
-    constructor(params: IFilterString) {
+export class SprintsFiltersRow extends FiltersRow {
+    constructor(params: IFilterRow) {
         super(params);
         this.state = { onApply: params.onApply, display: params.display  }
 
     
     }
-
-
-
-    public fileteringOn: boolean = false;
-    private filterString: string = '';
-    private filters: any = {};
 
     render() {     
         return <tr className={this.props.display? "": "nodisplay"}>
@@ -63,46 +51,5 @@ export class SprintsFiltersRow extends React.Component<IFilterString, IFilterStr
             </td>
         </tr>
     }
-
-
-    private FilterChanged(key: string, filter: string) {
-
-        this.filters[key] = filter;
-    }
-
-    private ApplyFiltersClick(e: any) {
-        console.log('call');
-
-        this.filterString = Filter.QUERY_HEAD;
-        var i = 0;
-        for (let iterator in this.filters) {
-            if (this.filters[iterator] === '')
-                continue;
-
-            i++;
-            if (i !== 1)
-                this.filterString += Filter.CONSTRAIN_DIVIDER;
-            this.filterString += this.filters[iterator];
-        }
-
-        if (i === 0) {
-            this.filterString = '';
-        }
-console.log(this.filterString);
-
-        this.state.onApply(this.filterString);
-    }
-
-
-    private CancelFiltersClick(e: any) {
-        for (const key in this.refs) {
-            let temp = this.refs[key] as Filter;
-            if (temp !== null && temp !== undefined){
-                temp.Reset();
-                
-            }
-        }
-    }
-   
 
 }

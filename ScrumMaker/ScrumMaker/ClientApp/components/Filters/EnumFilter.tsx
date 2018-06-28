@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Filter, IFilterConfiguration } from './Filter'
-import { FormControl } from 'react-bootstrap';
 
 export interface IEnumFilterConfiguration extends IFilterConfiguration {
     enumType: any;
