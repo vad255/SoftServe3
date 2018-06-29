@@ -53,6 +53,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\assets\css\images\arrow.svg" />
+    <None Include="wwwroot\assets\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\assets\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\assets\js\jquery.min.js" />
+    <None Include="wwwroot\assets\js\jquery.poptrox.min.js" />
+    <None Include="wwwroot\assets\js\jquery.scrolly.min.js" />
+    <None Include="wwwroot\assets\js\main.js" />
+    <None Include="wwwroot\assets\js\skel.min.js" />
+    <None Include="wwwroot\assets\js\util.js" />
     <None Include="wwwroot\img\28883217.jpg" />
     <None Include="wwwroot\img\face.jpg" />
     <None Include="wwwroot\img\mid_246485_6469.jpg" />
@@ -73,10 +82,6 @@
     <TypeScriptCompile Include="ClientApp\components\SprintsGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\components\TeamGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\css\editUser.css" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
   <ItemGroup>
