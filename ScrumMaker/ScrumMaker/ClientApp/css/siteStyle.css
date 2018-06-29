@@ -2,6 +2,10 @@
     font-family: 'Times New Roman';
 }
 
+body{
+    background-color:rgb(240, 240, 240);
+}
+
 .siteColor {
     background: #232526;
     background: -webkit-linear-gradient(to right, #232526, #414345);
