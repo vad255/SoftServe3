@@ -35,7 +35,11 @@
   <ItemGroup>
     <None Remove="ClientApp\components\AddUser.tsx" />
     <None Remove="ClientApp\components\EditUser.tsx" />
+    <None Remove="ClientApp\components\Error.tsx" />
     <None Remove="ClientApp\components\Filters\FeaturesFiltersRow.tsx" />
+    <None Remove="ClientApp\components\Filters\TeamFiltersRow.tsx" />
+    <None Remove="ClientApp\components\Filters\StoriesFiltersRow.tsx" />
+    <None Remove="ClientApp\components\Grids\StoriesGrid.tsx" />
     <None Remove="ClientApp\components\MailSender.tsx" />
     <None Remove="ClientApp\components\Models\Feature.tsx" />
     <None Remove="ClientApp\components\Models\FeatureState.tsx" />
@@ -55,6 +59,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\assets\css\images\arrow.svg" />
+    <None Include="wwwroot\assets\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\assets\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\assets\js\jquery.min.js" />
+    <None Include="wwwroot\assets\js\jquery.poptrox.min.js" />
+    <None Include="wwwroot\assets\js\jquery.scrolly.min.js" />
+    <None Include="wwwroot\assets\js\main.js" />
+    <None Include="wwwroot\assets\js\skel.min.js" />
+    <None Include="wwwroot\assets\js\util.js" />
     <None Include="wwwroot\img\28883217.jpg" />
     <None Include="wwwroot\img\face.jpg" />
     <None Include="wwwroot\img\mid_246485_6469.jpg" />
@@ -70,17 +83,17 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\AddUser.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Error.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Filters\FeaturesFiltersRow.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Filters\TeamFiltersRow.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Filters\StoriesFiltersRow.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Grids\StoriesGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Models\Feature.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Models\FeatureState.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Models\Story.tsx" />
     <TypeScriptCompile Include="ClientApp\components\SprintsGrid.tsx" />
-    <TypeScriptCompile Include="ClientApp\components\TeamGrid.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Grids\TeamGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\css\editUser.css" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
   <ItemGroup>
