@@ -13,6 +13,7 @@ interface UserState {
 
 export class TeamGrid extends Grid<RouteComponentProps<{}>, UserState> {
 
+    protected pageSize: number = 0;
     protected headerText: string = "Team Grid";
     protected URL_BASE: string = 'odata/teams';
     protected URL_EXPANDS: string = '?$expand=members'
@@ -43,7 +44,7 @@ export class TeamGrid extends Grid<RouteComponentProps<{}>, UserState> {
     protected GetFiltersRow(): JSX.Element {
         return < TeamFiltersRow
         onApply = { this.ApplyFiltersHandler.bind(this) }
-        display = { this.fileteringOn }
+        display = { this.filteringOn }
             />
     }
     protected GetBodyRows(): JSX.Element[] {
