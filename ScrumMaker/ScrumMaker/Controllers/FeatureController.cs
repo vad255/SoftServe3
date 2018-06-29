@@ -10,27 +10,24 @@ using DAL.Models;
 using DAL.Access;
 using Microsoft.Extensions.DependencyInjection;
 using BL;
+using Microsoft.AspNet.OData;
 
 namespace ScrumMaker.Controllers
 {
     [Route("api/[controller]")]
-    public class FeatureController : Controller 
+    public class FeatureController : ODataController 
     {
-        private IFeaturesManager _manager;
-        private IRepository<DAL.Models.Feature> featureRepository;
+        private IRepository<Feature> featureRepository;
 
-        public FeatureController(IServiceProvider serviceProvider, IFeaturesManager manager)
+        public FeatureController(IRepository<Feature> featureRepository)
         {
-            featureRepository = serviceProvider.GetService<IRepository<Feature>>();
-            _manager = manager;
+            this.featureRepository = featureRepository;
         }
 
-        [HttpGet("[action]")]
-        public IEnumerable<Feature> FeatureGet()
+        [EnableQuery]
+        public IActionResult Get()
         {
-            var result = featureRepository.GetAll()
-                .Include(f => f.Stories).ThenInclude(s => s.Team);
-            return result;
+            return Ok(featureRepository.GetAll());
         }
     }
 }
