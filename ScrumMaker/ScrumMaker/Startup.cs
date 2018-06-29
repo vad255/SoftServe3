@@ -62,7 +62,8 @@ namespace ScrumMaker
                 };
             });
 
-             string connectionStr = Configuration.GetConnectionString("Viktor");
+            string connectionStr = Configuration.GetConnectionString("Kateryna");
+
 
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
             services.AddScoped(typeof(DbContext), typeof(DataContext));
