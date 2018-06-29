@@ -219,48 +219,6 @@ export class UserGrid extends React.Component<RouteComponentProps<{}>, UserDataF
             {contents}
         </div>
     }
-
-    //public render() {
-    //    let contents = this.state.loading
-    //        ? <p><em>Loading...</em></p>
-    //        : this.renderForecastsTable(this.state.forecasts, this.state.roles);
-
-    //    return <div>
-    //        <h1>User Grid</h1>
-    //        {contents}
-    //    </div>;
-    //}
-
-    //private renderForecastsTable(forecasts: User[], roles: Role[]) {
-    //    return <table className='table table-sml table-striped table-dark'>
-    //        <caption>List of users</caption>
-    //        <thead className=''>
-    //            <tr>
-    //                <th scope="col">UserId</th>
-    //                <th scope="col">Login </th>
-    //                <th scope="col">Password</th>
-    //                <th scope="col">RoleId</th>
-    //                <th scope="col">TeamId</th>
-    //                <th scope="col">Activity</th>
-    //            </tr>
-    //        </thead>
-    //        <tbody>
-    //            {forecasts.map(forecast =>
-    //                <tr key={forecast.UserId}>
-    //                    <th scope="row">{forecast.UserId}</th>
-    //                    <td>{forecast.Login}</td>
-    //                    <td>{forecast.Password}</td>
-    //                    {roles.map(role =>
-    //                        role.RoleId == forecast.RoleId ? <td>{role.Name}</td> : null
-    //                    )}
-    //                    <td>{forecast.TeamId}</td>
-    //                    <td>{String(forecast.Activity)}</td>
-
-    //                </tr>
-    //            )}
-    //        </tbody>
-    //    </table>;
-    //}
 }
 
 
