@@ -16,6 +16,11 @@
   display: none !important;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
+
 .display{
   display:inherit !important;
 }

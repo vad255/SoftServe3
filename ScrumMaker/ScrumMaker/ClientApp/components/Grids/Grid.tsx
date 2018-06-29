@@ -14,6 +14,7 @@ export abstract class Grid<P, S> extends React.Component<P, S> {
     }
 
     protected abstract headerText: string;
+    protected abstract pageSize: number;
     protected isLoading: boolean = true;
 
     protected readonly abstract URL_BASE: string;
@@ -28,7 +29,7 @@ export abstract class Grid<P, S> extends React.Component<P, S> {
 
     public render() {
         console.log('render');
-        
+
         let contents = this.isLoading
             ? <p><em>Loading...</em></p>
             : this.renderContent();

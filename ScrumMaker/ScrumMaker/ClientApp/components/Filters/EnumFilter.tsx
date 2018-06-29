@@ -83,7 +83,7 @@ export class EnumFilter extends Filter {
     public render() {
         return <div className="dropdown"
             onMouseLeave={this.onMouseLeave.bind(this)}
-            onMouseEnter={this.onMouseEnter.bind(this)}
+        //    onMouseEnter={this.onMouseEnter.bind(this)}
         >
             <div className="light" onClick={this.onDpopdownClick.bind(this)}>
                 {this.label}<span className="caret"></span>

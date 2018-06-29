@@ -16,6 +16,8 @@ export class SprintsGrid extends Grid<RouteComponentProps<{}>, ISprintDataFetchi
     protected URL_ORDERING: string = '&$orderby=id'
     protected headerText: string = 'Sprints'
 
+    protected pageSize: number = 5;
+
     constructor() {
         super();
         this.LoadData();
@@ -38,14 +40,14 @@ export class SprintsGrid extends Grid<RouteComponentProps<{}>, ISprintDataFetchi
 
     protected GetHeaderRow() {
         return <tr>
-            <th className="well well-sm" onClick={() => this.OrderBy("id")}><span className="nowrap">Database ID</span></th>
-            <th className="well well-sm" onClick={() => this.OrderBy("name")}>Name</th>
-            <th className="well well-sm" onClick={() => this.OrderBy("team")}>Team</th>
-            <th className="well well-sm" onClick={() => this.OrderBy("stage")}>Stage</th>
-            <th className="well well-sm" onClick={() => this.OrderBy("review")}>Review</th>
-            <th className="well well-sm" onClick={() => this.OrderBy("history")}>History</th>
-            <th className="well well-sm" onClick={() => this.OrderBy("retrospective")}>Retrospective</th>
-            <th className="well well-sm">
+            <th className="well well-sm pointer" onClick={() => this.OrderBy("id")}><span className="nowrap">Database ID</span></th>
+            <th className="well well-sm pointer" onClick={() => this.OrderBy("name")}>Name</th>
+            <th className="well well-sm pointer" onClick={() => this.OrderBy("team")}>Team</th>
+            <th className="well well-sm pointer" onClick={() => this.OrderBy("stage")}>Stage</th>
+            <th className="well well-sm pointer" onClick={() => this.OrderBy("review")}>Review</th>
+            <th className="well well-sm pointer" onClick={() => this.OrderBy("history")}>History</th>
+            <th className="well well-sm pointer" onClick={() => this.OrderBy("retrospective")}>Retrospective</th>
+            <th className="well well-sm pointer">
                 <div onClick={this.FilterButtonClick.bind(this)}>
                     <span className="nowrap">Show Filters<span className="caret"></span></span>
                 </div>
