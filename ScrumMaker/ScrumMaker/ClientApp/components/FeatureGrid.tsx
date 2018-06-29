@@ -162,7 +162,7 @@ export class FeatureGrid extends React.Component<RouteComponentProps<{}>, FetchF
 
     private GetHeader() {
         return <thead>
-            <tr>
+            <tr height="400px">
                 <th className="well well-sm col-md-1" onClick={() => this.OrderBy("id")}>
                     <span className="nowrap"><a className="menu_links">ID</a></span>
                 </th>
