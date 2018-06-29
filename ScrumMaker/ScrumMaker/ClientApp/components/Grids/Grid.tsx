@@ -24,17 +24,13 @@ export abstract class Grid<P, S> extends React.Component<P, S> {
 
     private lastOrderingArg: string = '';
     private lastOrderingDir: boolean = false;
-    protected fileteringOn: boolean = false;
+    protected filteringOn: boolean = false;
 
 
     public render() {
-        console.log('render');
-
         let contents = this.isLoading
             ? <p><em>Loading...</em></p>
             : this.renderContent();
-
-        console.log(contents);
 
         return <div>
             <h1>{this.headerText}</h1>
@@ -82,7 +78,7 @@ export abstract class Grid<P, S> extends React.Component<P, S> {
 
 
     protected FilterButtonClick(e: any) {
-        this.fileteringOn = !this.fileteringOn
+        this.filteringOn = !this.filteringOn
         this.forceUpdate();
     }
 

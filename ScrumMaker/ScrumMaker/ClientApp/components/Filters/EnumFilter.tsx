@@ -115,7 +115,6 @@ export class EnumFilter extends Filter {
                 "dropdown-menu autooverflow"}
             multiple={true}
             onChange={this.OnChangeHandler.bind(this)}>
-
             {items}
         </select>
 

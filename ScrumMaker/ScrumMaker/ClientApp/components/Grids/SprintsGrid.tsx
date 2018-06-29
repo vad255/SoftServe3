@@ -40,14 +40,14 @@ export class SprintsGrid extends Grid<RouteComponentProps<{}>, ISprintDataFetchi
 
     protected GetHeaderRow() {
         return <tr>
-            <th className="well well-sm pointer" onClick={() => this.OrderBy("id")}><span className="nowrap">Database ID</span></th>
-            <th className="well well-sm pointer" onClick={() => this.OrderBy("name")}>Name</th>
-            <th className="well well-sm pointer" onClick={() => this.OrderBy("team")}>Team</th>
-            <th className="well well-sm pointer" onClick={() => this.OrderBy("stage")}>Stage</th>
-            <th className="well well-sm pointer" onClick={() => this.OrderBy("review")}>Review</th>
-            <th className="well well-sm pointer" onClick={() => this.OrderBy("history")}>History</th>
-            <th className="well well-sm pointer" onClick={() => this.OrderBy("retrospective")}>Retrospective</th>
-            <th className="well well-sm pointer">
+            <th className="well menu_links col-md-1" onClick={() => this.OrderBy("id")}>ID</th>
+            <th className="well menu_links col-md-1" onClick={() => this.OrderBy("name")}>Name</th>
+            <th className="well menu_links col-md-1" onClick={() => this.OrderBy("team")}>Team</th>
+            <th className="well menu_links col-md-1" onClick={() => this.OrderBy("stage")}>Stage</th>
+            <th className="well menu_links col-md-1" onClick={() => this.OrderBy("review")}>Review</th>
+            <th className="well menu_links col-md-1" onClick={() => this.OrderBy("history")}>History</th>
+            <th className="well menu_links col-md-1" onClick={() => this.OrderBy("retrospective")}>Retrospective</th>
+            <th className="well menu_links col-md-1">
                 <div onClick={this.FilterButtonClick.bind(this)}>
                     <span className="nowrap">Show Filters<span className="caret"></span></span>
                 </div>
@@ -57,11 +57,11 @@ export class SprintsGrid extends Grid<RouteComponentProps<{}>, ISprintDataFetchi
     protected GetFiltersRow() {
         return <SprintsFiltersRow
             onApply={this.ApplyFiltersHandler.bind(this)}
-            display={this.fileteringOn}
+            display={this.filteringOn}
         />
     }
     protected GetBodyRows() {
-        return this.state.sprints.map((s) => s.renderAsTableRow());
+    return this.state.sprints.map((s) => s.renderAsTableRow());
     }
     protected RenderFooter() {
         return <tr>
