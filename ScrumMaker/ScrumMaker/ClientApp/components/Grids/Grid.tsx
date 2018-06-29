@@ -6,7 +6,6 @@ import { SprintStage } from '../Models/SprintStage'
 import { SprintsFiltersRow } from '../Filters/SprintsFiltersRow'
 import { Content } from 'react-bootstrap/lib/Tab';
 
-
 export abstract class Grid<P, S> extends React.Component<P, S> {
     constructor() {
         super();
@@ -23,12 +22,10 @@ export abstract class Grid<P, S> extends React.Component<P, S> {
 
     private lastOrderingArg: string = '';
     private lastOrderingDir: boolean = false;
-    protected fileteringOn: boolean = false;
+    protected filteringOn: boolean = false;
 
 
     public render() {
-        console.log('render');
-        
         let contents = this.isLoading
             ? <p><em>Loading...</em></p>
             : this.renderContent();
@@ -42,7 +39,6 @@ export abstract class Grid<P, S> extends React.Component<P, S> {
     }
 
     private renderContent() {
-
         return <table className='table table-scrum table-hover td-scrum'>
             <thead>
                 {this.GetHeaderRow()}
@@ -55,7 +51,6 @@ export abstract class Grid<P, S> extends React.Component<P, S> {
                 {this.RenderFooter()}
             </tfoot>
         </table>
-
     }
 
     protected LoadData() {
@@ -81,7 +76,7 @@ export abstract class Grid<P, S> extends React.Component<P, S> {
 
 
     protected FilterButtonClick(e: any) {
-        this.fileteringOn = !this.fileteringOn
+        this.filteringOn = !this.filteringOn
         this.forceUpdate();
     }
 
@@ -90,17 +85,13 @@ export abstract class Grid<P, S> extends React.Component<P, S> {
         this.LoadData();
     }
 
-
     protected abstract OnDataReceived(data: any): void;
 
     protected abstract GetHeaderRow(): JSX.Element;
     protected abstract GetFiltersRow(): JSX.Element;
     protected abstract GetBodyRows(): JSX.Element[];
     protected abstract RenderFooter(): JSX.Element;
-
-
-
-
+    
     // Provide access to gridItems for sorting method
     protected abstract getData(): any[];
 
@@ -108,14 +99,12 @@ export abstract class Grid<P, S> extends React.Component<P, S> {
         try {
             let data = [];
             data = this.getData();
-
-
+            
             if (this.lastOrderingArg === arg)
                 this.lastOrderingDir = !this.lastOrderingDir;
             else
                 this.lastOrderingDir = false;
-
-
+            
             if (!this.lastOrderingDir)
                 data.sort((a, b) => this.SafeCompare(a, b, arg))
             else

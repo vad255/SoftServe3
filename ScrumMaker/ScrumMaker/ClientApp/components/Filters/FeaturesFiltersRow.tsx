@@ -8,7 +8,7 @@ import { EnumFilter } from './EnumFilter'
 import { EmptyFilter } from './EmptyFilter'
 import { State } from '../Models/FeatureState'
 
-import { Feature } from '../FeatureGrid'
+import { Feature } from '../Models/Feature'
 
 export interface IFilterString {
     onApply: Function;

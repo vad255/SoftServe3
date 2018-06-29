@@ -55,7 +55,7 @@ export class SprintsGrid extends Grid<RouteComponentProps<{}>, ISprintDataFetchi
     protected GetFiltersRow() {
         return <SprintsFiltersRow
             onApply={this.ApplyFiltersHandler.bind(this)}
-            display={this.fileteringOn}
+            display={this.filteringOn}
         />
     }
     protected GetBodyRows() {

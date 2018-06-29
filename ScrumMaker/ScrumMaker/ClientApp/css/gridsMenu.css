@@ -38,10 +38,9 @@
 .btn-dropdown:hover {
         background-color: white;
         color: #333;
-
 }
 
-a.menu_links {
+.menu_links {
     cursor: pointer;
     color: #333;
 }
