@@ -4,7 +4,7 @@ import 'isomorphic-fetch';
 import {User} from './User'
 
 
-export class Team{
+export class Team {
 
     empty: boolean = true;
     name: string = "";
@@ -30,7 +30,7 @@ export class Team{
         this.members = members;
     }
 
-    public toString() : string {
+    public toString(): string {
         if (this.empty)
             return "";
         return this.name;
@@ -47,6 +47,21 @@ export class Team{
                 {this.members.map(u => u.renderAsDropDown())}
             </ul>
         </div>
+    }
+
+    renderForecastsTable() {
+        return <tr key={this.id}>
+            <td>{this.id}</td>
+            <td scope="row">{this.name}</td>
+            <td><select className="btn btn-sm btn-primary" role="button" data-toggle="dropdown">
+                {this.members.map(u =>
+                    <option>{u.login}</option>
+                )}
+            </select>
+            </td>
+            <td>
+            </td>
+        </tr>;
     }
 }
 

@@ -11,7 +11,7 @@ import { StoryGrid } from './components/StoryGrid';
 import { FeatureGrid } from './components/FeatureGrid';
 import { EditUser } from './components/EditUser';
 import { Login } from './components/Login'
-import { TeamGrid } from './components/TeamGrid';
+import { TeamGrid } from './components/Grids/TeamGrid';
 import { DefectGrid } from './components/DefectGrid';
 
 const LayoutRoute = ({ ...props }) => {

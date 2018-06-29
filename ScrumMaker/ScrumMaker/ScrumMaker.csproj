@@ -36,6 +36,7 @@
     <None Remove="ClientApp\components\AddUser.tsx" />
     <None Remove="ClientApp\components\EditUser.tsx" />
     <None Remove="ClientApp\components\Filters\FeaturesFiltersRow.tsx" />
+    <None Remove="ClientApp\components\Filters\TeamFiltersRow.tsx" />
     <None Remove="ClientApp\components\MailSender.tsx" />
     <None Remove="ClientApp\components\Models\FeatureState.tsx" />
     <None Remove="ClientApp\components\SprintsGrid.tsx" />
@@ -69,9 +70,10 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\AddUser.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Filters\FeaturesFiltersRow.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Filters\TeamFiltersRow.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Models\FeatureState.tsx" />
     <TypeScriptCompile Include="ClientApp\components\SprintsGrid.tsx" />
-    <TypeScriptCompile Include="ClientApp\components\TeamGrid.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Grids\TeamGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\css\editUser.css" />
   </ItemGroup>
 
