@@ -14,6 +14,7 @@ export class FeatureGrid extends Grid<RouteComponentProps<{}>, IFeatureDataFetch
     protected URL_EXPANDS: string = '?$expand=stories($expand=team)';
     protected URL_ORDERING: string = '&$orderby=id';
     protected headerText: string = 'Feature';
+    protected pageSize: number = 10;
 
     constructor() {
         super();

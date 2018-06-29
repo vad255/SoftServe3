@@ -1,6 +1,7 @@
 ﻿import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
+import { Team } from './Team';
 
 
 
@@ -19,6 +20,7 @@ export class Story {
     name: string = '';
     status: StoryStatus = 0;
     description: string = '';
+    team: Team;
 
 
     public constructor(params: any) {
@@ -29,10 +31,14 @@ export class Story {
             return;
         }
 
-        this.id = params.id;
-        this.name = params.name;
-        this.status = params.status;
-        this.description = params.description;
+        this.id = params.Id;
+        this.name = params.Name;
+        this.status = params.Status;
+        this.description = params.Description;
+        if (params.Team === null || params.Team === undefined)
+            return;
+
+        this.team = new Team(params.Team);
     }
 
     public toString(): string {
@@ -60,6 +66,18 @@ export class Story {
                        </div>
                    </td>
                </tr>;
+    }
+
+    renderAsMenu() {
+        return <li className="dropdown-submenu">
+            <div > {this.name} </div>
+            <ul className="dropdown-menu">
+                <li className="dropdown-item"><b><pre>Story name: {this.name}</pre></b>  </li>
+                <li className="dropdown-item"><b><pre>Description: {this.description}</pre></b> </li>
+                <li className="dropdown-item"><b><pre>Status: {this.status}</pre></b> </li>
+                <li className="dropdown-item"><b><pre>Team: {(this.team === null || this.team === undefined) ? "None" : this.team.name}</pre></b> </li>
+            </ul>
+        </li>
     }
 }
 
