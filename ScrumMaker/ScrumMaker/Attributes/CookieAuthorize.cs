@@ -13,16 +13,21 @@ namespace ScrumMaker.Attributes
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-
             var value = context.HttpContext.Request.Cookies["Authorization"];
-            var handler = new JwtSecurityTokenHandler();
-            var token = handler.ReadToken(value) as JwtSecurityToken;
-            var exp = token.Claims.First(claim => claim.Type == "exp").Value;
-            if (Int64.Parse(exp) < ((DateTimeOffset)DateTime.Now).ToUnixTimeSeconds())
+            if (value != null)
+            {
+                var handler = new JwtSecurityTokenHandler();
+                var token = handler.ReadToken(value) as JwtSecurityToken;
+                var exp = token.Claims.First(claim => claim.Type == "exp").Value;
+                if (Int64.Parse(exp) < ((DateTimeOffset)DateTime.Now).ToUnixTimeSeconds())
+                {
+                    context.Result = new RedirectResult("/login");
+                }
+            }
+            else
             {
                 context.Result = new RedirectResult("/login");
             }
-
         }
     }
 }
