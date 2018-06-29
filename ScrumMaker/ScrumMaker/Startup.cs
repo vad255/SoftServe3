@@ -61,7 +61,6 @@ namespace ScrumMaker
                     ValidateIssuerSigningKey = true
                 };
             });
-
             string connectionStr = Configuration.GetConnectionString("Pasha");
 
 
