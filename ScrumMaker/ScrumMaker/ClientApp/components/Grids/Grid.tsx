@@ -7,10 +7,10 @@ import { SprintsFiltersRow } from '../Filters/SprintsFiltersRow'
 import { Content } from 'react-bootstrap/lib/Tab';
 
 
-export abstract class Grid<P, S> extends React.Component<P, S> {
+export abstract class Grid<P, S> extends React.Component<RouteComponentProps<any>, S> {
     constructor() {
         super();
-        this.isLoading = true
+        this.isLoading = true;
     }
 
     protected abstract headerText: string;
@@ -60,7 +60,7 @@ export abstract class Grid<P, S> extends React.Component<P, S> {
             .then(response => response.json() as any)
             .then(data => {
                 this.OnDataReceived(data);
-            });
+            }).catch(e => this.props.history.push("/Error"));
     }
 
     private getURL() {

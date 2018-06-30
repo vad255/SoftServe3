@@ -19,7 +19,7 @@ namespace DAL.Models
 
 
         [Required]    
-        public virtual List<User> Members { get; set; }
+        public virtual ICollection<User> Members { get; set; }
 
     }
 }
