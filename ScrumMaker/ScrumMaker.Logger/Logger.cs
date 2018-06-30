@@ -36,5 +36,10 @@ namespace ScrumMaker.Logger
         {
             log.Debug(message);
         }
+
+        public static void LogError(string message, Exception e)
+        {
+            log.Error($"{message} \r\nException message: {e.Message}");
+        }
     }
 }
