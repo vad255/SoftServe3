@@ -73,9 +73,17 @@ export class Sprint extends React.Component {
             <td className="align-base">{this.name}</td>
             <td className="align-base">{this.team.renderAsMenu()}</td>
             <td className="align-base">{this.stage}</td>
-            <td className="align-base">{this.review}</td>
+            <td className="align-base">
+                <div className='align-base m-tooltip'>{this.cutStirng(this.review, 15)}
+                    <span className="m-tooltiptext">{this.review}</span>
+                </div>
+            </td>
             <td className="align-base">{this.history.renderAsMenu()}</td>
-            <td className="align-base">{this.retrospective}</td>
+            <td className="align-base">
+                <div className='align-base m-tooltip'>{this.cutStirng(this.retrospective, 15)}
+                    <span className="m-tooltiptext">{this.retrospective}</span>
+                </div>
+            </td>
             <td className="align-base">
                 <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base ">
                     <span className="glyphicon glyphicon-edit dark" aria-hidden="true"></span>
@@ -86,5 +94,22 @@ export class Sprint extends React.Component {
                 </div>
             </td>
         </tr>;
+    }
+
+    private cutStirng(str: string, targetLength: number): string {
+        let s = new String(' ');
+        if (targetLength >= str.length)
+            return str;
+
+        if (targetLength <= 0)
+            return "";
+
+        if (targetLength < 4)
+            return str.substring(0, targetLength);
+
+        if (targetLength < 7)
+            return str.substring(0, targetLength - 2) + "..";
+
+        return str.substring(0, targetLength - 3) + "...";
     }
 }
