@@ -6,7 +6,7 @@ import { Filter } from './Filter'
 
 export interface IFilterRow {
     onApply: Function;
-    display: boolean
+    display: boolean;
 }
 
 

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DAL;
 using DAL.Access;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,172 +21,311 @@ namespace DataBaseInitializer
         static IRepository<SprintStagesHistory> _dbHisories;
         static IRepository<Sprint> _dbSprints;
 
-        static Random _rand = new Random(1);
 
-
-        static List<string> _names = new List<string>()
-                {
-                    "First", "Second", "Main", "Core", "TestName", "Poker", "Mouse", "Unicorns", "Party", "Movie"
-                };
-
-        // generated 
         public static void FillDataBase(DbContext context)
         {
             _context = context;
 
             FillRolesData();
+            ShowStatus(10);
             FillUsersData();
+            ShowStatus(20);
             FillTeamsData();
+            ShowStatus(30);
             FillDailyScrumData();
+            ShowStatus(40);
             FillDefectsData();
+            ShowStatus(50);
             FillStoriesData();
+            ShowStatus(60);
             FillTasksData();
+            ShowStatus(70);
             FillFeaturesData();
+            ShowStatus(80);
             FillSprintStagesData();
+            ShowStatus(90);
             FillSprintsData();
+            ShowStatus(100);
         }
 
         public static void FillRolesData()
         {
             _dbRoles = new Repository<Role>(_context);
 
-            if (_dbRoles.GetAll().Count() == 0)
+
+            Role[] roles = new Role[]
             {
-                Role[] roles = new Role[]
-                {
                     new Role() {Name = "Admin"},
                     new Role() {Name = "ScrumMaster"},
                     new Role() {Name = "User"},
-                };
+            };
 
-                foreach (var role in roles)
-                {
-                    _dbRoles.Create(role);
-                }
-
-                _dbRoles.Save();
-            }
+            AddToDatabase(roles, _dbRoles);
         }
 
         public static void FillUsersData()
         {
             _dbUsers = new Repository<User>(_context);
 
-            if (_dbUsers.GetAll().Count() == 0)
+            User[] users = new User[]
             {
-                User[] users = new User[]
-                {
                     new User()
                     {
                         Role = _dbRoles.GetById(1),
                         Activity = true,
-                        Login = "admin@gmail.com",
-                        Password = "admin123"
+                        Login = "Ivan.Nesterenko@gmail.com",
+                        Password = "INadmin2018"
                     },
                     new User()
                     {
                         Role = _dbRoles.GetById(2),
                         Activity = true,
-                        Login = "scrumMaster@gmail.com",
-                        Password = "scrumMaster123"
+                        Login = "Oleksandr.Petrov@gmail.com",
+                        Password = "OPscrumMaster13"
                     },
                     new User()
                     {
                         Role = _dbRoles.GetById(3),
                         Activity = true,
-                        Login = "user@gmail.com",
-                        Password = "user123"
+                        Login = "Nataliya.Kozachenko@ukr.net",
+                        Password = "uSdsger74"
                     },
                     new User()
                     {
                         Role = _dbRoles.GetById(3),
                         Activity = true,
-                        Login = "user@gmail.com",
-                        Password = "user456"
+                        Login = "Viktor.Andrushenko@mail.ru",
+                        Password = "gnfdA456"
                     },
                     new User()
                     {
                         Role = _dbRoles.GetById(3),
                         Activity = true,
-                        Login = "user@gmail.com",
-                        Password = "user789"
+                        Login = "Mykola.Kropyvnytskiy@gmail.com",
+                        Password = "usfmf1243"
                     },
                     new User()
                     {
                         Role = _dbRoles.GetById(3),
                         Activity = true,
-                        Login = "user@gmail.com",
-                        Password = "user101"
+                        Login = "Yuriy.Savchuk@gmail.com",
+                        Password = "uerthQQr101"
                     },
                     new User()
                     {
                         Role = _dbRoles.GetById(3),
                         Activity = true,
-                        Login = "user@gmail.com",
-                        Password = "user222"
+                        Login = "Roman.Danylenko@gmail.com",
+                        Password = "vzsd234D2"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(3),
+                        Activity = true,
+                        Login = "Anastasiya.Zelenska@gmail.com",
+                        Password = "vGHlhD2"
                     },
 
 
-                    new User()
-                    {
-                        Role = _dbRoles.GetById(1),
-                        Activity = true,
-                        Login = "hello@com",
-                        Password = "admin123"
-                    },
                     new User()
                     {
                         Role = _dbRoles.GetById(2),
                         Activity = true,
-                        Login = "scrumgmail.",
-                        Password = "Master123"
-                    },
-                    new User()
-                    {
-                        Role = _dbRoles.GetById(1),
-                        Activity = true,
-                        Login = "user@ukr.com",
-                        Password = "321user123"
+                        Login = "Andriy.Herula@com",
+                        Password = "xdsfhgin123"
                     },
                     new User()
                     {
                         Role = _dbRoles.GetById(3),
                         Activity = true,
-                        Login = "ermailcom",
+                        Login = "Ihor.Verbenets@ukr.net",
+                        Password = "M4ybfrh"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(3),
+                        Activity = true,
+                        Login = "Iryna.Revus@mail.ru",
+                        Password = "321usgm56667"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(3),
+                        Activity = true,
+                        Login = "Myhailo.Andruchvych@gmail.com",
                         Password = "ffer456"
                     },
                     new User()
                     {
                         Role = _dbRoles.GetById(3),
                         Activity = true,
-                        Login = "usoFrm",
+                        Login = "Maksym.Pereima@mail.ru",
                         Password = "user789"
                     },
                     new User()
                     {
                         Role = _dbRoles.GetById(3),
                         Activity = true,
-                        Login = "Worldmail.nom",
-                        Password = "useror101"
+                        Login = "Oleg.Mykytyn@gmail.com",
+                        Password = "bxcdfn4564QW"
                     },
                     new User()
                     {
                         Role = _dbRoles.GetById(3),
                         Activity = true,
-                        Login = "userator",
-                        Password = "usrrr222"
+                        Login = "Ulyana.Nazaruk@mail.ru",
+                        Password = "qwerty222"
                     },
-
-
-                };
-
-                foreach (var user in users)
+                new User()
                 {
-                    _dbUsers.Create(user);
+                    Role = _dbRoles.GetById(2),
+                    Activity = true,
+                    Login = "Andriy.Herula@com",
+                    Password = "xdsfhgin123"
+                },
+                new User()
+                {
+                    Role = _dbRoles.GetById(3),
+                    Activity = true,
+                    Login = "Ihor.Verbenets@ukr.net",
+                    Password = "M4ybfrh"
+                },
+                new User()
+                {
+                    Role = _dbRoles.GetById(3),
+                    Activity = true,
+                    Login = "Iryna.Revus@mail.ru",
+                    Password = "321usgm56667"
+                },
+                new User()
+                {
+                    Role = _dbRoles.GetById(3),
+                    Activity = true,
+                    Login = "Myhailo.Andruchvych@gmail.com",
+                    Password = "ffer456"
+                },
+                new User()
+                {
+                    Role = _dbRoles.GetById(3),
+                    Activity = true,
+                    Login = "Maksym.Pereima@mail.ru",
+                    Password = "user789"
+                },
+                new User()
+                {
+                    Role = _dbRoles.GetById(3),
+                    Activity = true,
+                    Login = "Oleg.Mykytyn@gmail.com",
+                    Password = "bxcdfn4564QW"
+                },
+                new User()
+                {
+                    Role = _dbRoles.GetById(3),
+                    Activity = true,
+                    Login = "Ulyana.Nazaruk@mail.ru",
+                    Password = "qwerty222"
+                },
+                new User()
+                {
+                    Role = _dbRoles.GetById(2),
+                    Activity = true,
+                    Login = "Andriy.Herula@com",
+                    Password = "xdsfhgin123"
+                },
+                new User()
+                {
+                    Role = _dbRoles.GetById(3),
+                    Activity = true,
+                    Login = "Ihor.Verbenets@ukr.net",
+                    Password = "M4ybfrh"
+                },
+                new User()
+                {
+                    Role = _dbRoles.GetById(3),
+                    Activity = true,
+                    Login = "Iryna.Revus@mail.ru",
+                    Password = "321usgm56667"
+                },
+                new User()
+                {
+                    Role = _dbRoles.GetById(3),
+                    Activity = true,
+                    Login = "Myhailo.Andruchvych@gmail.com",
+                    Password = "ffer456"
+                },
+                new User()
+                {
+                    Role = _dbRoles.GetById(3),
+                    Activity = true,
+                    Login = "Maksym.Pereima@mail.ru",
+                    Password = "user789"
+                },
+                new User()
+                {
+                    Role = _dbRoles.GetById(3),
+                    Activity = true,
+                    Login = "Oleg.Mykytyn@gmail.com",
+                    Password = "bxcdfn4564QW"
+                },
+                new User()
+                {
+                    Role = _dbRoles.GetById(3),
+                    Activity = true,
+                    Login = "Ulyana.Nazaruk@mail.ru",
+                    Password = "qwerty222"
+                },
+                new User()
+                {
+                    Role = _dbRoles.GetById(2),
+                    Activity = true,
+                    Login = "Andriy.Herula@com",
+                    Password = "xdsfhgin123"
+                },
+                new User()
+                {
+                    Role = _dbRoles.GetById(3),
+                    Activity = true,
+                    Login = "Ihor.Verbenets@ukr.net",
+                    Password = "M4ybfrh"
+                },
+                new User()
+                {
+                    Role = _dbRoles.GetById(3),
+                    Activity = true,
+                    Login = "Iryna.Revus@mail.ru",
+                    Password = "321usgm56667"
+                },
+                new User()
+                {
+                    Role = _dbRoles.GetById(3),
+                    Activity = true,
+                    Login = "Myhailo.Andruchvych@gmail.com",
+                    Password = "ffer456"
+                },
+                new User()
+                {
+                    Role = _dbRoles.GetById(3),
+                    Activity = true,
+                    Login = "Maksym.Pereima@mail.ru",
+                    Password = "user789"
+                },
+                new User()
+                {
+                    Role = _dbRoles.GetById(3),
+                    Activity = true,
+                    Login = "Oleg.Mykytyn@gmail.com",
+                    Password = "bxcdfn4564QW"
+                },
+                new User()
+                {
+                    Role = _dbRoles.GetById(3),
+                    Activity = true,
+                    Login = "Ulyana.Nazaruk@mail.ru",
+                    Password = "qwerty222"
                 }
+            };
 
-                _dbUsers.Save();
-            }
+            AddToDatabase(users, _dbUsers);
         }
 
 
@@ -196,35 +334,36 @@ namespace DataBaseInitializer
 
             _dbTeams = new Repository<Team>(_context);
 
-            if (_dbTeams.GetAll().Count() != 0)
-                return;
-
-
-            List<User> users = _dbUsers.GetAll().ToList();
-
-
-            List<Team> teams = new List<Team>();
-            
-            for (int i = 0; i < 4; i++)
+            Team[] teams = new Team[]
             {
-                var team = new Team()
+                new Team()
                 {
-                    Name = _names[_rand.Next(_names.Count)],
-                };
-                teams.Add(team);
-
-                var members = GetRandomCollection(users, _rand, 4, 8);
-                foreach (var item in members)
+                    Name = "ScrumMakerTeam",
+                    Members = _dbUsers.GetAll().Where(u => u.UserId >= 2 && u.UserId <= 8).ToList()
+                },
+                new Team()
                 {
-                    _dbUsers.GetById(item.UserId).Team = team;
-                }    
-            }
-            foreach (var item in teams)
-            {
-                _dbTeams.Create(item);
-            }
+                  Name  = "LP-1Team",
+                  Members = _dbUsers.GetAll().Where(u => u.UserId >= 9 && u.UserId <= 15).ToList()
+                },
+                new Team()
+                {
+                    Name  = "LV-234Team",
+                    Members = _dbUsers.GetAll().Where(u => u.UserId >= 16 && u.UserId <= 22).ToList()
+                },
+                new Team()
+                {
+                    Name  = "LV-123Team",
+                    Members = _dbUsers.GetAll().Where(u => u.UserId >= 23 && u.UserId <= 29).ToList()
+                },
+                new Team()
+                {
+                    Name  = "LV-441Team",
+                    Members = _dbUsers.GetAll().Where(u => u.UserId >= 30 && u.UserId <= 36).ToList()
+                }
+            };
 
-            _dbTeams.Save();
+            AddToDatabase(teams, _dbTeams);
         }
 
 
@@ -233,109 +372,301 @@ namespace DataBaseInitializer
         {
             _dbDefects = new Repository<Defect>(_context);
 
-            if (_dbDefects.GetAll().Count() == 0)
+            Defect[] defects = new Defect[]
             {
-
-
-                Defect[] defects = new Defect[]
-                {
                     new Defect()
                     {
-                        Description = "description",
-                        ActualResults = "result",
+                        Description = "The button doesn't work while clicking",
+                        ActualResults = "almost done",
+                        FixResults = "button has to work",
                         Blocked = Blocked.No,
-                        DefectName = "Defect Name",
-                        AssignedTo = _dbUsers.GetById(5),
-                        Priority = Priority.HighAttention
+                        DefectName = "Broken button 'Send'",
+                        AssignedTo = _dbUsers.GetById(2),
+                        Priority = Priority.HighAttention,
+                        State = State.Active,
+                        Status = Status.Open
+                    },
+                    new Defect()
+                    {
+                        Description = "Searching by name doesn't work correctly in Story Table",
+                        ActualResults = "in process",
+                        Blocked = Blocked.No,
+                        DefectName = "Bug in Serach input",
+                        AssignedTo = _dbUsers.GetById(3),
+                        Priority = Priority.Normal,
+                        State = State.InWork,
+                        Status = Status.Open,
+                        FixResults = "fixed result"
                         },
                     new Defect()
-                    {
-                        Description = "description2",
-                        ActualResults = "result2",
-                        Blocked = Blocked.No,
-                        DefectName = "Defect Name2",
-                        AssignedTo = _dbUsers.GetById(6),
-                        Priority = Priority.Low
-                    }
-                };
-
-                foreach (var defect in defects)
                 {
-                    _dbDefects.Create(defect);
-                }
+                    Description = "when gotten all data teable doesn't show it correctly",
+                    ActualResults = "result",
+                    Blocked = Blocked.No,
+                    DefectName = "TableSprintBug",
+                    AssignedTo = _dbUsers.GetById(4),
+                    Priority = Priority.Normal,
+                    State = State.Postponed,
+                    Status = Status.Open,
+                    FixResults = "still fixing"
+                    },
+                new Defect()
+                {
+                    Description = "some problems with getting data from database",
+                    ActualResults = "in process",
+                    Blocked = Blocked.No,
+                    DefectName = "Getting data bug",
+                    AssignedTo = _dbUsers.GetById(5),
+                    Priority = Priority.ResolveImmediately,
+                    State = State.PendingTest,
+                    Status = Status.Open,
+                    FixResults = "fixed"
 
-                _dbDefects.Save();
-            }
+                },
+                new Defect()
+                {
+                    Description = "Link in navigation menu desn't redirect to home page",
+                    ActualResults = "in process",
+                    Blocked = Blocked.No,
+                    DefectName = "Link to home page is not working",
+                    AssignedTo = _dbUsers.GetById(6),
+                    Priority = Priority.HighAttention,
+                    State = State.PendingTest,
+                    Status = Status.Open,
+                    FixResults = "still fixing"
+
+                },
+                new Defect()
+                {
+                    Description = "it's possible to insert an email that doesn't match the sample",
+                    ActualResults = "in process",
+                    Blocked = Blocked.No,
+                    DefectName = "checking email",
+                    AssignedTo = _dbUsers.GetById(7),
+                    Priority = Priority.Low,
+                    State = State.Active,
+                    Status = Status.Open,
+                    FixResults = "fixing"
+
+                },
+                new Defect()
+                {
+                    Description = "the width of input is too small.",
+                    ActualResults = "in process",
+                    Blocked = Blocked.No,
+                    DefectName = "too small input",
+                    AssignedTo = _dbUsers.GetById(8),
+                    Priority = Priority.HighAttention,
+                    State = State.Active,
+                    Status = Status.Open,
+                    FixResults = "fixing"
+
+                },
+                new Defect()
+                {
+                    Description = "The tax calculator gives wrong avarage result.",
+                    ActualResults = "in process",
+                    Blocked = Blocked.No,
+                    DefectName = "wrong avarage result",
+                    AssignedTo = _dbUsers.GetById(9),
+                    Priority = Priority.Low,
+                    State = State.Postponed,
+                    Status = Status.Open,
+                    FixResults = "fixing"
+
+                },
+                new Defect()
+                {
+                    Description = "While starting an app, the main windows doesn't show all members correctly.",
+                    ActualResults = "almost finished",
+                    Blocked = Blocked.No,
+                    DefectName = "Main windows not showing all members",
+                    AssignedTo = _dbUsers.GetById(10),
+                    Priority = Priority.Normal,
+                    State = State.Fixed,
+                    Status = Status.Close,
+                    FixResults = "fixed"
+
+                },
+                new Defect()
+                {
+                    Description = "Dont have a response when clicking on the Clients button",
+                    ActualResults = "in process",
+                    Blocked = Blocked.No,
+                    DefectName = "Response getting bug",
+                    AssignedTo = _dbUsers.GetById(11),
+                    Priority = Priority.Low,
+                    State = State.InWork,
+                    Status = Status.Open,
+                    FixResults = "fixing"
+
+                },
+                new Defect()
+                {
+                    Description = "the app doesn't insert data in the database when adding a new Client",
+                    ActualResults = "in rocess",
+                    Blocked = Blocked.No,
+                    DefectName = "data saving problem",
+                    AssignedTo = _dbUsers.GetById(12),
+                    Priority = Priority.ResolveImmediately,
+                    State = State.PendingTest,
+                    Status = Status.Open,
+                    FixResults = "fixing"
+                },
+                new Defect()
+                {
+                    Description = "Buttons don't change a color when pointing by mouse",
+                    ActualResults = "some result",
+                    Blocked = Blocked.No,
+                    DefectName = "buttons don't change the color",
+                    AssignedTo = _dbUsers.GetById(13),
+                    Priority = Priority.Low,
+                    State = State.Active,
+                    Status = Status.Open,
+                    FixResults = "fixing"
+                },
+                new Defect()
+                {
+                    Description = "Add bootstrap styles for tables",
+                    ActualResults = "result",
+                    Blocked = Blocked.No,
+                    DefectName = "girid styles",
+                    AssignedTo = _dbUsers.GetById(14),
+                    Priority = Priority.HighAttention,
+                    State = State.Fixed,
+                    Status = Status.Close,
+                    FixResults = "fixed"
+
+                },
+                new Defect()
+                {
+                    Description = "there is some bug with Home controller",
+                    ActualResults = "",
+                    Blocked = Blocked.No,
+                    DefectName = "can't get an Index view",
+                    AssignedTo = _dbUsers.GetById(15),
+                    Priority = Priority.Low,
+                    State = State.Active,
+                    Status = Status.Open,
+                    FixResults = "fixing"
+                }
+            };
+
+            AddToDatabase(defects, _dbDefects);
         }
 
 
         public static void FillStoriesData()
         {
             _dbStories = new Repository<Story>(_context);
-            if (_dbStories.GetAll().Count() == 0)
+
+            Story[] stories = new Story[]
             {
-                Story[] stories = new Story[]
-                {
                     new Story()
                     {
-                        Name = "StoryName",
+                        Name = "Grids",
                         Team = _dbTeams.GetById(1),
-                        Description = "StoryDescription",
-                        AssignedTo = _dbUsers.GetById(4),
+                        Description = "create grids for all models. Each grid should have columns described in the model. Also add bootstrap styles",
+                        AssignedTo = _dbUsers.GetById(2),
                         Status = StoryStatus.InProgress,
-                        Defects = _dbDefects.GetAll().ToList()
+                        Defects = _dbDefects.GetAll().Where(d => d.DefectId < 8).ToList()
+        },
+                    new Story()
+                    {
+                        Name = "Login page",
+                        Team = _dbTeams.GetById(2),
+                        Description = "login page has inputs for login and password, an image on backgroud, sign in and sign up buttons",
+                        AssignedTo = _dbUsers.GetById(9),
+                        Status = StoryStatus.ReadyToStart,
+                        Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList()
                     },
                     new Story()
                     {
-                        Name = "StoryName1",
-                        Team = _dbTeams.GetById(1),
-                        Description = "StoryDescription",
+                        Name = "DataBase",
+                        Team = _dbTeams.GetById(3),
+                        Description = "Sql database with code first model.",
                         AssignedTo = _dbUsers.GetById(3),
-                        Status = StoryStatus.InProgress,
-                        Defects = _dbDefects.GetAll().ToList()
-                    },
+                        Status = StoryStatus.Accepted,
+                        Defects = _dbDefects.GetAll().Where(d => d.DefectId < 8).ToList()
+        },
                     new Story()
-                    {
-                        Name = "StoryName2",
-                        Team = _dbTeams.GetById(1),
-                        Description = "StoryDescription",
-                        AssignedTo = _dbUsers.GetById(5),
-                        Status = StoryStatus.InProgress,
-                        Defects = _dbDefects.GetAll().ToList()
+                    { Name = "Clients page",
+                        Team = _dbTeams.GetById(4),
+                        Description = "This page should show all clients with possibilities add new client, delete some client",
+                        AssignedTo = _dbUsers.GetById(10),
+                        Status = StoryStatus.PendingApproval,
+                        Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList()
                     },
-                    new Story()
-                    { Name = "StoryName3",
-                        Team = _dbTeams.GetById(1),
-                        Description = "StoryDescription",
-                        AssignedTo = _dbUsers.GetById(3),
-                        Status = StoryStatus.InProgress,
-                        Defects = _dbDefects.GetAll().ToList()
-                    }
-                };
-
-                foreach (var story in stories)
+                new Story()
                 {
-                    _dbStories.Create(story);
+                    Name = "Taxes page",
+                    Team = _dbTeams.GetById(5),
+                    Description = "This page has info about client's taxes.",
+                    AssignedTo = _dbUsers.GetById(4),
+                    Status = StoryStatus.InProgress,
+                    Defects = _dbDefects.GetAll().Where(d => d.DefectId < 8).ToList()
+                },
+                new Story()
+                {
+                    Name = "Odata",
+                    Team = _dbTeams.GetById(1),
+                    Description = "Every api controller has to use odata requests",
+                    AssignedTo = _dbUsers.GetById(5),
+                    Status = StoryStatus.TestComplete,
+                    Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList()
+                },
+                new Story()
+                {
+                    Name = "Main window View",
+                    Team = _dbTeams.GetById(2),
+                    Description = "Cantains home page with general description of application and main links.",
+                    AssignedTo = _dbUsers.GetById(11),
+                    Status = StoryStatus.Accepted,
+                    Defects = _dbDefects.GetAll().Where(d => d.DefectId < 8).ToList()
+                },
+                new Story()
+                {
+                    Name = "Navigation Menu",
+                    Team = _dbTeams.GetById(3),
+                    Description = "Should be a popup menu, with main button and links inside",
+                    AssignedTo = _dbUsers.GetById(6),
+                    Status = StoryStatus.InProgress,
+                    Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList()
+                },
+                new Story()
+                {
+                    Name = "User Error Page",
+                    Team = _dbTeams.GetById(4),
+                    Description = "contains a link to the home page",
+                    AssignedTo = _dbUsers.GetById(12),
+                    Status = StoryStatus.PendingApproval,
+                    Defects = _dbDefects.GetAll().Where(d => d.DefectId < 8).ToList()
+                },
+                new Story()
+                {
+                    Name = "Exporting json file",
+                    Team = _dbTeams.GetById(5),
+                    Description = "there should be a possibility to get json file in client page. It will contain info about client.",
+                    AssignedTo = _dbUsers.GetById(7),
+                    Status = StoryStatus.DevComplete,
+                    Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList()
                 }
+            };
 
-                _dbStories.Save();
-            }
+            AddToDatabase(stories, _dbStories);
         }
 
 
         public static void FillTasksData()
         {
             _dbTasks = new Repository<ScrumTask>(_context);
-            if (_dbTasks.GetAll().Count() == 0)
+
+            ScrumTask[] tasks = new ScrumTask[]
             {
-
-
-                ScrumTask[] tasks = new ScrumTask[]
-                {
                     new ScrumTask()
                     {
                         Name = _dbStories.GetById(1),
-                        Description = "TaskDescription",
+                        Description = "Add bootstrap styles to all buttons",
                         AssignedTo = _dbUsers.GetById(2),
                         Blocked = "NO", ActualHours = 48,
                         PlannedHours = 72, RemainingHours = 96,
@@ -345,32 +676,47 @@ namespace DataBaseInitializer
                     new ScrumTask()
                     {
                         Name = _dbStories.GetById(2),
-                        Description = "TaskDescription",
-                        AssignedTo = _dbUsers.GetById(3),
+                        Description = "Add filters to all columns in grids",
+                        AssignedTo = _dbUsers.GetById(9),
                         Blocked = "NO", ActualHours = 48,
                         PlannedHours = 72, RemainingHours = 96,
                         Type = "medium", State = "in progress",
-                        WorkNotes = "This task should be done in 72 hours"
+                        WorkNotes = "This task should be done in 48 hours"
                     },
                     new ScrumTask()
                     {
                         Name = _dbStories.GetById(3),
-                        Description = "TaskDescription",
-                        AssignedTo = _dbUsers.GetById(4),
+                        Description = "Add new Button to save data",
+                        AssignedTo = _dbUsers.GetById(3),
                         Blocked = "NO", ActualHours = 48,
                         PlannedHours = 72, RemainingHours = 96,
                         Type = "medium", State = "in progress",
-                        WorkNotes = "This task should be done in 72 hours"
-                    }
-                };
+                        WorkNotes = "This task should be done in 24 hours"
+                    },
+                      new ScrumTask()
+                     {
+                        Name = _dbStories.GetById(4),
+                        Description = "Change background image",
+                        AssignedTo = _dbUsers.GetById(10),
+                        Blocked = "NO", ActualHours = 48,
+                        PlannedHours = 72, RemainingHours = 96,
+                     Type = "medium", State = "in progress",
+                      WorkNotes = "This task should be done in 48 hours"
+                      },
+                       new ScrumTask()
+                       {
+                       Name = _dbStories.GetById(9),
+                       Description = "write a class that checks the connection string",
+                       AssignedTo = _dbUsers.GetById(4),
+                       Blocked = "NO", ActualHours = 48,
+                       PlannedHours = 72, RemainingHours = 96,
+                       Type = "medium", State = "in progress",
+                       WorkNotes = "This task should be done in 72 hours"
+                       }
+            };
 
-                foreach (var task in tasks)
-                {
-                    _dbTasks.Create(task);
-                }
+            AddToDatabase(tasks, _dbTasks);
 
-                _dbTasks.Save();
-            }
         }
 
 
@@ -378,61 +724,56 @@ namespace DataBaseInitializer
         {
             _dbFeatures = new Repository<Feature>(_context);
 
-            if (_dbFeatures.GetAll().Count() == 0)
+
+            Feature[] features = new Feature[]
             {
-
-
-                Feature[] features = new Feature[]
-                {
                     new Feature()
                     {
-                        Description = "FeatureDescription",
+                        Description = "Login page cantains buttons: sign in, sign up, fields to type data.",
                         Blocked = false, State = FeatureState.Accepted,
-                        FeatureName = "Feature name",
-                        Stories = _dbStories.GetAll().ToList()
+                        FeatureName = "Login Page",
+                        Stories = _dbStories.GetAll().Where(s => s.Id <= 2).ToList()
                     },
                     new Feature()
                     {
-                        Description = "FeatureDescription1",
+                        Description = "Contains the description about the company with photos",
                         Blocked = false, State = FeatureState.InProgress,
-                        FeatureName = "Feature name1",
-                        Stories = _dbStories.GetAll().ToList()
+                        FeatureName = "Home Page",
+                        Stories = _dbStories.GetAll().Where(s => s.Id <= 4 && s.Id > 2).ToList()
                     },
                     new Feature()
                     {
-                        Description = "FeatureDescription2",
+                        Description = "Contains has elements to manage client data",
                         Blocked = false,
                         State = FeatureState.PendingApproval,
-                        FeatureName = "Feature name2",
-                        Stories = _dbStories.GetAll().ToList()
+                        FeatureName = "Client Page",
+                        Stories = _dbStories.GetAll().Where(s => s.Id <= 6 && s.Id > 4).ToList()
                     },
                     new Feature()
                     {
-                        Description = "FeatureDescription3",
+                        Description = "there is all contact info and links ",
                         Blocked = false, State = FeatureState.TestComplete,
-                        FeatureName = "Feature name3",
-                        Stories = _dbStories.GetAll().ToList()
+                        FeatureName = "Footer",
+                        Stories = _dbStories.GetAll().Where(s => s.Id <= 8 && s.Id > 6).ToList()
+                    },
+                    new Feature()
+                    {
+                        Description = "There is a navigation menu with links to all pages",
+                        Blocked = false, State = FeatureState.TestComplete,
+                        FeatureName = "Header",
+                        Stories = _dbStories.GetAll().Where(s => s.Id <= 10 && s.Id > 8).ToList()
                     }
-                };
+            };
 
-                foreach (var feature in features)
-                {
-                    _dbFeatures.Create(feature);
-                }
-
-                _dbFeatures.Save();
-            }
+            AddToDatabase(features, _dbFeatures);
         }
 
         public static void FillSprintStagesData()
         {
             _dbHisories = new Repository<SprintStagesHistory>(_context);
 
-            if (_dbHisories.GetAll().Count() == 0)
+            SprintStagesHistory[] sprintStagesHistories = new SprintStagesHistory[]
             {
-
-                SprintStagesHistory[] sprintStagesHistories = new SprintStagesHistory[]
-                {
 
                     new SprintStagesHistory()
                     {
@@ -442,56 +783,67 @@ namespace DataBaseInitializer
                         RetrospectiveDone =  DateTime.Today + new TimeSpan(14,0,0,0),
                         ReviewDone =  DateTime.Today + new TimeSpan(10,0,0,0)
                     }
-                };
+            };
 
-                foreach (var sprintStagesHistory in sprintStagesHistories)
-                {
-                    _dbHisories.Create(sprintStagesHistory);
-                }
-
-                _dbHisories.Save();
-            }
+            AddToDatabase(sprintStagesHistories, _dbHisories);
         }
 
         public static void FillSprintsData()
         {
             _dbSprints = new Repository<Sprint>(_context);
 
-            if (_dbSprints.GetAll().Count() != 0)
-                return;
 
-
-            var teams = _dbTeams.GetAll().ToList();
-            var logs = _dbHisories.GetAll().ToList();
-            var defectsRep = _dbDefects.GetAll().ToList();
-            var scrums = _dbDailyInfo.GetAll().ToList();
-            var stories = _dbStories.GetAll().ToList();
-
-            List<Sprint> sprints = new List<Sprint>();
-
-            for (int i = 0; i < 20; i++)
+            Sprint[] sprints = new Sprint[]
             {
-                var sprint = new Sprint()
+
+                new Sprint()
                 {
-                    Team = teams[_rand.Next(teams.Count)],
-                    Name = _names[_rand.Next(_names.Count)],
-                    Retrospective = "Sprint Retrospective " + _names[_rand.Next(_names.Count)] + " " + _names[_rand.Next(_names.Count)],
-                    Review = "Sprint Review" + _names[_rand.Next(_names.Count)] + " " + _names[_rand.Next(_names.Count)],
-                    Stage = (SprintStage)_rand.Next(Enum.GetValues(typeof(SprintStage)).Length),
-                    History = logs[_rand.Next(logs.Count)]
-                };
+                    Team = _dbTeams.GetById(1),
+                    Name = "Sprint 1",
+                    Retrospective = " What went well in the Sprint: command work. What could be improved: Speed of development. What will we commit to improve in the next Sprint: icrease development speed",
+                    Review = "",
+                    Stage = SprintStage.Progress,
+                    History = _dbHisories.GetById(1)
+                },
+                new Sprint()
+                {
+                    Team =  _dbTeams.GetById(2),
+                    Name = "Sprint 2",
+                    Retrospective = "",
+                    Review = "",
+                    Stage = SprintStage.Planning,
+                    History = _dbHisories.GetById(1)
+                },
+                new Sprint()
+                {
+                    Team =  _dbTeams.GetById(3),
+                    Name = "Sprint 3",
+                    Retrospective = " What went well in the Sprint: finished in time. What could be improved: the code review. What will we commit to improve in the next Sprint: give more time for code review.",
+                    Review = " all stories and tasks has been done. We are planning to do: ",
+                    Stage = SprintStage.Review,
+                    History = _dbHisories.GetById(1)
+                },
+                new Sprint()
+                {
+                    Team = _dbTeams.GetById(4),
+                    Name = "Sprint 4",
+                    Retrospective = " What went well in the Sprint: finished all stories and tasks in right way. What could be improved: Sprint was not finished. What will we commit to improve in the next Sprint: monitor timely for performance of all tasks.",
+                    Review = "",
+                    Stage = SprintStage.Retrospective,
+                    History = _dbHisories.GetById(1)
+                },new Sprint()
+                {
+                    Team = _dbTeams.GetById(5),
+                    Name = "Sprint 5",
+                    Retrospective = " What went well in the Sprint: all tasks were done. What could be improved: communication skiils with client. What will we commit to improve in the next Sprint: improve communcation skills",
+                    Review = "all planned tasks have been done except: database",
+                    Stage = SprintStage.Finished,
+                    History =_dbHisories.GetById(1)
+                }
 
-                sprints.Add(sprint);
-            }
+            };
 
-
-
-            foreach (var sprint in sprints)
-            {
-                _dbSprints.Create(sprint);
-            }
-
-            _dbSprints.Save();
+            AddToDatabase(sprints, _dbSprints);
 
         }
 
@@ -525,18 +877,36 @@ namespace DataBaseInitializer
                     }
 
                 };
+
                 item.DailyScrums = infos;
             }
-            
+
             _dbSprints.Save();
-            
+
         }
 
-        static List<T> GetRandomCollection<T>(IEnumerable<T> source, Random rand, int minElems, int maxElems)
+        public static void ShowStatus(int percentsDone)
         {
-            List<T> result = new List<T>(source);
-            result.Sort((a, b) => rand.Next(3) - 1);
-            return result.GetRange(0, minElems + rand.Next(maxElems - minElems));
+            Console.Clear();
+            Console.WriteLine("{0} % done", percentsDone);
+        }
+
+
+        public static void AddToDatabase<T>(T[] array, IRepository<T> repository) where T : class
+        {
+            if (repository.GetAll().Count() != 0)
+            {
+                return;
+            }
+            else
+            {
+                foreach (T element in array)
+                {
+                    repository.Create(element);
+                }
+
+                repository.Save();
+            }
         }
     }
 }
