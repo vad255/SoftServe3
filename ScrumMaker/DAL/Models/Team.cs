@@ -10,7 +10,6 @@ namespace DAL.Models
 {
     public class Team
     {
-        [Key]
         public int Id { get; private set; }
 
 
@@ -18,7 +17,6 @@ namespace DAL.Models
         public string Name { get; set; }
 
 
-        [Required]    
         public virtual List<User> Members { get; set; }
 
     }
