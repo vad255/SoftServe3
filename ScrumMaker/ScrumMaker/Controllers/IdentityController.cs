@@ -34,6 +34,7 @@ namespace ScrumMaker.Controllers
             ClaimsIdentity identity = tokenManager.GetIdentity(loginViewModel.Login, loginViewModel.Password);
             if (identity == null)
             {
+                Logger.Logger.LogError("IdentityController:Token():Invalid username or password.");
                 Response.StatusCode = 400;
                 await Response.WriteAsync("Invalid username or password.");
                 return;
@@ -47,7 +48,8 @@ namespace ScrumMaker.Controllers
                 expires = AuthOptions.LIFETIME,
                 status = StatusCode(200).StatusCode
             };
-            
+
+            Logger.Logger.LogInfo($"IdentityController:Token():User {loginViewModel.Login} signed in.");
             Response.ContentType = "application/json";
             await Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
         }
