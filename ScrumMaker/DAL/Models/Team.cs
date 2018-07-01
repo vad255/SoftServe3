@@ -12,12 +12,10 @@ namespace DAL.Models
     {
         public int Id { get; private set; }
 
-
         [Required]
         public string Name { get; set; }
 
-
-        public virtual List<User> Members { get; set; }
+        public virtual ICollection<User> Members { get; set; }
 
     }
 }

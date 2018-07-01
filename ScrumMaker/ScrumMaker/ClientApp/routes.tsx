@@ -8,7 +8,7 @@ import { AddUser } from './components/AddUser';
 import { SprintsGrid } from './components/Grids/SprintsGrid';
 import { UserGrid } from './components/Grids/UserGrid';
 import { StoriesGrid } from './components/Grids/StoriesGrid';
-import { FeatureGrid } from './components/FeatureGrid';
+import { FeatureGrid } from './components/Grids/FeatureGrid';
 import { EditUser } from './components/EditUser';
 import { Login } from './components/Login'
 import { TeamGrid } from './components/Grids/TeamGrid';
