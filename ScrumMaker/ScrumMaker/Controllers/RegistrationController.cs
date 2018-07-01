@@ -27,11 +27,17 @@ namespace ReactCrudDemo.Controllers
         [Route("api/User/Create")]
         public RedirectResult Create(User user)
         {
-            try {
-                Logger.LogInfo("Registration was successful!");
+            try
+            {
                 _db.Users.Add(user);
-                _db.SaveChanges(); }
-            catch{ Logger.LogError("Registration was not successful. Something went wrong!"); }
+                _db.SaveChanges();
+                Logger.LogInfo("RegistartionController:Create():Registration was successful!");
+            }
+
+            catch (Exception e)
+            {
+                Logger.LogError("RegistartionController:Create():Registration was not successful. Something went wrong!", e);
+            }
             return Redirect("");
         }
     }

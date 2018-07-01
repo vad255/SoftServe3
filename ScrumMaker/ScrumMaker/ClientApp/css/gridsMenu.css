@@ -1,4 +1,7 @@
-﻿.table-scrum {
+﻿td{
+    height: 40px;
+}
+.table-scrum {
     /*border: 1px solid black;*/
     border-collapse: collapse;
     width: 100%;
@@ -38,7 +41,6 @@
 .btn-dropdown:hover {
         background-color: white;
         color: #333;
-
 }
 
 .menu_links {
