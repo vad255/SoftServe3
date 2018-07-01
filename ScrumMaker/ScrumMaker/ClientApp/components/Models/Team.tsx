@@ -22,6 +22,10 @@ export class Team {
 
         //var members = params.members.map( u => new User(u));
         var members = [];
+        if (params.Members === null || params.Members === undefined) {
+            return;
+        }
+
         for (var i = 0; i < params.Members.length; i++) {
             members[i] = new User(params.Members[i]);
 
