@@ -61,7 +61,7 @@ namespace ScrumMaker
                     ValidateIssuerSigningKey = true
                 };
             });
-            string connectionStr = Configuration.GetConnectionString("Viktor");
+            string connectionStr = Configuration.GetConnectionString("Mikle");
 
 
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
