@@ -1,4 +1,12 @@
-﻿.file-upload {
+﻿
+.centerLogin {
+    margin-left:40%;
+    margin-top:10%;
+
+}
+
+
+.file-upload {
     position: relative; /* Даем возможность делать позиционирование, внутри данного элемента */
     overflow: hidden; /* Все что выходит за пределы - скрываем */
     width: 100%; /* Задаем ширину кнопки выбора файла */

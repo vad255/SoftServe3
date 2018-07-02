@@ -22,7 +22,7 @@ export class Login extends React.Component<RouteComponentProps<any>, LoginViewMo
             ? <p><em>Loading...</em></p>
             : this.renderCreateForm();
 
-        return <div>
+        return <div className="centerLogin">
             <h1>Login Page</h1>
             <hr />
             {contents}
@@ -49,7 +49,7 @@ export class Login extends React.Component<RouteComponentProps<any>, LoginViewMo
 
     private renderCreateForm() {
         return (
-            <form onSubmit={this.handleSave} >
+                <form  onSubmit={this.handleSave} >
                 < div className="form-group row" >
                     <label className=" control-label col-md-12" htmlFor="Login">Login</label>
                     <div className="col-md-4">
@@ -66,7 +66,7 @@ export class Login extends React.Component<RouteComponentProps<any>, LoginViewMo
                     <button type="submit" className="btn btn-default">Login</button>
                     <button className="btn" onClick={this.handleCancel}>Cancel</button>
                 </div >
-            </form >
+                </form >
         )
     }
 

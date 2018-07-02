@@ -2,15 +2,18 @@
 import { Filter, IFilterConfiguration } from './Filter'
 
 export class BoolFilter extends Filter {
-    public Reset(): void {
-        throw new Error("Method not implemented.");
-    }
+    
     constructor(params: IFilterConfiguration) {
         super(params);
     }
 
     filteringString: string = '';
 
+    public Reset(): void {
+        (document.getElementById(this.state.filterKey + "Filter") as any).value = '';
+        this.filteringString = '';
+        this.state.onFilterChanged(this.state.filterKey, this.filteringString);
+    }
     private OnChangeHandler(e: any) {
         var temp = -1;
         if (e.target.value === "false")
@@ -22,6 +25,6 @@ export class BoolFilter extends Filter {
     }
 
     public render() {
-        return <input type="text" onChange={((e: any) => this.OnChangeHandler(e)).bind(this)} />
+        return <input id={this.state.filterKey + "Filter"} type="text" onChange={((e: any) => this.OnChangeHandler(e)).bind(this)} />
     }
 }
