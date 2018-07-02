@@ -96,7 +96,7 @@ body {
 
 /* Type */
 
-body, input, select, textarea {
+/*body, input, select, textarea {
     color: rgba(255, 255, 255, 0.75);
     font-family: "Source Sans Pro", sans-serif;
     font-size: 14pt;
@@ -263,7 +263,7 @@ hr {
 
 .align-right {
     text-align: right;
-}
+}*/
 
 /* Section/Article */
 
@@ -336,7 +336,7 @@ header h6 + p {
 
 /* Form */
 
-form {
+/*form {
     margin: 0 0 2em 0;
 }
 
@@ -531,7 +531,7 @@ input[type="radio"] {
 .formerize-placeholder {
     color: rgba(255, 255, 255, 0.5) !important;
     opacity: 1.0;
-}
+}*/
 
 /* Box */
 
@@ -911,7 +911,7 @@ table {
 
 /* Button */
 
-input[type="submit"],
+/*input[type="submit"],
 input[type="reset"],
 input[type="button"],
 button,
@@ -1070,7 +1070,7 @@ button,
     .button {
         padding: 0;
     }
-}
+}*/
 
 /* Poptrox */
 
