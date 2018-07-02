@@ -31,10 +31,10 @@ export class Story {
             return;
         }
 
-        this.id = params.Id;
-        this.name = params.Name;
-        this.status = params.Status;
-        this.description = params.Description;
+        this.id = params.id;
+        this.name = params.name;
+        this.status = params.status;
+        this.description = params.description;
         if (params.Team === null || params.Team === undefined)
             return;
 
