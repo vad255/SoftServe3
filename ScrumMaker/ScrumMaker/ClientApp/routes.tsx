@@ -12,7 +12,7 @@ import { FeatureGrid } from './components/Grids/FeatureGrid';
 import { EditUser } from './components/EditUser';
 import { Login } from './components/Login'
 import { TeamGrid } from './components/Grids/TeamGrid';
-import { DefectGrid } from './components/DefectGrid';
+import { DefectGrid } from './components/Grids/DefectGrid';
 import { Error } from './components/Error';
 
 const LayoutRoute = ({ ...props }) => {
