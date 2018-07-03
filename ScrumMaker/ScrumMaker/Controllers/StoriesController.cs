@@ -26,11 +26,9 @@ namespace ScrumMaker.Controllers
         }
 
         [EnableQuery]
-        public IQueryable GetStories()
+        public IActionResult GetStories()
         {
-           return _stories.GetAll();
+           return Ok(_stories.GetAll());
         }
-
-
     }
 }
