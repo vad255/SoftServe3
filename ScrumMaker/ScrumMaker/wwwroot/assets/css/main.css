@@ -911,7 +911,7 @@ table {
 
 /* Button */
 
-/*input[type="submit"],
+input[type="submit"],
 input[type="reset"],
 input[type="button"],
 button,
@@ -1070,7 +1070,7 @@ button,
     .button {
         padding: 0;
     }
-}*/
+}
 
 /* Poptrox */
 
