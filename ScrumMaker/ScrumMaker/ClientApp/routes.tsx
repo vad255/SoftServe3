@@ -13,6 +13,7 @@ import { EditUser } from './components/EditUser';
 import { Login } from './components/Login'
 import { TeamGrid } from './components/Grids/TeamGrid';
 import { DefectGrid } from './components/Grids/DefectGrid';
+import { TaskGrid } from './components/Grids/TaskGrid';
 import { Error } from './components/Error';
 
 const LayoutRoute = ({ ...props }) => {
@@ -36,6 +37,7 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/editUser' component={EditUser} />
         <LayoutRoute path='/teamgrid' component={TeamGrid} />
         <LayoutRoute path='/defects' component={DefectGrid} />
+        <LayoutRoute path='/tasks' component={TaskGrid} />
         <Route path='/login' component={Login} />
         <Route path='/Error' component={Error} />
     </Switch>
