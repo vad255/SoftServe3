@@ -97,7 +97,6 @@
     <TypeScriptCompile Include="ClientApp\components\Models\FeatureState.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Models\Defect.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Models\Story.tsx" />
-    <TypeScriptCompile Include="ClientApp\components\SprintsGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Grids\TeamGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\css\editUser.css" />
   </ItemGroup>
