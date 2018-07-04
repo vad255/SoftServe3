@@ -17,9 +17,9 @@ export class NavMenu extends React.Component<{}, {}> {
                             </NavLink>
                             </li>
                             <li>
-                                <a href='/api/usergrid'>
+                                <Link to='/usergrid'>
                                     <span className='glyphicon glyphicon-th-list columnGrid'></span> Users
-                            </a>
+                            </Link>
                             </li>
                             <li>
                                 <NavLink to={'/Stories'} activeClassName='active'>

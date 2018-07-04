@@ -21,17 +21,11 @@ namespace ScrumMaker.Controllers
             _users = users;
         }
 
+        [CookieAuthorize]
         [EnableQuery]
         public IActionResult Get()
         {
             return Ok(_users.GetAll());
-        }
-
-        [CookieAuthorize]
-        [Route("/api/usergrid")]
-        public void GetGrid()
-        {
-            Response.Redirect("/usergrid");
         }
 
     }
