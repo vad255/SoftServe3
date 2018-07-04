@@ -33,7 +33,7 @@ export class UserGrid extends React.Component<RouteComponentProps<{}>, UserDataF
     private filterString: string = "";
 
     private LoadData() {
-        fetch(this.getURL())
+        fetch(this.getURL(), { credentials: 'include' })
             .then(response => response.json() as any)
             .then(data => {
                 var usersTemp = [];
@@ -41,7 +41,7 @@ export class UserGrid extends React.Component<RouteComponentProps<{}>, UserDataF
                     usersTemp[i] = new User(data["value"][i]);
                 }
                 this.setState({ users: usersTemp, loading: false, filters: this.state.filters });
-            });
+            }).catch(err => this.props.history.push('/login'));
     }
 
     private renderUsersTable(users: User[]) {
