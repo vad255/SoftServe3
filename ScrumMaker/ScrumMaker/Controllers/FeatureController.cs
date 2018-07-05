@@ -29,5 +29,11 @@ namespace ScrumMaker.Controllers
         {
             return Ok(featureRepository.GetAll());
         }
+
+        [EnableQuery]
+        public IActionResult GetById(int id)
+        {
+            return Ok(featureRepository.GetById(id));
+        }
     }
 }
