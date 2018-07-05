@@ -11,7 +11,7 @@ enum DisplayMod {
     edit
 }
 
-export class Sprint extends React.Component {
+export class Sprint {
     id: number = -1;
     name: string = '';
     stage: SprintStage = 0;
@@ -26,9 +26,6 @@ export class Sprint extends React.Component {
     mod: DisplayMod = DisplayMod.noData;
 
     public constructor(params: any) {
-
-        super(params);
-
         if (params === null || params === undefined) {
             return;
         }
