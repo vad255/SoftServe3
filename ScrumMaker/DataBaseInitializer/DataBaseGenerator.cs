@@ -382,9 +382,9 @@ namespace DataBaseInitializer
                         Blocked = Blocked.No,
                         DefectName = "Broken button 'Send'",
                         AssignedTo = _dbUsers.GetById(2),
-                        Priority = Priority.HighAttention,
+                        Priority = DefectPriority.HighAttention,
                         State = DefectState.Active,
-                        Status = Status.Open
+                        Status = DefectStatus.Open
                     },
                     new Defect()
                     {
@@ -393,9 +393,9 @@ namespace DataBaseInitializer
                         Blocked = Blocked.No,
                         DefectName = "Bug in Serach input",
                         AssignedTo = _dbUsers.GetById(3),
-                        Priority = Priority.Normal,
+                        Priority = DefectPriority.Normal,
                         State = DefectState.InWork,
-                        Status = Status.Open,
+                        Status = DefectStatus.Open,
                         FixResults = "fixed result"
                         },
                     new Defect()
@@ -405,9 +405,9 @@ namespace DataBaseInitializer
                     Blocked = Blocked.No,
                     DefectName = "TableSprintBug",
                     AssignedTo = _dbUsers.GetById(4),
-                    Priority = Priority.Normal,
+                    Priority = DefectPriority.Normal,
                     State = DefectState.Postponed,
-                    Status = Status.Open,
+                    Status = DefectStatus.Open,
                     FixResults = "still fixing"
                     },
                 new Defect()
@@ -417,9 +417,9 @@ namespace DataBaseInitializer
                     Blocked = Blocked.No,
                     DefectName = "Getting data bug",
                     AssignedTo = _dbUsers.GetById(5),
-                    Priority = Priority.ResolveImmediately,
+                    Priority = DefectPriority.ResolveImmediately,
                     State = DefectState.PendingTest,
-                    Status = Status.Open,
+                    Status = DefectStatus.Open,
                     FixResults = "fixed"
 
                 },
@@ -430,9 +430,9 @@ namespace DataBaseInitializer
                     Blocked = Blocked.No,
                     DefectName = "Link to home page is not working",
                     AssignedTo = _dbUsers.GetById(6),
-                    Priority = Priority.HighAttention,
+                    Priority = DefectPriority.HighAttention,
                     State = DefectState.PendingTest,
-                    Status = Status.Open,
+                    Status = DefectStatus.Open,
                     FixResults = "still fixing"
 
                 },
@@ -443,9 +443,9 @@ namespace DataBaseInitializer
                     Blocked = Blocked.No,
                     DefectName = "checking email",
                     AssignedTo = _dbUsers.GetById(7),
-                    Priority = Priority.Low,
+                    Priority = DefectPriority.Low,
                     State = DefectState.Active,
-                    Status = Status.Open,
+                    Status = DefectStatus.Open,
                     FixResults = "fixing"
 
                 },
@@ -456,9 +456,9 @@ namespace DataBaseInitializer
                     Blocked = Blocked.No,
                     DefectName = "too small input",
                     AssignedTo = _dbUsers.GetById(8),
-                    Priority = Priority.HighAttention,
+                    Priority = DefectPriority.HighAttention,
                     State = DefectState.Active,
-                    Status = Status.Open,
+                    Status = DefectStatus.Open,
                     FixResults = "fixing"
 
                 },
@@ -469,9 +469,9 @@ namespace DataBaseInitializer
                     Blocked = Blocked.No,
                     DefectName = "wrong avarage result",
                     AssignedTo = _dbUsers.GetById(9),
-                    Priority = Priority.Low,
+                    Priority = DefectPriority.Low,
                     State = DefectState.Postponed,
-                    Status = Status.Open,
+                    Status = DefectStatus.Open,
                     FixResults = "fixing"
 
                 },
@@ -482,9 +482,9 @@ namespace DataBaseInitializer
                     Blocked = Blocked.No,
                     DefectName = "Main windows not showing all members",
                     AssignedTo = _dbUsers.GetById(10),
-                    Priority = Priority.Normal,
+                    Priority = DefectPriority.Normal,
                     State = DefectState.Fixed,
-                    Status = Status.Close,
+                    Status = DefectStatus.Close,
                     FixResults = "fixed"
 
                 },
@@ -495,9 +495,9 @@ namespace DataBaseInitializer
                     Blocked = Blocked.No,
                     DefectName = "Response getting bug",
                     AssignedTo = _dbUsers.GetById(11),
-                    Priority = Priority.Low,
+                    Priority = DefectPriority.Low,
                     State = DefectState.InWork,
-                    Status = Status.Open,
+                    Status = DefectStatus.Open,
                     FixResults = "fixing"
 
                 },
@@ -508,9 +508,9 @@ namespace DataBaseInitializer
                     Blocked = Blocked.No,
                     DefectName = "data saving problem",
                     AssignedTo = _dbUsers.GetById(12),
-                    Priority = Priority.ResolveImmediately,
+                    Priority = DefectPriority.ResolveImmediately,
                     State = DefectState.PendingTest,
-                    Status = Status.Open,
+                    Status = DefectStatus.Open,
                     FixResults = "fixing"
                 },
                 new Defect()
@@ -520,9 +520,9 @@ namespace DataBaseInitializer
                     Blocked = Blocked.No,
                     DefectName = "buttons don't change the color",
                     AssignedTo = _dbUsers.GetById(13),
-                    Priority = Priority.Low,
+                    Priority = DefectPriority.Low,
                     State = DefectState.Active,
-                    Status = Status.Open,
+                    Status = DefectStatus.Open,
                     FixResults = "fixing"
                 },
                 new Defect()
@@ -532,9 +532,9 @@ namespace DataBaseInitializer
                     Blocked = Blocked.No,
                     DefectName = "girid styles",
                     AssignedTo = _dbUsers.GetById(14),
-                    Priority = Priority.HighAttention,
+                    Priority = DefectPriority.HighAttention,
                     State = DefectState.Fixed,
-                    Status = Status.Close,
+                    Status = DefectStatus.Close,
                     FixResults = "fixed"
 
                 },
@@ -545,9 +545,9 @@ namespace DataBaseInitializer
                     Blocked = Blocked.No,
                     DefectName = "can't get an Index view",
                     AssignedTo = _dbUsers.GetById(15),
-                    Priority = Priority.Low,
+                    Priority = DefectPriority.Low,
                     State = DefectState.Active,
-                    Status = Status.Open,
+                    Status = DefectStatus.Open,
                     FixResults = "fixing"
                 }
             };
