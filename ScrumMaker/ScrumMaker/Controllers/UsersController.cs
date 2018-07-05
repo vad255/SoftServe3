@@ -21,6 +21,7 @@ namespace ScrumMaker.Controllers
             _users = users;
         }
 
+        [RefreshToken]
         [CookieAuthorize]
         [EnableQuery]
         public IActionResult Get()
