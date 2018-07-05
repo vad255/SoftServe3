@@ -4,9 +4,9 @@ using System.Text;
 
 namespace DAL.Models
 {
-    public enum Status
+    public enum DefectPriority
     {
-        Open,
-        Close
+        ResolveImmediately, HighAttention, Normal, Low
     }
+    
 }

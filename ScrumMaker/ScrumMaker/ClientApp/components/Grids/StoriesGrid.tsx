@@ -18,8 +18,7 @@ export class StoriesGrid extends Grid<RouteComponentProps<{}>, IStoryDataState> 
     protected URL_ORDERING: string = '&$orderby=id';
     protected headerText: string = 'Stories';
 
-    protected pageSize = 5;
-
+ 
     constructor() {
         super();
         this.LoadData();
@@ -28,7 +27,7 @@ export class StoriesGrid extends Grid<RouteComponentProps<{}>, IStoryDataState> 
 
     protected OnDataReceived(data: any) {
         this.isLoading = false;
-        var stories1 = (data as any[]).map(s => new Story(s));
+        var stories1 = (data['value'] as any[]).map(s => new Story(s));
         this.setState({ stories: stories1 });
 
     }
@@ -61,17 +60,7 @@ export class StoriesGrid extends Grid<RouteComponentProps<{}>, IStoryDataState> 
         return this.state.stories.map(s => s.renderAsTableRow());
     }
 
-    protected RenderFooter() {
-        return <tr>
-            <td colSpan={8}>
-                <div className="text-center">
-                    <div role='button' className='btn btn-primary'>
-                        Add new
-                    </div>
-                </div>
-            </td>
-        </tr>;
-    }
+    
 }
 
 

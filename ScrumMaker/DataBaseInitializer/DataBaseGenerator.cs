@@ -383,7 +383,7 @@ namespace DataBaseInitializer
                         DefectName = "Broken button 'Send'",
                         AssignedTo = _dbUsers.GetById(2),
                         Priority = Priority.HighAttention,
-                        State = State.Active,
+                        State = DefectState.Active,
                         Status = Status.Open
                     },
                     new Defect()
@@ -394,7 +394,7 @@ namespace DataBaseInitializer
                         DefectName = "Bug in Serach input",
                         AssignedTo = _dbUsers.GetById(3),
                         Priority = Priority.Normal,
-                        State = State.InWork,
+                        State = DefectState.InWork,
                         Status = Status.Open,
                         FixResults = "fixed result"
                         },
@@ -406,7 +406,7 @@ namespace DataBaseInitializer
                     DefectName = "TableSprintBug",
                     AssignedTo = _dbUsers.GetById(4),
                     Priority = Priority.Normal,
-                    State = State.Postponed,
+                    State = DefectState.Postponed,
                     Status = Status.Open,
                     FixResults = "still fixing"
                     },
@@ -418,7 +418,7 @@ namespace DataBaseInitializer
                     DefectName = "Getting data bug",
                     AssignedTo = _dbUsers.GetById(5),
                     Priority = Priority.ResolveImmediately,
-                    State = State.PendingTest,
+                    State = DefectState.PendingTest,
                     Status = Status.Open,
                     FixResults = "fixed"
 
@@ -431,7 +431,7 @@ namespace DataBaseInitializer
                     DefectName = "Link to home page is not working",
                     AssignedTo = _dbUsers.GetById(6),
                     Priority = Priority.HighAttention,
-                    State = State.PendingTest,
+                    State = DefectState.PendingTest,
                     Status = Status.Open,
                     FixResults = "still fixing"
 
@@ -444,7 +444,7 @@ namespace DataBaseInitializer
                     DefectName = "checking email",
                     AssignedTo = _dbUsers.GetById(7),
                     Priority = Priority.Low,
-                    State = State.Active,
+                    State = DefectState.Active,
                     Status = Status.Open,
                     FixResults = "fixing"
 
@@ -457,7 +457,7 @@ namespace DataBaseInitializer
                     DefectName = "too small input",
                     AssignedTo = _dbUsers.GetById(8),
                     Priority = Priority.HighAttention,
-                    State = State.Active,
+                    State = DefectState.Active,
                     Status = Status.Open,
                     FixResults = "fixing"
 
@@ -470,7 +470,7 @@ namespace DataBaseInitializer
                     DefectName = "wrong avarage result",
                     AssignedTo = _dbUsers.GetById(9),
                     Priority = Priority.Low,
-                    State = State.Postponed,
+                    State = DefectState.Postponed,
                     Status = Status.Open,
                     FixResults = "fixing"
 
@@ -483,7 +483,7 @@ namespace DataBaseInitializer
                     DefectName = "Main windows not showing all members",
                     AssignedTo = _dbUsers.GetById(10),
                     Priority = Priority.Normal,
-                    State = State.Fixed,
+                    State = DefectState.Fixed,
                     Status = Status.Close,
                     FixResults = "fixed"
 
@@ -496,7 +496,7 @@ namespace DataBaseInitializer
                     DefectName = "Response getting bug",
                     AssignedTo = _dbUsers.GetById(11),
                     Priority = Priority.Low,
-                    State = State.InWork,
+                    State = DefectState.InWork,
                     Status = Status.Open,
                     FixResults = "fixing"
 
@@ -509,7 +509,7 @@ namespace DataBaseInitializer
                     DefectName = "data saving problem",
                     AssignedTo = _dbUsers.GetById(12),
                     Priority = Priority.ResolveImmediately,
-                    State = State.PendingTest,
+                    State = DefectState.PendingTest,
                     Status = Status.Open,
                     FixResults = "fixing"
                 },
@@ -521,7 +521,7 @@ namespace DataBaseInitializer
                     DefectName = "buttons don't change the color",
                     AssignedTo = _dbUsers.GetById(13),
                     Priority = Priority.Low,
-                    State = State.Active,
+                    State = DefectState.Active,
                     Status = Status.Open,
                     FixResults = "fixing"
                 },
@@ -533,7 +533,7 @@ namespace DataBaseInitializer
                     DefectName = "girid styles",
                     AssignedTo = _dbUsers.GetById(14),
                     Priority = Priority.HighAttention,
-                    State = State.Fixed,
+                    State = DefectState.Fixed,
                     Status = Status.Close,
                     FixResults = "fixed"
 
@@ -546,7 +546,7 @@ namespace DataBaseInitializer
                     DefectName = "can't get an Index view",
                     AssignedTo = _dbUsers.GetById(15),
                     Priority = Priority.Low,
-                    State = State.Active,
+                    State = DefectState.Active,
                     Status = Status.Open,
                     FixResults = "fixing"
                 }

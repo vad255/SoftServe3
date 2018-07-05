@@ -13,7 +13,7 @@ interface UserState {
 
 export class TeamGrid extends Grid<RouteComponentProps<{}>, UserState> {
 
-    protected pageSize: number = 0;
+   // protected pageSize: number = 0;
     protected headerText: string = "Team Grid";
     protected URL_BASE: string = 'odata/teams';
     protected URL_EXPANDS: string = '?$expand=members'
@@ -51,17 +51,7 @@ export class TeamGrid extends Grid<RouteComponentProps<{}>, UserState> {
         return this.state.teams.map((t) => (t.renderForecastsTable()));
     }
 
-    protected RenderFooter(): JSX.Element {
-        return <tr>
-            <td colSpan={8}>
-                <div className="text-center">
-                    <div role='button' className='btn btn-primary'>
-                        Add new
-                    </div>
-                </div>
-            </td>
-        </tr>;
-    }
+    
     protected getData(): any[] {
         return this.state.teams;
     }
