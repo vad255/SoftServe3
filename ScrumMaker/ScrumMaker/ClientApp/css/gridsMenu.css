@@ -1,6 +1,7 @@
 ﻿td{
     height: 40px;
 }
+
 .table-scrum {
     /*border: 1px solid black;*/
     border-collapse: collapse;
@@ -22,6 +23,8 @@
 .td-scrum thead tr th {
     background-color: rgba(200, 200, 200, 0.63);
     text-align: center;
+    cursor: pointer;
+    color: #333;
 }
 
 .td-scrum thead tr th:first-child {
@@ -41,9 +44,4 @@
 .btn-dropdown:hover {
         background-color: white;
         color: #333;
-}
-
-.menu_links {
-    cursor: pointer;
-    color: #333;
 }
