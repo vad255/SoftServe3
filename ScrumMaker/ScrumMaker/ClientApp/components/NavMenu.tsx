@@ -48,6 +48,12 @@ export class NavMenu extends React.Component<{}, {}> {
                             </li>
                         </ul>
                     </li>
+                    <br/>
+                    <li>
+                        <NavLink to={'/SimpleChat'} activeClassName='active'>
+                            <span></span> Chat
+                            </NavLink>
+                    </li>
                 </ul>
             </div>
             <div className="nav_bg">
