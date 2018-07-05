@@ -1,7 +1,6 @@
 ﻿import { Component } from "react";
 import * as React from "react";
 import { RouteComponentProps } from "react-router";
-import axios from "axios";
 
 interface FileLoad {
     imagePreviewUrl: './img/unknown.jpg'
