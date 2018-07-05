@@ -6,9 +6,10 @@ import './css/gridsMenu.css';
 import './css/editUser.css';
 import './css/siteStyle.css';
 import './css/switchImg.css';
-import './css/selectStyle.css'
-import './css/tooltips.css'
-import './css/chat.css'
+import './css/selectStyle.css';
+import './css/tooltips.css';
+import './css/login.css';
+import './css/chat.css';
 import 'bootstrap';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
