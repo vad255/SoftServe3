@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL.Chatting;
 
 namespace DAL
 {
@@ -34,7 +35,9 @@ namespace DAL
 
         public DbSet<Feature> Features { get; set; }
 
-        
+        public DbSet<Message> ChatMessages { get; set; }
+
+        public DbSet<ChatRoom> ChatingRooms { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
