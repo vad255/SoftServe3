@@ -25,7 +25,6 @@ export class Task {
     public constructor(params: any) {
 
         //super(params);
-
         if (params === null || params === undefined) {
             return;
         }
@@ -39,7 +38,6 @@ export class Task {
         this.userId = params.UserId;
         //this.story = new Story(params.Story);
         //this.user = new User(params.User);
-
 
     }
     public toString(): string {
@@ -68,10 +66,6 @@ export class Task {
         </tr>;
     }
 }
-
-
-
-
 
 
 

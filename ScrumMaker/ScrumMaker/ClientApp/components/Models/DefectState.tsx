@@ -2,7 +2,7 @@
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 
-export enum State {
+export enum DefectState {
     Active = 1,
     InWork = 2,
     PendingTest = 3,
