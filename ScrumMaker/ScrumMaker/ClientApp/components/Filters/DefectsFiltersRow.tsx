@@ -3,11 +3,11 @@ import 'isomorphic-fetch';
 import { TextFilter } from './TextFilter'
 import { IntFilter } from './IntFilter'
 import { EnumFilter } from './EnumFilter'
-import { Status } from '../Models/Status'
+import { DefectStatus } from '../Models/DefectStatus'
 import { EmptyFilter } from './EmptyFilter';
 import { FiltersRow, IFilterRow } from './FiltersRow'
-import { Priority } from '../Models/Priority';
-import { State } from '../Models/State';
+import { DefectPriority } from '../Models/DefectPriority';
+import { DefectState } from '../Models/DefectState';
 
 
 export class DefectsFiltersRow extends FiltersRow {
@@ -28,13 +28,13 @@ export class DefectsFiltersRow extends FiltersRow {
                 <TextFilter ref="description" filterKey='description' onFilterChanged={this.FilterChanged.bind(this)} />
             </td>
             <td>
-                <EnumFilter ref="priority" filterKey='priority' enumType={Priority} onFilterChanged={this.FilterChanged.bind(this)} />
+                <EnumFilter ref="priority" filterKey='priority' enumType={DefectPriority} onFilterChanged={this.FilterChanged.bind(this)} />
             </td>
             <td>
-                <EnumFilter ref="state" filterKey='state' enumType={State} onFilterChanged={this.FilterChanged.bind(this)} />
+                <EnumFilter ref="state" filterKey='state' enumType={DefectState} onFilterChanged={this.FilterChanged.bind(this)} />
             </td>
             <td>
-                <EnumFilter ref="status" filterKey='status' enumType={Status} onFilterChanged={this.FilterChanged.bind(this)} />
+                <EnumFilter ref="status" filterKey='status' enumType={DefectStatus} onFilterChanged={this.FilterChanged.bind(this)} />
             </td>
 
             <td>

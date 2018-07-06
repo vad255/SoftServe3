@@ -15,14 +15,12 @@ interface TaskDataFetchingState {
 
 export class TaskGrid extends Grid<RouteComponentProps<{}>, TaskDataFetchingState> {
 
-    protected pageSize: number = 0;
     protected URL_BASE: string = 'odata/tasks';
     protected URL_EXPANDS: string = '?&expand=()';
     protected URL_ORDERING: string = '&$orderby=taskId';
     protected headerText: string = 'Tasks';
 
     //protected pageSize = 5;
-
     constructor() {
         super();
         this.LoadData();
@@ -33,7 +31,6 @@ export class TaskGrid extends Grid<RouteComponentProps<{}>, TaskDataFetchingStat
         this.isLoading = false;
         //var tasks1 = (data as any[]).map(s => new Task(s));
         //this.setState({ tasks: tasks1 });
-
 
         //this.isLoading = false;
         ////var tasks1 = (data as any[]).map(s => new Task(s));
@@ -77,20 +74,5 @@ export class TaskGrid extends Grid<RouteComponentProps<{}>, TaskDataFetchingStat
     protected GetBodyRows(): JSX.Element[] {
         var i = 0;
         return this.state.tasks.map(s => s.renderAsTableRow());
-    }
-
-
-    protected RenderFooter() {
-        return <tr>
-            <td colSpan={8}>
-                <div className="text-center">
-                    <div role='button' className='btn btn-primary'>
-                        Add new
-                    </div>
-                </div>
-            </td>
-        </tr>;
-    }
+    }   
 }
-
-

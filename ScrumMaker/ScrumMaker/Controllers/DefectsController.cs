@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+//using System.Linq;
 using System.Threading.Tasks;
 using BL;
 using DAL;
@@ -25,12 +25,12 @@ namespace ScrumMaker.Controllers
             _manager = manager;
         }
 
-        [EnableQuery]
-        public IQueryable GetDefects()
+        [EnableQuery]       
+        public IActionResult Get()
         {            
             var result = _defect.GetAll();
             
-            return result;
+            return Ok(result);
         }
     }
     

@@ -16,11 +16,11 @@ namespace DAL.Models
         [MaxLength(500)]
         public string Description { get; set; }
                 
-        public Priority Priority { get; set; }
+        public DefectPriority Priority { get; set; }
 
-        public State State { get; set; }
+        public DefectState State { get; set; }
 
-        public Status Status { get; set; }
+        public DefectStatus Status { get; set; }
 
         [NotMapped]
         public string ProgramIncrement { get; set; }

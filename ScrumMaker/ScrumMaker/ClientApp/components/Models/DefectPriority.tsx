@@ -3,8 +3,9 @@ import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 //import { Team } from './Team'
 
-export enum Priority {
+export enum DefectPriority {
     ResolveImmediately = 1,
-    HighAttention = 2, Normal = 3,
+    HighAttention = 2,
+    Normal = 3,
     Low = 4
 }
