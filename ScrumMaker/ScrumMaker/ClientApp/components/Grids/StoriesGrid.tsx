@@ -27,8 +27,12 @@ export class StoriesGrid extends Grid<RouteComponentProps<{}>, IStoryDataState> 
 
     protected OnDataReceived(data: any) {
         this.isLoading = false;
-        var stories1 = (data['value'] as any[]).map(s => new Story(s));
-        this.setState({ stories: stories1 });
+        var storyTemp = [];
+
+        for (var i = 0; i < data['value'].length; i++)
+            storyTemp[i] = new Story(data['value'][i]);
+
+        this.setState({ stories: storyTemp });
 
     }
 

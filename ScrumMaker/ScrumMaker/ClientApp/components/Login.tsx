@@ -22,11 +22,7 @@ export class Login extends React.Component<RouteComponentProps<any>, LoginViewMo
             ? <p><em>Loading...</em></p>
             : this.renderCreateForm();
 
-        return <div>
-            <h1>Login Page</h1>
-            <hr />
-            {contents}
-        </div>;
+        return <div>{contents}</div>;
     }
 
     // This will handle the submit form event.
@@ -49,24 +45,41 @@ export class Login extends React.Component<RouteComponentProps<any>, LoginViewMo
 
     private renderCreateForm() {
         return (
-            <form onSubmit={this.handleSave} >
-                < div className="form-group row" >
-                    <label className=" control-label col-md-12" htmlFor="Login">Login</label>
-                    <div className="col-md-4">
-                        <input className="form-control" type="text" name="login" defaultValue={this.state.login} required />
-                    </div>
-                </div >
-                <div className="form-group row">
-                    <label className="control-label col-md-12" htmlFor="password" >Password</label>
-                    <div className="col-md-4">
-                        <input className="form-control" type="password" name="password" defaultValue={this.state.password} required />
+            <div onSubmit={this.handleSave}>
+                <div className="limiter">
+                    <div className="container-login100">
+                        <div className="wrap-login100">
+
+                            <div className="login100-form-title">
+                                <span className="login100-form-title-1">Login Page</span>
+                            </div>
+                            <form className="login100-form validate-form">
+                                <div className="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+                                    <span className="label-input100">Username</span>
+                                    <input className="input100" type="text" name="login" placeholder="Enter username" defaultValue={this.state.login} required />
+                                    <span className="focus-input100" />
+                                </div>
+                                <div className="wrap-input100 validate-input m-b-18" data-validate="Password is required">
+                                    <span className="label-input100">Password</span>
+                                    <input className="input100" type="password" name="password" placeholder="Enter password" defaultValue={this.state.password} required />                                    <span className="focus-input100" />
+                                </div>
+                                <div className="flex-sb-m w-full p-b-30">
+                                    <div className="contact100-form-checkbox">
+                                        <input className="input-checkbox100" id="ckb1" type="checkbox" name="remember-me" />
+                                        <label className="label-checkbox100" htmlFor="ckb1">Remember me</label>
+                                    </div>
+                                    <div>
+                                        <a href="#" className="txt1">Forgot Password?</a>
+                                    </div>
+                                </div>
+                                <div className="container-login100-form-btn">
+                                    <button className="login100-form-btn">Login</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-                <div className="form-group">
-                    <button type="submit" className="btn btn-default">Login</button>
-                    <button className="btn" onClick={this.handleCancel}>Cancel</button>
-                </div >
-            </form >
+            </div >
         )
     }
 

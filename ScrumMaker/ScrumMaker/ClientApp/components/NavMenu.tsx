@@ -17,9 +17,9 @@ export class NavMenu extends React.Component<{}, {}> {
                             </NavLink>
                             </li>
                             <li>
-                                <a href='/api/usergrid'>
+                                <Link to='/usergrid'>
                                     <span className='glyphicon glyphicon-th-list columnGrid'></span> Users
-                            </a>
+                            </Link>
                             </li>
                             <li>
                                 <NavLink to={'/Stories'} activeClassName='active'>
@@ -41,7 +41,18 @@ export class NavMenu extends React.Component<{}, {}> {
                                     <span className='glyphicon glyphicon-th-list columnGrid'></span> Defects
                             </NavLink>
                             </li>
+                            <li>
+                                <NavLink to={'/tasks'} activeClassName='active'>
+                                    <span className='glyphicon glyphicon-th-list columnGrid'></span> Tasks
+                            </NavLink>
+                            </li>
                         </ul>
+                    </li>
+                    <br/>
+                    <li>
+                        <NavLink to={'/SimpleChat'} activeClassName='active'>
+                            <span></span> Chat
+                            </NavLink>
                     </li>
                 </ul>
             </div>

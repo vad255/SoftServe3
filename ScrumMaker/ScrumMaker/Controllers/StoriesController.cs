@@ -30,7 +30,5 @@ namespace ScrumMaker.Controllers
         {
            return Ok(_stories.GetAll());
         }
-
-
     }
 }

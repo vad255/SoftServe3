@@ -52,20 +52,20 @@ export class Story {
 
     public renderAsTableRow(): JSX.Element {
         return <tr key={this.id}>
-                   <td className="align-base">{this.id}</td>
-                   <td className="align-base">{this.name}</td>
-                   <td className="align-base">{this.description}</td>
-                   <td className="align-base">{this.status}</td>
-                   <td className="align-base">
-                       <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base ">
-                           <span className="glyphicon glyphicon-edit dark" aria-hidden="true"></span>
-                       </div>
-                       &nbsp;&nbsp;
+            <td className="align-base">{this.id}</td>
+            <td className="align-base">{this.name}</td>
+            <td className="align-base">{this.description}</td>
+            <td className="align-base">{this.status}</td>
+            <td className="align-base">
+                <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base ">
+                    <span className="glyphicon glyphicon-edit dark" aria-hidden="true"></span>
+                </div>
+                &nbsp;&nbsp;
                        <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base">
-                           <span className="glyphicon glyphicon-trash dark" aria-hidden="true"></span>
-                       </div>
-                   </td>
-               </tr>;
+                    <span className="glyphicon glyphicon-trash dark" aria-hidden="true"></span>
+                </div>
+            </td>
+        </tr>;
     }
 
     renderAsMenu() {

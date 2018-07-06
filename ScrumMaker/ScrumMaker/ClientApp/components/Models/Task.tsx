@@ -48,11 +48,11 @@ export class Task {
 
     public renderAsTableRow(): JSX.Element {
         return <tr key={this.taskId}>
-            <td className="align-base">{this.taskId}</td>
+            <td className="align-base">{this.taskId}</td>            
             <td className="align-base">{this.plannedHours}</td>
             <td className="align-base">{this.remainingHours}</td>
             <td className="align-base">{this.actualHours}</td>
-            <td className="align-base">{this.type}</td>
+            <td className="align-base">{this.type}</td>            
             <td className="align-base">{this.state}</td>
             <td className="align-base">
                 <div id={this.taskId.toString()} role="button" className="btn btn-sq-xs align-base ">
@@ -66,3 +66,10 @@ export class Task {
         </tr>;
     }
 }
+
+
+
+
+
+
+

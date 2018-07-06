@@ -21,7 +21,7 @@ export class TasksFiltersRow extends FiltersRow {
         return <tr className={this.props.display ? "" : "nodisplay"}>
             <td>
                 <IntFilter ref="taskId" filterKey='taskId' onFilterChanged={this.FilterChanged.bind(this)} />
-            </td>
+            </td>            
             <td>
                 <IntFilter ref="plannedHours" filterKey='plannedHours' onFilterChanged={this.FilterChanged.bind(this)} />
             </td>
@@ -36,7 +36,7 @@ export class TasksFiltersRow extends FiltersRow {
             </td>
             <td>
                 <TextFilter ref="state" filterKey='state' onFilterChanged={this.FilterChanged.bind(this)} />
-            </td>
+            </td>            
             <td>
                 <div role="button" className="btn btn-sq-xs align-base " onClick={this.CancelFiltersClick.bind(this)}>
                     <span className="glyphicon glyphicon-remove-circle dark" aria-hidden="true"></span>
@@ -50,3 +50,4 @@ export class TasksFiltersRow extends FiltersRow {
     }
 
 }
+

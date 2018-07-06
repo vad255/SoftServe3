@@ -21,12 +21,12 @@ namespace ScrumMaker.Attributes
                 var exp = token.Claims.First(claim => claim.Type == "exp").Value;
                 if (Int64.Parse(exp) < ((DateTimeOffset)DateTime.Now).ToUnixTimeSeconds())
                 {
-                    context.Result = new RedirectResult("/login");
+                    context.Result = new RedirectResult("~/login");
                 }
             }
             else
             {
-                context.Result = new RedirectResult("/login");
+                context.Result = new RedirectResult("~/login");
             }
         }
     }

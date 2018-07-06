@@ -49,12 +49,12 @@ export class TaskGrid extends Grid<RouteComponentProps<{}>, TaskDataFetchingStat
 
     protected GetHeaderRow() {
         return <tr>
-            <th className="well menu_links col-md-1" onClick={() => this.OrderBy("taskId")}><span className="nowrap">Database ID</span></th>
+            <th className="well menu_links col-md-1" onClick={() => this.OrderBy("taskId")}><span className="nowrap">Database ID</span></th>            
             <th className="well menu_links col-md-1" onClick={() => this.OrderBy("plannedHours")}>PlannedHours</th>
             <th className="well menu_links col-md-1" onClick={() => this.OrderBy("remainingHours")}>RemainingHours</th>
             <th className="well menu_links col-md-1" onClick={() => this.OrderBy("actualHours")}>ActualHours</th>
             <th className="well menu_links col-md-1" onClick={() => this.OrderBy("type")}>Type</th>
-            <th className="well menu_links col-md-1" onClick={() => this.OrderBy("state")}>State</th>
+            <th className="well menu_links col-md-1" onClick={() => this.OrderBy("state")}>State</th>     
             <th className="well menu_links col-md-1">
                 <div onClick={this.FilterButtonClick.bind(this)}>
                     <span className="nowrap">Show Filters<span className="caret"></span></span>
