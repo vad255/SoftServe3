@@ -24,7 +24,7 @@ export class Layout extends React.Component<LayoutProps, {}> {
                             </li>
                             <li><a> <img src="./img/ScrumMakerLogo.jpg" width="40px" height="40px" alt="lorem" className="userAvatar"></img><span id="userLogin">Login</span></a>
                                 <ul className="dropdown">
-                                    <li><Link to="/edituser">Edit user</Link></li>
+                                    <li><a href="/edituser">Edit user</a></li>
                                     <li><Link to="/#">About</Link></li>
                                     <li><Link to="/#">Log Out</Link></li>
                                 </ul>

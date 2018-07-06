@@ -34,6 +34,8 @@ namespace DAL
 
         public DbSet<Feature> Features { get; set; }
 
+        public DbSet<Photo> Photos { get; set; }
+
         
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -31,6 +31,9 @@ namespace DAL.Models
         public virtual Team Team { get; set; }
 
         public bool Activity { get; set; }
-        public byte[] Photo { get; set; }
+
+        [ForeignKey("Photo")]
+        public int? PhotoId { get; set; }
+        public virtual Photo Photo { get; set; }
     }
 }
