@@ -29,5 +29,6 @@ namespace ScrumMaker.Attributes
                 context.Result = new RedirectResult("/login");
             }
         }
+
     }
 }

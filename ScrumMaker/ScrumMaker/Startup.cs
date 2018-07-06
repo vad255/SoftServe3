@@ -62,7 +62,7 @@ namespace ScrumMaker
                 };
             });
 
-            string connectionStr = Configuration.GetConnectionString("ScrumMakerDB");
+            string connectionStr = Configuration.GetConnectionString("Pasha");
 
 
 
