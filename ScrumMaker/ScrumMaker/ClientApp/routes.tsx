@@ -2,8 +2,6 @@ import * as React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { Home } from './components/Home';
-import { FetchData } from './components/FetchData';
-import { Counter } from './components/Counter';
 import { AddUser } from './components/AddUser';
 import { SprintsGrid } from './components/Grids/SprintsGrid';
 import { UserGrid } from './components/Grids/UserGrid';
@@ -15,6 +13,8 @@ import { TeamGrid } from './components/Grids/TeamGrid';
 import { DefectGrid } from './components/Grids/DefectGrid';
 import { TaskGrid } from './components/Grids/TaskGrid';
 import { Error } from './components/Error';
+import { SimpleChat } from './components/Chats/SimpleChat'
+
 
 const LayoutRoute = ({ ...props }) => {
     return (
@@ -27,9 +27,7 @@ const LayoutRoute = ({ ...props }) => {
 export const routes = <BrowserRouter >
     <Switch>
         <LayoutRoute exact path='/' component={Home} />
-        <LayoutRoute path='/counter' component={Counter} />
         <LayoutRoute path='/adduser' component={AddUser} />
-        <LayoutRoute path='/fetchdata' component={FetchData} />
         <LayoutRoute path='/usergrid' component={UserGrid} />
         <LayoutRoute path='/Sprints' component={SprintsGrid} />
         <LayoutRoute path='/Stories' component={StoriesGrid} />
@@ -38,6 +36,8 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/teamgrid' component={TeamGrid} />
         <LayoutRoute path='/defects' component={DefectGrid} />
         <LayoutRoute path='/tasks' component={TaskGrid} />
+        <LayoutRoute path='/SimpleChat' component={SimpleChat} />
+
         <Route path='/login' component={Login} />
         <Route path='/Error' component={Error} />
     </Switch>

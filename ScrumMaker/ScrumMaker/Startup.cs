@@ -88,8 +88,9 @@ namespace ScrumMaker
                     options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 }).
-                //for OData
                 SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddSignalR();
         }
 
 
@@ -115,7 +116,12 @@ namespace ScrumMaker
 
             app.UseAuthentication();
 
-            app.UseMvc(routes =>
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<Hubs.SimpleChat>("/chat");
+            });
+
+            app.UseMvc(routes =>    
             {
                 routes.Select().Expand().Filter().OrderBy().MaxTop(100).Count();
 

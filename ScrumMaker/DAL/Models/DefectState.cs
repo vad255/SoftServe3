@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DAL.Models
 {
-    public enum State
+    public enum DefectState
     {
         Active,
         InWork,
