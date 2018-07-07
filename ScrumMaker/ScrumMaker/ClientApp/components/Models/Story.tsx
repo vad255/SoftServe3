@@ -2,6 +2,7 @@
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { Team } from './Team';
+import { Link } from 'react-router-dom';
 
 
 
@@ -58,7 +59,9 @@ export class Story {
             <td className="align-base">{this.status}</td>
             <td className="align-base">
                 <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base ">
-                    <span className="glyphicon glyphicon-edit dark" aria-hidden="true"></span>
+                    <Link to={`EditStory/` + this.id}>
+                        <span className="glyphicon glyphicon-edit dark" aria-hidden="true"></span>
+                        </Link>
                 </div>
                 &nbsp;&nbsp;
                        <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base">
@@ -70,14 +73,16 @@ export class Story {
 
     renderAsMenu() {
         return <li className="dropdown-submenu">
-            <div > {this.name} </div>
-            <ul className="dropdown-menu">
-                <li className="dropdown-item"><b><pre>Story name: {this.name}</pre></b>  </li>
-                <li className="dropdown-item"><b><pre>Description: {this.description}</pre></b> </li>
-                <li className="dropdown-item"><b><pre>Status: {this.status}</pre></b> </li>
-                <li className="dropdown-item"><b><pre>Team: {(this.team === null || this.team === undefined) ? "None" : this.team.name}</pre></b> </li>
-            </ul>
-        </li>
+                   <div > {this.name} </div>
+                   <ul className="dropdown-menu">
+                       <li className="dropdown-item"><b><pre>Story name: {this.name}</pre></b> </li>
+                       <li className="dropdown-item"><b><pre>Description: {this.description}</pre></b> </li>
+                       <li className="dropdown-item"><b><pre>Status: {this.status}</pre></b> </li>
+                       <li className="dropdown-item"><b><pre>Team: {(this.team === null || this.team === undefined)
+                           ? "None"
+                           : this.team.name}</pre></b> </li>
+                   </ul>
+               </li>;
     }
 }
 

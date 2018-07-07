@@ -1,3 +1,4 @@
+
 import * as React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Layout } from './components/Layout';
@@ -14,6 +15,7 @@ import { DefectGrid } from './components/Grids/DefectGrid';
 import { TaskGrid } from './components/Grids/TaskGrid';
 import { Error } from './components/Error';
 import { SimpleChat } from './components/Chats/SimpleChat'
+import { EditStory } from "./components/EditPages/EditStory";
 
 
 const LayoutRoute = ({ ...props }) => {
@@ -37,6 +39,7 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/defects' component={DefectGrid} />
         <LayoutRoute path='/tasks' component={TaskGrid} />
         <LayoutRoute path='/SimpleChat' component={SimpleChat} />
+        <LayoutRoute path='/EditStory' component={EditStory} />
 
         <Route path='/login' component={Login} />
         <Route path='/Error' component={Error} />
