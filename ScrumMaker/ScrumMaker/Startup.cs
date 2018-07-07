@@ -24,6 +24,7 @@ using Microsoft.OData.Edm;
 using DAL;
 using DAL.Access;
 using DAL.Models;
+using ScrumMaker.Controllers.Chatting;
 using BL;
 using BL.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -96,7 +97,7 @@ namespace ScrumMaker
             services.AddScoped(typeof(IUserManager), typeof(UserManager));
             services.AddScoped(typeof(ITasksManager), typeof(TasksManager));
             services.AddScoped(typeof(IStoriesManager), typeof(StoriesManager));
-            services.AddScoped(typeof(BL.Chatting.IChatManager), typeof(BL.Chatting.ChatRoomManager));
+            services.AddScoped(typeof(BL.Chatting.IGlobalChatManager), typeof(BL.Chatting.GlobalChatManager));
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -126,7 +127,7 @@ namespace ScrumMaker
 
             app.UseSignalR(routes =>
             {
-                routes.MapHub<BL.Chatting.SimpleChat>("/chat");
+                routes.MapHub<GlobalChat>("/chat");
             });
 
             app.UseMvc(routes =>    

@@ -14,11 +14,18 @@ namespace DAL.Chatting
         public DateTime Sent { get; set; }
         public string Text { get; set; }
 
+        [ForeignKey("User")]
         public int? AuthorId { get; set; }
         public virtual User Author { get; set; }
 
         [NotMapped]
-        public string AuthorName { get; set; }
+        public string AuthorName
+        {
+            get
+            {
+                return Author?.Login;
+            }
+        }
 
 
         public int ChatId { get; set; }
@@ -26,7 +33,7 @@ namespace DAL.Chatting
 
         public override string ToString()
         {
-            return $"{AuthorName} : {Text}";
+            return $"({Sent}){AuthorName ?? "Anonym"} : {Text}";
         }
     }
 }
