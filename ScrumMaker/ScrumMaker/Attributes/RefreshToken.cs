@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ScrumMaker.Attributes
 {
-    public class RefreshToken : Attribute, IActionFilter
+    public class RefreshTokenAttribute : Attribute, IActionFilter
     {
         public void OnActionExecuted(ActionExecutedContext context)
         {
