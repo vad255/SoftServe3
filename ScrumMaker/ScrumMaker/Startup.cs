@@ -24,6 +24,7 @@ using Microsoft.OData.Edm;
 using DAL;
 using DAL.Access;
 using DAL.Models;
+using ScrumMaker.Controllers.Chatting;
 using BL;
 using BL.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -49,7 +50,8 @@ namespace ScrumMaker
                 x.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 x.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 x.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            }).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,options=> {
+            }).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+            {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
@@ -65,18 +67,9 @@ namespace ScrumMaker
             string connectionStr = Configuration.GetConnectionString("Viktor");
 
 
-
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
-            services.AddScoped(typeof(DbContext), typeof(DataContext));
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
-            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
-            services.AddScoped(typeof(ISprintManager), typeof(SprintManager));
-            services.AddScoped(typeof(IFeaturesManager), typeof(FeaturesManager));
-            services.AddScoped(typeof(IDefectsManager), typeof(DefectsManager));
-            services.AddScoped(typeof(IUserManager), typeof(UserManager));
-            services.AddScoped(typeof(ITasksManager), typeof(TasksManager));
-            services.AddScoped(typeof(IStoriesManager), typeof(StoriesManager));
+            ConfigureDI(services);
 
             services.AddOData();
 
@@ -93,7 +86,20 @@ namespace ScrumMaker
             services.AddSignalR();
         }
 
+        private static void ConfigureDI(IServiceCollection services)
+        {
+            services.AddScoped(typeof(DbContext), typeof(DataContext));
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
+            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+            services.AddScoped(typeof(ISprintManager), typeof(SprintManager));
+            services.AddScoped(typeof(IFeaturesManager), typeof(FeaturesManager));
+            services.AddScoped(typeof(IDefectsManager), typeof(DefectsManager));
+            services.AddScoped(typeof(IUserManager), typeof(UserManager));
+            services.AddScoped(typeof(ITasksManager), typeof(TasksManager));
+            services.AddScoped(typeof(IStoriesManager), typeof(StoriesManager));
+            services.AddScoped(typeof(BL.Chatting.IGlobalChatManager), typeof(BL.Chatting.GlobalChatManager));
+        }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
@@ -114,11 +120,15 @@ namespace ScrumMaker
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
+
+            app.LoadTokenDataToContext();
             app.UseAuthentication();
+
+
 
             app.UseSignalR(routes =>
             {
-                routes.MapHub<Hubs.SimpleChat>("/chat");
+                routes.MapHub<GlobalChat>("/chat");
             });
 
             app.UseMvc(routes =>    

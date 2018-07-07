@@ -14,27 +14,44 @@ export class SimpleChat extends React.Component<RouteComponentProps<{}>, any> {
     constructor() {
         super();
         this.connection = new HubConnectionBuilder().withUrl(this.URL_BASE).build();
-        this.connection.on("ReceiveMessage", this.onDataReceived.bind(this));
-        this.connection.start().catch(err => console.error(err));
+        this.connection.on("receiveMessage", this.receiveMessage.bind(this));
+        this.connection.on("receiveHistory", this.receiveHistory.bind(this));
+
+        this.connection.start().then(() => this.loadHistory()).catch(err => console.error(err));
+
     }
 
-    public SendData() {
-        this.connection.invoke("SendMessage", this.name, this.message).catch(err => console.error(err));
+    public Send() {
+        // fetch('api/chat/send',
+        //     {
+        //         method: 'POST',
+        //         headers: { 'Content-Type': 'application/json' },
+        //         body: JSON.stringify(this.message),
+        //         credentials: 'include'
+        //     });
+        this.connection.invoke("SendMessage",this.message);
     }
 
-    public onDataReceived(sender: string, message: string) {
+    loadHistory(){
+        this.connection.invoke("GetHistory");
+    }
+
+    public receiveHistory(messages: string[]) {
+        //console.log(messages);
+
+        messages.forEach(element => {
+            this.receiveMessage(element);
+        });
+    }
+
+    public receiveMessage(message: string) {
+        
         let output = undefined;
         output = document.getElementById("output") as any;
-        if (output.value !== '')
+        if (output.value != '')
             output.value += '\n';
-        output.value += sender + ": " + message;
+        output.value += message;
         output.scrollTop = output.scrollHeight;
-
-
-    }
-
-    private updateName(e: any) {
-        this.name = e.target.value;
     }
 
     private updateMessage(e: any) {
@@ -48,22 +65,18 @@ export class SimpleChat extends React.Component<RouteComponentProps<{}>, any> {
         input.value = null;
         e.preventDefault();
         if (this.message != undefined && this.message != null && this.message != '')
-            this.SendData();
-
+            this.Send();
     }
 
     render() {
-
-
         return <div className="chatWindow">
-            <textarea id="output" className="chatOutput" rows={15} readOnly={true}></textarea>
+            <div></div><div>
+                <textarea id="output" className="chatOutput" rows={15} readOnly={true}></textarea>
+            </div>
             <hr />
             <div className="chatInputBlock">
-                <span>Enter your name </span>
-                <input type="text" onChange={this.updateName.bind(this)} />
-                <br/>
+                <br />
                 <textarea id="messageInput" className="chatInput" onKeyPress={this.updateMessage.bind(this)} />
-
             </div>
         </div>
     }

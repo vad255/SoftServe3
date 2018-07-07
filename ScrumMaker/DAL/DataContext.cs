@@ -4,12 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL.Chatting;
 
 namespace DAL
 {
-    /// <summary>
-    /// Main context.
-    /// </summary>
     public class DataContext : DbContext
     {
         public DataContext(DbContextOptions options) : base(options) { }
@@ -34,9 +32,12 @@ namespace DAL
 
         public DbSet<Feature> Features { get; set; }
 
+        public DbSet<Message> ChatMessages { get; set; }
+
+        public DbSet<ChatRoom> ChatingRooms { get; set; }
+
         public DbSet<Photo> Photos { get; set; }
 
-        
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
