@@ -15,14 +15,14 @@ namespace DAL.Chatting
         public string Text { get; set; }
 
         public int? AuthorId { get; set; }
-        public User Author { get; set; }
+        public virtual User Author { get; set; }
 
         [NotMapped]
         public string AuthorName { get; set; }
 
 
         public int ChatId { get; set; }
-        public ChatRoom Chat { get; set; }
+        public virtual ChatRoom Chat { get; set; }
 
         public override string ToString()
         {
