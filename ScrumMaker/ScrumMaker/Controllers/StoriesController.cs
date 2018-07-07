@@ -42,6 +42,7 @@ namespace ScrumMaker.Controllers
             }
 
             Story story = _stories.GetById(key);
+
             if (story == null)
             {
                 return NotFound();

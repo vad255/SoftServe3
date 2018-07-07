@@ -78,7 +78,7 @@ export class EditStory extends React.Component<RouteComponentProps<any>, IEditPa
             </div>
             <div>
                 <h3 style={{ margin: "10px", padding: "5px", color: "green"}}>Status:</h3>
-                <select className="dropdown" onChange={this.handleStatusSelect} >
+                <select className="form-control-static" onChange={this.handleStatusSelect} >
                     <option value="0">Pending approval</option>
                     <option value="1">Ready to start</option>
                     <option value="2">In progress</option>
