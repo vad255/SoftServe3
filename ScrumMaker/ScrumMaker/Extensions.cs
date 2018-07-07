@@ -42,11 +42,6 @@ namespace ScrumMaker
 
                 Set(context, token.Claims);
 
-                //Console.BackgroundColor = ConsoleColor.Green;
-                //Console.ForegroundColor = ConsoleColor.Black;
-                //Console.WriteLine($"{token.Claims.First(claim => claim.Type == LOGIN).Value} requested");
-                //Console.ForegroundColor = ConsoleColor.Gray;
-                //Console.BackgroundColor = ConsoleColor.Black;
                 await next.Invoke();
             });
 
@@ -55,11 +50,6 @@ namespace ScrumMaker
 
         private static void SetDefault(HttpContext context)
         {
-            //Console.BackgroundColor = ConsoleColor.Cyan;
-            //Console.ForegroundColor = ConsoleColor.Black;
-            //Console.WriteLine("Anonym requested");
-            //Console.ForegroundColor = ConsoleColor.Gray;
-            //Console.BackgroundColor = ConsoleColor.Black;
 
             var claims = new List<Claim>()
                 {
