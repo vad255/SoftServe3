@@ -18,8 +18,7 @@ export class StoriesGrid extends Grid<RouteComponentProps<{}>, IStoryDataState> 
     protected URL_ORDERING: string = '&$orderby=id';
     protected headerText: string = 'Stories';
 
-    protected pageSize = 5;
-
+ 
     constructor() {
         super();
         this.LoadData();
@@ -65,17 +64,7 @@ export class StoriesGrid extends Grid<RouteComponentProps<{}>, IStoryDataState> 
         return this.state.stories.map(s => s.renderAsTableRow());
     }
 
-    protected RenderFooter() {
-        return <tr>
-            <td colSpan={8}>
-                <div className="text-center">
-                    <div role='button' className='btn btn-primary'>
-                        Add new
-                    </div>
-                </div>
-            </td>
-        </tr>;
-    }
+    
 }
 
 

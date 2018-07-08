@@ -11,13 +11,8 @@ namespace DAL.Access
     /// Provide CRUD access to one 'DBtable'
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IRepository<T> : IDisposable where T : class
+    public interface IRepository<T> : IRepositoryUoW<T> where T : class
     {
-        IQueryable<T> GetAll();
-        T GetById(int id);
-        void Create(T item);
-        void Delete(int enId);
-        void Update(T en);
         void Save();
     }
 }

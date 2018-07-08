@@ -8,7 +8,7 @@ namespace DataBaseInitializer
     class Program
     {
         public const string connectionString =
-            "Data Source=.\\SQLEXPRESS;Initial Catalog=ScrumMaker;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            "Server=.\\SQLEXPRESS;Database=ScrumMaker;Trusted_Connection=True;MultipleActiveResultSets=true";
 
         static void Main(string[] args)
         {

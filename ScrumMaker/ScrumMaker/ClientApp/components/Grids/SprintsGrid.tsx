@@ -16,11 +16,10 @@ export class SprintsGrid extends Grid<RouteComponentProps<{}>, ISprintDataFetchi
     protected URL_ORDERING: string = '&$orderby=id'
     protected headerText: string = 'Sprints'
 
-    protected pageSize: number = 5;
-
+   
     constructor() {
         super();
-        this.LoadData();
+        this.LoadData();        
     }
 
 
@@ -30,7 +29,7 @@ export class SprintsGrid extends Grid<RouteComponentProps<{}>, ISprintDataFetchi
         var sprintsTemp = [];
         for (var i = 0; i < data['value'].length; i++)
             sprintsTemp[i] = new Sprint(data["value"][i]);
-
+        
         this.setState({ sprints: sprintsTemp });
     }
 
@@ -63,17 +62,7 @@ export class SprintsGrid extends Grid<RouteComponentProps<{}>, ISprintDataFetchi
     protected GetBodyRows() {
     return this.state.sprints.map((s) => s.renderAsTableRow());
     }
-    protected RenderFooter() {
-        return <tr>
-            <td colSpan={8}>
-                <div className="text-center">
-                    <div role='button' className='btn btn-primary'>
-                        Add new
-                    </div>
-                </div>
-            </td>
-        </tr>;
-    }
+    
 }
 
 

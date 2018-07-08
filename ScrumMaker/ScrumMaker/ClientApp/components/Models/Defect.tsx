@@ -1,18 +1,18 @@
 ﻿import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
-import { Priority } from './Priority'
-import { State } from './State'
-import { Status } from './Status'
+import { DefectPriority } from './DefectPriority'
+import { DefectState } from './DefectState'
+import { DefectStatus } from './DefectStatus'
 
 
 export class Defect {
     defectId: number = -1;
     name: string = '';
     description: string = '';
-    priority: Priority = 0;
-    state: State = 0;
-    status: Status = 0;
+    priority: DefectPriority = 0;
+    state: DefectState = 0;
+    status: DefectStatus = 0;
     actualResults: string = '';
     fixResults: string = '';
 
@@ -25,14 +25,14 @@ export class Defect {
             return;
         }
 
-        this.defectId = params.defectId;
-        this.name = params.defectName;
-        this.description = params.description;
-        this.priority = params.priority;
-        this.state = params.state;
-        this.status = params.status;
-        this.actualResults = params.actualResults;
-        this.fixResults = params.fixResults;
+        this.defectId = params.DefectId;
+        this.name = params.DefectName;
+        this.description = params.Description;
+        this.priority = params.Priority;
+        this.state = params.State;
+        this.status = params.Status;
+        this.actualResults = params.ActualResults;
+        this.fixResults = params.FixResults;
     }
 
     public toString(): string {

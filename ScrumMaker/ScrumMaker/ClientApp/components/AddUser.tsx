@@ -27,6 +27,15 @@ export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDa
         this.handleCancel = this.handleCancel.bind(this);
     }
 
+    public SendItem() {
+        fetch('api/sprints/create',
+        {
+            method:'POST',
+            headers: {'Content-Type': 'application/json; charset=utf-8'},
+            body: JSON.stringify(this.props) 
+         });
+    }  
+
     public render() {
         let contents = this.state.login
             ? <p><em>Loading...</em></p>
