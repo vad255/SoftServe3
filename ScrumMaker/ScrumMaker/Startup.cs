@@ -41,7 +41,6 @@ namespace ScrumMaker
         public IConfiguration Configuration { get; }
 
 
-
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
@@ -123,7 +122,6 @@ namespace ScrumMaker
 
             app.LoadTokenDataToContext();
             app.UseAuthentication();
-
 
 
             app.UseSignalR(routes =>
