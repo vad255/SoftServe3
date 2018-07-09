@@ -41,7 +41,6 @@ namespace ScrumMaker
         public IConfiguration Configuration { get; }
 
 
-
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
@@ -66,6 +65,8 @@ namespace ScrumMaker
 
             string connectionStr = Configuration.GetConnectionString("Viktor");
 
+
+            
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
 
             ConfigureDI(services);
@@ -122,7 +123,6 @@ namespace ScrumMaker
 
             app.LoadTokenDataToContext();
             app.UseAuthentication();
-
 
 
             app.UseSignalR(routes =>
