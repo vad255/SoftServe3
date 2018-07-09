@@ -41,7 +41,6 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
             {contents}
         </div>
     }
-
     protected renderContent() {
         return <table className='table table-scrum table-hover td-scrum'>
             <thead>
@@ -56,7 +55,6 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
             </tfoot>
         </table>
     }
-
     protected LoadData() {
         fetch(this.getURL(), { credentials: 'include' })
             .then(response => response.json() as any)
@@ -65,9 +63,6 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
                 this.OnDataReceived(data);
             }).catch(e => this.onCatch(e));
     }
-
-
-
     protected getURL() {
 
         let result = this.URL_BASE;
@@ -84,7 +79,6 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
         return result;
     }
-
     protected OnDataReceived(data: any): void {
         this.isLoading = false;
 
@@ -94,7 +88,6 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
         this.setState({ items: itemsTemp });
     }
-
     protected abstract instantiate(item: any): IDbModel;
 
     protected onCatch(e: any) {
@@ -130,6 +123,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         </tr>;
     }
 
+
     private firstPageClick() {
         this.CurrentPage = 0;
         this.recalcPagingUrl()
@@ -154,10 +148,10 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         this.recalcPagingUrl();
         this.LoadData();
     }
-
     private recalcPagingUrl() {
         this.urlPaging = '&$skip=' + (this.CurrentPage * this.pageSize) + '&$top=' + this.pageSize;
     }
+
 
     protected FilterButtonClick(e: any) {
         this.filteringOn = !this.filteringOn
@@ -167,6 +161,20 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         this.urlFilters = e;
         this.LoadData();
     }
+    protected onDeleteClick(id: number) {
+        if (this.CurrentPage != 0)
+            if (this.allCount % this.pageSize === 1) {
+                this.CurrentPage--;
+                this.recalcPagingUrl();
+            }
+
+        fetch(this.URL_BASE + '/' + id,
+            {
+                method: 'DELETE',
+                credentials: 'include',
+            }).then(() => this.LoadData());
+    }
+
 
     protected toGridItem(items: JSX.Element[], id: number) {
 
@@ -188,20 +196,6 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
                 </div>
             </td>
         </tr>
-    }
-
-    protected onDeleteClick(id: number) {
-        if (this.CurrentPage != 0)
-            if (this.allCount % this.pageSize === 1) {
-                this.CurrentPage--;
-                this.recalcPagingUrl();
-            }
-
-        fetch(this.URL_BASE + '/' + id,
-            {
-                method: 'DELETE',
-                credentials: 'include',
-            }).then(() => this.LoadData());
     }
 
     protected OrderBy(arg: string) {
