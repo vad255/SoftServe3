@@ -9,7 +9,7 @@ export interface LayoutProps {
 export class Layout extends React.Component<LayoutProps, {}> {
     public render() {
         return <div className='container-fluid'>
-            <div className='header siteColor'>
+            <div id="headerPosition" className='header siteColor'>
                 <img src="./img/NewLogo.png" width="150" height="50" className="myLogo"/>
                 <div id='mySettings'>
                     <div className="navigation fontFamily" id="aColor">
@@ -34,10 +34,10 @@ export class Layout extends React.Component<LayoutProps, {}> {
                     </div>
             </div>
             <div className='row'>
-                <div className='col-sm-2'>
+                <div className='col-sm-2 mainPart'>
                     <NavMenu />
                 </div>
-                <div className='col-sm-10'>
+                <div className='col-sm-10 mainPart'>
                     {this.props.children}
                 </div>
             </div>

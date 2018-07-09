@@ -20,7 +20,6 @@ export class Team {
         this.id = params.Id;
         this.empty = false;
 
-        //var members = params.members.map( u => new User(u));
         var members = [];
         if (params.Members === null || params.Members === undefined) {
             return;
@@ -57,13 +56,22 @@ export class Team {
         return <tr key={this.id}>
             <td>{this.id}</td>
             <td scope="row">{this.name}</td>
-            <td><select className="btn btn-sm btn-primary" role="button" data-toggle="dropdown">
-                {this.members.map(u =>
-                    <option>{u.login}</option>
-                )}
-            </select>
+            <td className="dropdown">
+                <div id={this.id.toString()} role="button" data-toggle="dropdown" className="btn btn-sm btn-primary" >
+                    {this.name} <span className="caret"></span>
+                </div>
+                <ul className="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                    {this.members.map(u => u.renderAsDropDown())}
+                </ul>
             </td>
-            <td>
+            <td className="align-base">
+                <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base ">
+                    <span className="glyphicon glyphicon-edit dark" aria-hidden="true"></span>
+                </div>
+                &nbsp;&nbsp;
+                <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base">
+                    <span className="glyphicon glyphicon-trash dark" aria-hidden="true"></span>
+                </div>
             </td>
         </tr>;
     }

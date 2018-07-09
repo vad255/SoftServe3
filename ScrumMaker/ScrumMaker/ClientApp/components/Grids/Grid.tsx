@@ -93,25 +93,30 @@ export abstract class Grid<P, S> extends React.Component<RouteComponentProps<any
     }
 
     protected RenderFooter() {
-        return <tr>           
-            <td colSpan={8}>
-                <div className="text-center">                    
-                    <div role='button' className='btn btn-sq-xs align-base' onClick={this.FirstPageReceived.bind(this)}>
-                        <span className="glyphicon glyphicon-step-backward dark"></span>
+        if (this.allCount <= this.pageSize) {
+            return <tr></tr>
+        }
+        else {
+            return <tr>
+                <td colSpan={8}>
+                    <div className="text-center">
+                        <div role='button' className='btn btn-sq-xs align-base' onClick={this.FirstPageReceived.bind(this)}>
+                            <span className="glyphicon glyphicon-step-backward dark"></span>
+                        </div>
+                        <div role='button' className='btn btn-sq-xs align-base' onClick={this.NextPageReceivedLeft.bind(this)}>
+                            <span className="glyphicon glyphicon-chevron-left dark"></span>
+                        </div>
+                        {Math.ceil(this.CurrentPage + 1)} of {Math.ceil(this.allCount / this.pageSize)}
+                        <div role='button' className='btn btn-sq-xs align-base' onClick={this.NextPageReceivedRight.bind(this)}>
+                            <span className="glyphicon glyphicon-chevron-right dark"></span>
+                        </div>
+                        <div role='button' className='btn btn-sq-xs align-base' onClick={this.LastPageReceived.bind(this)}>
+                            <span className="glyphicon glyphicon-step-forward dark"></span>
+                        </div>
                     </div>
-                    <div role='button' className='btn btn-sq-xs align-base' onClick={this.NextPageReceivedLeft.bind(this)}>
-                        <span className="glyphicon glyphicon-chevron-left dark"></span>
-                    </div>
-                    {Math.ceil(this.CurrentPage + 1)} of {Math.ceil(this.allCount / this.pageSize)}
-                    <div role='button' className='btn btn-sq-xs align-base' onClick={this.NextPageReceivedRight.bind(this)}>
-                        <span className="glyphicon glyphicon-chevron-right dark"></span>
-                    </div>
-                    <div role='button' className='btn btn-sq-xs align-base' onClick={this.LastPageReceived.bind(this)}>
-                        <span className="glyphicon glyphicon-step-forward dark"></span>
-                    </div>                    
-                </div>
-            </td>           
-        </tr>;
+                </td>
+            </tr>;
+        }
     }
 
     protected NextPageReceivedRight(data: any) {

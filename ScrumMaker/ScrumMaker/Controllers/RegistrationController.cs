@@ -38,7 +38,7 @@ namespace ReactCrudDemo.Controllers
             {
                 Logger.LogError("RegistartionController:Create():Registration was not successful. Something went wrong!", e);
             }
-            return Redirect("");
+            return Redirect("/");
         }
     }
 }
