@@ -3,9 +3,25 @@ import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { Story } from './Story';
 import { User } from './User';
+import { IDbModel } from './IDbModel'
 
 
-export class Task {
+export class Task implements IDbModel{
+    getId(): number {
+        return this.taskId;
+    }
+    toArray(): any[] {
+        let elements: any[] = [
+            this.taskId,
+            this.plannedHours,
+            this.remainingHours,
+            this.actualHours,
+            this.type,
+            this.state
+        ]
+
+        return elements; 
+    }
 
     taskId: number = -1;
     storyId: number = -1;
@@ -42,28 +58,6 @@ export class Task {
     }
     public toString(): string {
         return this.taskId.toString();
-    }
-
-
-
-    public renderAsTableRow(): JSX.Element {
-        return <tr key={this.taskId}>
-            <td className="align-base">{this.taskId}</td>            
-            <td className="align-base">{this.plannedHours}</td>
-            <td className="align-base">{this.remainingHours}</td>
-            <td className="align-base">{this.actualHours}</td>
-            <td className="align-base">{this.type}</td>            
-            <td className="align-base">{this.state}</td>
-            <td className="align-base">
-                <div id={this.taskId.toString()} role="button" className="btn btn-sq-xs align-base ">
-                    <span className="glyphicon glyphicon-edit dark" aria-hidden="true"></span>
-                </div>
-                &nbsp;&nbsp;
-                <div id={this.taskId.toString()} role="button" className="btn btn-sq-xs align-base">
-                    <span className="glyphicon glyphicon-trash dark" aria-hidden="true"></span>
-                </div>
-            </td>
-        </tr>;
     }
 }
 

@@ -1,6 +1,13 @@
 import * as React from 'react';
+import { IDbModel } from './IDbModel';
 
-export class SprintHistory extends React.Component {
+export class SprintHistory implements IDbModel {
+    getId(): number {
+        throw new Error("Method not implemented.");
+    }
+    toArray(): any[] {
+        throw new Error("Method not implemented.");
+    }
 
     public empty: boolean = true;
     public id: number = -1;
@@ -11,7 +18,6 @@ export class SprintHistory extends React.Component {
     retrospectiveDone: Date;
 
     constructor(params: any) {
-        super(params);
         if (params === null || params === undefined) {
             return;
         }

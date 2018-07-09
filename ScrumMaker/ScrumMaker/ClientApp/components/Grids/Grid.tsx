@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
-import { Content } from 'react-bootstrap/lib/Tab';
+import { IDbModel, IFetchState } from '../Models/IDbModel';
+import { NavLink } from 'react-router-dom'
 
-export abstract class Grid<S> extends React.Component<RouteComponentProps<{}>, S> {
+export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFetchState> {
     constructor() {
         super();
         this.isLoading = true;
@@ -12,6 +13,9 @@ export abstract class Grid<S> extends React.Component<RouteComponentProps<{}>, S
     protected abstract headerText: string;
     private pageSize: number = 5;
     protected isLoading: boolean = true;
+
+
+    protected readonly URL_EDIT: string = "!!!NOT_IMPLEMENTED!!!/";
 
     protected readonly abstract URL_BASE: string;
     protected readonly abstract URL_EXPANDS: string;
@@ -38,7 +42,7 @@ export abstract class Grid<S> extends React.Component<RouteComponentProps<{}>, S
         </div>
     }
 
-    private renderContent() {
+    protected renderContent() {
         return <table className='table table-scrum table-hover td-scrum'>
             <thead>
                 {this.GetHeaderRow()}
@@ -48,7 +52,7 @@ export abstract class Grid<S> extends React.Component<RouteComponentProps<{}>, S
                 {this.GetBodyRows()}
             </tbody>
             <tfoot>
-                {this.RenderFooter()}
+                {this.GetFooterRow()}
             </tfoot>
         </table>
     }
@@ -63,7 +67,8 @@ export abstract class Grid<S> extends React.Component<RouteComponentProps<{}>, S
     }
 
 
-    private getURL() {
+
+    protected getURL() {
 
         let result = this.URL_BASE;
 
@@ -80,21 +85,30 @@ export abstract class Grid<S> extends React.Component<RouteComponentProps<{}>, S
         return result;
     }
 
+    protected OnDataReceived(data: any): void {
+        this.isLoading = false;
+
+        let itemsTemp: IDbModel[] = [];
+        for (var i = 0; i < data['value'].length; i++)
+            itemsTemp[i] = this.instantiate(data["value"][i]);
+
+        this.setState({ items: itemsTemp });
+    }
+
+    protected abstract instantiate(item: any): IDbModel;
+
     protected onCatch(e: any) {
-        this.props.history.push("/Error")
-    }
-
-    protected FilterButtonClick(e: any) {
-        this.filteringOn = !this.filteringOn
-        this.forceUpdate();
-    }
-    protected ApplyFiltersHandler(e: any) {
-        this.urlFilters = e;
-        this.LoadData();
+        console.error(e);
+     //   this.props.history.push("/Error")
     }
 
 
-    private RenderFooter() {
+    protected abstract GetHeaderRow(): JSX.Element;
+    protected abstract GetFiltersRow(): JSX.Element;
+    protected GetBodyRows(): JSX.Element[] {
+        return this.state.items.map((s) => this.toGridItem(s.toArray(), s.getId()))
+    }
+    private GetFooterRow() {
         return <tr>
             <td colSpan={8}>
                 <div className="text-center">
@@ -115,6 +129,7 @@ export abstract class Grid<S> extends React.Component<RouteComponentProps<{}>, S
             </td>
         </tr>;
     }
+
     private firstPageClick() {
         this.CurrentPage = 0;
         this.urlPaging = '&$skip=' + (this.CurrentPage * this.pageSize) + '&$top=' + this.pageSize;
@@ -144,21 +159,50 @@ export abstract class Grid<S> extends React.Component<RouteComponentProps<{}>, S
         this.LoadData();
     }
 
-    protected abstract OnDataReceived(data: any): void;
 
-    protected abstract GetHeaderRow(): JSX.Element;
-    protected abstract GetFiltersRow(): JSX.Element;
-    protected abstract GetBodyRows(): JSX.Element[];
+    protected FilterButtonClick(e: any) {
+        this.filteringOn = !this.filteringOn
+        this.forceUpdate();
+    }
+    protected ApplyFiltersHandler(e: any) {
+        this.urlFilters = e;
+        this.LoadData();
+    }
 
+    protected toGridItem(items: JSX.Element[], id: number) {
 
-    // Provide access to gridItems for sorting method
-    protected abstract getData(): any[];
+        return <tr key={id}>
+            {items.map((item, index) =>
+                <td key={index} className="align-base">{item}</td>)
+            }
+            <td className="align-base">
+                <NavLink to={this.URL_EDIT + id.toString()}
+                    activeClassName='active'>
+                    <span className="glyphicon glyphicon-edit dark" aria-hidden="true" />
+                </NavLink>
+                &nbsp;&nbsp;
+                <div id={id.toString()}
+                    role="button"
+                    className="btn btn-sq-xs align-base"
+                    onClick={(() => this.onDeleteClick(id)).bind(this)}>
+                    <span className="glyphicon glyphicon-trash dark" aria-hidden="true" />
+                </div>
+            </td>
+        </tr>
+    }
 
+    protected onDeleteClick(id: number) {
+        fetch(this.URL_BASE + '/' + id,
+            {
+                method: 'DELETE',
+                credentials: 'include',
+            });
+        this.LoadData();
+    }
 
     protected OrderBy(arg: string) {
         try {
-            let data = [];
-            data = this.getData();
+            let data = this.state.items;
 
             if (this.lastOrderingArg === arg)
                 this.lastOrderingDir = !this.lastOrderingDir;

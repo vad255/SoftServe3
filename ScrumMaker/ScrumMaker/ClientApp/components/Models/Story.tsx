@@ -3,6 +3,7 @@ import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { Team } from './Team';
 import { Link } from 'react-router-dom';
+import { IDbModel } from './IDbModel';
 
 
 
@@ -16,7 +17,7 @@ export enum StoryStatus {
 }
 
 
-export class Story {
+export class Story implements IDbModel{
     id: number = -1;
     name: string = '';
     status: StoryStatus = 0;
@@ -69,6 +70,20 @@ export class Story {
                 </div>
             </td>
         </tr>;
+    }
+
+    getId(): number {
+        return this.id;
+    }
+    toArray(): any[] {
+        let elements: any[] = [
+            this.id,
+            this.name,
+            this.description,
+            this.status
+        ]
+
+        return elements;
     }
 
     renderAsMenu() {

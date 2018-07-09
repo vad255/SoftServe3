@@ -5,6 +5,7 @@ import { State } from './FeatureState';
 import { Team } from '../Models/Team';
 import { Story } from '../Models/Story';
 import { NavLink } from 'react-router-dom';
+import { IDbModel } from './IDbModel'
 
 //class Team {
 //    id: number = -1;
@@ -16,7 +17,8 @@ import { NavLink } from 'react-router-dom';
 //    }
 //}
 
-export class Feature {
+export class Feature implements IDbModel {
+    
     id: number;
     featureName: string;
     state: State;
@@ -40,29 +42,24 @@ export class Feature {
 
         this.stories = stories;
     }
-
-    public renderAsTableRow() {
-        return <tr key={this.id}>
-            <td className="align-base">{this.id}</td>
-            <td className="align-base">{this.featureName}</td>
-            <td className="align-base">{this.description}</td>
-            <td className="align-base">{this.renderStories()}</td>
-            <td className="align-base">{this.state}</td>
-            <td className="align-base">{this.blocked === true ? "true" : "false"}</td>
-            <td className="align-base">
-                <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base ">
-                    <NavLink to={`featureEdit/${this.id}`} activeClassName='active'>
-                        <span className="glyphicon glyphicon-edit dark" aria-hidden="true"></span>
-                    </NavLink>
-                </div>
-                &nbsp;&nbsp;
-                <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base">
-                    <span className="glyphicon glyphicon-trash dark" aria-hidden="true"></span>
-                </div>
-            </td>
-        </tr>;
-    }
     
+    getId(): number {
+        return this.id;
+    }
+
+    toArray(): any[] {
+        let elements: any[] = [
+            this.id,
+            this.featureName,
+            this.description,
+            this.renderStories(),
+            this.state,
+            this.blocked === true ? "true" : "false"
+        ]
+
+        return elements;
+    }
+
     public renderStories() {
         if (this.stories === null || this.stories === undefined || this.stories.length < 1)
             return <p>No stories</p>

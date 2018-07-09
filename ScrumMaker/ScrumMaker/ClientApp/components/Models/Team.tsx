@@ -2,9 +2,26 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import {User} from './User'
+import { IDbModel } from './IDbModel'
 
 
-export class Team {
+export class Team implements IDbModel{
+    getId(): number {
+        return this.id;
+    }
+    toArray(): any[] {
+        let elements: any[] = [
+            this.id,
+            this.name,
+            <select className="btn btn-sm btn-primary" role="button" data-toggle="dropdown">
+                {this.members.map(u =>
+                    <option>{u.login}</option>
+                )}
+            </select>
+        ]
+
+        return elements;
+    }
 
     empty: boolean = true;
     name: string = "";
@@ -56,7 +73,7 @@ export class Team {
     renderForecastsTable() {
         return <tr key={this.id}>
             <td>{this.id}</td>
-            <td scope="row">{this.name}</td>
+            <td>{this.name}</td>
             <td><select className="btn btn-sm btn-primary" role="button" data-toggle="dropdown">
                 {this.members.map(u =>
                     <option>{u.login}</option>
