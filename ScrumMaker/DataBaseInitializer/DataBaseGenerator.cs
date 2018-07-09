@@ -21,7 +21,6 @@ namespace DataBaseInitializer
         static IRepository<SprintStagesHistory> _dbHisories;
         static IRepository<Sprint> _dbSprints;
 
-
         public static void FillDataBase(DbContext context)
         {
             _context = context;
@@ -328,7 +327,6 @@ namespace DataBaseInitializer
             AddToDatabase(users, _dbUsers);
         }
 
-
         public static void FillTeamsData()
         {
 
@@ -365,8 +363,6 @@ namespace DataBaseInitializer
 
             AddToDatabase(teams, _dbTeams);
         }
-
-
 
         public static void FillDefectsData()
         {
@@ -555,7 +551,6 @@ namespace DataBaseInitializer
             AddToDatabase(defects, _dbDefects);
         }
 
-
         public static void FillStoriesData()
         {
             _dbStories = new Repository<Story>(_context);
@@ -588,7 +583,7 @@ namespace DataBaseInitializer
                         AssignedTo = _dbUsers.GetById(3),
                         Status = StoryStatus.Accepted,
                         Defects = _dbDefects.GetAll().Where(d => d.DefectId < 8).ToList()
-        },
+                    },
                     new Story()
                     { Name = "Clients page",
                         Team = _dbTeams.GetById(4),
@@ -656,7 +651,6 @@ namespace DataBaseInitializer
             AddToDatabase(stories, _dbStories);
         }
 
-
         public static void FillTasksData()
         {
             _dbTasks = new Repository<ScrumTask>(_context);
@@ -718,7 +712,6 @@ namespace DataBaseInitializer
             AddToDatabase(tasks, _dbTasks);
 
         }
-
 
         public static void FillFeaturesData()
         {
@@ -890,7 +883,6 @@ namespace DataBaseInitializer
             Console.Clear();
             Console.WriteLine("{0} % done", percentsDone);
         }
-
 
         public static void AddToDatabase<T>(T[] array, IRepository<T> repository) where T : class
         {

@@ -18,12 +18,10 @@ export class StoriesGrid extends Grid<IStoryDataState> {
     protected URL_ORDERING: string = '&$orderby=id';
     protected headerText: string = 'Stories';
 
- 
     constructor() {
         super();
         this.LoadData();
     }
-
 
     protected OnDataReceived(data: any) {
         this.isLoading = false;
@@ -33,7 +31,6 @@ export class StoriesGrid extends Grid<IStoryDataState> {
             storyTemp[i] = new Story(data['value'][i]);
 
         this.setState({ stories: storyTemp });
-
     }
 
     protected getData() {
@@ -53,12 +50,14 @@ export class StoriesGrid extends Grid<IStoryDataState> {
             </th>
         </tr>;
     }
+
     protected GetFiltersRow() {
 
         return <StoriesFiltersRow
             onApply={this.ApplyFiltersHandler.bind(this)}
             display={this.filteringOn} />;
     }
+
     protected GetBodyRows(): JSX.Element[] {
         var i = 0;
         return this.state.stories.map(s => s.renderAsTableRow());
