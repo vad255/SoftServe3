@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using DAL.Models;
 
-namespace DAL.Stubs
+namespace BL.Chatting
 {
-    public class TeamMember : User
+    public interface IGlobalChatManager : IChatManager
     {
     }
 }

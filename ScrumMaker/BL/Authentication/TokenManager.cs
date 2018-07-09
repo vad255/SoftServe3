@@ -1,13 +1,14 @@
 ﻿using DAL.Access;
 using DAL.Models;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-
+using static BL.ClaimsKeys;
 
 
 namespace BL.Authentication
@@ -21,17 +22,28 @@ namespace BL.Authentication
         }
         public ClaimsIdentity GetIdentity(string login, string password)
         {
-            IEnumerable<User> Users = _users.GetAll();
-            User user = Users.FirstOrDefault(x => x.Login == login && x.Password == password);
+            User user = _users.GetAll().
+                Where(u => u.Login == login && u.Password == password).
+                Include(u => u.Role).
+                FirstOrDefault();
+
             if (user != null)
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
+                    new Claim(LOGIN, user.Login),
+                    new Claim(ROLE,user.Role.Name),
+                    new Claim(ID,user.UserId.ToString())
                 };
+
                 ClaimsIdentity claimsIdentity =
-                new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
-                    ClaimsIdentity.DefaultRoleClaimType);
+                new ClaimsIdentity(
+                    claims: claims,
+                    authenticationType: "Token",
+                    nameType: ClaimsIdentity.DefaultNameClaimType,
+                    roleType: ClaimsIdentity.DefaultRoleClaimType
+                    );
+
                 return claimsIdentity;
             }
             return null;

@@ -14,7 +14,7 @@ export class FeatureGrid extends Grid<RouteComponentProps<{}>, IFeatureDataFetch
     protected URL_EXPANDS: string = '?$expand=stories($expand=team)';
     protected URL_ORDERING: string = '&$orderby=id';
     protected headerText: string = 'Feature';
-    protected pageSize: number = 10;
+   // protected pageSize: number = 10;
 
     constructor() {
         super();
@@ -67,16 +67,5 @@ export class FeatureGrid extends Grid<RouteComponentProps<{}>, IFeatureDataFetch
     protected GetBodyRows() {
         return this.state.features.map((f) => f.renderAsTableRow());
     }
-
-    protected RenderFooter() {
-        return <tr>
-            <td colSpan={8}>
-                <div className="text-center">
-                    <div role='button' className='btn btn-primary'>
-                        Add new
-                    </div>
-                </div>
-            </td>
-        </tr>;
-    }
+        
 }

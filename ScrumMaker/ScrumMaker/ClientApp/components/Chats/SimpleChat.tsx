@@ -1,0 +1,89 @@
+import * as React from 'react';
+import { RouteComponentProps } from 'react-router';
+import 'isomorphic-fetch';
+import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr'
+
+export class SimpleChat extends React.Component<RouteComponentProps<{}>, any> {
+
+    protected URL_BASE: string = '/chat';
+    connection: HubConnection;
+    name: string = "defaultName";
+    message: string = "";
+
+
+    constructor() {
+        super();
+        this.connection = new HubConnectionBuilder().withUrl(this.URL_BASE).build();
+        this.connection.on("receiveMessage", this.receiveMessage.bind(this));
+        this.connection.on("receiveHistory", this.receiveHistory.bind(this));
+
+        this.connection.start().then(() => this.loadHistory()).catch(err => console.error(err));
+
+    }
+
+    public Send() {
+        // fetch('api/chat/send',
+        //     {
+        //         method: 'POST',
+        //         headers: { 'Content-Type': 'application/json' },
+        //         body: JSON.stringify(this.message),
+        //         credentials: 'include'
+        //     });
+        this.connection.invoke("SendMessage",this.message);
+    }
+
+    loadHistory(){
+        this.connection.invoke("GetHistory");
+    }
+
+    public receiveHistory(messages: string[]) {
+        //console.log(messages);
+
+        messages.forEach(element => {
+            this.receiveMessage(element);
+        });
+    }
+
+    public receiveMessage(message: string) {
+        
+        let output = undefined;
+        output = document.getElementById("output") as any;
+        if (output.value != '')
+            output.value += '\n';
+        output.value += message;
+        output.scrollTop = output.scrollHeight;
+    }
+
+    private updateMessage(e: any) {
+
+        if (e.key !== 'Enter' || e.shiftKey)
+            return;
+
+        let input = undefined;
+        input = document.getElementById("messageInput") as any;
+        this.message = input.value;
+        input.value = null;
+        e.preventDefault();
+        if (this.message != undefined && this.message != null && this.message != '')
+            this.Send();
+    }
+
+    render() {
+        return <div className="chatWindow">
+            <div></div><div>
+                <textarea id="output" className="chatOutput" rows={15} readOnly={true}></textarea>
+            </div>
+            <hr />
+            <div className="chatInputBlock">
+                <br />
+                <textarea id="messageInput" className="chatInput" onKeyPress={this.updateMessage.bind(this)} />
+            </div>
+        </div>
+    }
+
+
+}
+
+
+
+
