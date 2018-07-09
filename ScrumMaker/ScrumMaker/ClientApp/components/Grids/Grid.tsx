@@ -99,7 +99,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
     protected onCatch(e: any) {
         console.error(e);
-     //   this.props.history.push("/Error")
+        //   this.props.history.push("/Error")
     }
 
 
@@ -132,33 +132,32 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
     private firstPageClick() {
         this.CurrentPage = 0;
-        this.urlPaging = '&$skip=' + (this.CurrentPage * this.pageSize) + '&$top=' + this.pageSize;
+        this.recalcPagingUrl()
         this.LoadData();
     }
     private previousPageClick() {
-
         if (this.CurrentPage > 0) {
             this.CurrentPage--;
-            this.urlPaging = '&$skip=' + (this.CurrentPage * this.pageSize) + '&$top=' + this.pageSize;
+            this.recalcPagingUrl()
             this.LoadData();
         }
     }
     private nextPageClick() {
-
         if (this.CurrentPage < (this.allCount / this.pageSize) - 1) {
             this.CurrentPage++;
-            this.urlPaging = '&$skip=' + (this.CurrentPage * this.pageSize) + '&$top=' + this.pageSize
+            this.recalcPagingUrl()
             this.LoadData();
         }
     }
     private lastPageClick() {
-
         this.CurrentPage = Math.ceil((this.allCount / this.pageSize)) - 1;
-        this.urlPaging = '&$skip=' + (this.CurrentPage * this.pageSize) + '&$top=' + this.pageSize;
-
+        this.recalcPagingUrl();
         this.LoadData();
     }
 
+    private recalcPagingUrl() {
+        this.urlPaging = '&$skip=' + (this.CurrentPage * this.pageSize) + '&$top=' + this.pageSize;
+    }
 
     protected FilterButtonClick(e: any) {
         this.filteringOn = !this.filteringOn
@@ -192,12 +191,17 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
     }
 
     protected onDeleteClick(id: number) {
+        if (this.CurrentPage != 0)
+            if (this.allCount % this.pageSize === 1) {
+                this.CurrentPage--;
+                this.recalcPagingUrl();
+            }
+
         fetch(this.URL_BASE + '/' + id,
             {
                 method: 'DELETE',
                 credentials: 'include',
-            });
-        this.LoadData();
+            }).then(() => this.LoadData());
     }
 
     protected OrderBy(arg: string) {

@@ -14,7 +14,6 @@ export class StoriesGrid extends Grid {
     protected URL_ORDERING: string = '&$orderby=id';
     protected headerText: string = 'Stories';
     protected URL_EDIT: string = "EditStory/"
-    protected URL_DELETE: string = "Delete/"
 
     constructor() {
         super();
