@@ -68,7 +68,7 @@ namespace BL.Authentication
         public const string ISSUER = "MyAuthServer";
         public const string AUDIENCE = "http://localhost:49971/";
         const string KEY = "scrummakerscrummakerscrummaker";
-        public const int LIFETIME = 120;
+        public const int LIFETIME = 1800;
         public static SymmetricSecurityKey GetSymmetricSecurityKey()
         {
             return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(KEY));

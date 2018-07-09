@@ -9,7 +9,7 @@ interface ISprintDataFetchingState {
     sprints: Sprint[];
 }
 
-export class SprintsGrid extends Grid<RouteComponentProps<{}>, ISprintDataFetchingState> {
+export class SprintsGrid extends Grid<ISprintDataFetchingState> {
 
     protected URL_BASE: string = 'odata/sprints';
     protected URL_EXPANDS: string = '?$expand=Team($expand=members),history'

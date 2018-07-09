@@ -9,7 +9,7 @@ interface IFeatureDataFetchingState {
     features: Feature[];
 }
 
-export class FeatureGrid extends Grid<RouteComponentProps<{}>, IFeatureDataFetchingState> {
+export class FeatureGrid extends Grid<IFeatureDataFetchingState> {
     protected URL_BASE: string = 'odata/feature';
     protected URL_EXPANDS: string = '?$expand=stories($expand=team)';
     protected URL_ORDERING: string = '&$orderby=id';

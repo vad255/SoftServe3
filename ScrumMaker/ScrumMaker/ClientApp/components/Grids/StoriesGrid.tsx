@@ -11,7 +11,7 @@ interface IStoryDataState {
 }
 
 
-export class StoriesGrid extends Grid<RouteComponentProps<{}>, IStoryDataState> {
+export class StoriesGrid extends Grid<IStoryDataState> {
 
     protected URL_BASE: string = 'odata/stories';
     protected URL_EXPANDS: string = '?&expand=()';

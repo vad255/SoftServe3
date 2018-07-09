@@ -2,6 +2,9 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr'
+import { User } from '../Models/User';
+import { UserBox } from './UsersBox';
+
 
 export class SimpleChat extends React.Component<RouteComponentProps<{}>, any> {
 
@@ -9,43 +12,73 @@ export class SimpleChat extends React.Component<RouteComponentProps<{}>, any> {
     connection: HubConnection;
     name: string = "defaultName";
     message: string = "";
-
+    usersBox: UserBox = new UserBox();
 
     constructor() {
         super();
         this.connection = new HubConnectionBuilder().withUrl(this.URL_BASE).build();
         this.connection.on("receiveMessage", this.receiveMessage.bind(this));
         this.connection.on("receiveHistory", this.receiveHistory.bind(this));
+        this.connection.on("receiveUsers", this.receiveUsers.bind(this));
+        this.connection.on("userConnected", this.userConnected.bind(this));
+        this.connection.on("userDisconnect", this.userDisconnected.bind(this));
+        this.connection.onclose(() => {
+            this.message = "CONNECTION CLOSED"
+            this.receiveMessage(this.message);
 
-        this.connection.start().then(() => this.loadHistory()).catch(err => console.error(err));
+        })
 
+        this.connection.start().
+            then(() => {
+                this.loadHistory();
+                this.loadUsers()
+            }).catch(err => console.error(err));
     }
 
     public Send() {
-        // fetch('api/chat/send',
-        //     {
-        //         method: 'POST',
-        //         headers: { 'Content-Type': 'application/json' },
-        //         body: JSON.stringify(this.message),
-        //         credentials: 'include'
-        //     });
-        this.connection.invoke("SendMessage",this.message);
+        this.connection.invoke("SendMessage", this.message);
     }
 
-    loadHistory(){
+    loadHistory() {
         this.connection.invoke("GetHistory");
     }
 
-    public receiveHistory(messages: string[]) {
-        //console.log(messages);
+    loadUsers() {
+        this.connection.invoke("GetUsers");
+    }
 
+    receiveHistory(messages: string[]) {
         messages.forEach(element => {
             this.receiveMessage(element);
         });
     }
 
+    public receiveUsers(users: User[]) {
+        users.forEach(element => {
+            this.userConnected(element);
+        });
+    }
+
+    userConnected(user: User) {
+        console.log("Conected: " + user);
+
+        if (user != null && user != undefined) {
+            this.usersBox.users.push(user);
+            this.forceUpdate();
+        }
+    }
+
+    userDisconnected(user: User) {
+        console.log("Disconected: " + user);
+
+        if (user != null && user != undefined) {
+            this.usersBox.users = this.usersBox.users.filter(u => u.login != user.login);
+            this.forceUpdate();
+        }
+    }
+
     public receiveMessage(message: string) {
-        
+
         let output = undefined;
         output = document.getElementById("output") as any;
         if (output.value != '')
@@ -70,8 +103,13 @@ export class SimpleChat extends React.Component<RouteComponentProps<{}>, any> {
 
     render() {
         return <div className="chatWindow">
-            <div></div><div>
-                <textarea id="output" className="chatOutput" rows={15} readOnly={true}></textarea>
+            <div className="chatOutputWindow">
+                <div className="chatOutput">
+                    <textarea id="output" className="chatOutputArea" rows={15} readOnly={true}></textarea>
+                </div>
+                <div className="chatUsersBlock">
+                    {this.usersBox.render()}
+                </div>
             </div>
             <hr />
             <div className="chatInputBlock">
