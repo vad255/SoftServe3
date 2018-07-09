@@ -1,9 +1,10 @@
 ﻿import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps, Redirect } from 'react-router';
 import 'isomorphic-fetch';
 import { State } from './FeatureState';
 import { Team } from '../Models/Team';
 import { Story } from '../Models/Story';
+import { NavLink } from 'react-router-dom';
 
 //class Team {
 //    id: number = -1;
@@ -29,6 +30,7 @@ export class Feature {
         this.state = params.State;
         this.description = params.Description;
         this.blocked = params.Blocked;
+
         if (params.Stories === null || params.Stories === undefined)
             return;
 
@@ -49,7 +51,9 @@ export class Feature {
             <td className="align-base">{this.blocked === true ? "true" : "false"}</td>
             <td className="align-base">
                 <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base ">
-                    <span className="glyphicon glyphicon-edit dark" aria-hidden="true"></span>
+                    <NavLink to={`featureEdit/${this.id}`} activeClassName='active'>
+                        <span className="glyphicon glyphicon-edit dark" aria-hidden="true"></span>
+                    </NavLink>
                 </div>
                 &nbsp;&nbsp;
                 <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base">
@@ -58,7 +62,7 @@ export class Feature {
             </td>
         </tr>;
     }
-
+    
     public renderStories() {
         if (this.stories === null || this.stories === undefined || this.stories.length < 1)
             return <p>No stories</p>
