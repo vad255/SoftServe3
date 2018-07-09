@@ -5,8 +5,6 @@ import { Team } from './Team';
 import { Link } from 'react-router-dom';
 import { IDbModel } from './IDbModel';
 
-
-
 export enum StoryStatus {
     PendingApproval = 1,
     ReadyToStart = 2,
@@ -16,7 +14,6 @@ export enum StoryStatus {
     Accepted = 6
 }
 
-
 export class Story implements IDbModel{
     id: number = -1;
     name: string = '';
@@ -24,10 +21,7 @@ export class Story implements IDbModel{
     description: string = '';
     team: Team;
 
-
     public constructor(params: any) {
-
-        //super(params);
 
         if (params === null || params === undefined) {
             return;
@@ -47,9 +41,23 @@ export class Story implements IDbModel{
         return this.id.toString();
     }
 
-
-    public Test() {
-        return <tr><td>Hello</td></tr>;
+    getStatus(status: any) {
+        switch (status) {
+            case "PendingApproval":
+                return "Pending approval";
+            case "ReadyToStart":
+                return "Ready to start";
+            case "InProgress":
+                return "In progress";
+            case "DevComplete":
+                return "Developing complete";
+            case "TestComplete":
+                return "Test complete";
+            case "Accepted":
+                return "Accepted";
+            default:
+                return "";
+        }
     }
 
     public renderAsTableRow(): JSX.Element {
@@ -57,12 +65,12 @@ export class Story implements IDbModel{
             <td className="align-base">{this.id}</td>
             <td className="align-base">{this.name}</td>
             <td className="align-base">{this.description}</td>
-            <td className="align-base">{this.status}</td>
+            <td className="align-base">{this.getStatus(this.status)}</td>
             <td className="align-base">
                 <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base ">
                     <Link to={`EditStory/` + this.id}>
                         <span className="glyphicon glyphicon-edit dark" aria-hidden="true"></span>
-                        </Link>
+                    </Link>
                 </div>
                 &nbsp;&nbsp;
                        <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base">
@@ -88,16 +96,16 @@ export class Story implements IDbModel{
 
     renderAsMenu() {
         return <li className="dropdown-submenu">
-                   <div > {this.name} </div>
-                   <ul className="dropdown-menu">
-                       <li className="dropdown-item"><b><pre>Story name: {this.name}</pre></b> </li>
-                       <li className="dropdown-item"><b><pre>Description: {this.description}</pre></b> </li>
-                       <li className="dropdown-item"><b><pre>Status: {this.status}</pre></b> </li>
-                       <li className="dropdown-item"><b><pre>Team: {(this.team === null || this.team === undefined)
-                           ? "None"
-                           : this.team.name}</pre></b> </li>
-                   </ul>
-               </li>;
+            <div > {this.name} </div>
+            <ul className="dropdown-menu">
+                <li className="dropdown-item"><b><pre>Story name: {this.name}</pre></b> </li>
+                <li className="dropdown-item"><b><pre>Description: {this.description}</pre></b> </li>
+                <li className="dropdown-item"><b><pre>Status: {this.status}</pre></b> </li>
+                <li className="dropdown-item"><b><pre>Team: {(this.team === null || this.team === undefined)
+                    ? "None"
+                    : this.team.name}</pre></b> </li>
+            </ul>
+        </li>;
     }
 }
 

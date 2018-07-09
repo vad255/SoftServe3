@@ -39,6 +39,7 @@ export class StoriesGrid extends Grid {
             </th>
         </tr>;
     }
+
     protected GetFiltersRow() {
 
         return <StoriesFiltersRow
