@@ -33,7 +33,7 @@ namespace DAL.Chatting
 
         public override string ToString()
         {
-            return $"({Sent}){AuthorName ?? "Anonym"} : {Text}";
+            return $"({Sent.ToLocalTime()}){AuthorName ?? "Anonym"} : {Text}";
         }
     }
 }
