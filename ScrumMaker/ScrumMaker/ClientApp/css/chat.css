@@ -1,21 +1,44 @@
-.chatWindow{
+.chatWindow {
     margin-top: 20px;
     width: 100%;
-    
 }
 
-.chatOutput{
+.chatOutputWindow {
+    padding: 0%;
+    margin: 0%;
+    width: inherit;
+}
+
+.chatOutput {
+    width: 85%;
+    padding: 5px;
+    display: inline-block;
+}
+
+.chatOutputArea {
     width: 100%;
     resize: none;
     overflow: auto;
     box-lines: 20;
 }
 
-.chatInputBlock{
+.chatUsersBlock {
+    padding: 5px;
+
+    display: inline-block;
+    vertical-align: top;
+    width: 15%;
+}
+
+.chatUsersList {
+    background-color: white;
+}
+
+.chatInputBlock {
     width: 100%;
 }
 
-.chatInput{
+.chatInput {
     margin-top: 10px;
     width: 100%;
     height: 5em;
@@ -25,8 +48,8 @@
 
 hr {
     border: 0;
-    clear:both;
-    width: 100%;               
-    background-color:rgb(82, 82, 82);
+    clear: both;
+    width: 100%;
+    background-color: rgb(82, 82, 82);
     height: 2px;
-  }
+}

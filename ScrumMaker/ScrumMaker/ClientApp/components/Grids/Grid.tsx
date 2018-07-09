@@ -3,14 +3,14 @@ import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { Content } from 'react-bootstrap/lib/Tab';
 
-export abstract class Grid<P, S> extends React.Component<RouteComponentProps<any>, S> {
+export abstract class Grid<S> extends React.Component<RouteComponentProps<{}>, S> {
     constructor() {
         super();
-        this.isLoading = true;        
+        this.isLoading = true;
     }
 
     protected abstract headerText: string;
-    private pageSize: number=5;
+    private pageSize: number = 5;
     protected isLoading: boolean = true;
 
     protected readonly abstract URL_BASE: string;
@@ -19,7 +19,7 @@ export abstract class Grid<P, S> extends React.Component<RouteComponentProps<any
     protected readonly abstract URL_ORDERING: string;
     private readonly URL_COUNT: string = '&$count=true';
     private urlPaging: string = '&$top=' + this.pageSize;
-    
+
     private CurrentPage = 0;
     private allCount = 0;
     private lastOrderingArg: string = '';
@@ -54,16 +54,15 @@ export abstract class Grid<P, S> extends React.Component<RouteComponentProps<any
     }
 
     protected LoadData() {
-        fetch(this.getURL())
+        fetch(this.getURL(), { credentials: 'include' })
             .then(response => response.json() as any)
             .then(data => {
                 this.allCount = data['@odata.count'];
-                console.error(this.allCount);
-                this.OnDataReceived(data);               
-            }).catch(e => this.props.history.push("/Error"));
+                this.OnDataReceived(data);
+            }).catch(e => this.onCatch(e));
     }
 
-       
+
     private getURL() {
 
         let result = this.URL_BASE;
@@ -81,17 +80,18 @@ export abstract class Grid<P, S> extends React.Component<RouteComponentProps<any
         return result;
     }
 
+    protected onCatch(e: any) {
+        this.props.history.push("/Error")
+    }
 
     protected FilterButtonClick(e: any) {
         this.filteringOn = !this.filteringOn
         this.forceUpdate();
     }
-
     protected ApplyFiltersHandler(e: any) {
         this.urlFilters = e;
         this.LoadData();
     }
-
     protected RenderFooter() {
         if (this.allCount <= this.pageSize) {
             return <tr></tr>
@@ -118,65 +118,56 @@ export abstract class Grid<P, S> extends React.Component<RouteComponentProps<any
             </tr>;
         }
     }
-
-    protected NextPageReceivedRight(data: any) {
-
-        if (this.CurrentPage < (this.allCount / this.pageSize)-1) {
-            this.CurrentPage += 1;
-            this.urlPaging = '&$skip=' + (this.CurrentPage * this.pageSize) + '&$top=' + this.pageSize;            
-            this.LoadData();            
-        }
-        else {
-            this.urlPaging = '&$top=' + this.pageSize;
-        }
+    private firstPageClick() {
+        this.CurrentPage = 0;
+        this.urlPaging = '&$skip=' + (this.CurrentPage * this.pageSize) + '&$top=' + this.pageSize;
+        this.LoadData();
     }
+    private previousPageClick() {
 
-    protected NextPageReceivedLeft(data: any) {
-       
-        if (this.CurrentPage >= 1) {
-            this.CurrentPage -= 1;
+        if (this.CurrentPage > 0) {
+            this.CurrentPage--;
             this.urlPaging = '&$skip=' + (this.CurrentPage * this.pageSize) + '&$top=' + this.pageSize;
-            this.LoadData();            
+            this.LoadData();
         }
-        else {
-            this.urlPaging ='&$top=' + this.pageSize;
-        }        
     }
+    private nextPageClick() {
 
-    protected FirstPageReceived(data: any) {
-        
-            this.CurrentPage = 0;
-            this.urlPaging = '&$skip=' + (this.CurrentPage * this.pageSize) + '&$top=' + this.pageSize;
-            this.LoadData();       
+        if (this.CurrentPage < (this.allCount / this.pageSize) - 1) {
+            this.CurrentPage++;
+            this.urlPaging = '&$skip=' + (this.CurrentPage * this.pageSize) + '&$top=' + this.pageSize
+            this.LoadData();
+        }
     }
+    private lastPageClick() {
 
-    protected LastPageReceived(data: any) {
-
-        this.CurrentPage = Math.ceil((this.allCount / this.pageSize))-1;        
+        this.CurrentPage = Math.ceil((this.allCount / this.pageSize)) - 1;
         this.urlPaging = '&$skip=' + (this.CurrentPage * this.pageSize) + '&$top=' + this.pageSize;
 
         this.LoadData();
     }
-    
-    protected abstract OnDataReceived(data: any): void;       
+
+    protected abstract OnDataReceived(data: any): void;
+
     protected abstract GetHeaderRow(): JSX.Element;
     protected abstract GetFiltersRow(): JSX.Element;
     protected abstract GetBodyRows(): JSX.Element[];
-   
-   
+
+
     // Provide access to gridItems for sorting method
     protected abstract getData(): any[];
+
 
     protected OrderBy(arg: string) {
         try {
             let data = [];
             data = this.getData();
-            
+
             if (this.lastOrderingArg === arg)
                 this.lastOrderingDir = !this.lastOrderingDir;
             else
                 this.lastOrderingDir = false;
-            
+
             if (!this.lastOrderingDir)
                 data.sort((a, b) => this.SafeCompare(a, b, arg))
             else

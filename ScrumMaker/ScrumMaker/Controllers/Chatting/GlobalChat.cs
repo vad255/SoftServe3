@@ -23,7 +23,6 @@ namespace ScrumMaker.Controllers.Chatting
         {
             _manager.User = Context.User;
 
-            await Groups.AddToGroupAsync(Context.ConnectionId, _manager.GetGroupIdentifier);
             Message msg = _manager.AddMessage(text);
             await Clients.Group(_manager.GetGroupIdentifier).SendAsync("receiveMessage", msg.ToString());
         }
@@ -33,6 +32,34 @@ namespace ScrumMaker.Controllers.Chatting
             var history = _manager.GetHistory().Select(m => m.ToString());
 
             await Clients.Caller.SendAsync("receiveHistory", history);
+        }
+
+        public async Task GetUsers()
+        {
+            await Clients.Caller.SendAsync("receiveUsers", _manager.GetOnlineUsers());
+        }
+
+
+        public override async Task OnConnectedAsync()
+        {
+            _manager.User = Context.User;
+            DAL.Models.User user = _manager.Connect();
+
+            await Clients.Group(_manager.GetGroupIdentifier).SendAsync("userConnected", user);
+            await Groups.AddToGroupAsync(Context.ConnectionId, _manager.GetGroupIdentifier);
+
+            await base.OnConnectedAsync();
+        }
+
+        public override async Task OnDisconnectedAsync(Exception exception)
+        {
+            _manager.User = Context.User;
+            DAL.Models.User user = _manager.Disconnect();
+
+            await Clients.Group(_manager.GetGroupIdentifier).SendAsync("userDisconnect", user);
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, _manager.GetGroupIdentifier);
+
+            await base.OnDisconnectedAsync(exception);
         }
     }
 }
