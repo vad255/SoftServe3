@@ -98,9 +98,10 @@ export abstract class Grid<S> extends React.Component<RouteComponentProps<{}>, S
         this.urlFilters = e;
         this.LoadData();
     }
-
-
     private RenderFooter() {
+        if (this.allCount <= this.pageSize) {
+            return <tr></tr>
+        }
         return <tr>
             <td colSpan={8}>
                 <div className="text-center">
@@ -118,9 +119,9 @@ export abstract class Grid<S> extends React.Component<RouteComponentProps<{}>, S
                         <span className="glyphicon glyphicon-step-forward dark"></span>
                     </div>
                 </div>
-            </td>
-        </tr>;
-    }
+                </td>
+            </tr>;
+        }
     private firstPageClick() {
         this.CurrentPage = 0;
         this.urlPaging = '&$skip=' + (this.CurrentPage * this.pageSize) + '&$top=' + this.pageSize;
@@ -206,7 +207,3 @@ export abstract class Grid<S> extends React.Component<RouteComponentProps<{}>, S
             return a.toString().localeCompare(b.toString());
     }
 }
-
-
-
-
