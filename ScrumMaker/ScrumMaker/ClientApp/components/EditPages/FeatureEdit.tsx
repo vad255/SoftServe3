@@ -14,7 +14,7 @@ interface IFeatureFetchingState {
     Blocked: boolean;
     Stories: Story[];
     ProgramIncrement: string;
-    Owner: User;
+    OwnerUserId: number;
 }
 
 export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatureFetchingState> {
@@ -64,7 +64,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
             Blocked: currentFeature.blocked,
             Stories: currentFeature.stories,
             ProgramIncrement: currentFeature.programIncrement,
-            Owner: currentFeature.owner
+            OwnerUserId: currentFeature.ownerUserId
         });
     }
 
@@ -127,9 +127,9 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
             <div className="text-left">
                 <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Owner:</h3>
                 <input
-                    name="Owner"
+                    name="OwnerUserId"
                     type="text"
-                    value={this.state.Owner.login}
+                    value={this.state.OwnerUserId}
                     onChange={this.handleInputChange} />
             </div>
             <div className="text-left">
@@ -180,7 +180,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
             Description: this.state.Description,
             Blocked: this.state.Blocked,
             ProgramIncrement: this.state.ProgramIncrement,
-            Owner: this.state.Owner
+            OwnerUserId: this.state.OwnerUserId
         };
 
         fetch(this.updateURL + this.id, {

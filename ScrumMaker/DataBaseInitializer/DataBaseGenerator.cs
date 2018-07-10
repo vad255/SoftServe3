@@ -729,7 +729,8 @@ namespace DataBaseInitializer
                         FeatureName = "Login Page",
                         Stories = _dbStories.GetAll().Where(s => s.Id <= 2).ToList(),
                         Owner = users[counter],
-                        ProgramIncrement = "Login and registration page"
+                        ProgramIncrement = "Login and registration page",
+                        OwnerUserId = 2
                     },
                     new Feature()
                     {
@@ -738,7 +739,8 @@ namespace DataBaseInitializer
                         FeatureName = "Home Page",
                         Stories = _dbStories.GetAll().Where(s => s.Id <= 4 && s.Id > 2).ToList(),
                         Owner = users[counter-1],
-                        ProgramIncrement = "Home page"
+                        ProgramIncrement = "Home page",
+                        OwnerUserId = 3
                     },
                     new Feature()
                     {
@@ -748,7 +750,8 @@ namespace DataBaseInitializer
                         FeatureName = "Client Page",
                         Stories = _dbStories.GetAll().Where(s => s.Id <= 6 && s.Id > 4).ToList(),
                         Owner = users[counter-2],
-                        ProgramIncrement = "Home and client page"
+                        ProgramIncrement = "Home and client page",
+                        OwnerUserId = 6
                     },
                     new Feature()
                     {
@@ -757,7 +760,8 @@ namespace DataBaseInitializer
                         FeatureName = "Footer",
                         Stories = _dbStories.GetAll().Where(s => s.Id <= 8 && s.Id > 6).ToList(),
                         Owner = users[counter-3],
-                        ProgramIncrement = "Site with footer"
+                        ProgramIncrement = "Site with footer",
+                        OwnerUserId = 1
                     },
                     new Feature()
                     {
@@ -766,7 +770,8 @@ namespace DataBaseInitializer
                         FeatureName = "Header",
                         Stories = _dbStories.GetAll().Where(s => s.Id <= 10 && s.Id > 8).ToList(),
                         Owner = users[counter-4],
-                        ProgramIncrement = "Site with header"
+                        ProgramIncrement = "Site with header",
+                        OwnerUserId = 4
                     },
                     new Feature()
                     {
@@ -775,7 +780,8 @@ namespace DataBaseInitializer
                         FeatureName = "Board",
                         Stories = _dbStories.GetAll().Where(s => s.Id <= 10 && s.Id > 8).ToList(),
                         Owner = users[counter-5],
-                        ProgramIncrement = "SCRUMBoard"
+                        ProgramIncrement = "SCRUMBoard",
+                        OwnerUserId = 31
                     }
             };
 

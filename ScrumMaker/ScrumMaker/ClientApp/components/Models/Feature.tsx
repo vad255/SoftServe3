@@ -14,7 +14,8 @@ export class Feature {
     description: string;
     blocked: boolean;
     stories: Story[] = [];
-    owner: User;
+    users: User[] = [];
+    ownerUserId: number;
     programIncrement: string;
 
     public constructor(params: any) {
@@ -23,7 +24,7 @@ export class Feature {
         this.state = params.State;
         this.description = params.Description;
         this.blocked = params.Blocked;
-        
+        this.ownerUserId = params.OwnerUserId;
         this.programIncrement = params.ProgramIncrement;
 
         if (params.Stories) {
@@ -33,11 +34,18 @@ export class Feature {
 
             this.stories = stories;
         }
-        
-        this.owner = params.Owner;
-        if (params.Owner) {
-            this.owner = new User(params.Owner);
+
+        if (params.Users) {
+            var users = [];
+            for (var i = 0; i < params.Users.length; i++)
+                users[i] = new User(params.Users[i]);
+
+            this.users = users;
         }
+        //this.owner = params.Owner;
+        //if (params.Owner) {
+        //    this.owner = new User(params.Owner);
+        //}
     }
 
     public renderAsTableRow() {
