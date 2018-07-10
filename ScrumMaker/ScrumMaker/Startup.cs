@@ -64,7 +64,7 @@ namespace ScrumMaker
                 };
             });
 
-            string connectionStr = Configuration.GetConnectionString("Pasha");
+            string connectionStr = Configuration.GetConnectionString("Viktor");
 
 
             

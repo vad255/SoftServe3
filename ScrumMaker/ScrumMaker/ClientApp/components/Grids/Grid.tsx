@@ -5,7 +5,8 @@ import { IDbModel, IFetchState } from '../Models/IDbModel';
 import { NavLink } from 'react-router-dom'
 import { Content } from 'react-bootstrap/lib/Tab';
 import { Filter } from '../Filters/Filter';
-
+import { ConfirmMadal, IModalState } from '../ConfirmModal'
+import { Thumbnail } from 'react-bootstrap';
 
 
 export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFetchState> {
@@ -82,7 +83,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
         result += this.urlFilters;
 
-         if (this.customUrlFilters) {
+        if (this.customUrlFilters) {
             result += this.urlFilters ? Filter.CONSTRAIN_DIVIDER + this.customUrlFilters : Filter.QUERY_HEAD + this.customUrlFilters;
         }
 
@@ -141,23 +142,15 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
             </td>
         </tr>;
     }
-    
+
     private GetDeleteConfirmModal() {
-        return <div id="confirmDeleteModal" className="modal fade">
-            <div className="modal-dialog">
-                <div className="modal-content">
-                    <div className="modal-header  text-center" ><button className="close" type="button" data-dismiss="modal">×</button>
-                        <h4 className="modal-title">Are you sure you want to delete this item?</h4>
-                    </div>
-                    <div className="modal-body text-center">
-                        <button className="btn btn-default" type="button" data-dismiss="modal" onClick={(() => this.onDeleteConfirmed()).bind(this)}>
-                            Yes</button>
-                        <button className="btn btn-default" type="button" data-dismiss="modal" onClick={(() => this.onDeleteCancel()).bind(this)}>No</button>
-                    </div>
-                    <div className="modal-footer"></div>
-                </div>
-            </div>
-        </div>;
+        let title = "Are you sure you want to delete this item?";
+
+        return <ConfirmMadal
+            onCanceled={this.onDeleteCancel.bind(this)}
+            onConfirmed={this.onDeleteConfirmed.bind(this)}
+            title={title}
+            id={"ConfirmDeleteDialog"} />
     }
 
     private firstPageClick() {
@@ -237,7 +230,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
                         role="button"
                         onClick={(() => this.setItemToDelete(id)).bind(this)}
                         data-toggle="modal"
-                        data-target="#confirmDeleteModal"
+                        data-target="#ConfirmDeleteDialog"
                         className="btn btn-sq-xs align-base">
                         <span className="glyphicon glyphicon-trash dark" aria-hidden="true" />
                     </div>
