@@ -5,18 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\**" />
     <Compile Remove="Sprint\**" />
-    <EmbeddedResource Remove="Migrations\**" />
     <EmbeddedResource Remove="Sprint\**" />
-    <None Remove="Migrations\**" />
     <None Remove="Sprint\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="Migrations\20180710134228_init.cs" />
-    <Compile Include="Migrations\20180710134228_init.Designer.cs" />
-    <Compile Include="Migrations\DataContextModelSnapshot.cs" />
   </ItemGroup>
 
   <ItemGroup>
