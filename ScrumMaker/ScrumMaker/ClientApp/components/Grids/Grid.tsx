@@ -1,10 +1,15 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
+import { IDbModel, IFetchState } from '../Models/IDbModel';
+import { NavLink } from 'react-router-dom'
 import { Content } from 'react-bootstrap/lib/Tab';
 import { Filter } from '../Filters/Filter';
+import { ConfirmMadal, IModalState } from '../ConfirmModal'
+import { Thumbnail } from 'react-bootstrap';
 
-export abstract class Grid<S> extends React.Component<RouteComponentProps<{}>, S> {
+
+export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFetchState> {
     constructor() {
         super();
         this.isLoading = true;
@@ -13,6 +18,9 @@ export abstract class Grid<S> extends React.Component<RouteComponentProps<{}>, S
     protected abstract headerText: string;
     private pageSize: number = 5;
     protected isLoading: boolean = true;
+
+
+    protected readonly URL_EDIT: string = "!!!NOT_IMPLEMENTED!!!/";
 
     protected readonly abstract URL_BASE: string;
     protected readonly abstract URL_EXPANDS: string;
@@ -39,20 +47,24 @@ export abstract class Grid<S> extends React.Component<RouteComponentProps<{}>, S
             {contents}
         </div>
     }
-
-    private renderContent() {
-        return <table className='table table-scrum table-hover td-scrum'>
-            <thead>
-                {this.GetHeaderRow()}
-                {this.GetFiltersRow()}
-            </thead>
-            <tbody>
-                {this.GetBodyRows()}
-            </tbody>
-            <tfoot>
-                {this.RenderFooter()}
-            </tfoot>
-        </table>
+    protected renderContent() {
+        return (
+            <div>
+                <table className='table table-scrum table-hover td-scrum'>
+                    <thead>
+                        {this.GetHeaderRow()}
+                        {this.GetFiltersRow()}
+                    </thead>
+                    <tbody>
+                        {this.GetBodyRows()}
+                    </tbody>
+                    <tfoot>
+                        {this.GetFooterRow()}
+                    </tfoot>
+                </table>
+                {this.GetDeleteConfirmModal()}
+            </div>
+        );
     }
 
     protected LoadData() {
@@ -63,9 +75,7 @@ export abstract class Grid<S> extends React.Component<RouteComponentProps<{}>, S
                 this.OnDataReceived(data);
             }).catch(e => this.onCatch(e));
     }
-
-
-    private getURL() {
+    protected getURL() {
 
         let result = this.URL_BASE;
 
@@ -85,22 +95,32 @@ export abstract class Grid<S> extends React.Component<RouteComponentProps<{}>, S
 
         return result;
     }
+    protected OnDataReceived(data: any): void {
+        this.isLoading = false;
+
+        let itemsTemp: IDbModel[] = [];
+        for (var i = 0; i < data['value'].length; i++)
+            itemsTemp[i] = this.instantiate(data["value"][i]);
+
+        this.setState({ items: itemsTemp });
+    }
+    protected abstract instantiate(item: any): IDbModel;
 
     protected onCatch(e: any) {
-        this.props.history.push("/Error")
-    }
-
-    protected FilterButtonClick(e: any) {
-        this.filteringOn = !this.filteringOn
-        this.forceUpdate();
-    }
-    protected ApplyFiltersHandler(e: any) {
-        this.urlFilters = e;
-        this.LoadData();
+        console.error(e);
+        //   this.props.history.push("/Error")
     }
 
 
-    private RenderFooter() {
+    protected abstract GetHeaderRow(): JSX.Element;
+    protected abstract GetFiltersRow(): JSX.Element;
+    protected GetBodyRows(): JSX.Element[] {
+        return this.state.items.map((s) => this.toGridItem(s.toArray(), s.getId()))
+    }
+    private GetFooterRow() {
+        if (this.allCount <= this.pageSize) {
+            return <tr></tr>
+        }
         return <tr>
             <td colSpan={8}>
                 <div className="text-center">
@@ -114,57 +134,114 @@ export abstract class Grid<S> extends React.Component<RouteComponentProps<{}>, S
                     <div role='button' className='btn btn-sq-xs align-base' onClick={this.nextPageClick.bind(this)}>
                         <span className="glyphicon glyphicon-chevron-right dark"></span>
                     </div>
-                    <div role='button' className='btn btn-sq-xs align-base' onClick={this.lastPageClick.bind(this)}>
+                    <div role='button' className='btn btn-sq-xs align-base'
+                        onClick={this.lastPageClick.bind(this)}>
                         <span className="glyphicon glyphicon-step-forward dark"></span>
                     </div>
                 </div>
             </td>
         </tr>;
     }
+
+    private GetDeleteConfirmModal() {
+        let title = "Are you sure you want to delete this item?";
+
+        return <ConfirmMadal
+            onCanceled={this.onDeleteCancel.bind(this)}
+            onConfirmed={this.onDeleteConfirmed.bind(this)}
+            title={title}
+            id={"ConfirmDeleteDialog"} />
+    }
+
     private firstPageClick() {
         this.CurrentPage = 0;
-        this.urlPaging = '&$skip=' + (this.CurrentPage * this.pageSize) + '&$top=' + this.pageSize;
+        this.recalcPagingUrl()
         this.LoadData();
     }
     private previousPageClick() {
-
         if (this.CurrentPage > 0) {
             this.CurrentPage--;
-            this.urlPaging = '&$skip=' + (this.CurrentPage * this.pageSize) + '&$top=' + this.pageSize;
+            this.recalcPagingUrl()
             this.LoadData();
         }
     }
     private nextPageClick() {
-
         if (this.CurrentPage < (this.allCount / this.pageSize) - 1) {
             this.CurrentPage++;
-            this.urlPaging = '&$skip=' + (this.CurrentPage * this.pageSize) + '&$top=' + this.pageSize
+            this.recalcPagingUrl()
             this.LoadData();
         }
     }
     private lastPageClick() {
-
         this.CurrentPage = Math.ceil((this.allCount / this.pageSize)) - 1;
+        this.recalcPagingUrl();
+        this.LoadData();
+    }
+    private recalcPagingUrl() {
         this.urlPaging = '&$skip=' + (this.CurrentPage * this.pageSize) + '&$top=' + this.pageSize;
+    }
 
+
+    protected FilterButtonClick(e: any) {
+        this.filteringOn = !this.filteringOn
+        this.forceUpdate();
+    }
+    protected ApplyFiltersHandler(e: any) {
+        this.urlFilters = e;
         this.LoadData();
     }
 
-    protected abstract OnDataReceived(data: any): void;
 
-    protected abstract GetHeaderRow(): JSX.Element;
-    protected abstract GetFiltersRow(): JSX.Element;
-    protected abstract GetBodyRows(): JSX.Element[];
+    private itemToDelete: number = -1;
+    private setItemToDelete(id: number) {
+        this.itemToDelete = id;
+    }
+    protected onDeleteConfirmed() {
+        if (this.CurrentPage == (Math.ceil(this.allCount / this.pageSize) - 1))
+            if (this.allCount % this.pageSize === 1) {
+                this.CurrentPage--;
+                this.recalcPagingUrl();
+            }
+
+        fetch(this.URL_BASE + '/' + this.itemToDelete,
+            {
+                method: 'DELETE',
+                credentials: 'include',
+            }).then(() => this.LoadData());
+    }
+    protected onDeleteCancel() {
+        this.itemToDelete = -1;
+    }
 
 
-    // Provide access to gridItems for sorting method
-    protected abstract getData(): any[];
-
+    protected toGridItem(items: JSX.Element[], id: number) {
+        return (
+            <tr key={id}>
+                {items.map((item, index) =>
+                    <td key={index} className="align-base">{item}</td>)
+                }
+                <td className="align-base">
+                    <NavLink to={this.URL_EDIT + id.toString()}
+                        activeClassName='active'>
+                        <span className="glyphicon glyphicon-edit dark" aria-hidden="true" />
+                    </NavLink>
+                    &nbsp;&nbsp;
+                <div id={id.toString()}
+                        role="button"
+                        onClick={(() => this.setItemToDelete(id)).bind(this)}
+                        data-toggle="modal"
+                        data-target="#ConfirmDeleteDialog"
+                        className="btn btn-sq-xs align-base">
+                        <span className="glyphicon glyphicon-trash dark" aria-hidden="true" />
+                    </div>
+                </td>
+            </tr>
+        );
+    }
 
     protected OrderBy(arg: string) {
         try {
-            let data = [];
-            data = this.getData();
+            let data = this.state.items;
 
             if (this.lastOrderingArg === arg)
                 this.lastOrderingDir = !this.lastOrderingDir;
@@ -206,7 +283,3 @@ export abstract class Grid<S> extends React.Component<RouteComponentProps<{}>, S
             return a.toString().localeCompare(b.toString());
     }
 }
-
-
-
-

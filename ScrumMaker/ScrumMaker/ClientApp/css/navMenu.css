@@ -1,7 +1,16 @@
-﻿#userLogin{
-    margin-left: 10px;
+﻿.mainPart {
+    margin-top: 1.5%;
 }
 
+#userLogin{
+    margin-left: 10px;
+    margin-top: -10%;
+}
+
+#navigation-position{
+    position: fixed;
+    width: 15%;
+}
 .columnGrid {
     width: 50px;
 }
@@ -24,7 +33,10 @@
 }
 
 #myUl {
-   height: 560px;
+    height: 560px;
+    position: fixed;
+    width: 15%;
+    margin-top: 0.8%;
 }
 .userAvatar {
     border-radius: 20px;
@@ -129,13 +141,17 @@
     border-radius: 0;
 }
 
+#headerPosition {
+    position: fixed;
+    z-index: 1000;
+}
 .header {
     width: 100%;
     height: 60px;
     display: flex;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
     border-radius: 3px;
-    margin-top: -2%;
+    margin-top: -3.7%;
     position: relative;
 }
 
@@ -176,7 +192,19 @@
 
 @media (max-width: 768px) and (min-width: 0px){
     #myUl {
+        margin-top: 5%;
         height: auto;
+        width: 95.5%;
+        position: relative;
+        margin-right: -5%;
+    }
+    .header {
+        position: relative;
+        width: 100%;
+        margin-right: 5%;
+    }
+    .mainPart {
+        margin-top: 5%;
     }
 }
 

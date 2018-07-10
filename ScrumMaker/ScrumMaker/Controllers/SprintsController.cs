@@ -26,6 +26,14 @@ namespace ScrumMaker.Controllers
         public IActionResult Get()
         {
             return Ok(_sprints.GetAll());
-        }       
+        }
+
+        [AcceptVerbs("DELETE")]
+        public IActionResult Delete([FromODataUri] int key)
+        {
+            _sprints.Delete(key);
+            _sprints.Save();
+            return NoContent();
+        }
     }
 }

@@ -110,13 +110,13 @@ export class EditUser extends Component<RouteComponentProps<any>, FileLoad> {
                         <div className="form-group row">
                             <label className="control-label col-md-12" htmlFor="password" >New password</label>
                             <div className="col-md-4">
-                                <input className="form-control siteColor" type="password" name="password" id="password" defaultValue={this.state.password} required />
+                                <input className="form-control" type="password" name="password" id="password" defaultValue={this.state.password} required />
                             </div>
                         </div>
                         <div className="form-group row">
                             <label className="control-label col-md-12" htmlFor="repeatpassword" >Repeat password</label>
                             <div className="col-md-4">
-                                <input className="form-control siteColor" type="password" name="repeatpassword" id="repeatpassword" defaultValue={this.state.repeatPassword} required />
+                                <input className="form-control" type="password" name="repeatpassword" id="repeatpassword" defaultValue={this.state.repeatPassword} required />
                             </div>
                         </div>
                         <button type="submit" className="btn save siteColor">Change password</button>
