@@ -9,8 +9,8 @@ interface AddUserDataState {
     roles: Role[];
 }
 interface Role {
-    roleId: number;
-    name: string;
+    RoleId: number;
+    Name: string;
 }
 
 export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDataState> {
@@ -18,10 +18,12 @@ export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDa
         super(props);
 
         this.state = { id: 0, login: "", password: "", roles: [] };
-        fetch('api/UserGrid/GetRoles')
-            .then(response => response.json() as Promise<Role[]>)
+        fetch('odata/roles')
+            .then(response => response.json() as any)
             .then(data => {
-                this.setState({ roles: data});
+                console.log(data['value']);
+                
+                this.setState({ roles: data['value']});
             });
         this.handleSave = this.handleSave.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
@@ -91,7 +93,7 @@ export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDa
                     <div className="col-md-4">
                         <select className="form-control" data-val="true" name="roleid" required>
                             <option value="">-- Select Role --</option>
-                            {this.state.roles.map(x => <option value={x.roleId}>{x.name}</option>)}
+                            {this.state.roles.map(x => <option value={x.RoleId}>{x.Name}</option>)}
                         </select>
                     </div>
                 </div >
