@@ -2,6 +2,7 @@
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { Feature } from '../Models/Feature'
+import { IDbModel } from './IDbModel'
 
 export enum State {
     PendingApproval = 1,

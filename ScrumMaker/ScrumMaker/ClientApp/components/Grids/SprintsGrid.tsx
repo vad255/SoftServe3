@@ -1,40 +1,25 @@
 ﻿import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { Sprint } from '../Models/Sprint';
 import { SprintsFiltersRow } from '../Filters/SprintsFiltersRow'
 import { Grid } from './Grid'
 
-interface ISprintDataFetchingState {
-    sprints: Sprint[];
-}
 
-export class SprintsGrid extends Grid<ISprintDataFetchingState> {
+export class SprintsGrid extends Grid {
 
     protected URL_BASE: string = 'odata/sprints';
     protected URL_EXPANDS: string = '?$expand=Team($expand=members),history'
     protected URL_ORDERING: string = '&$orderby=id'
     protected headerText: string = 'Sprints'
 
-   
+
     constructor() {
         super();
-        this.LoadData();        
+        this.LoadData();
     }
 
-
-    protected OnDataReceived(data: any) {
-        this.isLoading = false;
-
-        var sprintsTemp = [];
-        for (var i = 0; i < data['value'].length; i++)
-            sprintsTemp[i] = new Sprint(data["value"][i]);
-        
-        this.setState({ sprints: sprintsTemp });
-    }
-
-    protected getData() {
-        return this.state.sprints;
+    protected instantiate(item: any) {
+        return new Sprint(item);
     }
 
     protected GetHeaderRow() {
@@ -53,16 +38,13 @@ export class SprintsGrid extends Grid<ISprintDataFetchingState> {
             </th>
         </tr>;
     }
+
     protected GetFiltersRow() {
         return <SprintsFiltersRow
             onApply={this.ApplyFiltersHandler.bind(this)}
             display={this.filteringOn}
         />
     }
-    protected GetBodyRows() {
-    return this.state.sprints.map((s) => s.renderAsTableRow());
-    }
-    
 }
 
 

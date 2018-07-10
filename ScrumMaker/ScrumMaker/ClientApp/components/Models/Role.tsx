@@ -4,17 +4,13 @@ import 'isomorphic-fetch';
 
 
 
-export class Role extends React.Component {
-
+export class Role {
     empty: boolean = true;
     roleId: number = -1;
     name: string = '';
 
 
     public constructor(params: any) {
-
-        super(params);
-
         if (params === null || params === undefined) {
             return;
         }

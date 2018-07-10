@@ -4,14 +4,9 @@ import 'isomorphic-fetch';
 import { Grid } from './Grid'
 import { Defect } from '../Models/Defect';
 import { DefectsFiltersRow } from '../Filters/DefectsFiltersRow'
+import { IDbModel } from '../Models/IDbModel';
 
-interface IDefectDataFetchingState {
-    defects: Defect[];
-}
-
-export class DefectGrid extends Grid<IDefectDataFetchingState> {
-
-    
+export class DefectGrid extends Grid {
     protected URL_BASE: string = 'odata/defects';
     protected URL_EXPANDS: string = '?expand=()';
     protected URL_ORDERING: string = '&$orderby=DefectId';
@@ -19,21 +14,11 @@ export class DefectGrid extends Grid<IDefectDataFetchingState> {
 
     constructor() {
         super();
-        this.LoadData();       
+        this.LoadData();
     }
 
-    protected OnDataReceived(data: any) {
-        this.isLoading = false;
-        var defectsTemp = [];
-       
-        for (var i = 0; i < data['value'].length; i++)
-            defectsTemp[i] = new Defect(data['value'][i]);            
-
-        this.setState({ defects: defectsTemp });
-    }
-
-    protected getData() {
-        return this.state.defects;
+    protected instantiate(item: any): IDbModel {
+        return new Defect(item);
     }
 
     protected GetHeaderRow(): JSX.Element {
@@ -59,8 +44,4 @@ export class DefectGrid extends Grid<IDefectDataFetchingState> {
             display={this.filteringOn}
         />
     }
-    protected GetBodyRows(): JSX.Element[] {
-        return this.state.defects.map((s) => s.renderAsTableRow());
-    }   
-    
 }

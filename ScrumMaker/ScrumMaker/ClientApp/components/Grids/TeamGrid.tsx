@@ -6,29 +6,26 @@ import { Team } from '../Models/Team';
 import { User } from '../Models/User';
 import { Grid } from './Grid';
 import { TeamFiltersRow } from '../Filters/TeamFiltersRow';
+import { IDbModel, IFetchState } from '../Models/IDbModel';
 
-interface UserState {
-    teams: Team[];
-}
 
-export class TeamGrid extends Grid<UserState> {
+export class TeamGrid extends Grid{
 
-   // protected pageSize: number = 0;
+    constructor() {
+        super();
+        this.LoadData();
+    }
+    
     protected headerText: string = "Team Grid";
     protected URL_BASE: string = 'odata/teams';
     protected URL_EXPANDS: string = '?$expand=members'
     protected URL_ORDERING: string = '&$orderby=id'
 
-    protected OnDataReceived(data: any): void {
-        this.isLoading = false;
 
-        var teamsTemp = [];
-        for (var i = 0; i < data['value'].length; i++)
-            teamsTemp[i] = new Team(data["value"][i]);
-        this.setState({
-            teams: teamsTemp
-        })
+    protected instantiate(item: any): IDbModel {
+        return new Team(item);
     }
+    
     protected GetHeaderRow(): JSX.Element {
         return <tr>
             <th className="well well-sm col-md-2" onClick={() => this.OrderBy("id")}><span className="nowrap">Database ID</span></th>
@@ -47,21 +44,5 @@ export class TeamGrid extends Grid<UserState> {
         display = { this.filteringOn }
             />
     }
-    protected GetBodyRows(): JSX.Element[] {
-        return this.state.teams.map((t) => (t.renderForecastsTable()));
-    }
-
-    
-    protected getData(): any[] {
-        return this.state.teams;
-    }
-
-    constructor() {
-        super();
-        this.state = { teams: [] };
-
-        this.LoadData();
-    }
-
 }
 

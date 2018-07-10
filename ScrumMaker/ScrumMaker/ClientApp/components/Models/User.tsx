@@ -3,9 +3,9 @@ import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { Role } from './Role';
 import { Team } from './Team';
+import { IDbModel } from './IDbModel'
 
-export class User extends React.Component {
-
+export class User implements IDbModel {
     empty: boolean = true;
     userId: number = -1;
     login: string = '';
@@ -18,8 +18,6 @@ export class User extends React.Component {
 
 
     public constructor(params: any) {
-
-        super(params);
 
         if (params === null || params === undefined) {
             return;
@@ -69,5 +67,22 @@ export class User extends React.Component {
                 </div>
             </td>
         </tr>;
+    }
+
+
+    getId(): number {
+        return this.userId;
+    }
+    toArray(): any[] {
+        let elements: any[] = [
+            this.userId,
+            this.login,
+            this.password,
+            this.team.renderAsMenu(),
+            this.activity ? "true" : "false",
+            this.role.name
+        ]
+
+        return elements;
     }
 }
