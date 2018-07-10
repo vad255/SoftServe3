@@ -5,16 +5,7 @@ import { State } from './FeatureState';
 import { Team } from '../Models/Team';
 import { Story } from '../Models/Story';
 import { NavLink } from 'react-router-dom';
-
-//class Team {
-//    id: number = -1;
-//    name: string = "";
-
-//    constructor(params: any) {
-//        this.id = params.Id;
-//        this.name = params.Name;
-//    }
-//}
+import { User } from './User';
 
 export class Feature {
     id: number;
@@ -23,6 +14,8 @@ export class Feature {
     description: string;
     blocked: boolean;
     stories: Story[] = [];
+    owner: User;
+    programIncrement: string;
 
     public constructor(params: any) {
         this.id = params.Id;
@@ -30,15 +23,21 @@ export class Feature {
         this.state = params.State;
         this.description = params.Description;
         this.blocked = params.Blocked;
+        
+        this.programIncrement = params.ProgramIncrement;
 
-        if (params.Stories === null || params.Stories === undefined)
-            return;
+        if (params.Stories) {
+            var stories = [];
+            for (var i = 0; i < params.Stories.length; i++)
+                stories[i] = new Story(params.Stories[i]);
 
-        var stories = [];
-        for (var i = 0; i < params.Stories.length; i++)
-            stories[i] = new Story(params.Stories[i]);
-
-        this.stories = stories;
+            this.stories = stories;
+        }
+        
+        this.owner = params.Owner;
+        if (params.Owner) {
+            this.owner = new User(params.Owner);
+        }
     }
 
     public renderAsTableRow() {

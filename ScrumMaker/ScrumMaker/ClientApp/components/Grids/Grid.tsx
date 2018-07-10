@@ -2,6 +2,7 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { Content } from 'react-bootstrap/lib/Tab';
+import { Filter } from '../Filters/Filter';
 
 export abstract class Grid<S> extends React.Component<RouteComponentProps<{}>, S> {
     constructor() {
@@ -16,6 +17,7 @@ export abstract class Grid<S> extends React.Component<RouteComponentProps<{}>, S
     protected readonly abstract URL_BASE: string;
     protected readonly abstract URL_EXPANDS: string;
     protected urlFilters: string = '';
+    protected customUrlFilters: string = '';
     protected readonly abstract URL_ORDERING: string;
     private readonly URL_COUNT: string = '&$count=true';
     private urlPaging: string = '&$top=' + this.pageSize;
@@ -70,6 +72,10 @@ export abstract class Grid<S> extends React.Component<RouteComponentProps<{}>, S
         result += this.URL_EXPANDS;
 
         result += this.urlFilters;
+
+        if (this.customUrlFilters) {
+            result += this.urlFilters ? Filter.CONSTRAIN_DIVIDER + this.customUrlFilters : Filter.QUERY_HEAD + this.customUrlFilters;
+        }
 
         result += this.URL_ORDERING;
 

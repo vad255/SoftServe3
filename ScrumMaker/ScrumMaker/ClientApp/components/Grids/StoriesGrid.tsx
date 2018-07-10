@@ -14,12 +14,19 @@ interface IStoryDataState {
 export class StoriesGrid extends Grid<IStoryDataState> {
 
     protected URL_BASE: string = 'odata/stories';
-    protected URL_EXPANDS: string = '?&expand=()';
+    protected URL_EXPANDS: string = '?&$expand=feature';
     protected URL_ORDERING: string = '&$orderby=id';
+    protected URL_FEATUREID_FILTER: string = 'feature/id eq ';
     protected headerText: string = 'Stories';
 
     constructor() {
         super();
+        var url = new URL(window.location.href)
+        var featureId = url.searchParams.get("featureId")
+        if (featureId) {
+            this.customUrlFilters = this.URL_FEATUREID_FILTER + featureId
+        }
+
         this.LoadData();
     }
 

@@ -4,7 +4,8 @@ import { Feature } from '../Models/Feature';
 import { Story } from '../Models/Story';
 import { FeatureGrid } from '../Grids/FeatureGrid';
 import { State } from '../Models/FeatureState';
-import { Login } from '../Login';
+import { NavLink } from 'react-router-dom';
+import { User } from '../Models/User';
 
 interface IFeatureFetchingState {
     FeatureName: string;
@@ -12,6 +13,8 @@ interface IFeatureFetchingState {
     Description: string;
     Blocked: boolean;
     Stories: Story[];
+    ProgramIncrement: string;
+    Owner: User;
 }
 
 export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatureFetchingState> {
@@ -26,7 +29,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
     private isLoading: boolean = true;
     private link: string = (window.location.href);
     readonly id: string = this.link.substr(this.link.lastIndexOf('/') + 1);
-    private URL: string = "odata/feature?$expand=stories($expand=team)&$filter=id eq " + this.id;
+    private URL: string = "odata/feature?$expand=owner,stories($expand=team)&$filter=id eq " + this.id;
     private updateURL: string = "/odata/feature/";
     
     public render() {
@@ -35,7 +38,6 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
             : this.renderContent();
 
         return <div>
-            <h1>Page for editing</h1>
             {contents}
         </div>
     }
@@ -61,6 +63,8 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
             Description: currentFeature.description,
             Blocked: currentFeature.blocked,
             Stories: currentFeature.stories,
+            ProgramIncrement: currentFeature.programIncrement,
+            Owner: currentFeature.owner
         });
     }
 
@@ -82,41 +86,67 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
 
     public EditName() {
         return <form onSubmit={this.handleSave} name="oldForm" >
-            <label>
-                Name:
-          <input
+            <div className="text-center">
+                <h2 style={{ margin: "10px", padding: "5px", textAlign: "center" }}>"{this.state.FeatureName}" feature editing page</h2>
+            </div>
+            <div className="text-left">
+                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Name:</h3>
+                <input
+                    className="input-lg"
                     name="FeatureName"
                     type="text"
                     value={this.state.FeatureName}
                     onChange={this.handleInputChange} />
-
-            </label>
-            <br/>
-            <label>
-                Description:
-          <textarea
+            </div>
+            <div className="text-left">
+                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Description:</h3>
+                <textarea
+                    style={{ width: "400px", height: "300px", fontSize: 20, padding: "7px" }}
+                    className="fa-text-height"
                     name="Description"
                     type="text"
                     value={this.state.Description}
                     onChange={this.handleInputChange} />
-            </label>
-            <br/>
-            <label>
-                Blocked:
-          <input
+            </div>
+            <div className="text-left">
+                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Stories:</h3>
+                <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base ">
+                    <NavLink to={`../stories?featureId=${this.id}`} activeClassName='active'>
+                       See stories which are in this feature...
+                    </NavLink>
+                </div>
+            </div>
+            <div className="text-left">
+                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Blocked:</h3>
+                <input
                     name="Blocked"
                     type="checkbox"
                     checked={this.state.Blocked}
                     onChange={this.handleInputChange} />
-            </label>
-            <br/>
-            <label>
-                State:
+            </div>
+            <div className="text-left">
+                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Owner:</h3>
+                <input
+                    name="Owner"
+                    type="text"
+                    value={this.state.Owner.login}
+                    onChange={this.handleInputChange} />
+            </div>
+            <div className="text-left">
+                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>State:</h3>
             {this.renderSelectOptions()}
-            </label>
-            <br />
+            </div>
+            <div className="text-left">
+                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Program increment:</h3>
+                <input
+                    className="input-lg"
+                    name="ProgramIncrement"
+                    type="text"
+                    value={this.state.ProgramIncrement}
+                    onChange={this.handleInputChange} />
+            </div>
             <div className="container-login100-form-btn">
-                <button className="login100-form-btn">Save</button>
+                <button className="login100-form-btn">Update</button>
             </div>
         </form>
     }
@@ -133,21 +163,12 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
             items.push(<option key={i + 1} value={names[i]}>{names[i]}</option>);
         }
    
-        return <select value={this.state.State}
+        return <select
+            value={this.state.State}
             name="State"
             onChange={this.handleInputChange}>
             {items}
         </select>
-    }
-
-    public handleDBClick(event: any) {
-        console.log(event)
-    }
-
-    dispalyItems: boolean = false;
-    onDpopdownClick() {
-        this.dispalyItems = !this.dispalyItems;
-        this.forceUpdate();
     }
 
     private handleSave(event: any) {
@@ -158,6 +179,8 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
             State: this.state.State,
             Description: this.state.Description,
             Blocked: this.state.Blocked,
+            ProgramIncrement: this.state.ProgramIncrement,
+            Owner: this.state.Owner
         };
 
         fetch(this.updateURL + this.id, {

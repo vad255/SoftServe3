@@ -20,11 +20,9 @@ namespace DAL.Models
         public string Description { get; set; }
 
         public FeatureState State { get; set; }
-
-        [NotMapped]
-        public ProgramIncrement ProgramIncrement { get; set; }
-
-        [NotMapped]
+        
+        public string ProgramIncrement { get; set; }
+        
         public User Owner { get; set; }
 
         [Required]
