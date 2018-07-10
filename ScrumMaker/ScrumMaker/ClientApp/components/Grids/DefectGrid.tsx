@@ -9,7 +9,7 @@ interface IDefectDataFetchingState {
     defects: Defect[];
 }
 
-export class DefectGrid extends Grid<RouteComponentProps<{}>, IDefectDataFetchingState> {
+export class DefectGrid extends Grid<IDefectDataFetchingState> {
 
     
     protected URL_BASE: string = 'odata/defects';

@@ -36,9 +36,6 @@ export class User extends React.Component {
     }
 
 
-    public render() {
-        return this.renderAsTableRow();
-    }
 
     renderAsDropDown() {
         if (this.empty)

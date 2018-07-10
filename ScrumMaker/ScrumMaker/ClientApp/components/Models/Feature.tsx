@@ -1,19 +1,11 @@
 ﻿import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps, Redirect } from 'react-router';
 import 'isomorphic-fetch';
 import { State } from './FeatureState';
 import { Team } from '../Models/Team';
 import { Story } from '../Models/Story';
-
-//class Team {
-//    id: number = -1;
-//    name: string = "";
-
-//    constructor(params: any) {
-//        this.id = params.Id;
-//        this.name = params.Name;
-//    }
-//}
+import { NavLink } from 'react-router-dom';
+import { User } from './User';
 
 export class Feature {
     id: number;
@@ -22,6 +14,8 @@ export class Feature {
     description: string;
     blocked: boolean;
     stories: Story[] = [];
+    owner: User;
+    programIncrement: string;
 
     public constructor(params: any) {
         this.id = params.Id;
@@ -29,14 +23,21 @@ export class Feature {
         this.state = params.State;
         this.description = params.Description;
         this.blocked = params.Blocked;
-        if (params.Stories === null || params.Stories === undefined)
-            return;
+        
+        this.programIncrement = params.ProgramIncrement;
 
-        var stories = [];
-        for (var i = 0; i < params.Stories.length; i++)
-            stories[i] = new Story(params.Stories[i]);
+        if (params.Stories) {
+            var stories = [];
+            for (var i = 0; i < params.Stories.length; i++)
+                stories[i] = new Story(params.Stories[i]);
 
-        this.stories = stories;
+            this.stories = stories;
+        }
+        
+        this.owner = params.Owner;
+        if (params.Owner) {
+            this.owner = new User(params.Owner);
+        }
     }
 
     public renderAsTableRow() {
@@ -49,7 +50,9 @@ export class Feature {
             <td className="align-base">{this.blocked === true ? "true" : "false"}</td>
             <td className="align-base">
                 <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base ">
-                    <span className="glyphicon glyphicon-edit dark" aria-hidden="true"></span>
+                    <NavLink to={`featureEdit/${this.id}`} activeClassName='active'>
+                        <span className="glyphicon glyphicon-edit dark" aria-hidden="true"></span>
+                    </NavLink>
                 </div>
                 &nbsp;&nbsp;
                 <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base">
@@ -58,7 +61,7 @@ export class Feature {
             </td>
         </tr>;
     }
-
+    
     public renderStories() {
         if (this.stories === null || this.stories === undefined || this.stories.length < 1)
             return <p>No stories</p>

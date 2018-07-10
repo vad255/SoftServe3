@@ -9,7 +9,7 @@ export interface LayoutProps {
 export class Layout extends React.Component<LayoutProps, {}> {
     public render() {
         return <div className='container-fluid'>
-            <div className='header siteColor'>
+            <div id="headerPosition" className='header siteColor'>
                 <img src="./img/NewLogo.png" width="150" height="50" className="myLogo"/>
                 <div id='mySettings'>
                     <div className="navigation fontFamily" id="aColor">
@@ -22,9 +22,9 @@ export class Layout extends React.Component<LayoutProps, {}> {
                                     <li><Link to="/sprints">Sprints</Link></li>
                                 </ul>
                             </li>
-                            <li><a> <img src="./img/ScrumMakerLogo.jpg" width="40px" height="40px" alt="lorem" className="userAvatar"></img><span id="userLogin">Login</span></a>
+                            <li><a className=""> <img src="./img/ScrumMakerLogo.jpg" width="35px" height="35px" alt="lorem" className="userAvatar"></img><span id="userLogin">Login</span></a>
                                 <ul className="dropdown">
-                                    <li><Link to="/edituser">Edit user</Link></li>
+                                    <li><a href="/edituser">Edit user</a></li>
                                     <li><Link to="/#">About</Link></li>
                                     <li><Link to="/#">Log Out</Link></li>
                                 </ul>
@@ -34,10 +34,10 @@ export class Layout extends React.Component<LayoutProps, {}> {
                     </div>
             </div>
             <div className='row'>
-                <div className='col-sm-2'>
+                <div className='col-sm-2 mainPart'>
                     <NavMenu />
                 </div>
-                <div className='col-sm-10'>
+                <div className='col-sm-10 mainPart'>
                     {this.props.children}
                 </div>
             </div>

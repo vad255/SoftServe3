@@ -11,7 +11,7 @@ interface UserState {
     teams: Team[];
 }
 
-export class TeamGrid extends Grid<RouteComponentProps<{}>, UserState> {
+export class TeamGrid extends Grid<UserState> {
 
    // protected pageSize: number = 0;
     protected headerText: string = "Team Grid";

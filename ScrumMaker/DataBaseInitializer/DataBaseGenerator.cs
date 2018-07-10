@@ -21,7 +21,6 @@ namespace DataBaseInitializer
         static IRepository<SprintStagesHistory> _dbHisories;
         static IRepository<Sprint> _dbSprints;
 
-
         public static void FillDataBase(DbContext context)
         {
             _context = context;
@@ -335,7 +334,6 @@ namespace DataBaseInitializer
             AddToDatabase(users, _dbUsers);
         }
 
-
         public static void FillTeamsData()
         {
 
@@ -372,8 +370,6 @@ namespace DataBaseInitializer
 
             AddToDatabase(teams, _dbTeams);
         }
-
-
 
         public static void FillDefectsData()
         {
@@ -562,7 +558,6 @@ namespace DataBaseInitializer
             AddToDatabase(defects, _dbDefects);
         }
 
-
         public static void FillStoriesData()
         {
             _dbStories = new Repository<Story>(_context);
@@ -595,7 +590,7 @@ namespace DataBaseInitializer
                         AssignedTo = _dbUsers.GetById(3),
                         Status = StoryStatus.Accepted,
                         Defects = _dbDefects.GetAll().Where(d => d.DefectId < 8).ToList()
-        },
+                    },
                     new Story()
                     { Name = "Clients page",
                         Team = _dbTeams.GetById(4),
@@ -663,7 +658,6 @@ namespace DataBaseInitializer
             AddToDatabase(stories, _dbStories);
         }
 
-
         public static void FillTasksData()
         {
             _dbTasks = new Repository<ScrumTask>(_context);
@@ -726,11 +720,12 @@ namespace DataBaseInitializer
 
         }
 
-
         public static void FillFeaturesData()
         {
             _dbFeatures = new Repository<Feature>(_context);
-
+            var firstUser = _dbUsers.GetAll().FirstOrDefault();
+            var users = _dbUsers.GetAll().ToList();
+            var counter = users.Count() - 1;
 
             Feature[] features = new Feature[]
             {
@@ -739,14 +734,18 @@ namespace DataBaseInitializer
                         Description = "Login page cantains buttons: sign in, sign up, fields to type data.",
                         Blocked = false, State = FeatureState.Accepted,
                         FeatureName = "Login Page",
-                        Stories = _dbStories.GetAll().Where(s => s.Id <= 2).ToList()
+                        Stories = _dbStories.GetAll().Where(s => s.Id <= 2).ToList(),
+                        Owner = users[counter],
+                        ProgramIncrement = "Login and registration page"
                     },
                     new Feature()
                     {
                         Description = "Contains the description about the company with photos",
                         Blocked = false, State = FeatureState.InProgress,
                         FeatureName = "Home Page",
-                        Stories = _dbStories.GetAll().Where(s => s.Id <= 4 && s.Id > 2).ToList()
+                        Stories = _dbStories.GetAll().Where(s => s.Id <= 4 && s.Id > 2).ToList(),
+                        Owner = users[counter-1],
+                        ProgramIncrement = "Home page"
                     },
                     new Feature()
                     {
@@ -754,21 +753,36 @@ namespace DataBaseInitializer
                         Blocked = false,
                         State = FeatureState.PendingApproval,
                         FeatureName = "Client Page",
-                        Stories = _dbStories.GetAll().Where(s => s.Id <= 6 && s.Id > 4).ToList()
+                        Stories = _dbStories.GetAll().Where(s => s.Id <= 6 && s.Id > 4).ToList(),
+                        Owner = users[counter-2],
+                        ProgramIncrement = "Home and client page"
                     },
                     new Feature()
                     {
                         Description = "there is all contact info and links ",
                         Blocked = false, State = FeatureState.TestComplete,
                         FeatureName = "Footer",
-                        Stories = _dbStories.GetAll().Where(s => s.Id <= 8 && s.Id > 6).ToList()
+                        Stories = _dbStories.GetAll().Where(s => s.Id <= 8 && s.Id > 6).ToList(),
+                        Owner = users[counter-3],
+                        ProgramIncrement = "Site with footer"
                     },
                     new Feature()
                     {
                         Description = "There is a navigation menu with links to all pages",
                         Blocked = false, State = FeatureState.TestComplete,
                         FeatureName = "Header",
-                        Stories = _dbStories.GetAll().Where(s => s.Id <= 10 && s.Id > 8).ToList()
+                        Stories = _dbStories.GetAll().Where(s => s.Id <= 10 && s.Id > 8).ToList(),
+                        Owner = users[counter-4],
+                        ProgramIncrement = "Site with header"
+                    },
+                    new Feature()
+                    {
+                        Description = "Create SCRUM dashboard",
+                        Blocked = false, State = FeatureState.TestComplete,
+                        FeatureName = "Board",
+                        Stories = _dbStories.GetAll().Where(s => s.Id <= 10 && s.Id > 8).ToList(),
+                        Owner = users[counter-5],
+                        ProgramIncrement = "SCRUMBoard"
                     }
             };
 
@@ -894,7 +908,6 @@ namespace DataBaseInitializer
             Console.Clear();
             Console.WriteLine("{0} % done", percentsDone);
         }
-
 
         public static void AddToDatabase<T>(T[] array, IRepository<T> repository) where T : class
         {

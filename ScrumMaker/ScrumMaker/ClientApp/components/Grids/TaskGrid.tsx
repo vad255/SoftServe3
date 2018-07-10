@@ -13,7 +13,7 @@ interface TaskDataFetchingState {
 
 
 
-export class TaskGrid extends Grid<RouteComponentProps<{}>, TaskDataFetchingState> {
+export class TaskGrid extends Grid<TaskDataFetchingState> {
 
     protected URL_BASE: string = 'odata/tasks';
     protected URL_EXPANDS: string = '?&expand=()';

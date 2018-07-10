@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using DAL.Models;
+using DAL.Chatting;
+
 
 namespace DAL.Access
 {
@@ -20,15 +22,16 @@ namespace DAL.Access
         IRepository<Sprint> _sprints;
         IRepository<Defect> _defects;
         IRepository<Feature> _features;
-
+        IRepository<ChatRoom> _chats;
+        IRepository<Message> _messages;
 
         public UnitOfWork(DbContext context)
         {
             _context = context;
         }
 
-     
-        public IRepository<User> Users
+
+        public IRepositoryUoW<User> Users
         {
             get
             {
@@ -38,7 +41,7 @@ namespace DAL.Access
             }
         }
 
-        public IRepository<Team> Teams
+        public IRepositoryUoW<Team> Teams
         {
             get
             {
@@ -48,7 +51,7 @@ namespace DAL.Access
             }
         }
 
-        public IRepository<Story> Stories
+        public IRepositoryUoW<Story> Stories
         {
             get
             {
@@ -58,7 +61,7 @@ namespace DAL.Access
             }
         }
 
-        public IRepository<Sprint> Sprints
+        public IRepositoryUoW<Sprint> Sprints
         {
             get
             {
@@ -68,7 +71,7 @@ namespace DAL.Access
             }
         }
 
-        public IRepository<Defect> Defects
+        public IRepositoryUoW<Defect> Defects
         {
             get
             {
@@ -78,7 +81,7 @@ namespace DAL.Access
             }
         }
 
-        public IRepository<Feature> Features
+        public IRepositoryUoW<Feature> Features
         {
             get
             {
@@ -88,7 +91,24 @@ namespace DAL.Access
             }
         }
 
-  
+        public IRepositoryUoW<ChatRoom> Chats
+        {
+            get
+            {
+                _chats = _chats ?? new Repository<ChatRoom>(_context);
+                return _chats;
+            }
+        }
+
+        public IRepositoryUoW<Message> Messages
+        {
+            get
+            {
+                _messages = _messages ?? new Repository<Message>(_context);
+                return _messages;
+            }
+        }
+
 
         public void Commit()
         {
@@ -100,8 +120,6 @@ namespace DAL.Access
             _context?.Dispose();
             _context = null;
         }
-   
     }
-
 }
 
