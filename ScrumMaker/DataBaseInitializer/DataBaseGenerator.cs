@@ -569,7 +569,7 @@ namespace DataBaseInitializer
                         Name = "Grids",
                         Team = _dbTeams.GetById(1),
                         Description = "create grids for all models. Each grid should have columns described in the model. Also add bootstrap styles",
-                        AssignedTo = _dbUsers.GetById(2),
+                        User = _dbUsers.GetById(2),
                         Status = StoryStatus.InProgress,
                         Defects = _dbDefects.GetAll().Where(d => d.DefectId < 8).ToList()
         },
@@ -578,7 +578,7 @@ namespace DataBaseInitializer
                         Name = "Login page",
                         Team = _dbTeams.GetById(2),
                         Description = "login page has inputs for login and password, an image on backgroud, sign in and sign up buttons",
-                        AssignedTo = _dbUsers.GetById(9),
+                        User = _dbUsers.GetById(9),
                         Status = StoryStatus.ReadyToStart,
                         Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList()
                     },
@@ -587,7 +587,7 @@ namespace DataBaseInitializer
                         Name = "DataBase",
                         Team = _dbTeams.GetById(3),
                         Description = "Sql database with code first model.",
-                        AssignedTo = _dbUsers.GetById(3),
+                        User = _dbUsers.GetById(3),
                         Status = StoryStatus.Accepted,
                         Defects = _dbDefects.GetAll().Where(d => d.DefectId < 8).ToList()
                     },
@@ -595,7 +595,7 @@ namespace DataBaseInitializer
                     { Name = "Clients page",
                         Team = _dbTeams.GetById(4),
                         Description = "This page should show all clients with possibilities add new client, delete some client",
-                        AssignedTo = _dbUsers.GetById(10),
+                        User = _dbUsers.GetById(10),
                         Status = StoryStatus.PendingApproval,
                         Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList()
                     },
@@ -604,7 +604,7 @@ namespace DataBaseInitializer
                     Name = "Taxes page",
                     Team = _dbTeams.GetById(5),
                     Description = "This page has info about client's taxes.",
-                    AssignedTo = _dbUsers.GetById(4),
+                    User = _dbUsers.GetById(4),
                     Status = StoryStatus.InProgress,
                     Defects = _dbDefects.GetAll().Where(d => d.DefectId < 8).ToList()
                 },
@@ -613,7 +613,7 @@ namespace DataBaseInitializer
                     Name = "Odata",
                     Team = _dbTeams.GetById(1),
                     Description = "Every api controller has to use odata requests",
-                    AssignedTo = _dbUsers.GetById(5),
+                    User = _dbUsers.GetById(5),
                     Status = StoryStatus.TestComplete,
                     Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList()
                 },
@@ -622,7 +622,7 @@ namespace DataBaseInitializer
                     Name = "Main window View",
                     Team = _dbTeams.GetById(2),
                     Description = "Cantains home page with general description of application and main links.",
-                    AssignedTo = _dbUsers.GetById(11),
+                    User = _dbUsers.GetById(11),
                     Status = StoryStatus.Accepted,
                     Defects = _dbDefects.GetAll().Where(d => d.DefectId < 8).ToList()
                 },
@@ -631,7 +631,7 @@ namespace DataBaseInitializer
                     Name = "Navigation Menu",
                     Team = _dbTeams.GetById(3),
                     Description = "Should be a popup menu, with main button and links inside",
-                    AssignedTo = _dbUsers.GetById(6),
+                    User = _dbUsers.GetById(6),
                     Status = StoryStatus.InProgress,
                     Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList()
                 },
@@ -640,7 +640,7 @@ namespace DataBaseInitializer
                     Name = "User Error Page",
                     Team = _dbTeams.GetById(4),
                     Description = "contains a link to the home page",
-                    AssignedTo = _dbUsers.GetById(12),
+                    User = _dbUsers.GetById(12),
                     Status = StoryStatus.PendingApproval,
                     Defects = _dbDefects.GetAll().Where(d => d.DefectId < 8).ToList()
                 },
@@ -649,7 +649,7 @@ namespace DataBaseInitializer
                     Name = "Exporting json file",
                     Team = _dbTeams.GetById(5),
                     Description = "there should be a possibility to get json file in client page. It will contain info about client.",
-                    AssignedTo = _dbUsers.GetById(7),
+                    User = _dbUsers.GetById(7),
                     Status = StoryStatus.DevComplete,
                     Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList()
                 }
