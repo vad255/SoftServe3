@@ -3,6 +3,8 @@ import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { IDbModel, IFetchState } from '../Models/IDbModel';
 import { NavLink } from 'react-router-dom'
+import { Content } from 'react-bootstrap/lib/Tab';
+import { Filter } from '../Filters/Filter';
 
 
 
@@ -22,6 +24,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
     protected readonly abstract URL_BASE: string;
     protected readonly abstract URL_EXPANDS: string;
     protected urlFilters: string = '';
+    protected customUrlFilters: string = '';
     protected readonly abstract URL_ORDERING: string;
     private readonly URL_COUNT: string = '&$count=true';
     private urlPaging: string = '&$top=' + this.pageSize;
@@ -79,6 +82,10 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
         result += this.urlFilters;
 
+         if (this.customUrlFilters) {
+            result += this.urlFilters ? Filter.CONSTRAIN_DIVIDER + this.customUrlFilters : Filter.QUERY_HEAD + this.customUrlFilters;
+        }
+
         result += this.URL_ORDERING;
 
         result += this.urlPaging;
@@ -110,6 +117,9 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         return this.state.items.map((s) => this.toGridItem(s.toArray(), s.getId()))
     }
     private GetFooterRow() {
+        if (this.allCount <= this.pageSize) {
+            return <tr></tr>
+        }
         return <tr>
             <td colSpan={8}>
                 <div className="text-center">
@@ -131,6 +141,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
             </td>
         </tr>;
     }
+    
     private GetDeleteConfirmModal() {
         return <div id="confirmDeleteModal" className="modal fade">
             <div className="modal-dialog">
@@ -148,7 +159,6 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
             </div>
         </div>;
     }
-
 
     private firstPageClick() {
         this.CurrentPage = 0;
@@ -280,7 +290,3 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
             return a.toString().localeCompare(b.toString());
     }
 }
-
-
-
-

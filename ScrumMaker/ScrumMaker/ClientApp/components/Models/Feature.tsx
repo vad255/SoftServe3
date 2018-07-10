@@ -6,16 +6,8 @@ import { Team } from '../Models/Team';
 import { Story } from '../Models/Story';
 import { NavLink } from 'react-router-dom';
 import { IDbModel } from './IDbModel'
+import { User } from './User';
 
-//class Team {
-//    id: number = -1;
-//    name: string = "";
-
-//    constructor(params: any) {
-//        this.id = params.Id;
-//        this.name = params.Name;
-//    }
-//}
 
 export class Feature implements IDbModel {
     
@@ -25,6 +17,8 @@ export class Feature implements IDbModel {
     description: string;
     blocked: boolean;
     stories: Story[] = [];
+    owner: User;
+    programIncrement: string;
 
     public constructor(params: any) {
         this.id = params.Id;
@@ -32,15 +26,21 @@ export class Feature implements IDbModel {
         this.state = params.State;
         this.description = params.Description;
         this.blocked = params.Blocked;
+        
+        this.programIncrement = params.ProgramIncrement;
 
-        if (params.Stories === null || params.Stories === undefined)
-            return;
+        if (params.Stories) {
+            var stories = [];
+            for (var i = 0; i < params.Stories.length; i++)
+                stories[i] = new Story(params.Stories[i]);
 
-        var stories = [];
-        for (var i = 0; i < params.Stories.length; i++)
-            stories[i] = new Story(params.Stories[i]);
-
-        this.stories = stories;
+            this.stories = stories;
+        }
+        
+        this.owner = params.Owner;
+        if (params.Owner) {
+            this.owner = new User(params.Owner);
+        }
     }
     
     getId(): number {
