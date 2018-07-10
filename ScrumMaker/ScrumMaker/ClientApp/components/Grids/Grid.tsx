@@ -4,6 +4,8 @@ import 'isomorphic-fetch';
 import { IDbModel, IFetchState } from '../Models/IDbModel';
 import { NavLink } from 'react-router-dom'
 
+
+
 export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFetchState> {
     constructor() {
         super();
@@ -42,19 +44,25 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         </div>
     }
     protected renderContent() {
-        return <table className='table table-scrum table-hover td-scrum'>
-            <thead>
-                {this.GetHeaderRow()}
-                {this.GetFiltersRow()}
-            </thead>
-            <tbody>
-                {this.GetBodyRows()}
-            </tbody>
-            <tfoot>
-                {this.GetFooterRow()}
-            </tfoot>
-        </table>
+        return (
+            <div>
+                <table className='table table-scrum table-hover td-scrum'>
+                    <thead>
+                        {this.GetHeaderRow()}
+                        {this.GetFiltersRow()}
+                    </thead>
+                    <tbody>
+                        {this.GetBodyRows()}
+                    </tbody>
+                    <tfoot>
+                        {this.GetFooterRow()}
+                    </tfoot>
+                </table>
+                {this.GetDeleteConfirmModal()}
+            </div>
+        );
     }
+
     protected LoadData() {
         fetch(this.getURL(), { credentials: 'include' })
             .then(response => response.json() as any)
@@ -115,12 +123,30 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
                     <div role='button' className='btn btn-sq-xs align-base' onClick={this.nextPageClick.bind(this)}>
                         <span className="glyphicon glyphicon-chevron-right dark"></span>
                     </div>
-                    <div role='button' className='btn btn-sq-xs align-base' onClick={this.lastPageClick.bind(this)}>
+                    <div role='button' className='btn btn-sq-xs align-base'
+                        onClick={this.lastPageClick.bind(this)}>
                         <span className="glyphicon glyphicon-step-forward dark"></span>
                     </div>
                 </div>
             </td>
         </tr>;
+    }
+    private GetDeleteConfirmModal() {
+        return <div id="confirmDeleteModal" className="modal fade">
+            <div className="modal-dialog">
+                <div className="modal-content">
+                    <div className="modal-header  text-center" ><button className="close" type="button" data-dismiss="modal">×</button>
+                        <h4 className="modal-title">Are you sure you want to delete this item?</h4>
+                    </div>
+                    <div className="modal-body text-center">
+                        <button className="btn btn-default" type="button" data-dismiss="modal" onClick={(() => this.onDeleteConfirmed()).bind(this)}>
+                            Yes</button>
+                        <button className="btn btn-default" type="button" data-dismiss="modal" onClick={(() => this.onDeleteCancel()).bind(this)}>No</button>
+                    </div>
+                    <div className="modal-footer"></div>
+                </div>
+            </div>
+        </div>;
     }
 
 
@@ -161,41 +187,53 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         this.urlFilters = e;
         this.LoadData();
     }
-    protected onDeleteClick(id: number) {
-        if (this.CurrentPage != 0)
+
+
+    private itemToDelete: number = -1;
+    private setItemToDelete(id: number) {
+        this.itemToDelete = id;
+    }
+    protected onDeleteConfirmed() {
+        if (this.CurrentPage == (Math.ceil(this.allCount / this.pageSize) - 1))
             if (this.allCount % this.pageSize === 1) {
                 this.CurrentPage--;
                 this.recalcPagingUrl();
             }
 
-        fetch(this.URL_BASE + '/' + id,
+        fetch(this.URL_BASE + '/' + this.itemToDelete,
             {
                 method: 'DELETE',
                 credentials: 'include',
             }).then(() => this.LoadData());
     }
+    protected onDeleteCancel() {
+        this.itemToDelete = -1;
+    }
 
 
     protected toGridItem(items: JSX.Element[], id: number) {
-
-        return <tr key={id}>
-            {items.map((item, index) =>
-                <td key={index} className="align-base">{item}</td>)
-            }
-            <td className="align-base">
-                <NavLink to={this.URL_EDIT + id.toString()}
-                    activeClassName='active'>
-                    <span className="glyphicon glyphicon-edit dark" aria-hidden="true" />
-                </NavLink>
-                &nbsp;&nbsp;
+        return (
+            <tr key={id}>
+                {items.map((item, index) =>
+                    <td key={index} className="align-base">{item}</td>)
+                }
+                <td className="align-base">
+                    <NavLink to={this.URL_EDIT + id.toString()}
+                        activeClassName='active'>
+                        <span className="glyphicon glyphicon-edit dark" aria-hidden="true" />
+                    </NavLink>
+                    &nbsp;&nbsp;
                 <div id={id.toString()}
-                    role="button"
-                    className="btn btn-sq-xs align-base"
-                    onClick={(() => this.onDeleteClick(id)).bind(this)}>
-                    <span className="glyphicon glyphicon-trash dark" aria-hidden="true" />
-                </div>
-            </td>
-        </tr>
+                        role="button"
+                        onClick={(() => this.setItemToDelete(id)).bind(this)}
+                        data-toggle="modal"
+                        data-target="#confirmDeleteModal"
+                        className="btn btn-sq-xs align-base">
+                        <span className="glyphicon glyphicon-trash dark" aria-hidden="true" />
+                    </div>
+                </td>
+            </tr>
+        );
     }
 
     protected OrderBy(arg: string) {
