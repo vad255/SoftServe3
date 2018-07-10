@@ -16,6 +16,7 @@ import { TaskGrid } from './components/Grids/TaskGrid';
 import { FeatureEdit } from './components/EditPages/FeatureEdit';
 import { Error } from './components/Error';
 import { SimpleChat } from './components/Chats/SimpleChat'
+import { Chart } from './components/Charts/Chart'
 import { EditStory } from "./components/EditPages/EditStory";
 
 
@@ -41,8 +42,8 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/tasks' component={TaskGrid} />
         <LayoutRoute path='/featureEdit' component={FeatureEdit} />
         <LayoutRoute path='/SimpleChat' component={SimpleChat} />
+        <LayoutRoute path='/Chart' component={Chart} />
         <LayoutRoute path='/EditStory' component={EditStory} />
-
 
         <Route path='/login' component={Login} />
         <Route path='/Error' component={Error} />
