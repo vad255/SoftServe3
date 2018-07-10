@@ -22,32 +22,7 @@ namespace ScrumMaker.Controllers
             _stories = stories;
             _chartManager = chartManager; 
         }
-
-        [Route("/getCurrentSprint")]
-        public Sprint GetCurrentSprint()
-        {
-            ChartManager manager = new ChartManager(_sprints, _stories);
-            Sprint sprint = _chartManager.GetSprintByDate();
-            return sprint;
-        }
-        [Route("/getDays")]
-        public List<DateTime> GetWorkingDay()
-        {
-            ChartManager manager = new ChartManager(_sprints, _stories);
-            return _chartManager.GetWorkingDaysOfSprint();
-        }
-        [Route("/getstories")]
-        public ICollection<Story> GetStories()
-        {
-            ChartManager manager = new ChartManager(_sprints, _stories);
-            return _chartManager.GetStoriesOfSprint();
-        }
-        [Route("/gettasks")]
-        public ICollection<ScrumTask> GetTasks()
-        {
-            ChartManager manager = new ChartManager(_sprints, _stories);
-            return _chartManager.GetTasksOfStories();
-        }
+        
         [Route("/getdata")]
         public ICollection<ModelForCharts> GetData()
         {
