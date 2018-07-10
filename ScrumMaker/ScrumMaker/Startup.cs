@@ -27,6 +27,7 @@ using DAL.Models;
 using BL;
 using BL.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using BL.Chart;
 
 namespace ScrumMaker
 {
@@ -62,7 +63,7 @@ namespace ScrumMaker
                 };
             });
 
-            string connectionStr = Configuration.GetConnectionString("Viktor");
+            string connectionStr = Configuration.GetConnectionString("Dmytro");
 
 
 
@@ -77,6 +78,7 @@ namespace ScrumMaker
             services.AddScoped(typeof(IUserManager), typeof(UserManager));
             services.AddScoped(typeof(ITasksManager), typeof(TasksManager));
             services.AddScoped(typeof(IStoriesManager), typeof(StoriesManager));
+            services.AddScoped(typeof(IChartManager), typeof(ChartManager));
 
             services.AddOData();
 

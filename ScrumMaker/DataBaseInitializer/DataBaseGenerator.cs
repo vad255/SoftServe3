@@ -73,6 +73,13 @@ namespace DataBaseInitializer
                     {
                         Role = _dbRoles.GetById(1),
                         Activity = true,
+                        Login = "admin",
+                        Password = "admin"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(1),
+                        Activity = true,
                         Login = "Ivan.Nesterenko@gmail.com",
                         Password = "INadmin2018"
                     },
@@ -665,7 +672,7 @@ namespace DataBaseInitializer
             {
                     new ScrumTask()
                     {
-                        Name = _dbStories.GetById(1),
+                        Name = "Add bootstrap styles to all buttons",
                         Description = "Add bootstrap styles to all buttons",
                         AssignedTo = _dbUsers.GetById(2),
                         Blocked = "NO", ActualHours = 48,
@@ -675,7 +682,7 @@ namespace DataBaseInitializer
                     },
                     new ScrumTask()
                     {
-                        Name = _dbStories.GetById(2),
+                        Name = "Add filters to all columns in grids",
                         Description = "Add filters to all columns in grids",
                         AssignedTo = _dbUsers.GetById(9),
                         Blocked = "NO", ActualHours = 48,
@@ -685,7 +692,7 @@ namespace DataBaseInitializer
                     },
                     new ScrumTask()
                     {
-                        Name = _dbStories.GetById(3),
+                        Name = "Add new Button to save data",
                         Description = "Add new Button to save data",
                         AssignedTo = _dbUsers.GetById(3),
                         Blocked = "NO", ActualHours = 48,
@@ -695,7 +702,7 @@ namespace DataBaseInitializer
                     },
                       new ScrumTask()
                      {
-                        Name = _dbStories.GetById(4),
+                        Name = "Change background image",
                         Description = "Change background image",
                         AssignedTo = _dbUsers.GetById(10),
                         Blocked = "NO", ActualHours = 48,
@@ -705,7 +712,7 @@ namespace DataBaseInitializer
                       },
                        new ScrumTask()
                        {
-                       Name = _dbStories.GetById(9),
+                       Name = "write a class that checks the connection string",
                        Description = "write a class that checks the connection string",
                        AssignedTo = _dbUsers.GetById(4),
                        Blocked = "NO", ActualHours = 48,
@@ -778,10 +785,7 @@ namespace DataBaseInitializer
                     new SprintStagesHistory()
                     {
                         Begined = DateTime.Today - new TimeSpan(10,0,0,0),
-                        Planned =  DateTime.Today - new TimeSpan(30,0,0,0),
-                        Initiated =  DateTime.Today - new TimeSpan(20,0,0,0),
-                        RetrospectiveDone =  DateTime.Today + new TimeSpan(14,0,0,0),
-                        ReviewDone =  DateTime.Today + new TimeSpan(10,0,0,0)
+                        Ended =  DateTime.Today + new TimeSpan(31,0,0,0)
                     }
             };
 

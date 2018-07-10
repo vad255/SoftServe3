@@ -38,7 +38,8 @@ namespace DAL.Models
 
         public Team Team { get; set; }
 
-
+        [ForeignKey("Sprint")]
+        public int? SprintId { get; set; }
         public Sprint Sprint { get; set; }
 
 
@@ -56,7 +57,7 @@ namespace DAL.Models
 
         public ICollection<Defect> Defects { get; set; }
 
-
+        public virtual ICollection<ScrumTask> Tasks { get; set; }
 
         [NotMapped]
         public Chat Chat { get; set; }

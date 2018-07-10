@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using System.Text;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models
 {
@@ -11,9 +12,13 @@ namespace DAL.Models
         [Key]
         public int TaskId { get; set; }
 
-        [Required]
         [MaxLength(50)]
-        public Story Name { get; set; }
+        public string Name { get; set; }
+        public DateTime? Started { get; set; }
+        public DateTime? Completed { get; set; }
+        [ForeignKey("Story")]
+        public int? StoryId { get; set; }
+        public Story Story { get; set; }
 
         public int PlannedHours { get; set; }
 

@@ -14,7 +14,7 @@ import { DefectGrid } from './components/Grids/DefectGrid';
 import { TaskGrid } from './components/Grids/TaskGrid';
 import { Error } from './components/Error';
 import { SimpleChat } from './components/Chats/SimpleChat'
-
+import { Chart } from './components/Charts/Chart'
 
 const LayoutRoute = ({ ...props }) => {
     return (
@@ -37,6 +37,8 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/defects' component={DefectGrid} />
         <LayoutRoute path='/tasks' component={TaskGrid} />
         <LayoutRoute path='/SimpleChat' component={SimpleChat} />
+        <LayoutRoute path='/Chart' component={Chart} />
+
 
         <Route path='/login' component={Login} />
         <Route path='/Error' component={Error} />
