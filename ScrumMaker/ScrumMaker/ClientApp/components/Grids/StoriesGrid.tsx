@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { Grid } from './Grid';
 import { Story, StoryStatus } from "../Models/Story";
-import { IDbModel, IFetchState } from '../Models/IDbModel';
+import { IDbModel } from '../Models/IDbModel';
 
 
 import { FiltersManager } from '../Filters/FiltersManager';
@@ -24,17 +24,6 @@ export class StoriesGrid extends Grid {
 
     constructor() {
         super();
-        var url = new URL(window.location.href)
-        let params = url.toString();
-        console.log(url.search.toString());
-
-
-        var featureId = url.searchParams.get("featureId")
-        if (featureId) {
-            this.customUrlFilters = this.URL_FEATUREID_FILTER + featureId
-        }
-
-        this.LoadData();
     }
 
 
@@ -70,7 +59,7 @@ export class StoriesGrid extends Grid {
             filters={filetrs}
             onApply={this.ApplyFiltersHandler.bind(this)}
             display={this.filteringOn}
-            externalConstraints=""
+            externalConstraints={this.customUrlFilters}
             />
     }
 }

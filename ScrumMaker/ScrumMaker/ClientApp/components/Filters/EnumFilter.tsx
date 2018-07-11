@@ -88,9 +88,7 @@ export class EnumFilter extends Filter {
         this.requesRedraw();
     }
 
-    public render() {
-        console.log(this.dispalyItems);
-        
+    public render() {      
         return <div className="dropdown"
             onMouseLeave={this.onMouseLeave.bind(this)}
         //    onMouseEnter={this.onMouseEnter.bind(this)}

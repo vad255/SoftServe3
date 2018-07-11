@@ -1,11 +1,6 @@
-import * as React from 'react';
-import { StreamInvocationMessage } from '@aspnet/signalr';
-
-
 export interface IFilterConfiguration {
     filterKey: string;
 }
-export interface empty { }
 
 export abstract class Filter {
 

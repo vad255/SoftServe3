@@ -28,7 +28,6 @@ export class TaskGrid extends Grid {
 
     constructor() {
         super();
-        this.LoadData();
     }
 
     protected instantiate(item: any): IDbModel {
@@ -66,7 +65,7 @@ export class TaskGrid extends Grid {
             filters={filetrs}
             onApply={this.ApplyFiltersHandler.bind(this)}
             display={this.filteringOn}
-            externalConstraints=""
+            externalConstraints={this.customUrlFilters}
             />
     }
 }

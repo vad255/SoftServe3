@@ -67,5 +67,44 @@ namespace ScrumMaker
             ClaimsPrincipal principal = new ClaimsPrincipal(identity);
             context.User = principal;
         }
+
+
+        public static string UserLogin(this ClaimsIdentity identity)
+        {
+            ClaimsIdentity claims = identity as ClaimsIdentity;
+
+            if (claims == null)
+                return null;
+
+            string name = identity.Claims.Where(c => c.Type == LOGIN).FirstOrDefault()?.Value;
+
+            return name;
+        }
+        public static int UserId(this ClaimsIdentity identity)
+        {
+            ClaimsIdentity claims = identity as ClaimsIdentity;
+
+            if (claims == null)
+                return -1;
+
+            int authorId = -1;
+            string idFromClaims = identity.Claims.Where(c => c.Type == ID).FirstOrDefault()?.Value;
+            int.TryParse(idFromClaims, out authorId);
+
+            return authorId;
+        }
+        public static string UserRole(this ClaimsIdentity identity)
+        {
+            ClaimsIdentity claims = identity as ClaimsIdentity;
+
+            if (claims == null)
+                return null;
+
+            string role = identity.Claims.Where(c => c.Type == ROLE).FirstOrDefault()?.Value;
+
+            return role;
+        }
+
+
     }
 }

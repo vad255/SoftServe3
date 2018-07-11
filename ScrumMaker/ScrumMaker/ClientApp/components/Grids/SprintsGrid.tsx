@@ -22,11 +22,8 @@ export class SprintsGrid extends Grid {
 
     constructor() {
         super();
-
         this.pageSize = 10;
         this.recalcPagingUrl();
-
-        this.LoadData();
     }
 
     protected instantiate(item: any) {
@@ -62,10 +59,11 @@ export class SprintsGrid extends Grid {
         ]
 
         return <FiltersManager
+            ref={this.FILTER_MANAGER_REF}
             filters={filetrs}
             onApply={this.ApplyFiltersHandler.bind(this)}
             display={this.filteringOn}
-            externalConstraints=""
+            externalConstraints={this.customUrlFilters}
         />
     }
 }

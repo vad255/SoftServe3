@@ -2,10 +2,8 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Sprint } from '../Models/Sprint';
 import { Story } from '../Models/Story';
-import { FeatureGrid } from '../Grids/FeatureGrid';
 import { State } from '../Models/FeatureState';
 import { NavLink } from 'react-router-dom';
-import { User } from '../Models/User';
 import { IDbModel } from '../Models/IDbModel'
 
 
@@ -83,8 +81,8 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
                 <div className="text-left">
                     <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Stories:</h3>
                     <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base ">
-                        <NavLink to={`../stories?SprintId=${this.id}`} activeClassName='active'>
-                            See stories which are in this feature...
+                        <NavLink to={`../stories?filter=sprint/id eq ${this.id}`} activeClassName='active'>
+                            See stories which are in this sprint...
                 </NavLink>
                     </div>
                 </div>

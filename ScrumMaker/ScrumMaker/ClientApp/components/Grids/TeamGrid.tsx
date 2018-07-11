@@ -18,7 +18,6 @@ export class TeamGrid extends Grid {
 
     constructor() {
         super();
-        this.LoadData();
     }
 
     protected headerText: string = "Team Grid";
@@ -54,7 +53,7 @@ export class TeamGrid extends Grid {
             filters={filetrs}
             onApply={this.ApplyFiltersHandler.bind(this)}
             display={this.filteringOn}
-            externalConstraints=""
+            externalConstraints={this.customUrlFilters}
             />
     }
 }

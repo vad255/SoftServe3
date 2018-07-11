@@ -15,7 +15,6 @@ export interface IFilterManagerState {
 export class FiltersManager extends React.Component<IFilterManagerState, IFilterManagerState> {
 
     public fileteringOn: boolean = false;
-    protected filterString: string = '';
     protected constraints: any = {};
     protected externalConstraints = "";
 
@@ -52,19 +51,13 @@ export class FiltersManager extends React.Component<IFilterManagerState, IFilter
         )
     }
 
-
-    protected FilterChanged(key: string, filter: string) {
-        this.constraints[key] = filter;
-    }
-
-    protected ApplyFiltersClick(e: any) {
-
-        this.filterString = Filter.QUERY_HEAD;
+    public GetFilteringQuery(): string {
+        let filterString = Filter.QUERY_HEAD;
 
         let noConstrainsYet = true;
 
         if (this.externalConstraints != undefined && this.externalConstraints != null && this.externalConstraints != "") {
-            this.filterString += this.externalConstraints;
+            filterString += this.externalConstraints;
             noConstrainsYet = false;
         }
         for (let iterator in this.constraints) {
@@ -72,24 +65,32 @@ export class FiltersManager extends React.Component<IFilterManagerState, IFilter
                 continue;
 
             if (!noConstrainsYet)
-                this.filterString += Filter.CONSTRAIN_DIVIDER;
+                filterString += Filter.CONSTRAIN_DIVIDER;
 
-            this.filterString += this.constraints[iterator];
+            filterString += this.constraints[iterator];
             noConstrainsYet = false;
         }
 
         if (noConstrainsYet) {
-            this.filterString = '';
+            filterString = '';
         }
 
-        this.state.onApply(this.filterString);
+        return filterString;
     }
 
 
+    protected FilterChanged(key: string, filter: string) {
+        this.constraints[key] = filter;
+    }
+
+    protected ApplyFiltersClick(e: any) {
+        let queryString = this.GetFilteringQuery();
+        this.state.onApply(queryString);
+    }
+
     protected CancelFiltersClick(e: any) {
         this.state.filters.map(f => f.Reset());
-        this.filterString = "";
-
-        this.state.onApply(this.filterString);
+        let queryString = this.GetFilteringQuery();
+        this.state.onApply(queryString);
     }
 }

@@ -68,7 +68,7 @@ export class Feature implements IDbModel {
                 Stories<span className="caret"></span>
             </div>
             <ul className="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-                {this.stories.map(s => s.renderAsMenu())}
+                {this.stories.map((s,i) => s.renderAsMenu(i))}
             </ul>
         </div>
     }

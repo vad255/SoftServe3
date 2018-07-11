@@ -22,8 +22,6 @@ export class UserGrid extends Grid {
     constructor() {
         super();
         this.state = { items: [] };
-
-        this.LoadData();
     }
 
 
@@ -64,7 +62,7 @@ export class UserGrid extends Grid {
             filters={filetrs}
             onApply={this.ApplyFiltersHandler.bind(this)}
             display={this.filteringOn}
-            externalConstraints=""
+            externalConstraints={this.customUrlFilters}
             />
     }
 }

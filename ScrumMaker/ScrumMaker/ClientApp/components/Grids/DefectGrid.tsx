@@ -23,7 +23,6 @@ export class DefectGrid extends Grid {
 
     constructor() {
         super();
-        this.LoadData();
     }
 
     protected instantiate(item: any): IDbModel {

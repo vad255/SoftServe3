@@ -14,7 +14,7 @@ export enum StoryStatus {
     Accepted = 6
 }
 
-export class Story implements IDbModel{
+export class Story implements IDbModel {
     id: number = -1;
     name: string = '';
     status: StoryStatus = 0;
@@ -60,25 +60,6 @@ export class Story implements IDbModel{
         }
     }
 
-    public renderAsTableRow(): JSX.Element {
-        return <tr key={this.id}>
-            <td className="align-base">{this.id}</td>
-            <td className="align-base">{this.name}</td>
-            <td className="align-base">{this.description}</td>
-            <td className="align-base">{this.getStatus(this.status)}</td>
-            <td className="align-base">
-                <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base ">
-                    <Link to={`EditStory/` + this.id}>
-                        <span className="glyphicon glyphicon-edit dark" aria-hidden="true"></span>
-                    </Link>
-                </div>
-                &nbsp;&nbsp;
-                       <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base">
-                    <span className="glyphicon glyphicon-trash dark" aria-hidden="true"></span>
-                </div>
-            </td>
-        </tr>;
-    }
 
     getId(): number {
         return this.id;
@@ -94,8 +75,8 @@ export class Story implements IDbModel{
         return elements;
     }
 
-    renderAsMenu() {
-        return <li className="dropdown-submenu">
+    renderAsMenu(key: number) {
+        return <li key={key} className="dropdown-submenu">
             <div > {this.name} </div>
             <ul className="dropdown-menu">
                 <li className="dropdown-item"><b><pre>Story name: {this.name}</pre></b> </li>
