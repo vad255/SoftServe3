@@ -6,35 +6,37 @@ import { NavLink } from 'react-router-dom'
 import { Content } from 'react-bootstrap/lib/Tab';
 import { Filter } from '../Filters/Filter';
 import { ConfirmMadal, IModalState } from '../ConfirmModal'
-import { Thumbnail } from 'react-bootstrap';
 
 
 export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFetchState> {
-    constructor() {
-        super();
-        this.isLoading = true;
-    }
 
-    protected abstract headerText: string;
-    private pageSize: number = 5;
     protected isLoading: boolean = true;
+    protected abstract headerText: string;
 
-
-    protected readonly URL_EDIT: string = "!!!NOT_IMPLEMENTED!!!/";
 
     protected readonly abstract URL_BASE: string;
     protected readonly abstract URL_EXPANDS: string;
-    protected urlFilters: string = '';
-    protected customUrlFilters: string = '';
     protected readonly abstract URL_ORDERING: string;
     private readonly URL_COUNT: string = '&$count=true';
-    private urlPaging: string = '&$top=' + this.pageSize;
+    protected readonly URL_EDIT: string = "!!!NOT_IMPLEMENTED!!!/";
+
+    protected customUrlFilters: string = '';
+    private urlPaging: string = "";
+    protected urlFilters: string = '';
 
     private CurrentPage = 0;
-    private allCount = 0;
+    private totalCount = 0;
+    protected pageSize: number = 5;
+
     private lastOrderingArg: string = '';
     private lastOrderingDir: boolean = false;
     protected filteringOn: boolean = false;
+
+    constructor() {
+        super();
+        this.recalcPagingUrl();
+        this.isLoading = true;
+    }
 
 
     public render() {
@@ -71,7 +73,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         fetch(this.getURL(), { credentials: 'include' })
             .then(response => response.json() as any)
             .then(data => {
-                this.allCount = data['@odata.count'];
+                this.totalCount = data['@odata.count'];
                 this.OnDataReceived(data);
             }).catch(e => this.onCatch(e));
     }
@@ -105,7 +107,6 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         this.setState({ items: itemsTemp });
     }
     protected abstract instantiate(item: any): IDbModel;
-
     protected onCatch(e: any) {
         console.error(e);
         //   this.props.history.push("/Error")
@@ -118,7 +119,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         return this.state.items.map((s) => this.toGridItem(s.toArray(), s.getId()))
     }
     private GetFooterRow() {
-        if (this.allCount <= this.pageSize) {
+        if (this.totalCount <= this.pageSize) {
             return <tr></tr>
         }
         return <tr>
@@ -130,7 +131,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
                     <div role='button' className='btn btn-sq-xs align-base' onClick={this.previousPageClick.bind(this)}>
                         <span className="glyphicon glyphicon-chevron-left dark"></span>
                     </div>
-                    {Math.ceil(this.CurrentPage + 1)} of {Math.ceil(this.allCount / this.pageSize)}
+                    {Math.ceil(this.CurrentPage + 1)} of {Math.ceil(this.totalCount / this.pageSize)}
                     <div role='button' className='btn btn-sq-xs align-base' onClick={this.nextPageClick.bind(this)}>
                         <span className="glyphicon glyphicon-chevron-right dark"></span>
                     </div>
@@ -166,18 +167,18 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         }
     }
     private nextPageClick() {
-        if (this.CurrentPage < (this.allCount / this.pageSize) - 1) {
+        if (this.CurrentPage < (this.totalCount / this.pageSize) - 1) {
             this.CurrentPage++;
             this.recalcPagingUrl()
             this.LoadData();
         }
     }
     private lastPageClick() {
-        this.CurrentPage = Math.ceil((this.allCount / this.pageSize)) - 1;
+        this.CurrentPage = Math.ceil((this.totalCount / this.pageSize)) - 1;
         this.recalcPagingUrl();
         this.LoadData();
     }
-    private recalcPagingUrl() {
+    protected recalcPagingUrl() {
         this.urlPaging = '&$skip=' + (this.CurrentPage * this.pageSize) + '&$top=' + this.pageSize;
     }
 
@@ -197,8 +198,8 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         this.itemToDelete = id;
     }
     protected onDeleteConfirmed() {
-        if (this.CurrentPage == (Math.ceil(this.allCount / this.pageSize) - 1))
-            if (this.allCount % this.pageSize === 1) {
+        if (this.CurrentPage == (Math.ceil(this.totalCount / this.pageSize) - 1))
+            if (this.totalCount % this.pageSize === 1) {
                 this.CurrentPage--;
                 this.recalcPagingUrl();
             }
@@ -239,6 +240,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         );
     }
 
+
     protected OrderBy(arg: string) {
         try {
             let data = this.state.items;
@@ -259,7 +261,6 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
             alert(e);
         }
     }
-
     private SafeCompare(a: any, b: any, arg: string) {
         let aUndef = a === undefined || a === null || a[arg] === undefined || a[arg] === null;
         let bUndef = b === undefined || b === null || b[arg] === undefined || b[arg] === null;
@@ -275,7 +276,6 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
         return -1;
     }
-
     private Compare(a: any, b: any): number {
         if (typeof a === 'number' && typeof b === 'number')
             return a - b;

@@ -2,9 +2,16 @@
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { Feature } from '../Models/Feature';
-import { FeaturesFiltersRow } from '../Filters/FeaturesFiltersRow'
 import { Grid } from './Grid'
 import { IDbModel } from '../Models/IDbModel';
+
+import { FiltersManager } from '../Filters/FiltersManager';
+import { TextFilter } from '../Filters/TextFilter'
+import { IntFilter } from '../Filters/IntFilter'
+import { EnumFilter } from '../Filters/EnumFilter'
+import { SprintStage } from '../Models/SprintStage'
+import { EmptyFilter } from '../Filters/EmptyFilter';
+import { State } from '../Models/FeatureState';
 
 interface IFeatureDataFetchingState {
     features: Feature[];
@@ -51,9 +58,24 @@ export class FeatureGrid extends Grid{
     }
     
     protected GetFiltersRow() {
-        return <FeaturesFiltersRow
+
+
+
+
+        let filetrs = [
+            new IntFilter({ filterKey: "id"}),
+            new TextFilter({ filterKey: "featureName"}),
+            new TextFilter({ filterKey: "description"}),
+            new EmptyFilter(),
+            new EnumFilter({ filterKey: "state", enumType: State}),
+            new TextFilter({ filterKey: "blocked"}),
+        ]
+
+        return <FiltersManager
+            filters={filetrs}
             onApply={this.ApplyFiltersHandler.bind(this)}
             display={this.filteringOn}
-        />
+            externalConstraints=""
+            />
     }      
 }
