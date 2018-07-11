@@ -666,52 +666,67 @@ namespace DataBaseInitializer
             {
                     new ScrumTask()
                     {
-                        Name = "Add bootstrap styles to all buttons",
-                        Description = "Add bootstrap styles to all buttons",
-                        AssignedTo = _dbUsers.GetById(2),
-                        Blocked = "NO", ActualHours = 48,
-                        PlannedHours = 72, RemainingHours = 96,
-                        Type = "medium", State = "in progress",
+                        Summary = "SVN, Project Page",
+                        Story = _dbStories.GetById(1),
+                        Description = "Set-up SVN, project folders, SharePoint, project page",
+                        User = _dbUsers.GetById(2),
+                        Blocked =  false,
+                        PlannedHours = 72,
+                        Started = new DateTime(2018,7,6,12,45,30),
+                        Completed =new DateTime(2018,7,7,18,45,30),
+                        Type = "Coding", State = "ToDo",
                         WorkNotes = "This task should be done in 72 hours"
                     },
                     new ScrumTask()
                     {
-                        Name = "Add filters to all columns in grids",
-                        Description = "Add filters to all columns in grids",
-                        AssignedTo = _dbUsers.GetById(9),
-                        Blocked = "NO", ActualHours = 48,
-                        PlannedHours = 72, RemainingHours = 96,
-                        Type = "medium", State = "in progress",
+                        Summary = "Add validation to enteties",
+                        Story = _dbStories.GetById(2),
+                        Description = "Validation saving when saving",
+                        User = _dbUsers.GetById(9),
+                        Blocked =  false,
+                        PlannedHours = 72,
+                        Started = new DateTime(2018,7,6,12,45,30),
+                        Completed =new DateTime(2018,7,7,18,45,30),
+                        Type = "Coding", State = "InProgress",
                         WorkNotes = "This task should be done in 48 hours"
                     },
                     new ScrumTask()
                     {
-                        Name = "Add new Button to save data",
-                        Description = "Add new Button to save data",
-                        AssignedTo = _dbUsers.GetById(3),
-                        Blocked = "NO", ActualHours = 48,
-                        PlannedHours = 72, RemainingHours = 96,
-                        Type = "medium", State = "in progress",
+                        Summary = "Manual tests",
+                        Story = _dbStories.GetById(3),
+                        Description = "Run manual tests",
+                        User = _dbUsers.GetById(3),
+                        Blocked =  false,
+                        PlannedHours = 72,
+                        Started = new DateTime(2018,7,6,12,45,30),
+                        Completed =new DateTime(2018,7,7,18,45,30),
+                        Type = "Documentation", State = "ToDo",
                         WorkNotes = "This task should be done in 24 hours"
                     },
                       new ScrumTask()
                      {
-                        Name = "Change background image",
-                        Description = "Change background image",
-                        AssignedTo = _dbUsers.GetById(10),
-                        Blocked = "NO", ActualHours = 48,
-                        PlannedHours = 72, RemainingHours = 96,
-                     Type = "medium", State = "in progress",
-                      WorkNotes = "This task should be done in 48 hours"
+                        Summary = "User docment draft review",
+                        Story = _dbStories.GetById(4),
+                        Description = "User docment draft review",
+                        User = _dbUsers.GetById(10),
+                        Blocked =  false,
+                        PlannedHours = 72,
+                        Started = new DateTime(2018,7,6,12,45,30),
+                        Completed =new DateTime(2018,7,7,18,45,30),
+                        Type = "Documentation", State = "Done",
+                        WorkNotes = "This task should be done in 48 hours"
                       },
                        new ScrumTask()
                        {
-                       Name = "write a class that checks the connection string",
-                       Description = "write a class that checks the connection string",
-                       AssignedTo = _dbUsers.GetById(4),
-                       Blocked = "NO", ActualHours = 48,
-                       PlannedHours = 72, RemainingHours = 96,
-                       Type = "medium", State = "in progress",
+                       Summary = "Automated tests",
+                       Story = _dbStories.GetById(9),
+                       Description = "Create automated tests",
+                       User = _dbUsers.GetById(4),
+                       Blocked =  false,
+                       PlannedHours = 72,
+                       Started = new DateTime(2018,7,6,12,45,30),
+                       Completed =new DateTime(2018,7,7,18,45,30),
+                       Type = "Testing", State = "Done",
                        WorkNotes = "This task should be done in 72 hours"
                        }
             };
@@ -719,6 +734,7 @@ namespace DataBaseInitializer
             AddToDatabase(tasks, _dbTasks);
 
         }
+
 
         public static void FillFeaturesData()
         {
