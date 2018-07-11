@@ -18,7 +18,7 @@ namespace DAL.Models
         public DateTime? Completed { get; set; }
         [ForeignKey("Story")]
         public int? StoryId { get; set; }
-        public Story Story { get; set; }
+        public virtual Story Story { get; set; }
 
         public int PlannedHours { get; set; }
 

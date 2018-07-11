@@ -64,9 +64,9 @@ namespace ScrumMaker
                 };
             });
 
-            string connectionStr = Configuration.GetConnectionString("Pasha");
+            string connectionStr = Configuration.GetConnectionString("ScrumMakerDB");
 
-
+            
             
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
 

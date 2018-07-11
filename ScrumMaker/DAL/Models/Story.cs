@@ -34,7 +34,7 @@ namespace DAL.Models
 
         [ForeignKey("Sprint")]
         public int? SprintId { get; set; }
-        public Sprint Sprint { get; set; }
+        public virtual Sprint Sprint { get; set; }
 
         [NotMapped]
         public StoryValue Value { get; set; }
