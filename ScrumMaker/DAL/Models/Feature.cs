@@ -14,16 +14,18 @@ namespace DAL.Models
 
         [Required]
         [MaxLength(30)]
-        public string FeatureName{ get; set; }
+        public string FeatureName { get; set; }
 
         [MaxLength(500)]
         public string Description { get; set; }
 
         public FeatureState State { get; set; }
-        
+
         public string ProgramIncrement { get; set; }
-        
-        public User Owner { get; set; }
+
+        [ForeignKey ("User")]
+        public int? OwnerUserId { get; set; }
+        public virtual User Owner { get; set; }
 
         [Required]
         public bool Blocked { get; set; }

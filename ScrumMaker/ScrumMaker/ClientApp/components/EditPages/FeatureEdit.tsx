@@ -14,7 +14,9 @@ interface IFeatureFetchingState {
     Blocked: boolean;
     Stories: Story[];
     ProgramIncrement: string;
+    OwnerUserId: number;
     Owner: User;
+    Users: User[];
 }
 
 export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatureFetchingState> {
@@ -22,6 +24,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
     constructor() {
         super();
         this.LoadData();
+        this.getUsers();
         this.handleSave = this.handleSave.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
     }
@@ -31,6 +34,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
     readonly id: string = this.link.substr(this.link.lastIndexOf('/') + 1);
     private URL: string = "odata/feature?$expand=owner,stories($expand=team)&$filter=id eq " + this.id;
     private updateURL: string = "/odata/feature/";
+    private getUserURL: string = "odata/users/";
     
     public render() {
         let contents = this.isLoading
@@ -45,6 +49,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
     public renderContent() {
         return <div><h4>{this.EditName()}</h4>
             <h4>{this.OnDataReceived.bind(this)}</h4>
+            <h4>{this.setUsers.bind(this)}</h4>
         </div>
     }
 
@@ -56,6 +61,31 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
             })
     }
 
+    private getUsers() {
+        fetch(this.getUserURL, {
+            credentials: 'include',
+        })
+            .then(response => response.json() as any)
+            .then(data => {
+                this.setUsers(data);
+            })
+    }
+
+    private setUsers(data: any) {
+        this.isLoading = false;
+        var userData = data['value'];
+        let users: User[] = [];
+        for (var i = 0; i < userData.length; i++) {
+            var user = new User(userData[i])
+            users.push(user);
+        }
+
+        this.setState(
+            {
+                Users : users
+        });
+    }
+
     private setFeatureData(currentFeature: Feature) {
         this.setState({
             FeatureName: currentFeature.featureName,
@@ -64,7 +94,8 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
             Blocked: currentFeature.blocked,
             Stories: currentFeature.stories,
             ProgramIncrement: currentFeature.programIncrement,
-            Owner: currentFeature.owner
+            Owner: currentFeature.owner,
+            OwnerUserId: currentFeature.owner.userId
         });
     }
 
@@ -126,15 +157,12 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
             </div>
             <div className="text-left">
                 <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Owner:</h3>
-                <input
-                    name="Owner"
-                    type="text"
-                    value={this.state.Owner.login}
-                    onChange={this.handleInputChange} />
+                {this.renderUsers()}
+
             </div>
             <div className="text-left">
                 <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>State:</h3>
-            {this.renderSelectOptions()}
+            {this.renderStates()}
             </div>
             <div className="text-left">
                 <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Program increment:</h3>
@@ -151,7 +179,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
         </form>
     }
 
-    private renderSelectOptions() {
+    private renderStates() {
         let names: string[] = [];
         for (let iterator in State) {
             if (!parseInt(iterator))
@@ -171,6 +199,21 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
         </select>
     }
 
+    private renderUsers() {
+        let items: JSX.Element[] = [];
+        var users = this.state.Users;
+        for (var i = 0; i < users.length; i++) {
+            items.push(<option key={i + 1} value={users[i].userId}>{users[i].login}</option>);
+        }
+
+        return <select
+            value={this.state.OwnerUserId}
+            name="OwnerUserId"
+            onChange={this.handleInputChange}>
+            {items}
+        </select>
+    }
+
     private handleSave(event: any) {
         event.preventDefault();
         var form = new FormData(event.target);
@@ -180,7 +223,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
             Description: this.state.Description,
             Blocked: this.state.Blocked,
             ProgramIncrement: this.state.ProgramIncrement,
-            Owner: this.state.Owner
+            OwnerUserId: this.state.OwnerUserId
         };
 
         fetch(this.updateURL + this.id, {

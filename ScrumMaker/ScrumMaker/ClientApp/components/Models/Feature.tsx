@@ -26,7 +26,6 @@ export class Feature implements IDbModel {
         this.state = params.State;
         this.description = params.Description;
         this.blocked = params.Blocked;
-        
         this.programIncrement = params.ProgramIncrement;
 
         if (params.Stories) {
@@ -36,7 +35,6 @@ export class Feature implements IDbModel {
 
             this.stories = stories;
         }
-        
         this.owner = params.Owner;
         if (params.Owner) {
             this.owner = new User(params.Owner);
