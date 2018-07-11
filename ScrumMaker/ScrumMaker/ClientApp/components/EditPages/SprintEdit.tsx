@@ -63,7 +63,8 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
                     {this.getTeamSelector()}
                     {this.getStageSelector()}
                     {this.getReletedStoriesLink()}
-                    {this.getDescriptionInput()}
+                    {this.getReviewInput()}
+                    {this.getRetrospectiveInput()}
 
                     <div className="container-login100-form-btn">
                         <button className="login100-form-btn">Update</button>
@@ -85,7 +86,7 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
     getNameInput() {
         return (
             <div>
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Name:&nbsp;&nbsp;
+                <h3 className="hStyle">Name:&nbsp;&nbsp;
                 <input
                         className="form-control inline-block"
                         name="SprintName"
@@ -119,7 +120,7 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
 
         return (
             <div>
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Team:&nbsp;&nbsp;&nbsp;
+                <h3 className="hStyle">Team:&nbsp;&nbsp;&nbsp;
                 <select className="form-control inline-block">
                         <option key={1} value={1}>Foo</option>
                         <option key={2} value={2}>Bar</option>
@@ -132,12 +133,12 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
     getReletedStoriesLink() {
         return (
             <div>
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Stories:&nbsp;
+                <h3 className="hStyle">Stories:&nbsp;
                     <button className="form-control inline-block">
-                        <NavLink 
-                        //className="align-base"
-                        to={`../stories?filter=sprintid eq ${this.id}`} 
-                        activeClassName='active'>
+                        <NavLink
+                            //className="align-base"
+                            to={`../stories?filter=sprintid eq ${this.id}`}
+                            activeClassName='active'>
                             Go to related stories
                         </NavLink>
                     </button>
@@ -148,27 +149,42 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
     getStageSelector() {
         return (
             <div>
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>State:&nbsp;&nbsp;&nbsp;&nbsp;
+                <h3 className="hStyle">State:&nbsp;&nbsp;&nbsp;&nbsp;
                 {this.renderSelectOptions()}
                 </h3>
             </div>
         );
     }
-    getDescriptionInput() {
+    getReviewInput() {
         return (
             <div>
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Description:</h3>
+                <h3 className="hStyle">Review:</h3>
                 <textarea
-                    style={{ width: "400px", height: "300px", fontSize: 20, padding: "7px" }}
-                    className="fa-text-height"
+                    className="areaStyle"
+                   // className="fa-text-height"
                     name="Description"
                     type="text"
-                    value={this.state.item.review}
-                    onChange={this.handleInputChange} />
+                    //value={this.state.item.review}
+                    //onChange={this.handleInputChange} 
+                    />
             </div>
         )
     }
+    getRetrospectiveInput() {
+        return (
+            <div>
+                <h3 className="hStyle">Retrospective:</h3>
+                <textarea
+                    className="areaStyle fa-text-height"
 
+                    name="Description"
+                    type="text"
+                    value={this.state.item.retrospective}
+                    //onChange={this.handleInputChange} 
+                    />
+            </div>
+        )
+    }
 
     protected OnDataReceived(data: any) {
         this.isLoading = false;
