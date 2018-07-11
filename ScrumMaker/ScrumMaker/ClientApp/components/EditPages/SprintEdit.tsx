@@ -81,7 +81,7 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
                 <div className="text-left">
                     <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Stories:</h3>
                     <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base ">
-                        <NavLink to={`../stories?filter=sprint/id eq ${this.id}`} activeClassName='active'>
+                        <NavLink to={`../stories?filter=sprintid eq ${this.id}`} activeClassName='active'>
                             See stories which are in this sprint...
                 </NavLink>
                     </div>
