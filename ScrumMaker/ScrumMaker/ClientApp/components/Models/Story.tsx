@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps  } from 'react-router';
 import 'isomorphic-fetch';
 import { Team } from './Team';
 import { Link } from 'react-router-dom';
@@ -20,6 +20,8 @@ export class Story implements IDbModel{
     status: StoryStatus = 0;
     description: string = '';
     team: Team;
+    userId: number = 0;
+
 
     public constructor(params: any) {
 
@@ -31,6 +33,7 @@ export class Story implements IDbModel{
         this.name = params.Name;
         this.status = params.Status;
         this.description = params.Description;
+        this.userId = params.UserId;
         if (params.Team === null || params.Team === undefined)
             return;
 
