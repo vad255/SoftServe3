@@ -5,6 +5,7 @@ import { Story } from '../Models/Story';
 import { State } from '../Models/FeatureState';
 import { NavLink } from 'react-router-dom';
 import { IDbModel } from '../Models/IDbModel'
+import { SprintStage } from '../Models/SprintStage';
 
 
 interface ISprintEditState extends IEditState {
@@ -54,74 +55,119 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
     }
 
     public renderContent() {
-        return  (
-            <form onSubmit={this.handleSave} name="oldForm">
-                <div className="text-center">
-                    <h2 style={{ margin: "10px", padding: "5px", textAlign: "center" }}>"{this.state.item.name}" feature editing page</h2>
-                </div>
+        return (
+            <form style={{ margin: "10px", padding: "5px", textAlign: "center" }} onSubmit={this.handleSave} name="oldForm">
                 <div className="text-left">
-                    <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Name:</h3>
-                    <input
-                        className="input-lg"
-                        name="FeatureName"
-                        type="text"
-                        value={this.state.item.name}
-                        onChange={this.handleInputChange} />
-                </div>
-                <div className="text-left">
-                    <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Description:</h3>
-                    <textarea
-                        style={{ width: "400px", height: "300px", fontSize: 20, padding: "7px" }}
-                        className="fa-text-height"
-                        name="Description"
-                        type="text"
-                        value={this.state.item.review}
-                        onChange={this.handleInputChange} />
-                </div>
-                <div className="text-left">
-                    <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Stories:</h3>
-                    <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base ">
-                        <NavLink to={`../stories?filter=sprintid eq ${this.id}`} activeClassName='active'>
-                            See stories which are in this sprint...
-                </NavLink>
+                    {this.getHeader()}
+                    {this.getNameInput()}
+                    {this.getTeamSelector()}
+                    {this.getStageSelector()}
+                    {this.getReletedStoriesLink()}
+                    {this.getDescriptionInput()}
+
+                    <div className="container-login100-form-btn">
+                        <button className="login100-form-btn">Update</button>
                     </div>
-                </div>
-                <div className="text-left">
-                    <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Blocked:</h3>
-                    <input
-                        name="Blocked"
-                        type="checkbox"
-                        checked={true}
-                        onChange={this.handleInputChange} />
-                </div>
-                <div className="text-left">
-                    <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Owner:</h3>
-                    <input
-                        name="Owner"
-                        type="text"
-                        value={this.state.item.team.name}
-                        onChange={this.handleInputChange} />
-                </div>
-                <div className="text-left">
-                    <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>State:</h3>
-                    {this.renderSelectOptions()}
-                </div>
-                <div className="text-left">
-                    <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Program increment:</h3>
-                    <input
-                        className="input-lg"
-                        name="ProgramIncrement"
-                        type="text"
-                        value={this.state.item.review}
-                        onChange={this.handleInputChange} />
-                </div>
-                <div className="container-login100-form-btn">
-                    <button className="login100-form-btn">Update</button>
                 </div>
             </form>
         )
     }
 
+
+
+    getHeader() {
+        return <div className="text-center">
+            <h2> Sprint editing page</h2>
+            <br />
+            <h3>"{this.state.item.name}"</h3>
+        </div>;
+    }
+    getNameInput() {
+        return (
+            <div>
+                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Name:&nbsp;&nbsp;
+                <input
+                        className="form-control inline-block"
+                        name="SprintName"
+                        type="text"
+                        value={this.state.item.name}
+                        onChange={this.handleInputChange} />
+                </h3>
+            </div>
+
+        )
+    }
+    getTeamSelector() {
+        let names: string[] = [];
+        for (let iterator in SprintStage) {
+            if (!parseInt(iterator))
+                names.push(iterator.toString());
+        }
+
+        let items: JSX.Element[] = [];
+        for (var i = 0; i < names.length; i++) {
+            items.push(<option key={i + 1} value={names[i]}>{names[i]}</option>);
+        }
+
+        // return <select
+        //     value={this.state.item.stage}
+        //     name="State"
+        //     onChange={this.handleInputChange}>
+        //     {items} }
+        // </select>
+
+
+        return (
+            <div>
+                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Team:&nbsp;&nbsp;&nbsp;
+                <select className="form-control inline-block">
+                        <option key={1} value={1}>Foo</option>
+                        <option key={2} value={2}>Bar</option>
+                        <option key={3} value={3}>Baz</option>
+                    </select>
+                </h3>
+            </div>
+        );
+    }
+    getReletedStoriesLink() {
+        return (
+            <div>
+                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Stories:&nbsp;
+                    <button className="form-control inline-block">
+                        <NavLink 
+                        //className="align-base"
+                        to={`../stories?filter=sprintid eq ${this.id}`} 
+                        activeClassName='active'>
+                            Go to related stories
+                        </NavLink>
+                    </button>
+                </h3>
+            </div >
+        );
+    }
+    getStageSelector() {
+        return (
+            <div>
+                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>State:&nbsp;&nbsp;&nbsp;&nbsp;
+                {this.renderSelectOptions()}
+                </h3>
+            </div>
+        );
+    }
+    getDescriptionInput() {
+        return (
+            <div>
+                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Description:</h3>
+                <textarea
+                    style={{ width: "400px", height: "300px", fontSize: 20, padding: "7px" }}
+                    className="fa-text-height"
+                    name="Description"
+                    type="text"
+                    value={this.state.item.review}
+                    onChange={this.handleInputChange} />
+            </div>
+        )
+    }
 
 
     protected OnDataReceived(data: any) {
@@ -141,7 +187,7 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
 
     private renderSelectOptions() {
         let names: string[] = [];
-        for (let iterator in State) {
+        for (let iterator in SprintStage) {
             if (!parseInt(iterator))
                 names.push(iterator.toString());
         }
@@ -151,11 +197,12 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
             items.push(<option key={i + 1} value={names[i]}>{names[i]}</option>);
         }
 
-        return <select>
-            {/* // value={this.state.State}
-            // name="State"
-            // onChange={this.handleInputChange}>
-            // {items} */}
+        return <select
+            className="form-control inline-block"
+            value={this.state.item.stage}
+            name="State"
+            onChange={this.handleInputChange}>
+            {items} }
         </select>
     }
 
