@@ -60,8 +60,6 @@ export class StoryGrid extends React.Component<RouteComponentProps<{}>, StoryDat
                 }
 
             });
-
-
     }
 
 

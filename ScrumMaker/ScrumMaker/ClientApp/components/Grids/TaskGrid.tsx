@@ -5,6 +5,7 @@ import { TasksFiltersRow } from "../Filters/TasksFiltersRow";
 import { Grid } from './Grid';
 import { Task } from "../Models/Task";
 import { Login } from '../Login';
+import { IDbModel, IFetchState } from '../Models/IDbModel';
 
 
 interface TaskDataFetchingState {
@@ -13,38 +14,20 @@ interface TaskDataFetchingState {
 
 
 
-export class TaskGrid extends Grid<TaskDataFetchingState> {
+export class TaskGrid extends Grid{
 
     protected URL_BASE: string = 'odata/tasks';
     protected URL_EXPANDS: string = '?&expand=()';
     protected URL_ORDERING: string = '&$orderby=taskId';
     protected headerText: string = 'Tasks';
 
-    //protected pageSize = 5;
     constructor() {
         super();
         this.LoadData();
     }
 
-    protected OnDataReceived(data: any) {
-
-        this.isLoading = false;
-        //var tasks1 = (data as any[]).map(s => new Task(s));
-        //this.setState({ tasks: tasks1 });
-
-        //this.isLoading = false;
-        ////var tasks1 = (data as any[]).map(s => new Task(s));
-        console.log(data);
-
-        var tasksTemp = [];
-        for (var i = 0; i < data['value'].length; i++)
-            tasksTemp[i] = new Task(data["value"][i]);
-        this.setState({ tasks: tasksTemp });
-
-    }
-
-    protected getData() {
-        return this.state.tasks;
+    protected instantiate(item: any): IDbModel {
+        return new Task(item);
     }
 
     protected GetHeaderRow() {
@@ -65,14 +48,8 @@ export class TaskGrid extends Grid<TaskDataFetchingState> {
 
 
     protected GetFiltersRow() {
-
         return <TasksFiltersRow
             onApply={this.ApplyFiltersHandler.bind(this)}
             display={this.filteringOn} />;
-    }
-
-    protected GetBodyRows(): JSX.Element[] {
-        var i = 0;
-        return this.state.tasks.map(s => s.renderAsTableRow());
-    }   
+    }  
 }

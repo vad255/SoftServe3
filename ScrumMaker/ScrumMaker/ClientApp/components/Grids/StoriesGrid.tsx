@@ -4,20 +4,17 @@ import 'isomorphic-fetch';
 import { StoriesFiltersRow } from "../Filters/StoriesFiltersRow";
 import { Grid } from './Grid';
 import { Story } from "../Models/Story";
+import { IDbModel, IFetchState } from '../Models/IDbModel';
 
 
-interface IStoryDataState {
-    stories: Story[];
-}
-
-
-export class StoriesGrid extends Grid<IStoryDataState> {
+export class StoriesGrid extends Grid {
 
     protected URL_BASE: string = 'odata/stories';
     protected URL_EXPANDS: string = '?&$expand=feature';
     protected URL_ORDERING: string = '&$orderby=id';
     protected URL_FEATUREID_FILTER: string = 'feature/id eq ';
     protected headerText: string = 'Stories';
+    protected URL_EDIT: string = "EditStory/"
 
     constructor() {
         super();
@@ -30,19 +27,11 @@ export class StoriesGrid extends Grid<IStoryDataState> {
         this.LoadData();
     }
 
-    protected OnDataReceived(data: any) {
-        this.isLoading = false;
-        var storyTemp = [];
 
-        for (var i = 0; i < data['value'].length; i++)
-            storyTemp[i] = new Story(data['value'][i]);
-
-        this.setState({ stories: storyTemp });
+    protected instantiate(item: any): IDbModel {
+        return new Story(item);
     }
 
-    protected getData() {
-        return this.state.stories;
-    }
 
     protected GetHeaderRow() {
         return <tr>
@@ -64,13 +53,6 @@ export class StoriesGrid extends Grid<IStoryDataState> {
             onApply={this.ApplyFiltersHandler.bind(this)}
             display={this.filteringOn} />;
     }
-
-    protected GetBodyRows(): JSX.Element[] {
-        var i = 0;
-        return this.state.stories.map(s => s.renderAsTableRow());
-    }
-
-    
 }
 
 

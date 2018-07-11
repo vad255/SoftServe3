@@ -4,34 +4,27 @@ import 'isomorphic-fetch';
 import { Feature } from '../Models/Feature';
 import { FeaturesFiltersRow } from '../Filters/FeaturesFiltersRow'
 import { Grid } from './Grid'
+import { IDbModel } from '../Models/IDbModel';
 
 interface IFeatureDataFetchingState {
     features: Feature[];
 }
 
-export class FeatureGrid extends Grid<IFeatureDataFetchingState> {
+export class FeatureGrid extends Grid{
+    
     protected URL_BASE: string = 'odata/feature';
     protected URL_EXPANDS: string = '?$expand=stories($expand=team)';
     protected URL_ORDERING: string = '&$orderby=id';
     protected headerText: string = 'Feature';
-   // protected pageSize: number = 10;
-
+    protected URL_EDIT :string = "featureEdit/"
+    
     constructor() {
         super();
         this.LoadData();
     };
 
-    protected OnDataReceived(data: any) {
-        this.isLoading = false;
-        var featuresTemp = [];
-        for (var i = 0; i < data['value'].length; i++)
-            featuresTemp[i] = new Feature(data['value'][i]);
-
-        this.setState({ features: featuresTemp});
-    }
-
-    protected getData() {
-        return this.state.features;
+    protected instantiate(item: any): IDbModel {
+        return new Feature(item);
     }
 
     protected GetHeaderRow() {
@@ -62,10 +55,5 @@ export class FeatureGrid extends Grid<IFeatureDataFetchingState> {
             onApply={this.ApplyFiltersHandler.bind(this)}
             display={this.filteringOn}
         />
-    }
-
-    protected GetBodyRows() {
-        return this.state.features.map((f) => f.renderAsTableRow());
-    }
-        
+    }      
 }

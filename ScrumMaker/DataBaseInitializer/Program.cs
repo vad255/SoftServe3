@@ -8,7 +8,7 @@ namespace DataBaseInitializer
     class Program
     {
         public const string connectionString =
-            "Server=DESKTOP-VLOBHTQ;Database=ScrumMaker;Trusted_Connection=True;MultipleActiveResultSets=true";
+            "Server=.\\SQLEXPRESS;Database=ScrumMaker;Trusted_Connection=True;MultipleActiveResultSets=true";
 
         static void Main(string[] args)
         {
