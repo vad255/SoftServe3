@@ -57,5 +57,13 @@ namespace ScrumMaker.Controllers
             
             return Updated(feature);
         }
+
+        [AcceptVerbs("DELETE")]
+        public IActionResult Delete([FromODataUri] int key)
+        {
+            featureRepository.Delete(key);
+            featureRepository.Save();
+            return NoContent();
+        }
     }
 }
