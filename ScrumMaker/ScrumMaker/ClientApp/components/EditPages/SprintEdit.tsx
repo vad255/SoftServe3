@@ -33,7 +33,7 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
 
         this.LoadData();
         this.handleSave = this.handleSave.bind(this);
-        this.handleInputChange = this.handleInputChange.bind(this);
+        //this.handleInputChange = this.handleInputChange.bind(this);
     }
 
 
@@ -66,8 +66,8 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
                     {this.getReviewInput()}
                     {this.getRetrospectiveInput()}
 
-                    <div className="container-login100-form-btn">
-                        <button className="login100-form-btn">Update</button>
+                    <div className="text-center">
+                        <button className="btn">Update</button>
                     </div>
                 </div>
             </form>
@@ -92,7 +92,8 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
                         name="SprintName"
                         type="text"
                         value={this.state.item.name}
-                        onChange={this.handleInputChange} />
+                        //onChange={this.handleInputChange} 
+                        />
                 </h3>
             </div>
 
@@ -161,12 +162,11 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
                 <h3 className="hStyle">Review:</h3>
                 <textarea
                     className="areaStyle"
-                   // className="fa-text-height"
                     name="Description"
                     type="text"
-                    //value={this.state.item.review}
-                    //onChange={this.handleInputChange} 
-                    />
+                    value={this.state.item.review}
+                    onChange={this.handleReviewChange}
+                />
             </div>
         )
     }
@@ -180,8 +180,8 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
                     name="Description"
                     type="text"
                     value={this.state.item.retrospective}
-                    //onChange={this.handleInputChange} 
-                    />
+                    onChange={this.handleRetrospChange}
+                />
             </div>
         )
     }
@@ -191,12 +191,15 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
         let currentItem = new Sprint(data['value'][0]);
         this.setState({ item: currentItem })
     }
-
-    handleInputChange(event: any) {
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
-
+    handleReviewChange(event: any) {
+        let newState = this.state.item;
+        newState.review = event.target.value;
+        this.setState({ item: newState });
+    }
+    handleRetrospChange(event: any) {
+        let newState = this.state.item;
+        newState.retrospective = event.target.value;
+        this.setState({ item: newState });
     }
 
 
@@ -217,7 +220,8 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
             className="form-control inline-block"
             value={this.state.item.stage}
             name="State"
-            onChange={this.handleInputChange}>
+            //onChange={this.handleInputChange}
+            >
             {items} }
         </select>
     }
