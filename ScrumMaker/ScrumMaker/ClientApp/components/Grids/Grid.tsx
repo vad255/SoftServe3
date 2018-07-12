@@ -293,6 +293,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
     }
 
 
+
     private readQueryParams() {
         let params = this.GetUrlParams();
 

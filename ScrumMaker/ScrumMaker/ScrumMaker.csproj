@@ -54,6 +54,7 @@
     <None Remove="ClientApp\components\Models\Story.tsx" />
     <None Remove="ClientApp\components\Models\Task.tsx" />
     <None Remove="ClientApp\components\EditPages\FeatureEdit.tsx" />
+    <None Remove="ClientApp\components\MyCalendar.tsx" />
     <None Remove="ClientApp\components\Models\TaskState.tsx" />
     <None Remove="ClientApp\components\Models\TaskType.tsx" />
     <None Remove="ClientApp\components\SprintsGrid.tsx" />
@@ -95,6 +96,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\AddUser.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\MyCalendar.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Charts\Chart.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\EditStory.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Error.tsx" />

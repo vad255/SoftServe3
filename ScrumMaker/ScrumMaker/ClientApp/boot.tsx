@@ -11,6 +11,7 @@ import './css/selectStyle.css';
 import './css/tooltips.css';
 import './css/login.css';
 import './css/chat.css';
+import './css/calendar.css'
 import 'bootstrap';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
