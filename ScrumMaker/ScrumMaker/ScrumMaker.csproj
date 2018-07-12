@@ -34,6 +34,7 @@
 
   <ItemGroup>
     <None Remove="ClientApp\components\AddUser.tsx" />
+    <None Remove="ClientApp\components\Charts\Chart.tsx" />
     <None Remove="ClientApp\components\EditPages\EditStory.tsx" />
     <None Remove="ClientApp\components\EditUser.tsx" />
     <None Remove="ClientApp\components\Error.tsx" />
@@ -49,10 +50,13 @@
     <None Remove="ClientApp\components\Models\Defect.tsx" />
     <None Remove="ClientApp\components\Models\Feature.tsx" />
     <None Remove="ClientApp\components\Models\FeatureState.tsx" />
+    <None Remove="ClientApp\components\Models\ModelForChart.tsx" />
     <None Remove="ClientApp\components\Models\Story.tsx" />
     <None Remove="ClientApp\components\Models\Task.tsx" />
     <None Remove="ClientApp\components\EditPages\FeatureEdit.tsx" />
     <None Remove="ClientApp\components\MyCalendar.tsx" />
+    <None Remove="ClientApp\components\Models\TaskState.tsx" />
+    <None Remove="ClientApp\components\Models\TaskType.tsx" />
     <None Remove="ClientApp\components\SprintsGrid.tsx" />
     <None Remove="ClientApp\components\TeamGrid.tsx" />
     <None Remove="ClientApp\css\editUser.css" />
@@ -93,6 +97,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\AddUser.tsx" />
     <TypeScriptCompile Include="ClientApp\components\MyCalendar.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Charts\Chart.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\EditStory.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Error.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Filters\TasksFiltersRow.tsx" />
@@ -103,12 +108,15 @@
     <TypeScriptCompile Include="ClientApp\components\Grids\TaskGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Grids\DefectGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Grids\StoriesGrid.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Models\ModelForChart.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Models\Task.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Models\Feature.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Models\FeatureState.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Models\Defect.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Models\Story.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\FeatureEdit.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Models\TaskState.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Models\TaskType.tsx" />
     <TypeScriptCompile Include="ClientApp\components\SprintsGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Grids\TeamGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\css\editUser.css" />

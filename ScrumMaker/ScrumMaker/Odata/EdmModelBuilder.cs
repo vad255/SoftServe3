@@ -20,7 +20,8 @@ namespace ScrumMaker
                 builder.EntitySet<Sprint>("Sprints").EntityType.HasKey(s => s.Id);
                 builder.EntitySet<SprintStagesHistory>("SprintStagesLog").EntityType.HasKey(s => s.Id);
                 builder.EntitySet<Team>("Teams").EntityType.HasKey(t => t.Id);
-                builder.EntitySet<User>("Users");
+                builder.EntitySet<User>("Users").EntityType.HasKey(u => u.UserId);
+                builder.EntitySet<Role>("Roles").EntityType.HasKey(r => r.RoleId);
                 builder.EntitySet<Feature>("Feature").EntityType.HasKey(f => f.Id);
                 builder.EntitySet<Story>("Stories").EntityType.HasKey(k => k.Id);
                 builder.EntitySet<Defect>("Defects").EntityType.HasKey(k => k.DefectId);

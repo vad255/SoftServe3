@@ -28,6 +28,7 @@ using ScrumMaker.Controllers.Chatting;
 using BL;
 using BL.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using BL.Chart;
 
 namespace ScrumMaker
 {
@@ -63,12 +64,20 @@ namespace ScrumMaker
                 };
             });
 
-            string connectionStr = Configuration.GetConnectionString("Pasha");
+            string connectionStr = Configuration.GetConnectionString("Viktor");
 
 
             
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
 
+            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+            services.AddScoped(typeof(ISprintManager), typeof(SprintManager));
+            services.AddScoped(typeof(IFeaturesManager), typeof(FeaturesManager));
+            services.AddScoped(typeof(IDefectsManager), typeof(DefectsManager));
+            services.AddScoped(typeof(IUserManager), typeof(UserManager));
+            services.AddScoped(typeof(ITasksManager), typeof(TasksManager));
+            services.AddScoped(typeof(IStoriesManager), typeof(StoriesManager));
+            services.AddScoped(typeof(IChartManager), typeof(ChartManager));
             ConfigureDI(services);
 
             services.AddOData();

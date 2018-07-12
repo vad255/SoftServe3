@@ -1,41 +1,36 @@
 ﻿import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
-import { StoriesFiltersRow } from "../Filters/StoriesFiltersRow";
 import { Grid } from './Grid';
-import { Story } from "../Models/Story";
+import { Story, StoryStatus } from "../Models/Story";
+import { IDbModel } from '../Models/IDbModel';
 
 
-interface IStoryDataState {
-    stories: Story[];
-}
+import { FiltersManager } from '../Filters/FiltersManager';
+import { TextFilter } from '../Filters/TextFilter'
+import { IntFilter } from '../Filters/IntFilter'
+import { EnumFilter } from '../Filters/EnumFilter'
+import { SprintStage } from '../Models/SprintStage'
+import { EmptyFilter } from '../Filters/EmptyFilter';
 
-
-export class StoriesGrid extends Grid<IStoryDataState> {
+export class StoriesGrid extends Grid {
 
     protected URL_BASE: string = 'odata/stories';
-    protected URL_EXPANDS: string = '?&expand=()';
+    protected URL_EXPANDS: string = '?&$expand=feature';
     protected URL_ORDERING: string = '&$orderby=id';
+    protected URL_FEATUREID_FILTER: string = 'feature/id eq ';
     protected headerText: string = 'Stories';
+    protected URL_EDIT: string = "EditStory/"
 
     constructor() {
         super();
-        this.LoadData();
     }
 
-    protected OnDataReceived(data: any) {
-        this.isLoading = false;
-        var storyTemp = [];
 
-        for (var i = 0; i < data['value'].length; i++)
-            storyTemp[i] = new Story(data['value'][i]);
-
-        this.setState({ stories: storyTemp });
+    protected instantiate(item: any): IDbModel {
+        return new Story(item);
     }
 
-    protected getData() {
-        return this.state.stories;
-    }
 
     protected GetHeaderRow() {
         return <tr>
@@ -53,17 +48,20 @@ export class StoriesGrid extends Grid<IStoryDataState> {
 
     protected GetFiltersRow() {
 
-        return <StoriesFiltersRow
+        let filetrs = [
+            new IntFilter({ filterKey: "id"}),
+            new TextFilter({ filterKey: "name"}),
+            new TextFilter({ filterKey: "description"}),
+            new EnumFilter({ filterKey: "status", enumType: StoryStatus})
+        ]
+
+        return <FiltersManager
+            filters={filetrs}
             onApply={this.ApplyFiltersHandler.bind(this)}
-            display={this.filteringOn} />;
+            display={this.filteringOn}
+            externalConstraints={this.customUrlFilters}
+            />
     }
-
-    protected GetBodyRows(): JSX.Element[] {
-        var i = 0;
-        return this.state.stories.map(s => s.renderAsTableRow());
-    }
-
-    
 }
 
 

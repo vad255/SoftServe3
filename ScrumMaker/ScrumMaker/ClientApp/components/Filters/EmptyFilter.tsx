@@ -4,7 +4,7 @@ import { Filter } from './Filter'
 
 export class EmptyFilter extends Filter {
     constructor() {
-        super({ filterKey: '', onFilterChanged: EmptyFilter.HandlerStub });
+        super({ filterKey: ''});
     }
 
 

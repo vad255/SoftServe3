@@ -1,0 +1,14 @@
+.hStyle {
+    margin: 10px;
+    padding: 5px;
+    color: green;
+}
+
+.areaStyle {
+    width: 100%;
+    padding: 7px;
+    font-size: 18px;
+    resize: none;
+    overflow: auto;
+    height: 12em;
+}

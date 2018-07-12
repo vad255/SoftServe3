@@ -16,8 +16,10 @@ import { TaskGrid } from './components/Grids/TaskGrid';
 import { FeatureEdit } from './components/EditPages/FeatureEdit';
 import { Error } from './components/Error';
 import { SimpleChat } from './components/Chats/SimpleChat'
+import { Chart } from './components/Charts/Chart'
 import { EditStory } from "./components/EditPages/EditStory";
 import { MyCalendar } from "./components/MyCalendar";
+import { SprintEdit } from './components/EditPages/SprintEdit';
 
 
 const LayoutRoute = ({ ...props }) => {
@@ -42,9 +44,10 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/tasks' component={TaskGrid} />
         <LayoutRoute path='/featureEdit' component={FeatureEdit} />
         <LayoutRoute path='/SimpleChat' component={SimpleChat} />
+        <LayoutRoute path='/Chart' component={Chart} />
         <LayoutRoute path='/EditStory' component={EditStory} />
         <LayoutRoute path='/Calendar' component={MyCalendar} />
-
+        <LayoutRoute path='/SprintEdit' component={SprintEdit} />
 
         <Route path='/login' component={Login} />
         <Route path='/Error' component={Error} />

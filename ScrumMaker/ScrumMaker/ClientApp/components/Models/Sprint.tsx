@@ -4,14 +4,10 @@ import 'isomorphic-fetch';
 import { Team } from './Team'
 import { SprintStage } from './SprintStage'
 import { SprintHistory } from './SprintHistory'
+import { IDbModel } from './IDbModel'
 
-enum DisplayMod {
-    read,
-    noData,
-    edit
-}
 
-export class Sprint {
+export class Sprint implements IDbModel {
     id: number = -1;
     name: string = '';
     stage: SprintStage = 0;
@@ -22,8 +18,6 @@ export class Sprint {
     review: string = '';
     retrospective: string = '';
     team: Team;
-
-    mod: DisplayMod = DisplayMod.noData;
 
     public constructor(params: any) {
         if (params === null || params === undefined) {
@@ -40,61 +34,40 @@ export class Sprint {
         this.review = params.Review;
         this.retrospective = params.Retrospective;
         this.team = new Team(params.Team);
-
-        this.mod = DisplayMod.read;
     }
 
     public toString(): string {
         return this.id.toString();
     }
 
-    public render() {
-        switch (this.mod) {
-            case DisplayMod.read:
-                return this.renderAsTableRow();
+    public toArray(): any[] {
 
-            //case DisplayMod.edit:
-            //    return this.renderAsInput();
+        let elements: any[] = [
+            this.id,
+            this.name,
+            this.team != undefined ? this.team.renderAsMenu() : "",
+            this.stage,
+            <div className='align-base m-tooltip'> {this.cutStirng(this.review, 15)}
+                <span className="m-tooltiptext"> {this.review}</span>
+            </div>,
+            this.history.renderAsMenu(),
+            <div className='align-base m-tooltip'>{this.cutStirng(this.retrospective, 15)}
+                <span className="m-tooltiptext">{this.retrospective}</span>
+            </div>
+        ]
 
-            case DisplayMod.noData:
-                return (null);
-
-        }
-        return <form><text>Hello</text><button>Submit</button></form>
-
+        return elements;
+    }
+    getId() {
+        return this.id
     }
 
-    public renderAsTableRow() {
-        return <tr key={this.id}>
-            <td className="align-base">{this.id}</td>
-            <td className="align-base">{this.name}</td>
-            <td className="align-base">{this.team.renderAsMenu()}</td>
-            <td className="align-base">{this.stage}</td>
-            <td className="align-base">
-                <div className='align-base m-tooltip'>{this.cutStirng(this.review, 15)}
-                    <span className="m-tooltiptext">{this.review}</span>
-                </div>
-            </td>
-            <td className="align-base">{this.history.renderAsMenu()}</td>
-            <td className="align-base">
-                <div className='align-base m-tooltip'>{this.cutStirng(this.retrospective, 15)}
-                    <span className="m-tooltiptext">{this.retrospective}</span>
-                </div>
-            </td>
-            <td className="align-base">
-                <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base ">
-                    <span className="glyphicon glyphicon-edit dark" aria-hidden="true"></span>
-                </div>
-                &nbsp;&nbsp;
-                <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base">
-                    <span className="glyphicon glyphicon-trash dark" aria-hidden="true"></span>
-                </div>
-            </td>
-        </tr>;
-    }
 
     private cutStirng(str: string, targetLength: number): string {
-        let s = new String(' ');
+
+        if (str === null || str === undefined)
+            return "";
+
         if (targetLength >= str.length)
             return str;
 

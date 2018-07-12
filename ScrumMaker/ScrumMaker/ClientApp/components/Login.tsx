@@ -61,7 +61,8 @@ export class Login extends React.Component<RouteComponentProps<any>, LoginViewMo
                                 </div>
                                 <div className="wrap-input100 validate-input m-b-18" data-validate="Password is required">
                                     <span className="label-input100">Password</span>
-                                    <input className="input100" type="password" name="password" placeholder="Enter password" defaultValue={this.state.password} required />                                    <span className="focus-input100" />
+                                    <input className="input100" type="password" name="password" placeholder="Enter password" defaultValue={this.state.password} required />
+                                    <span className="focus-input100" />
                                 </div>
                                 <div className="flex-sb-m w-full p-b-30">
                                     <div className="contact100-form-checkbox">

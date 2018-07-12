@@ -11,19 +11,19 @@ export class IntFilter extends Filter {
     filteringString: string = '';
 
     public Reset(): void {
-        (document.getElementById(this.state.filterKey + "Filter") as any).value = '';
+        (document.getElementById(this.filterKey + "Filter") as any).value = '';
         this.filteringString = '';
-        this.state.onFilterChanged(this.state.filterKey, this.filteringString);
+        this.onFilterChanged(this.filterKey, this.filteringString);
     }
 
     private OnChangeHandler(e: any) {
-        this.filteringString = 'contains(cast(' + this.state.filterKey + ', \'Edm.String\'), \'' + e.target.value + '\')'
-        this.state.onFilterChanged(this.state.filterKey, this.filteringString);
+        this.filteringString = 'contains(cast(' + this.filterKey + ', \'Edm.String\'), \'' + e.target.value + '\')'
+        this.onFilterChanged(this.filterKey, this.filteringString);
     }
 
     public render() {
         return <input
-            id={this.state.filterKey + "Filter"}
+            id={this.filterKey + "Filter"}
             type="text"
             onChange={((e: any) => this.OnChangeHandler(e)).bind(this)}/>
     }

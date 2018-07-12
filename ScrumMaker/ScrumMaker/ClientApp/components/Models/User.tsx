@@ -3,9 +3,9 @@ import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { Role } from './Role';
 import { Team } from './Team';
+import { IDbModel } from './IDbModel'
 
-export class User extends React.Component {
-
+export class User implements IDbModel {
     empty: boolean = true;
     userId: number = -1;
     login: string = '';
@@ -18,8 +18,6 @@ export class User extends React.Component {
 
 
     public constructor(params: any) {
-
-        super(params);
 
         if (params === null || params === undefined) {
             return;
@@ -51,23 +49,21 @@ export class User extends React.Component {
             </ul>
         </li>
     }
-    public renderAsTableRow() {
-        return <tr key={this.userId}>
-            <td className="align-base">{this.userId}</td>
-            <td className="align-base">{this.login}</td>
-            <td className="align-base">{this.password}</td>
-            <td className="align-base">{this.team.renderAsMenu()}</td>
-            <td className="align-base">{this.activity ? "true" : "false"}</td>
-            <td className="align-base">{this.role.name}</td>
-            <td className="align-base">
-                <div id={this.userId.toString()} role="button" className="btn btn-sq-xs align-base ">
-                    <span className="glyphicon glyphicon-edit dark" aria-hidden="true"></span>
-                </div>
-                &nbsp;&nbsp;
-                <div id={this.userId.toString()} role="button" className="btn btn-sq-xs align-base">
-                    <span className="glyphicon glyphicon-trash dark" aria-hidden="true"></span>
-                </div>
-            </td>
-        </tr>;
+
+
+    getId(): number {
+        return this.userId;
+    }
+    toArray(): any[] {
+        let elements: any[] = [
+            this.userId,
+            this.login,
+            this.password,
+            this.team.renderAsMenu(),
+            this.activity ? "true" : "false",
+            this.role.name
+        ]
+
+        return elements;
     }
 }

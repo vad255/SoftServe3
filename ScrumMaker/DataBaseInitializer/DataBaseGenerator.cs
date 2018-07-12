@@ -72,6 +72,13 @@ namespace DataBaseInitializer
                     {
                         Role = _dbRoles.GetById(1),
                         Activity = true,
+                        Login = "admin",
+                        Password = "admin"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(1),
+                        Activity = true,
                         Login = "Ivan.Nesterenko@gmail.com",
                         Password = "INadmin2018"
                     },
@@ -562,7 +569,7 @@ namespace DataBaseInitializer
                         Name = "Grids",
                         Team = _dbTeams.GetById(1),
                         Description = "create grids for all models. Each grid should have columns described in the model. Also add bootstrap styles",
-                        AssignedTo = _dbUsers.GetById(2),
+                        User = _dbUsers.GetById(2),
                         Status = StoryStatus.InProgress,
                         Defects = _dbDefects.GetAll().Where(d => d.DefectId < 8).ToList()
         },
@@ -571,7 +578,7 @@ namespace DataBaseInitializer
                         Name = "Login page",
                         Team = _dbTeams.GetById(2),
                         Description = "login page has inputs for login and password, an image on backgroud, sign in and sign up buttons",
-                        AssignedTo = _dbUsers.GetById(9),
+                        User = _dbUsers.GetById(9),
                         Status = StoryStatus.ReadyToStart,
                         Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList()
                     },
@@ -580,7 +587,7 @@ namespace DataBaseInitializer
                         Name = "DataBase",
                         Team = _dbTeams.GetById(3),
                         Description = "Sql database with code first model.",
-                        AssignedTo = _dbUsers.GetById(3),
+                        User = _dbUsers.GetById(3),
                         Status = StoryStatus.Accepted,
                         Defects = _dbDefects.GetAll().Where(d => d.DefectId < 8).ToList()
                     },
@@ -588,7 +595,7 @@ namespace DataBaseInitializer
                     { Name = "Clients page",
                         Team = _dbTeams.GetById(4),
                         Description = "This page should show all clients with possibilities add new client, delete some client",
-                        AssignedTo = _dbUsers.GetById(10),
+                        User = _dbUsers.GetById(10),
                         Status = StoryStatus.PendingApproval,
                         Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList()
                     },
@@ -597,7 +604,7 @@ namespace DataBaseInitializer
                     Name = "Taxes page",
                     Team = _dbTeams.GetById(5),
                     Description = "This page has info about client's taxes.",
-                    AssignedTo = _dbUsers.GetById(4),
+                    User = _dbUsers.GetById(4),
                     Status = StoryStatus.InProgress,
                     Defects = _dbDefects.GetAll().Where(d => d.DefectId < 8).ToList()
                 },
@@ -606,7 +613,7 @@ namespace DataBaseInitializer
                     Name = "Odata",
                     Team = _dbTeams.GetById(1),
                     Description = "Every api controller has to use odata requests",
-                    AssignedTo = _dbUsers.GetById(5),
+                    User = _dbUsers.GetById(5),
                     Status = StoryStatus.TestComplete,
                     Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList()
                 },
@@ -615,7 +622,7 @@ namespace DataBaseInitializer
                     Name = "Main window View",
                     Team = _dbTeams.GetById(2),
                     Description = "Cantains home page with general description of application and main links.",
-                    AssignedTo = _dbUsers.GetById(11),
+                    User = _dbUsers.GetById(11),
                     Status = StoryStatus.Accepted,
                     Defects = _dbDefects.GetAll().Where(d => d.DefectId < 8).ToList()
                 },
@@ -624,7 +631,7 @@ namespace DataBaseInitializer
                     Name = "Navigation Menu",
                     Team = _dbTeams.GetById(3),
                     Description = "Should be a popup menu, with main button and links inside",
-                    AssignedTo = _dbUsers.GetById(6),
+                    User = _dbUsers.GetById(6),
                     Status = StoryStatus.InProgress,
                     Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList()
                 },
@@ -633,7 +640,7 @@ namespace DataBaseInitializer
                     Name = "User Error Page",
                     Team = _dbTeams.GetById(4),
                     Description = "contains a link to the home page",
-                    AssignedTo = _dbUsers.GetById(12),
+                    User = _dbUsers.GetById(12),
                     Status = StoryStatus.PendingApproval,
                     Defects = _dbDefects.GetAll().Where(d => d.DefectId < 8).ToList()
                 },
@@ -642,7 +649,7 @@ namespace DataBaseInitializer
                     Name = "Exporting json file",
                     Team = _dbTeams.GetById(5),
                     Description = "there should be a possibility to get json file in client page. It will contain info about client.",
-                    AssignedTo = _dbUsers.GetById(7),
+                    User = _dbUsers.GetById(7),
                     Status = StoryStatus.DevComplete,
                     Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList()
                 }
@@ -659,52 +666,67 @@ namespace DataBaseInitializer
             {
                     new ScrumTask()
                     {
-                        Name = _dbStories.GetById(1),
-                        Description = "Add bootstrap styles to all buttons",
-                        AssignedTo = _dbUsers.GetById(2),
-                        Blocked = "NO", ActualHours = 48,
-                        PlannedHours = 72, RemainingHours = 96,
-                        Type = "medium", State = "in progress",
+                        Summary = "SVN, Project Page",
+                        Story = _dbStories.GetById(1),
+                        Description = "Set-up SVN, project folders, SharePoint, project page",
+                        User = _dbUsers.GetById(2),
+                        Blocked =  false,
+                        PlannedHours = 72,
+                        Started = new DateTime(2018,7,6,12,45,30),
+                        Completed =new DateTime(2018,7,7,18,45,30),
+                        Type = "Coding", State = "ToDo",
                         WorkNotes = "This task should be done in 72 hours"
                     },
                     new ScrumTask()
                     {
-                        Name = _dbStories.GetById(2),
-                        Description = "Add filters to all columns in grids",
-                        AssignedTo = _dbUsers.GetById(9),
-                        Blocked = "NO", ActualHours = 48,
-                        PlannedHours = 72, RemainingHours = 96,
-                        Type = "medium", State = "in progress",
+                        Summary = "Add validation to enteties",
+                        Story = _dbStories.GetById(2),
+                        Description = "Validation saving when saving",
+                        User = _dbUsers.GetById(9),
+                        Blocked =  false,
+                        PlannedHours = 72,
+                        Started = new DateTime(2018,7,6,12,45,30),
+                        Completed =new DateTime(2018,7,7,18,45,30),
+                        Type = "Coding", State = "InProgress",
                         WorkNotes = "This task should be done in 48 hours"
                     },
                     new ScrumTask()
                     {
-                        Name = _dbStories.GetById(3),
-                        Description = "Add new Button to save data",
-                        AssignedTo = _dbUsers.GetById(3),
-                        Blocked = "NO", ActualHours = 48,
-                        PlannedHours = 72, RemainingHours = 96,
-                        Type = "medium", State = "in progress",
+                        Summary = "Manual tests",
+                        Story = _dbStories.GetById(3),
+                        Description = "Run manual tests",
+                        User = _dbUsers.GetById(3),
+                        Blocked =  false,
+                        PlannedHours = 72,
+                        Started = new DateTime(2018,7,6,12,45,30),
+                        Completed =new DateTime(2018,7,7,18,45,30),
+                        Type = "Documentation", State = "ToDo",
                         WorkNotes = "This task should be done in 24 hours"
                     },
                       new ScrumTask()
                      {
-                        Name = _dbStories.GetById(4),
-                        Description = "Change background image",
-                        AssignedTo = _dbUsers.GetById(10),
-                        Blocked = "NO", ActualHours = 48,
-                        PlannedHours = 72, RemainingHours = 96,
-                     Type = "medium", State = "in progress",
-                      WorkNotes = "This task should be done in 48 hours"
+                        Summary = "User docment draft review",
+                        Story = _dbStories.GetById(4),
+                        Description = "User docment draft review",
+                        User = _dbUsers.GetById(10),
+                        Blocked =  false,
+                        PlannedHours = 72,
+                        Started = new DateTime(2018,7,6,12,45,30),
+                        Completed =new DateTime(2018,7,7,18,45,30),
+                        Type = "Documentation", State = "Done",
+                        WorkNotes = "This task should be done in 48 hours"
                       },
                        new ScrumTask()
                        {
-                       Name = _dbStories.GetById(9),
-                       Description = "write a class that checks the connection string",
-                       AssignedTo = _dbUsers.GetById(4),
-                       Blocked = "NO", ActualHours = 48,
-                       PlannedHours = 72, RemainingHours = 96,
-                       Type = "medium", State = "in progress",
+                       Summary = "Automated tests",
+                       Story = _dbStories.GetById(9),
+                       Description = "Create automated tests",
+                       User = _dbUsers.GetById(4),
+                       Blocked =  false,
+                       PlannedHours = 72,
+                       Started = new DateTime(2018,7,6,12,45,30),
+                       Completed =new DateTime(2018,7,7,18,45,30),
+                       Type = "Testing", State = "Done",
                        WorkNotes = "This task should be done in 72 hours"
                        }
             };
@@ -713,10 +735,13 @@ namespace DataBaseInitializer
 
         }
 
+
         public static void FillFeaturesData()
         {
             _dbFeatures = new Repository<Feature>(_context);
-
+            var firstUser = _dbUsers.GetAll().FirstOrDefault();
+            var users = _dbUsers.GetAll().ToList();
+            var counter = users.Count() - 1;
 
             Feature[] features = new Feature[]
             {
@@ -725,14 +750,20 @@ namespace DataBaseInitializer
                         Description = "Login page cantains buttons: sign in, sign up, fields to type data.",
                         Blocked = false, State = FeatureState.Accepted,
                         FeatureName = "Login Page",
-                        Stories = _dbStories.GetAll().Where(s => s.Id <= 2).ToList()
+                        Stories = _dbStories.GetAll().Where(s => s.Id <= 2).ToList(),
+                        Owner = users[counter],
+                        ProgramIncrement = "Login and registration page",
+                        OwnerUserId = 2
                     },
                     new Feature()
                     {
                         Description = "Contains the description about the company with photos",
                         Blocked = false, State = FeatureState.InProgress,
                         FeatureName = "Home Page",
-                        Stories = _dbStories.GetAll().Where(s => s.Id <= 4 && s.Id > 2).ToList()
+                        Stories = _dbStories.GetAll().Where(s => s.Id <= 4 && s.Id > 2).ToList(),
+                        Owner = users[counter-1],
+                        ProgramIncrement = "Home page",
+                        OwnerUserId = 3
                     },
                     new Feature()
                     {
@@ -740,21 +771,40 @@ namespace DataBaseInitializer
                         Blocked = false,
                         State = FeatureState.PendingApproval,
                         FeatureName = "Client Page",
-                        Stories = _dbStories.GetAll().Where(s => s.Id <= 6 && s.Id > 4).ToList()
+                        Stories = _dbStories.GetAll().Where(s => s.Id <= 6 && s.Id > 4).ToList(),
+                        Owner = users[counter-2],
+                        ProgramIncrement = "Home and client page",
+                        OwnerUserId = 6
                     },
                     new Feature()
                     {
                         Description = "there is all contact info and links ",
                         Blocked = false, State = FeatureState.TestComplete,
                         FeatureName = "Footer",
-                        Stories = _dbStories.GetAll().Where(s => s.Id <= 8 && s.Id > 6).ToList()
+                        Stories = _dbStories.GetAll().Where(s => s.Id <= 8 && s.Id > 6).ToList(),
+                        Owner = users[counter-3],
+                        ProgramIncrement = "Site with footer",
+                        OwnerUserId = 1
                     },
                     new Feature()
                     {
                         Description = "There is a navigation menu with links to all pages",
                         Blocked = false, State = FeatureState.TestComplete,
                         FeatureName = "Header",
-                        Stories = _dbStories.GetAll().Where(s => s.Id <= 10 && s.Id > 8).ToList()
+                        Stories = _dbStories.GetAll().Where(s => s.Id <= 10 && s.Id > 8).ToList(),
+                        Owner = users[counter-4],
+                        ProgramIncrement = "Site with header",
+                        OwnerUserId = 4
+                    },
+                    new Feature()
+                    {
+                        Description = "Create SCRUM dashboard",
+                        Blocked = false, State = FeatureState.TestComplete,
+                        FeatureName = "Board",
+                        Stories = _dbStories.GetAll().Where(s => s.Id <= 10 && s.Id > 8).ToList(),
+                        Owner = users[counter-5],
+                        ProgramIncrement = "SCRUMBoard",
+                        OwnerUserId = 31
                     }
             };
 
@@ -771,10 +821,7 @@ namespace DataBaseInitializer
                     new SprintStagesHistory()
                     {
                         Begined = DateTime.Today - new TimeSpan(10,0,0,0),
-                        Planned =  DateTime.Today - new TimeSpan(30,0,0,0),
-                        Initiated =  DateTime.Today - new TimeSpan(20,0,0,0),
-                        RetrospectiveDone =  DateTime.Today + new TimeSpan(14,0,0,0),
-                        ReviewDone =  DateTime.Today + new TimeSpan(10,0,0,0)
+                        Ended =  DateTime.Today + new TimeSpan(31,0,0,0)
                     }
             };
 

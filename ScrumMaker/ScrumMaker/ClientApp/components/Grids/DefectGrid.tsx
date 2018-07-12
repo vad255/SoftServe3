@@ -3,15 +3,19 @@ import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { Grid } from './Grid'
 import { Defect } from '../Models/Defect';
-import { DefectsFiltersRow } from '../Filters/DefectsFiltersRow'
+import { IDbModel } from '../Models/IDbModel';
 
-interface IDefectDataFetchingState {
-    defects: Defect[];
-}
+import { FiltersManager } from '../Filters/FiltersManager';
+import { TextFilter } from '../Filters/TextFilter'
+import { IntFilter } from '../Filters/IntFilter'
+import { EnumFilter } from '../Filters/EnumFilter'
+import { SprintStage } from '../Models/SprintStage'
+import { EmptyFilter } from '../Filters/EmptyFilter';
+import { DefectPriority } from '../Models/DefectPriority';
+import { DefectState } from '../Models/DefectState';
+import { DefectStatus } from '../Models/DefectStatus';
 
-export class DefectGrid extends Grid<IDefectDataFetchingState> {
-
-    
+export class DefectGrid extends Grid {
     protected URL_BASE: string = 'odata/defects';
     protected URL_EXPANDS: string = '?expand=()';
     protected URL_ORDERING: string = '&$orderby=DefectId';
@@ -19,21 +23,10 @@ export class DefectGrid extends Grid<IDefectDataFetchingState> {
 
     constructor() {
         super();
-        this.LoadData();       
     }
 
-    protected OnDataReceived(data: any) {
-        this.isLoading = false;
-        var defectsTemp = [];
-       
-        for (var i = 0; i < data['value'].length; i++)
-            defectsTemp[i] = new Defect(data['value'][i]);            
-
-        this.setState({ defects: defectsTemp });
-    }
-
-    protected getData() {
-        return this.state.defects;
+    protected instantiate(item: any): IDbModel {
+        return new Defect(item);
     }
 
     protected GetHeaderRow(): JSX.Element {
@@ -54,13 +47,22 @@ export class DefectGrid extends Grid<IDefectDataFetchingState> {
         </tr>;
     }
     protected GetFiltersRow(): JSX.Element {
-        return <DefectsFiltersRow
+        let filetrs = [
+            new IntFilter({ filterKey: "defectId"}),
+            new TextFilter({ filterKey: "name"}),
+            new TextFilter({ filterKey: "description"}),
+            new EnumFilter({ filterKey: "priority", enumType: DefectPriority}),
+            new EnumFilter({ filterKey: "status", enumType: DefectState}),
+            new EnumFilter({ filterKey: "status", enumType: DefectStatus}),
+            new TextFilter({ filterKey: "actualResults"}),
+            new TextFilter({ filterKey: "fixResults"}),
+        ]
+
+        return <FiltersManager
+            filters={filetrs}
             onApply={this.ApplyFiltersHandler.bind(this)}
             display={this.filteringOn}
-        />
+            externalConstraints={this.customUrlFilters}
+            />
     }
-    protected GetBodyRows(): JSX.Element[] {
-        return this.state.defects.map((s) => s.renderAsTableRow());
-    }   
-    
 }

@@ -3,15 +3,40 @@ import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { Story } from './Story';
 import { User } from './User';
+import { IDbModel } from './IDbModel'
+import { Login } from '../Login';
 
 
-export class Task {
+export class Task implements IDbModel{
+    getId(): number {
+        return this.taskId;
+    }
+    toArray(): any[] {
+        let elements: any[] = [
+            this.taskId,
+            this.summary,
+                <div className='align-base m-tooltip'>{this.cutStirng(this.description, 10)}
+                    <span className="m-tooltiptext">{this.description}</span>
+            </div>,
+            this.story.name,
+            this.plannedHours,
+            this.started.toLocaleString(),
+            this.completed.toLocaleString(),
+            this.type,
+            this.state,
+            this.user.login,
+        ]
+
+        return elements; 
+    }
 
     taskId: number = -1;
+    summary: string = '';
+    description: string = '';
     storyId: number = -1;
     plannedHours: number = -1;
-    remainingHours: number = -1;
-    actualHours: number = -1;
+    started: Date;
+    completed: Date;
     type: string = '';
     state: string = '';
     userId: number = -1;
@@ -29,41 +54,39 @@ export class Task {
             return;
         }
         this.taskId = params.TaskId;
+        this.summary = params.Summary;
+        this.description = params.Description;
         this.storyId = params.StoryId;
         this.plannedHours = params.PlannedHours;
-        this.remainingHours = params.RemainingHours;
-        this.actualHours = params.ActualHours;
+        this.started = new Date(params.Started);
+        this.completed = new Date(params.Completed);
         this.type = params.Type;
         this.state = params.State;
         this.userId = params.UserId;
-        //this.story = new Story(params.Story);
-        //this.user = new User(params.User);
+        this.story = new Story(params.Story);
+        this.user = new User(params.User);
+
 
     }
     public toString(): string {
         return this.taskId.toString();
     }
 
+    private cutStirng(str: string, targetLength: number): string {
+        let s = new String(' ');
+        if (targetLength >= str.length)
+            return str;
 
+        if (targetLength <= 0)
+            return "";
 
-    public renderAsTableRow(): JSX.Element {
-        return <tr key={this.taskId}>
-            <td className="align-base">{this.taskId}</td>            
-            <td className="align-base">{this.plannedHours}</td>
-            <td className="align-base">{this.remainingHours}</td>
-            <td className="align-base">{this.actualHours}</td>
-            <td className="align-base">{this.type}</td>            
-            <td className="align-base">{this.state}</td>
-            <td className="align-base">
-                <div id={this.taskId.toString()} role="button" className="btn btn-sq-xs align-base ">
-                    <span className="glyphicon glyphicon-edit dark" aria-hidden="true"></span>
-                </div>
-                &nbsp;&nbsp;
-                <div id={this.taskId.toString()} role="button" className="btn btn-sq-xs align-base">
-                    <span className="glyphicon glyphicon-trash dark" aria-hidden="true"></span>
-                </div>
-            </td>
-        </tr>;
+        if (targetLength < 4)
+            return str.substring(0, targetLength);
+
+        if (targetLength < 7)
+            return str.substring(0, targetLength - 2) + "..";
+
+        return str.substring(0, targetLength - 3) + "...";
     }
 }
 

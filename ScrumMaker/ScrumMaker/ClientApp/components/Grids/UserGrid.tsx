@@ -1,20 +1,18 @@
 ﻿import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { User } from '../Models/User';
-import { Filter, IFilterConfiguration } from '../Filters/Filter'
+import { Grid } from './Grid';
+import { IDbModel, IFetchState } from '../Models/IDbModel';
+
+import { FiltersManager } from '../Filters/FiltersManager';
 import { TextFilter } from '../Filters/TextFilter'
 import { IntFilter } from '../Filters/IntFilter'
 import { EnumFilter } from '../Filters/EnumFilter'
-import { BoolFilter } from '../Filters/BoolFilter'
-import { Grid } from './Grid';
-import { UsersFiltersRow } from '../Filters/UsersFilterRow';
+import { SprintStage } from '../Models/SprintStage'
+import { EmptyFilter } from '../Filters/EmptyFilter';
+import { BoolFilter } from '../Filters/BoolFilter';
 
-interface UserDataFetchingState {
-    users: User[];
-}
-
-export class UserGrid extends Grid<UserDataFetchingState> {
+export class UserGrid extends Grid {
 
     protected headerText: string = 'Users';
     protected URL_BASE: string = 'odata/users';
@@ -23,20 +21,12 @@ export class UserGrid extends Grid<UserDataFetchingState> {
 
     constructor() {
         super();
-        this.state = { users: [] };
-
-        this.LoadData();
+        this.state = { items: [] };
     }
 
 
-    protected OnDataReceived(data: any): void {
-        this.isLoading = false;
-
-        var usersTemp = [];
-        for (var i = 0; i < data['value'].length; i++) {
-            usersTemp[i] = new User(data["value"][i]);
-        }
-        this.setState({ users: usersTemp });
+    protected instantiate(item: any): IDbModel {
+        return new User(item);
     }
 
     protected onCatch(e: any) {
@@ -45,32 +35,35 @@ export class UserGrid extends Grid<UserDataFetchingState> {
 
     protected GetHeaderRow(): JSX.Element {
         return <tr>
-                <th className="well menu_links col-md-1" onClick={() => this.OrderBy("userId")}><span className="nowrap">Database ID</span></th>
-                <th className="well menu_links col-md-1" onClick={() => this.OrderBy("login")}>Login</th>
-                <th className="well menu_links col-md-1" onClick={() => this.OrderBy("password")}>Password</th>
-                <th className="well menu_links col-md-1" onClick={() => this.OrderBy("teamId")}>TeamId</th>
-                <th className="well menu_links col-md-1" onClick={() => this.OrderBy("activity")}>Activity</th>
-                <th className="well menu_links col-md-1" onClick={() => this.OrderBy("roleId")}>RoleId</th>
-                <th className="well menu_links col-md-1">
-                    <div onClick={this.FilterButtonClick.bind(this)}>
-                        <span className="nowrap">Show Filters<span className="caret"></span></span>
-                    </div>
-                </th>
-            </tr>
-     ;
+            <th className="well menu_links col-md-1" onClick={() => this.OrderBy("userId")}><span className="nowrap">Database ID</span></th>
+            <th className="well menu_links col-md-1" onClick={() => this.OrderBy("login")}>Login</th>
+            <th className="well menu_links col-md-1" onClick={() => this.OrderBy("password")}>Password</th>
+            <th className="well menu_links col-md-1" onClick={() => this.OrderBy("teamId")}>TeamId</th>
+            <th className="well menu_links col-md-1" onClick={() => this.OrderBy("activity")}>Activity</th>
+            <th className="well menu_links col-md-1" onClick={() => this.OrderBy("roleId")}>RoleId</th>
+            <th className="well menu_links col-md-1">
+                <div onClick={this.FilterButtonClick.bind(this)}>
+                    <span className="nowrap">Show Filters<span className="caret"></span></span>
+                </div>
+            </th>
+        </tr>;
     }
     protected GetFiltersRow(): JSX.Element {
-        return <UsersFiltersRow
+        let filetrs = [
+            new IntFilter({ filterKey: "userId" }),
+            new TextFilter({ filterKey: "login" }),
+            new TextFilter({ filterKey: "password" }),
+            new TextFilter({ filterKey: "team/name" }),
+            new BoolFilter({ filterKey: "activity" }),
+            new TextFilter({ filterKey: "role/name" }),
+        ]
+
+        return <FiltersManager
+            filters={filetrs}
             onApply={this.ApplyFiltersHandler.bind(this)}
             display={this.filteringOn}
-        />
-    }
-
-    protected GetBodyRows(): JSX.Element[] {
-        return this.state.users.map(s => s.renderAsTableRow());
-    }
-    protected getData(): any[] {
-        return this.state.users;
+            externalConstraints={this.customUrlFilters}
+            />
     }
 }
 

@@ -4,9 +4,11 @@ import 'isomorphic-fetch';
 import { DefectPriority } from './DefectPriority'
 import { DefectState } from './DefectState'
 import { DefectStatus } from './DefectStatus'
+import { IDbModel } from './IDbModel'
 
 
-export class Defect {
+export class Defect implements IDbModel {
+
     defectId: number = -1;
     name: string = '';
     description: string = '';
@@ -18,8 +20,6 @@ export class Defect {
 
 
     public constructor(params: any) {
-
-        //  super(params);
 
         if (params === null || params === undefined) {
             return;
@@ -39,26 +39,24 @@ export class Defect {
         return this.defectId.toString();
     }
 
-    public renderAsTableRow(): JSX.Element {
-        return <tr key={this.defectId}>
-            <td className="align-base">{this.defectId}</td>
-            <td className="align-base">{this.name}</td>
-            <td className="align-base">{this.description}</td>
-            <td className="align-base">{this.priority}</td>
-            <td className="align-base">{this.state}</td>
-            <td className="align-base">{this.status}</td>
-            <td className="align-base">{this.actualResults}</td>
-            <td className="align-base">{this.fixResults}</td>
-            <td className="align-base">
-                <div id={this.defectId.toString()} role="button" className="btn btn-sq-xs align-base ">
-                    <span className="glyphicon glyphicon-edit dark" aria-hidden="true"></span>
-                </div>
-                &nbsp;&nbsp;
-                <div id={this.defectId.toString()} role="button" className="btn btn-sq-xs align-base">
-                    <span className="glyphicon glyphicon-trash dark" aria-hidden="true"></span>
-                </div>
-            </td>
-        </tr>;
+    public toArray(): any[] {
+
+        let elements: any[] = [
+            this.defectId,
+            this.name,
+            this.description,
+            this.priority,
+            this.state,
+            this.status,
+            this.actualResults,
+            this.fixResults
+        ]
+
+        return elements;
+    }
+
+    getId(): number {
+        return this.defectId;
     }
 }
 
