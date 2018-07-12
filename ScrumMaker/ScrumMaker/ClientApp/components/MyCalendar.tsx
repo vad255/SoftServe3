@@ -147,12 +147,4 @@ export class MyCalendar extends React.Component<RouteComponentProps<{}>, Calenda
             </div>
         );
     }
-
-    private leftCalendarBox(date: any) {
-
-    }
-
-    private rigthCalendarBox() {
-
-    }
 }
