@@ -142,7 +142,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
             <div className="text-left">
                 <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Stories:</h3>
                 <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base ">
-                    <NavLink to={`../stories?featureId=${this.id}`} activeClassName='active'>
+                    <NavLink to={`../stories?filter=feature/id eq ${this.id}`} activeClassName='active'>
                        See stories which are in this feature...
                     </NavLink>
                 </div>

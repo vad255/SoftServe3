@@ -1,11 +1,17 @@
 ﻿import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
-import { StoriesFiltersRow } from "../Filters/StoriesFiltersRow";
 import { Grid } from './Grid';
-import { Story } from "../Models/Story";
-import { IDbModel, IFetchState } from '../Models/IDbModel';
+import { Story, StoryStatus } from "../Models/Story";
+import { IDbModel } from '../Models/IDbModel';
 
+
+import { FiltersManager } from '../Filters/FiltersManager';
+import { TextFilter } from '../Filters/TextFilter'
+import { IntFilter } from '../Filters/IntFilter'
+import { EnumFilter } from '../Filters/EnumFilter'
+import { SprintStage } from '../Models/SprintStage'
+import { EmptyFilter } from '../Filters/EmptyFilter';
 
 export class StoriesGrid extends Grid {
 
@@ -18,13 +24,6 @@ export class StoriesGrid extends Grid {
 
     constructor() {
         super();
-        var url = new URL(window.location.href)
-        var featureId = url.searchParams.get("featureId")
-        if (featureId) {
-            this.customUrlFilters = this.URL_FEATUREID_FILTER + featureId
-        }
-
-        this.LoadData();
     }
 
 
@@ -49,9 +48,19 @@ export class StoriesGrid extends Grid {
 
     protected GetFiltersRow() {
 
-        return <StoriesFiltersRow
+        let filetrs = [
+            new IntFilter({ filterKey: "id"}),
+            new TextFilter({ filterKey: "name"}),
+            new TextFilter({ filterKey: "description"}),
+            new EnumFilter({ filterKey: "status", enumType: StoryStatus})
+        ]
+
+        return <FiltersManager
+            filters={filetrs}
             onApply={this.ApplyFiltersHandler.bind(this)}
-            display={this.filteringOn} />;
+            display={this.filteringOn}
+            externalConstraints={this.customUrlFilters}
+            />
     }
 }
 

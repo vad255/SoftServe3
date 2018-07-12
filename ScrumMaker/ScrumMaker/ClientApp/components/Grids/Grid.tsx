@@ -5,76 +5,99 @@ import { IDbModel, IFetchState } from '../Models/IDbModel';
 import { NavLink } from 'react-router-dom'
 import { Content } from 'react-bootstrap/lib/Tab';
 import { Filter } from '../Filters/Filter';
-import { ConfirmMadal, IModalState } from '../ConfirmModal'
-import { Thumbnail } from 'react-bootstrap';
+import { ConfirmMadal } from '../ConfirmModal'
+import { FiltersManager } from '../Filters/FiltersManager';
 
 
 export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFetchState> {
-    constructor() {
-        super();
-        this.isLoading = true;
-    }
 
-    protected abstract headerText: string;
-    private pageSize: number = 5;
     protected isLoading: boolean = true;
-
-
-    protected readonly URL_EDIT: string = "!!!NOT_IMPLEMENTED!!!/";
+    protected abstract headerText: string;
 
     protected readonly abstract URL_BASE: string;
     protected readonly abstract URL_EXPANDS: string;
-    protected urlFilters: string = '';
-    protected customUrlFilters: string = '';
     protected readonly abstract URL_ORDERING: string;
     private readonly URL_COUNT: string = '&$count=true';
-    private urlPaging: string = '&$top=' + this.pageSize;
+    protected readonly URL_EDIT: string = "!!!NOT_IMPLEMENTED!!!/";
+
+    protected readonly FILTER_MANAGER_REF = "FilterManager"
+    protected customUrlFilters: string = '';
+    protected filteringOn: boolean = false;
+    private urlFilters: string = '';
+    private urlPaging: string = "";
 
     private CurrentPage = 0;
-    private allCount = 0;
+    private totalCount = 0;
+    protected pageSize: number = 5;
+
     private lastOrderingArg: string = '';
     private lastOrderingDir: boolean = false;
-    protected filteringOn: boolean = false;
 
+    constructor() {
+        super();
+        this.recalcPagingUrl();
+        this.readQueryParams()
+        this.isLoading = true;
+    }
 
     public render() {
         let contents = this.isLoading
-            ? <p><em>Loading...</em></p>
-            : this.renderContent();
+            ? <tr><td colSpan={10}><p><em>Loading...</em></p></td></tr>
+            : this.GetBodyRows();
 
-        return <div>
-            <h1>{this.headerText}</h1>
-            {contents}
-        </div>
-    }
-    protected renderContent() {
         return (
             <div>
-                <table className='table table-scrum table-hover td-scrum'>
-                    <thead>
-                        {this.GetHeaderRow()}
-                        {this.GetFiltersRow()}
-                    </thead>
-                    <tbody>
-                        {this.GetBodyRows()}
-                    </tbody>
-                    <tfoot>
-                        {this.GetFooterRow()}
-                    </tfoot>
-                </table>
-                {this.GetDeleteConfirmModal()}
+                <h1>{this.headerText}</h1>
+                <div>
+                    <table className='table table-scrum table-hover td-scrum'>
+                        <thead>
+                            {this.GetHeaderRow()}
+                            {this.GetFiltersRow()}
+                        </thead>
+                        <tbody>
+                            {contents}
+                        </tbody>
+                        <tfoot>
+                            {this.GetFooterRow()}
+                        </tfoot>
+                    </table>
+                    {this.GetDeleteConfirmModal()}
+                </div>
             </div>
-        );
+        )
     }
+    public componentDidMount() {
+        let manager = this.refs[this.FILTER_MANAGER_REF] as FiltersManager
+        if (manager)
+            this.urlFilters = manager.GetFilteringQuery();
+        console.log(this.urlFilters);
 
-    protected LoadData() {
+        this.LoadData();
+    }
+    private LoadData() {
         fetch(this.getURL(), { credentials: 'include' })
             .then(response => response.json() as any)
             .then(data => {
-                this.allCount = data['@odata.count'];
+                this.totalCount = data['@odata.count'];
                 this.OnDataReceived(data);
             }).catch(e => this.onCatch(e));
     }
+
+
+    protected OnDataReceived(data: any): void {
+        this.isLoading = false;
+
+        let itemsTemp: IDbModel[] = [];
+        for (var i = 0; i < data['value'].length; i++)
+            itemsTemp[i] = this.instantiate(data["value"][i]);
+
+        this.setState({ items: itemsTemp });
+    }
+    protected onCatch(e: any) {
+        console.error(e);
+        //this.props.history.push("/Error")
+    }
+
     protected getURL() {
 
         let result = this.URL_BASE;
@@ -95,22 +118,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
         return result;
     }
-    protected OnDataReceived(data: any): void {
-        this.isLoading = false;
-
-        let itemsTemp: IDbModel[] = [];
-        for (var i = 0; i < data['value'].length; i++)
-            itemsTemp[i] = this.instantiate(data["value"][i]);
-
-        this.setState({ items: itemsTemp });
-    }
     protected abstract instantiate(item: any): IDbModel;
-
-    protected onCatch(e: any) {
-        console.error(e);
-        //   this.props.history.push("/Error")
-    }
-
 
     protected abstract GetHeaderRow(): JSX.Element;
     protected abstract GetFiltersRow(): JSX.Element;
@@ -118,11 +126,11 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         return this.state.items.map((s) => this.toGridItem(s.toArray(), s.getId()))
     }
     private GetFooterRow() {
-        if (this.allCount <= this.pageSize) {
+        if (this.totalCount <= this.pageSize) {
             return <tr></tr>
         }
         return <tr>
-            <td colSpan={8}>
+            <td colSpan={10}>
                 <div className="text-center">
                     <div role='button' className='btn btn-sq-xs align-base' onClick={this.firstPageClick.bind(this)}>
                         <span className="glyphicon glyphicon-step-backward dark"></span>
@@ -130,7 +138,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
                     <div role='button' className='btn btn-sq-xs align-base' onClick={this.previousPageClick.bind(this)}>
                         <span className="glyphicon glyphicon-chevron-left dark"></span>
                     </div>
-                    {Math.ceil(this.CurrentPage + 1)} of {Math.ceil(this.allCount / this.pageSize)}
+                    {Math.ceil(this.CurrentPage + 1)} of {Math.ceil(this.totalCount / this.pageSize)}
                     <div role='button' className='btn btn-sq-xs align-base' onClick={this.nextPageClick.bind(this)}>
                         <span className="glyphicon glyphicon-chevron-right dark"></span>
                     </div>
@@ -142,7 +150,6 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
             </td>
         </tr>;
     }
-
     private GetDeleteConfirmModal() {
         let title = "Are you sure you want to delete this item?";
 
@@ -152,6 +159,8 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
             title={title}
             id={"ConfirmDeleteDialog"} />
     }
+
+
 
     private firstPageClick() {
         this.CurrentPage = 0;
@@ -166,20 +175,21 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         }
     }
     private nextPageClick() {
-        if (this.CurrentPage < (this.allCount / this.pageSize) - 1) {
+        if (this.CurrentPage < (this.totalCount / this.pageSize) - 1) {
             this.CurrentPage++;
             this.recalcPagingUrl()
             this.LoadData();
         }
     }
     private lastPageClick() {
-        this.CurrentPage = Math.ceil((this.allCount / this.pageSize)) - 1;
+        this.CurrentPage = Math.ceil((this.totalCount / this.pageSize)) - 1;
         this.recalcPagingUrl();
         this.LoadData();
     }
-    private recalcPagingUrl() {
+    protected recalcPagingUrl() {
         this.urlPaging = '&$skip=' + (this.CurrentPage * this.pageSize) + '&$top=' + this.pageSize;
     }
+
 
 
     protected FilterButtonClick(e: any) {
@@ -197,8 +207,8 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         this.itemToDelete = id;
     }
     protected onDeleteConfirmed() {
-        if (this.CurrentPage == (Math.ceil(this.allCount / this.pageSize) - 1))
-            if (this.allCount % this.pageSize === 1) {
+        if (this.CurrentPage == (Math.ceil(this.totalCount / this.pageSize) - 1))
+            if (this.totalCount % this.pageSize === 1) {
                 this.CurrentPage--;
                 this.recalcPagingUrl();
             }
@@ -239,6 +249,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         );
     }
 
+
     protected OrderBy(arg: string) {
         try {
             let data = this.state.items;
@@ -259,7 +270,6 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
             alert(e);
         }
     }
-
     private SafeCompare(a: any, b: any, arg: string) {
         let aUndef = a === undefined || a === null || a[arg] === undefined || a[arg] === null;
         let bUndef = b === undefined || b === null || b[arg] === undefined || b[arg] === null;
@@ -275,11 +285,45 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
         return -1;
     }
-
     private Compare(a: any, b: any): number {
         if (typeof a === 'number' && typeof b === 'number')
             return a - b;
         else
             return a.toString().localeCompare(b.toString());
+    }
+
+
+    private readQueryParams() {
+        let params = this.GetUrlParams();
+
+        if (!params)
+            return;
+
+        console.log(params);
+
+        for (let iterator in params) {
+            this.customUrlFilters += params[iterator]
+        }
+        console.log("filter: " + this.customUrlFilters);
+
+    }
+    private GetUrlParams(): any[] {
+        let vars: any = {};
+        let queryBegin = window.location.href.indexOf('?')
+
+        if (queryBegin < 0)
+            return [];
+
+        let paramsSection = window.location.href.slice(queryBegin + 1);
+
+        let hashes = paramsSection.split("&");
+        let keyVal: string[] = [];
+        for (var i = 0; i < hashes.length; i++) {
+            keyVal = hashes[i].split('=');
+            if (!keyVal[0] || !keyVal[1])
+                return [];
+            vars[keyVal[0]] = keyVal[1];
+        }
+        return vars;
     }
 }

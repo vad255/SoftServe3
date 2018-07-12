@@ -49,25 +49,6 @@ export class User implements IDbModel {
             </ul>
         </li>
     }
-    public renderAsTableRow() {
-        return <tr key={this.userId}>
-            <td className="align-base">{this.userId}</td>
-            <td className="align-base">{this.login}</td>
-            <td className="align-base">{this.password}</td>
-            <td className="align-base">{this.team.renderAsMenu()}</td>
-            <td className="align-base">{this.activity ? "true" : "false"}</td>
-            <td className="align-base">{this.role.name}</td>
-            <td className="align-base">
-                <div id={this.userId.toString()} role="button" className="btn btn-sq-xs align-base ">
-                    <span className="glyphicon glyphicon-edit dark" aria-hidden="true"></span>
-                </div>
-                &nbsp;&nbsp;
-                <div id={this.userId.toString()} role="button" className="btn btn-sq-xs align-base">
-                    <span className="glyphicon glyphicon-trash dark" aria-hidden="true"></span>
-                </div>
-            </td>
-        </tr>;
-    }
 
 
     getId(): number {
