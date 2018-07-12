@@ -92,31 +92,29 @@ export abstract class Grid<S> extends React.Component<RouteComponentProps<{}>, S
         this.urlFilters = e;
         this.LoadData();
     }
-    protected RenderFooter() {
+    private RenderFooter() {
         if (this.allCount <= this.pageSize) {
             return <tr></tr>
         }
-        else {
-            return <tr>
-                <td colSpan={8}>
-                    <div className="text-center">
-                        <div role='button' className='btn btn-sq-xs align-base' onClick={this.FirstPageReceived.bind(this)}>
-                            <span className="glyphicon glyphicon-step-backward dark"></span>
-                        </div>
-                        <div role='button' className='btn btn-sq-xs align-base' onClick={this.NextPageReceivedLeft.bind(this)}>
-                            <span className="glyphicon glyphicon-chevron-left dark"></span>
-                        </div>
-                        {Math.ceil(this.CurrentPage + 1)} of {Math.ceil(this.allCount / this.pageSize)}
-                        <div role='button' className='btn btn-sq-xs align-base' onClick={this.NextPageReceivedRight.bind(this)}>
-                            <span className="glyphicon glyphicon-chevron-right dark"></span>
-                        </div>
-                        <div role='button' className='btn btn-sq-xs align-base' onClick={this.LastPageReceived.bind(this)}>
-                            <span className="glyphicon glyphicon-step-forward dark"></span>
-                        </div>
+        return <tr>
+            <td colSpan={8}>
+                <div className="text-center">
+                    <div role='button' className='btn btn-sq-xs align-base' onClick={this.firstPageClick.bind(this)}>
+                        <span className="glyphicon glyphicon-step-backward dark"></span>
                     </div>
-                </td>
-            </tr>;
-        }
+                    <div role='button' className='btn btn-sq-xs align-base' onClick={this.previousPageClick.bind(this)}>
+                        <span className="glyphicon glyphicon-chevron-left dark"></span>
+                    </div>
+                    {Math.ceil(this.CurrentPage + 1)} of {Math.ceil(this.allCount / this.pageSize)}
+                    <div role='button' className='btn btn-sq-xs align-base' onClick={this.nextPageClick.bind(this)}>
+                        <span className="glyphicon glyphicon-chevron-right dark"></span>
+                    </div>
+                    <div role='button' className='btn btn-sq-xs align-base' onClick={this.lastPageClick.bind(this)}>
+                        <span className="glyphicon glyphicon-step-forward dark"></span>
+                    </div>
+                </div>
+            </td>
+        </tr>;
     }
     private firstPageClick() {
         this.CurrentPage = 0;
@@ -203,7 +201,3 @@ export abstract class Grid<S> extends React.Component<RouteComponentProps<{}>, S
             return a.toString().localeCompare(b.toString());
     }
 }
-
-
-
-

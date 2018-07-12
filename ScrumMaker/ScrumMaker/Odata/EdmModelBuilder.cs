@@ -25,6 +25,7 @@ namespace ScrumMaker
                 builder.EntitySet<Story>("Stories").EntityType.HasKey(k => k.Id);
                 builder.EntitySet<Defect>("Defects").EntityType.HasKey(k => k.DefectId);
                 builder.EntitySet<ScrumTask>("Tasks").EntityType.HasKey(k => k.TaskId);
+                builder.EntitySet<Calendar>("Calendar").EntityType.HasKey(c => c.CalendarId);
 
                 _model = builder.GetEdmModel();
             }
