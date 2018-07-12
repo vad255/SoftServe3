@@ -13,14 +13,14 @@ namespace DAL.Models
         public DateTime Date { get; set; }
 
         public int? UserId { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
 
         public int? TeamId { get; set; }
-        public Team Team { get; set; }
+        public virtual Team Team { get; set; }
 
         [Required]
         public int MeetingId { get; set; }
-        public Meetings Meetings { get; set; }
+        public virtual Meetings Meetings { get; set; }
         [Required]
         public int Hours { get; set; }
     }
