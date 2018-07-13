@@ -17,6 +17,7 @@ export class Sprint implements IDbModel {
     dailyScrums: string = '';
     review: string = '';
     retrospective: string = '';
+    teamId: number = -1;
     team: Team;
 
     public constructor(params: any) {
@@ -33,6 +34,7 @@ export class Sprint implements IDbModel {
         this.dailyScrums = params.DailyScrums;
         this.review = params.Review;
         this.retrospective = params.Retrospective;
+        this.teamId  = params.TeamId;
         this.team = new Team(params.Team);
     }
 

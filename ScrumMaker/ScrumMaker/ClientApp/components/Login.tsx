@@ -34,6 +34,8 @@ export class Login extends React.Component<RouteComponentProps<any>, LoginViewMo
             body: data
         }).then(res => res.json())
             .then(data => {
+                console.log(data.access_token);
+
                 document.cookie = `Authorization=${data.access_token};max-age=` + data.expires + ';'
             }
             )

@@ -30,6 +30,8 @@ namespace DAL.Models
 
         public string Retrospective { get; set; }
 
+        [ForeignKey("Team")]
+        public int? TeamId { get; set; }
         public virtual Team Team { get; set; }
     }
 }

@@ -25,7 +25,6 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
     private URL: string = "";
     private UPDATE_URL: string = "/odata/sprints/";
     private MAIN_URL: string = "odata/sprints?$expand=team,backlog,history&$filter=id eq ";
-    //private 
 
     constructor() {
         super();
@@ -61,39 +60,40 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
 
     }
     public render() {
-        let contents = this.isLoading
-            ? <p><em>Loading...</em></p>
-            : this.renderContent();
+        let contents: JSX.Element;
 
+        if (this.isLoading)
+            contents = <p><em>Loading...</em></p>
+        else {
+            contents = (
+                <div className="editWindow">
+                    {this.getHeader()}
+                    <div className="sprintMainBlock inline-block">
+                        {this.getNameInput()}
+                        {this.getTeamSelector()}
+                        {this.getStageSelector()}
+                        {this.getReletedStoriesLink()}
+                    </div>
+
+                    <div className="sprintHistoryBlock inline-block">
+                        {this.getHistoyBlock()}
+                    </div>
+
+                    {this.getReviewInput()}
+                    {this.getRetrospectiveInput()}
+                    {this.getButtons()}
+                </div>
+            )
+        }
         return contents;
     }
 
-    public renderContent() {
-        return (
-            <form style={{ margin: "10px", padding: "5px", textAlign: "center" }} onSubmit={this.handleSave} name="oldForm" >
-                <div className="text-left">
-                    {this.getHeader()}
-                    {this.getNameInput()}
-                    {this.getTeamSelector()}
-                    {this.getStageSelector()}
-                    {this.getReletedStoriesLink()}
-                    {this.getReviewInput()}
-                    {this.getRetrospectiveInput()}
 
-                    <div className="text-center">
-                        <button className="btn">Update</button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <button className="btn inline-block">Discard</button>
-                    </div>
-                </div>
-            </form >
-        )
-    }
 
 
 
     getHeader() {
-        return <div className="text-center">
+        return <div className="editHead">
             <h2> Sprint editing page</h2>
             <br />
             <h3>"{this.state.item.name}"</h3>
@@ -105,10 +105,9 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
                 <h3 className="hStyle">Name:&nbsp;&nbsp;
                 <input
                         className="form-control inline-block"
-                        name="SprintName"
                         type="text"
                         value={this.state.item.name}
-                    //onChange={this.handleInputChange} 
+                        onChange={this.handleNameChange.bind(this)}
                     />
                 </h3>
             </div>
@@ -140,11 +139,14 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
             });
         }
 
-
         return (
             <div>
                 <h3 className="hStyle">Team:&nbsp;&nbsp;&nbsp;
-                <select className="form-control inline-block">
+                <select
+                        className="form-control inline-block"
+                        value={this.state.item.teamId}
+                        onChange={this.handleTeamChange.bind(this)}
+                    >
                         {options}
                     </select>
                 </h3>
@@ -183,7 +185,6 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
                 <h3 className="hStyle">Stories:&nbsp;
                     <button className="form-control inline-block">
                         <NavLink
-                            //className="align-base"
                             to={`../stories?filter=sprintid eq ${this.id}`}
                             activeClassName='active'>
                             Go to related stories
@@ -193,6 +194,44 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
             </div >
         );
     }
+
+    getHistoyBlock() {
+        return (
+            <div>
+                <h3 className="hStyle">History</h3>
+                <h4 className="hStyle">Begin:&nbsp;&nbsp;
+                <input
+                        className="form-control inline-block"
+                        type="text"
+                        value={this.state.item.name}
+                        onChange={this.handleNameChange.bind(this)}
+                    />
+                </h4>
+                {/* <h4 className="hStyle">End:&nbsp;&nbsp;&nbsp;&nbsp;
+                <div className="container">
+                        <div className="row">
+                            <div className='col-sm-6'>
+                                <div className="form-group">
+                                    <div className='input-group date' id='datetimepicker1'>
+                                        <input type='text' className="form-control" />
+                                        <span className="input-group-addon">
+                                            <span className="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            {/* <script type="text/javascript">
+                                $(function () {
+                                    $('#datetimepicker1').datetimepicker();
+                                });
+        </script> }
+                        </div>
+                    </div>
+                </h4> */}
+            </div>
+        );
+    }
+
     getReviewInput() {
         return (
             <div>
@@ -222,13 +261,35 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
             </div>
         )
     }
+    getButtons() {
+        return (
+            <div className="text-center">
+                <button
+                    className="btn"
+                    onClick={this.handleSave.bind(this)}
+                >Update</button>
 
+                &nbsp;&nbsp;&nbsp;&nbsp;
+
+                <button
+                    className="btn inline-block"
+                    onClick={this.handleCancel.bind(this)}
+                >Discard</button>
+            </div>
+        );
+    }
 
 
     OnDataReceived(data: any) {
         this.isLoading = false;
         let currentItem = new Sprint(data['value'][0]);
         this.setState({ item: currentItem })
+    }
+
+    handleNameChange(event: any) {
+        let newState = this.state.item;
+        newState.name = event.target.value;
+        this.setState({ item: newState });
     }
     handleReviewChange(event: any) {
         let newState = this.state.item;
@@ -245,34 +306,38 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
         newState.stage = event.target.value;
         this.setState({ item: newState });
     }
-    generateSelecorItems(items: { key: number, value: string, name: string }[]): JSX.Element[] {
-        return items.map(i => <option key={i.key} value={i.value}>{i.name}</option>);
+    handleTeamChange(event: any) {
+        let newState = this.state.item;
+        newState.teamId = event.target.value;
+        this.setState({ item: newState });
+    }
+    handleCancel() {
+        this.props.history.push('/sprints');
     }
 
     private handleSave(event: any) {
-        event.preventDefault();
-        // var form = new FormData(event.target);
-        // var featureUpdateModel = {
-        //     FeatureName: this.state.FeatureName,
-        //     State: this.state.State,
-        //     Description: this.state.Description,
-        //     Blocked: this.state.Blocked,
-        //     ProgramIncrement: this.state.ProgramIncrement,
-        //     Owner: this.state.Owner
-        //};
 
-        // fetch(this.updateURL + this.id, {
-        //     method: 'Patch',
-        //     body: JSON.stringify({
-        //         '@odata.type': 'DAL.Models.Feature',
-        //         ...featureUpdateModel
-        //     }
-        //     ),
-        //     headers: {
-        //         'OData-Version': '4.0',
-        //         'Content-Type': 'application/json;odata.metadata=minimal',
-        //         'Accept': 'application/json'
-        //     }
-        // }).then(response => { this.props.history.push('/feature') });
+        let item = this.state.item;
+        let updateModel = {
+            Name: item.name,
+            TeamId: item.teamId,
+            Stage: item.stage,
+            Review: item.review,
+            Retrospective: item.retrospective,
+        };
+
+        fetch(this.UPDATE_URL + this.state.item.id, {
+            method: 'Patch',
+            body: JSON.stringify({
+                '@odata.type': 'DAL.Models.Sprint',
+                ...updateModel
+            }
+            ),
+            headers: {
+                'OData-Version': '4.0',
+                'Content-Type': 'application/json;odata.metadata=minimal',
+                'Accept': 'application/json'
+            }
+        }).then(response => { this.props.history.push('/sprints') });
     }
 }

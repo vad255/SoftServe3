@@ -28,6 +28,44 @@ namespace ScrumMaker.Controllers
             return Ok(_sprints.GetAll());
         }
 
+
+        [AcceptVerbs("PATCH", "MERGE")]
+        public IActionResult Patch([FromODataUri] int key, [FromBody] Delta<Sprint> patch)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            Sprint sprint = _sprints.GetById(key);
+
+            if (sprint == null)
+            {
+                return NotFound();
+            }
+
+            patch.Patch(sprint);
+
+            try
+            {
+                _sprints.Save();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (_sprints.GetById(key) == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return Updated(sprint);
+        }
+
+
         [AcceptVerbs("DELETE")]
         public IActionResult Delete([FromODataUri] int key)
         {
