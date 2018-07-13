@@ -26,7 +26,6 @@ export class Feature implements IDbModel {
         this.state = params.State;
         this.description = params.Description;
         this.blocked = params.Blocked;
-        
         this.programIncrement = params.ProgramIncrement;
 
         if (params.Stories) {
@@ -36,7 +35,6 @@ export class Feature implements IDbModel {
 
             this.stories = stories;
         }
-        
         this.owner = params.Owner;
         if (params.Owner) {
             this.owner = new User(params.Owner);
@@ -68,7 +66,7 @@ export class Feature implements IDbModel {
                 Stories<span className="caret"></span>
             </div>
             <ul className="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-                {this.stories.map(s => s.renderAsMenu())}
+                {this.stories.map((s,i) => s.renderAsMenu(i))}
             </ul>
         </div>
     }

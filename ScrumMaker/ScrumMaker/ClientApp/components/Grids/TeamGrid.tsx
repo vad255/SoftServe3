@@ -5,17 +5,21 @@ import { DropdownButton, MenuItem } from 'react-bootstrap';
 import { Team } from '../Models/Team';
 import { User } from '../Models/User';
 import { Grid } from './Grid';
-import { TeamFiltersRow } from '../Filters/TeamFiltersRow';
 import { IDbModel, IFetchState } from '../Models/IDbModel';
 
+import { FiltersManager } from '../Filters/FiltersManager';
+import { TextFilter } from '../Filters/TextFilter'
+import { IntFilter } from '../Filters/IntFilter'
+import { EnumFilter } from '../Filters/EnumFilter'
+import { SprintStage } from '../Models/SprintStage'
+import { EmptyFilter } from '../Filters/EmptyFilter';
 
-export class TeamGrid extends Grid{
+export class TeamGrid extends Grid {
 
     constructor() {
         super();
-        this.LoadData();
     }
-    
+
     protected headerText: string = "Team Grid";
     protected URL_BASE: string = 'odata/teams';
     protected URL_EXPANDS: string = '?$expand=members'
@@ -25,7 +29,7 @@ export class TeamGrid extends Grid{
     protected instantiate(item: any): IDbModel {
         return new Team(item);
     }
-    
+
     protected GetHeaderRow(): JSX.Element {
         return <tr>
             <th className="well well-sm col-md-2" onClick={() => this.OrderBy("id")}><span className="nowrap">Database ID</span></th>
@@ -39,9 +43,17 @@ export class TeamGrid extends Grid{
         </tr>;
     }
     protected GetFiltersRow(): JSX.Element {
-        return < TeamFiltersRow
-        onApply = { this.ApplyFiltersHandler.bind(this) }
-        display = { this.filteringOn }
+        let filetrs = [
+            new IntFilter({ filterKey: "id"}),
+            new TextFilter({ filterKey: "name"}),
+            new EmptyFilter()
+        ]
+
+        return <FiltersManager
+            filters={filetrs}
+            onApply={this.ApplyFiltersHandler.bind(this)}
+            display={this.filteringOn}
+            externalConstraints={this.customUrlFilters}
             />
     }
 }

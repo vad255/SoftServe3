@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps  } from 'react-router';
 import 'isomorphic-fetch';
 import { Team } from './Team';
 import { Link } from 'react-router-dom';
@@ -14,12 +14,14 @@ export enum StoryStatus {
     Accepted = 6
 }
 
-export class Story implements IDbModel{
+export class Story implements IDbModel {
     id: number = -1;
     name: string = '';
     status: StoryStatus = 0;
     description: string = '';
     team: Team;
+    userId: number = 0;
+
 
     public constructor(params: any) {
 
@@ -31,6 +33,7 @@ export class Story implements IDbModel{
         this.name = params.Name;
         this.status = params.Status;
         this.description = params.Description;
+        this.userId = params.UserId;
         if (params.Team === null || params.Team === undefined)
             return;
 
@@ -60,25 +63,6 @@ export class Story implements IDbModel{
         }
     }
 
-    public renderAsTableRow(): JSX.Element {
-        return <tr key={this.id}>
-            <td className="align-base">{this.id}</td>
-            <td className="align-base">{this.name}</td>
-            <td className="align-base">{this.description}</td>
-            <td className="align-base">{this.getStatus(this.status)}</td>
-            <td className="align-base">
-                <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base ">
-                    <Link to={`EditStory/` + this.id}>
-                        <span className="glyphicon glyphicon-edit dark" aria-hidden="true"></span>
-                    </Link>
-                </div>
-                &nbsp;&nbsp;
-                       <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base">
-                    <span className="glyphicon glyphicon-trash dark" aria-hidden="true"></span>
-                </div>
-            </td>
-        </tr>;
-    }
 
     getId(): number {
         return this.id;
@@ -94,8 +78,8 @@ export class Story implements IDbModel{
         return elements;
     }
 
-    renderAsMenu() {
-        return <li className="dropdown-submenu">
+    renderAsMenu(key: number) {
+        return <li key={key} className="dropdown-submenu">
             <div > {this.name} </div>
             <ul className="dropdown-menu">
                 <li className="dropdown-item"><b><pre>Story name: {this.name}</pre></b> </li>

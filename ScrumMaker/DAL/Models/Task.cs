@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel;
 using System.Text;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models
 {
@@ -12,39 +12,35 @@ namespace DAL.Models
         [Key]
         public int TaskId { get; set; }
 
-        [MaxLength(50)]
-        public string Name { get; set; }
-        public DateTime? Started { get; set; }
-        public DateTime? Completed { get; set; }
+        [Required]
+        public string Summary { get; set; }
+
         [ForeignKey("Story")]
         public int? StoryId { get; set; }
         public virtual Story Story { get; set; }
 
         public int PlannedHours { get; set; }
-
-        public int RemainingHours { get; set; }
-
-        public int ActualHours { get; set; }
+        public DateTime? Started { get; set; }
+        public DateTime? Completed { get; set; }
 
         [Required]
         public string Type { get; set; }
 
-        [DefaultValue("Draft")]
+        [Required]
         public string State { get; set; }
 
+        public bool Blocked { get; set; }
 
-        [MaxLength(500)]
-        public string Blocked { get; set; }
-
-        [Required]
-        public User AssignedTo { get; set; }
+        [ForeignKey("User")]
+        public int UserId { get; set; }
+        public virtual User User { get; set; }
 
         [Required]
         [MaxLength(500)]
         public string Description { get; set; }
 
-        [MaxLength(500)]
+        [NotMapped]
         public string WorkNotes { get; set; }
-        
+
     }
 }

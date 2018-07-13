@@ -50,8 +50,13 @@ export class NavMenu extends React.Component<{}, {}> {
                     </li>
                     <br/>
                     <li>
-                        <NavLink to={'/SimpleChat'} activeClassName='active'>
-                            <span></span> Chat
+                        <NavLink to={'/SimpleChat'} id='coulumWidth' activeClassName='active'>
+                            Chat
+                            </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to={'/Calendar'} id='coulumWidth' activeClassName='active'>
+                            Calendar
                             </NavLink>
                     </li>
                     <br />

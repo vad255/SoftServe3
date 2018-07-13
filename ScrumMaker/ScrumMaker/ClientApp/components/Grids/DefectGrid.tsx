@@ -3,8 +3,17 @@ import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { Grid } from './Grid'
 import { Defect } from '../Models/Defect';
-import { DefectsFiltersRow } from '../Filters/DefectsFiltersRow'
 import { IDbModel } from '../Models/IDbModel';
+
+import { FiltersManager } from '../Filters/FiltersManager';
+import { TextFilter } from '../Filters/TextFilter'
+import { IntFilter } from '../Filters/IntFilter'
+import { EnumFilter } from '../Filters/EnumFilter'
+import { SprintStage } from '../Models/SprintStage'
+import { EmptyFilter } from '../Filters/EmptyFilter';
+import { DefectPriority } from '../Models/DefectPriority';
+import { DefectState } from '../Models/DefectState';
+import { DefectStatus } from '../Models/DefectStatus';
 
 export class DefectGrid extends Grid {
     protected URL_BASE: string = 'odata/defects';
@@ -14,7 +23,6 @@ export class DefectGrid extends Grid {
 
     constructor() {
         super();
-        this.LoadData();
     }
 
     protected instantiate(item: any): IDbModel {
@@ -39,9 +47,22 @@ export class DefectGrid extends Grid {
         </tr>;
     }
     protected GetFiltersRow(): JSX.Element {
-        return <DefectsFiltersRow
+        let filetrs = [
+            new IntFilter({ filterKey: "defectId"}),
+            new TextFilter({ filterKey: "name"}),
+            new TextFilter({ filterKey: "description"}),
+            new EnumFilter({ filterKey: "priority", enumType: DefectPriority}),
+            new EnumFilter({ filterKey: "status", enumType: DefectState}),
+            new EnumFilter({ filterKey: "status", enumType: DefectStatus}),
+            new TextFilter({ filterKey: "actualResults"}),
+            new TextFilter({ filterKey: "fixResults"}),
+        ]
+
+        return <FiltersManager
+            filters={filetrs}
             onApply={this.ApplyFiltersHandler.bind(this)}
             display={this.filteringOn}
-        />
+            externalConstraints={this.customUrlFilters}
+            />
     }
 }

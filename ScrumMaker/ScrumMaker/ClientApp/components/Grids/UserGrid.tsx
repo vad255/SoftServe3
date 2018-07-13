@@ -2,9 +2,15 @@
 import 'isomorphic-fetch';
 import { User } from '../Models/User';
 import { Grid } from './Grid';
-import { UsersFiltersRow } from '../Filters/UsersFilterRow';
 import { IDbModel, IFetchState } from '../Models/IDbModel';
 
+import { FiltersManager } from '../Filters/FiltersManager';
+import { TextFilter } from '../Filters/TextFilter'
+import { IntFilter } from '../Filters/IntFilter'
+import { EnumFilter } from '../Filters/EnumFilter'
+import { SprintStage } from '../Models/SprintStage'
+import { EmptyFilter } from '../Filters/EmptyFilter';
+import { BoolFilter } from '../Filters/BoolFilter';
 
 export class UserGrid extends Grid {
 
@@ -16,8 +22,6 @@ export class UserGrid extends Grid {
     constructor() {
         super();
         this.state = { items: [] };
-
-        this.LoadData();
     }
 
 
@@ -47,10 +51,21 @@ export class UserGrid extends Grid {
     protected URL_EDIT = "UserEdit/";
 
     protected GetFiltersRow(): JSX.Element {
-        return <UsersFiltersRow
+        let filetrs = [
+            new IntFilter({ filterKey: "userId" }),
+            new TextFilter({ filterKey: "login" }),
+            new TextFilter({ filterKey: "password" }),
+            new TextFilter({ filterKey: "team/name" }),
+            new BoolFilter({ filterKey: "activity" }),
+            new TextFilter({ filterKey: "role/name" }),
+        ]
+
+        return <FiltersManager
+            filters={filetrs}
             onApply={this.ApplyFiltersHandler.bind(this)}
             display={this.filteringOn}
-        />
+            externalConstraints={this.customUrlFilters}
+            />
     }
 }
 
