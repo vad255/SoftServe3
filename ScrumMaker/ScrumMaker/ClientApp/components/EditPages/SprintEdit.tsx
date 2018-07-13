@@ -6,10 +6,12 @@ import { State } from '../Models/FeatureState';
 import { NavLink } from 'react-router-dom';
 import { IDbModel } from '../Models/IDbModel'
 import { SprintStage } from '../Models/SprintStage';
+import { Team } from '../Models/Team';
 
 
 interface ISprintEditState extends IEditState {
     item: Sprint
+    teams: Team[]
 }
 
 export interface IEditState {
@@ -21,7 +23,9 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
     private isLoading: boolean = true;
     readonly id: number = -1;
     private URL: string = "";
-    private updateURL: string = "/odata/sprints/";
+    private UPDATE_URL: string = "/odata/sprints/";
+    private MAIN_URL: string = "odata/sprints?$expand=team,backlog,history&$filter=id eq ";
+    //private 
 
     constructor() {
         super();
@@ -31,12 +35,13 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
         this.id = parseInt(link.substr(link.lastIndexOf('/') + 1));
         this.URL = "odata/sprints?$expand=team,backlog,history&$filter=id eq " + this.id;
 
-        this.LoadData();
         this.handleSave = this.handleSave.bind(this);
         //this.handleInputChange = this.handleInputChange.bind(this);
     }
 
-
+    componentDidMount() {
+        this.LoadData();
+    }
 
     public LoadData() {
         fetch(this.URL)
@@ -44,8 +49,17 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
             .then(data => {
                 this.OnDataReceived(data);
             }).catch(e => console.error(e));
-    }
 
+        fetch("api/teams/getFreeTeams", { credentials: "include" }).
+            then(response => response.json() as any).
+            then(data => {
+                let teamsTemp: Team[] = [];
+                (data as any[]).map(t => teamsTemp.push(new Team(t)));
+                this.setState({ teams: teamsTemp });
+            }).
+            catch(e => console.error(e));
+
+    }
     public render() {
         let contents = this.isLoading
             ? <p><em>Loading...</em></p>
@@ -56,7 +70,7 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
 
     public renderContent() {
         return (
-            <form style={{ margin: "10px", padding: "5px", textAlign: "center" }} onSubmit={this.handleSave} name="oldForm">
+            <form style={{ margin: "10px", padding: "5px", textAlign: "center" }} onSubmit={this.handleSave} name="oldForm" >
                 <div className="text-left">
                     {this.getHeader()}
                     {this.getNameInput()}
@@ -68,9 +82,11 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
 
                     <div className="text-center">
                         <button className="btn">Update</button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <button className="btn inline-block">Discard</button>
                     </div>
                 </div>
-            </form>
+            </form >
         )
     }
 
@@ -92,14 +108,51 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
                         name="SprintName"
                         type="text"
                         value={this.state.item.name}
-                        //onChange={this.handleInputChange} 
-                        />
+                    //onChange={this.handleInputChange} 
+                    />
                 </h3>
             </div>
 
         )
     }
     getTeamSelector() {
+        let options: JSX.Element[] = [];
+        let index = 0;
+
+        if (this.state.item.team) {
+            options.push(
+                <option key={index++} value={this.state.item.team.id}>
+                    {this.state.item.team.name}
+                </option>
+            )
+        }
+        else
+            options.push(<option key={index++} value={-1} />)
+
+
+        if (this.state.teams) {
+            this.state.teams.forEach(team => {
+                options.push(
+                    <option key={index++} value={team.id}>
+                        {team.name}
+                    </option>
+                );
+            });
+        }
+
+
+        return (
+            <div>
+                <h3 className="hStyle">Team:&nbsp;&nbsp;&nbsp;
+                <select className="form-control inline-block">
+                        {options}
+                    </select>
+                </h3>
+            </div>
+        );
+
+    }
+    getStageSelector() {
         let names: string[] = [];
         for (let iterator in SprintStage) {
             if (!parseInt(iterator))
@@ -111,21 +164,14 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
             items.push(<option key={i + 1} value={names[i]}>{names[i]}</option>);
         }
 
-        // return <select
-        //     value={this.state.item.stage}
-        //     name="State"
-        //     onChange={this.handleInputChange}>
-        //     {items} }
-        // </select>
-
-
         return (
             <div>
-                <h3 className="hStyle">Team:&nbsp;&nbsp;&nbsp;
-                <select className="form-control inline-block">
-                        <option key={1} value={1}>Foo</option>
-                        <option key={2} value={2}>Bar</option>
-                        <option key={3} value={3}>Baz</option>
+                <h3 className="hStyle">State:&nbsp;&nbsp;&nbsp;&nbsp;
+                    <select
+                        className="form-control inline-block"
+                        value={this.state.item.stage}
+                        onChange={this.handleStageChange.bind(this)}>
+                        {items};
                     </select>
                 </h3>
             </div>
@@ -145,15 +191,6 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
                     </button>
                 </h3>
             </div >
-        );
-    }
-    getStageSelector() {
-        return (
-            <div>
-                <h3 className="hStyle">State:&nbsp;&nbsp;&nbsp;&nbsp;
-                {this.renderSelectOptions()}
-                </h3>
-            </div>
         );
     }
     getReviewInput() {
@@ -186,7 +223,9 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
         )
     }
 
-    protected OnDataReceived(data: any) {
+
+
+    OnDataReceived(data: any) {
         this.isLoading = false;
         let currentItem = new Sprint(data['value'][0]);
         this.setState({ item: currentItem })
@@ -201,29 +240,13 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
         newState.retrospective = event.target.value;
         this.setState({ item: newState });
     }
-
-
-
-    private renderSelectOptions() {
-        let names: string[] = [];
-        for (let iterator in SprintStage) {
-            if (!parseInt(iterator))
-                names.push(iterator.toString());
-        }
-
-        let items: JSX.Element[] = [];
-        for (var i = 0; i < names.length; i++) {
-            items.push(<option key={i + 1} value={names[i]}>{names[i]}</option>);
-        }
-
-        return <select
-            className="form-control inline-block"
-            value={this.state.item.stage}
-            name="State"
-            //onChange={this.handleInputChange}
-            >
-            {items} }
-        </select>
+    handleStageChange(event: any) {
+        let newState = this.state.item;
+        newState.stage = event.target.value;
+        this.setState({ item: newState });
+    }
+    generateSelecorItems(items: { key: number, value: string, name: string }[]): JSX.Element[] {
+        return items.map(i => <option key={i.key} value={i.value}>{i.name}</option>);
     }
 
     private handleSave(event: any) {

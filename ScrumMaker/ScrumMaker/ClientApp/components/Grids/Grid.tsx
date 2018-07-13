@@ -67,11 +67,6 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         )
     }
     public componentDidMount() {
-        let manager = this.refs[this.FILTER_MANAGER_REF] as FiltersManager
-        if (manager)
-            this.urlFilters = manager.GetFilteringQuery();
-        console.log(this.urlFilters);
-
         this.LoadData();
     }
     private LoadData() {
@@ -82,8 +77,6 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
                 this.OnDataReceived(data);
             }).catch(e => this.onCatch(e));
     }
-
-
     protected OnDataReceived(data: any): void {
         this.isLoading = false;
 
@@ -99,6 +92,8 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
     }
 
     protected getURL() {
+        this.recalcPagingUrl();
+        this.updateFilterUrl();
 
         let result = this.URL_BASE;
 
@@ -106,9 +101,9 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
         result += this.urlFilters;
 
-        if (this.customUrlFilters) {
-            result += this.urlFilters ? Filter.CONSTRAIN_DIVIDER + this.customUrlFilters : Filter.QUERY_HEAD + this.customUrlFilters;
-        }
+        // if (this.customUrlFilters) {
+        //     result += this.urlFilters ? Filter.CONSTRAIN_DIVIDER + this.customUrlFilters : Filter.QUERY_HEAD + this.customUrlFilters;
+        // }
 
         result += this.URL_ORDERING;
 
@@ -116,8 +111,27 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
         result += this.URL_COUNT;
 
+        console.log(result);
+
         return result;
     }
+    updateFilterUrl(): any {
+        let manager = this.refs[this.FILTER_MANAGER_REF] as FiltersManager;
+
+        console.log(this.refs[this.FILTER_MANAGER_REF]);
+
+        console.log(manager);
+
+
+        if (manager)
+            this.urlFilters = manager.GetFilteringQuery();
+        else
+            this.urlFilters = "";
+    }
+    recalcPagingUrl() {
+        this.urlPaging = '&$skip=' + (this.CurrentPage * this.pageSize) + '&$top=' + this.pageSize;
+    }
+
     protected abstract instantiate(item: any): IDbModel;
 
     protected abstract GetHeaderRow(): JSX.Element;
@@ -164,31 +178,25 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
     private firstPageClick() {
         this.CurrentPage = 0;
-        this.recalcPagingUrl()
         this.LoadData();
     }
     private previousPageClick() {
         if (this.CurrentPage > 0) {
             this.CurrentPage--;
-            this.recalcPagingUrl()
             this.LoadData();
         }
     }
     private nextPageClick() {
         if (this.CurrentPage < (this.totalCount / this.pageSize) - 1) {
             this.CurrentPage++;
-            this.recalcPagingUrl()
             this.LoadData();
         }
     }
     private lastPageClick() {
         this.CurrentPage = Math.ceil((this.totalCount / this.pageSize)) - 1;
-        this.recalcPagingUrl();
         this.LoadData();
     }
-    protected recalcPagingUrl() {
-        this.urlPaging = '&$skip=' + (this.CurrentPage * this.pageSize) + '&$top=' + this.pageSize;
-    }
+
 
 
 
@@ -200,6 +208,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         this.urlFilters = e;
         this.LoadData();
     }
+
 
 
     private itemToDelete: number = -1;
@@ -251,6 +260,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
 
     protected OrderBy(arg: string) {
+                
         try {
             let data = this.state.items;
 
@@ -299,12 +309,10 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         if (!params)
             return;
 
-        console.log(params);
-
         for (let iterator in params) {
             this.customUrlFilters += params[iterator]
         }
-        console.log("filter: " + this.customUrlFilters);
+        console.log("Externalfilter: " + this.customUrlFilters);
 
     }
     private GetUrlParams(): any[] {

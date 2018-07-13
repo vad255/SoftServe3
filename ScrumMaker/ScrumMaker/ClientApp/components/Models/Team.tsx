@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
-import {User} from './User'
+import { User } from './User'
 import { IDbModel } from './IDbModel'
 
 
-export class Team implements IDbModel{
+export class Team implements IDbModel {
     getId(): number {
         return this.id;
     }
@@ -14,7 +14,7 @@ export class Team implements IDbModel{
             this.id,
             this.name,
             <select className="btn btn-sm btn-primary" role="button" data-toggle="dropdown">
-                {this.members.map((u,i) =>
+                {this.members.map((u, i) =>
                     <option key={i}>{u.login}</option>
                 )}
             </select>
@@ -29,18 +29,16 @@ export class Team implements IDbModel{
     members: User[] = [];
 
     constructor(params: any) {
-
-        if (params === null || params === undefined) {
+        if (!params)
             return;
-        }
+
         this.name = params.Name;
         this.id = params.Id;
         this.empty = false;
 
         var members = [];
-        if (params.Members === null || params.Members === undefined) {
+        if (!params.Members)
             return;
-        }
 
         for (var i = 0; i < params.Members.length; i++) {
             members[i] = new User(params.Members[i]);

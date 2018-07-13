@@ -49,18 +49,19 @@ export class StoriesGrid extends Grid {
     protected GetFiltersRow() {
 
         let filetrs = [
-            new IntFilter({ filterKey: "id"}),
-            new TextFilter({ filterKey: "name"}),
-            new TextFilter({ filterKey: "description"}),
-            new EnumFilter({ filterKey: "status", enumType: StoryStatus})
+            new IntFilter({ filterKey: "id" }),
+            new TextFilter({ filterKey: "name" }),
+            new TextFilter({ filterKey: "description" }),
+            new EnumFilter({ filterKey: "status", enumType: StoryStatus })
         ]
 
         return <FiltersManager
+            ref={this.FILTER_MANAGER_REF}
             filters={filetrs}
             onApply={this.ApplyFiltersHandler.bind(this)}
             display={this.filteringOn}
             externalConstraints={this.customUrlFilters}
-            />
+        />
     }
 }
 

@@ -44,17 +44,18 @@ export class TeamGrid extends Grid {
     }
     protected GetFiltersRow(): JSX.Element {
         let filetrs = [
-            new IntFilter({ filterKey: "id"}),
-            new TextFilter({ filterKey: "name"}),
+            new IntFilter({ filterKey: "id" }),
+            new TextFilter({ filterKey: "name" }),
             new EmptyFilter()
         ]
 
         return <FiltersManager
+            ref={this.FILTER_MANAGER_REF}
             filters={filetrs}
             onApply={this.ApplyFiltersHandler.bind(this)}
             display={this.filteringOn}
             externalConstraints={this.customUrlFilters}
-            />
+        />
     }
 }
 
