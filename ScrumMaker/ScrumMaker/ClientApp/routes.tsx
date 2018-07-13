@@ -18,6 +18,7 @@ import { Error } from './components/Error';
 import { SimpleChat } from './components/Chats/SimpleChat'
 import { Chart } from './components/Charts/Chart'
 import { EditStory } from "./components/EditPages/EditStory";
+import { UserEdit } from "./components/EditPages/UserEdit";
 
 
 const LayoutRoute = ({ ...props }) => {
@@ -44,6 +45,7 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/SimpleChat' component={SimpleChat} />
         <LayoutRoute path='/Chart' component={Chart} />
         <LayoutRoute path='/EditStory' component={EditStory} />
+        <LayoutRoute path='/UserEdit' component={UserEdit}/>
 
         <Route path='/login' component={Login} />
         <Route path='/Error' component={Error} />

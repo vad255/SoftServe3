@@ -44,6 +44,8 @@ export class UserGrid extends Grid {
             </th>
         </tr>;
     }
+    protected URL_EDIT = "UserEdit/";
+
     protected GetFiltersRow(): JSX.Element {
         return <UsersFiltersRow
             onApply={this.ApplyFiltersHandler.bind(this)}
