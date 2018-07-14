@@ -571,7 +571,8 @@ namespace DataBaseInitializer
                         Description = "create grids for all models. Each grid should have columns described in the model. Also add bootstrap styles",
                         User = _dbUsers.GetById(2),
                         Status = StoryStatus.InProgress,
-                        Defects = _dbDefects.GetAll().Where(d => d.DefectId < 8).ToList()
+                        Defects = _dbDefects.GetAll().Where(d => d.DefectId < 8).ToList(),
+                        Sprint = _dbSprints.GetById(1),
         },
                     new Story()
                     {
@@ -580,7 +581,8 @@ namespace DataBaseInitializer
                         Description = "login page has inputs for login and password, an image on backgroud, sign in and sign up buttons",
                         User = _dbUsers.GetById(9),
                         Status = StoryStatus.ReadyToStart,
-                        Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList()
+                        Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList(),
+                        Sprint = _dbSprints.GetById(2),
                     },
                     new Story()
                     {
@@ -589,7 +591,8 @@ namespace DataBaseInitializer
                         Description = "Sql database with code first model.",
                         User = _dbUsers.GetById(3),
                         Status = StoryStatus.Accepted,
-                        Defects = _dbDefects.GetAll().Where(d => d.DefectId < 8).ToList()
+                        Defects = _dbDefects.GetAll().Where(d => d.DefectId < 8).ToList(),
+                        Sprint = _dbSprints.GetById(1),
                     },
                     new Story()
                     { Name = "Clients page",
@@ -597,7 +600,8 @@ namespace DataBaseInitializer
                         Description = "This page should show all clients with possibilities add new client, delete some client",
                         User = _dbUsers.GetById(10),
                         Status = StoryStatus.PendingApproval,
-                        Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList()
+                        Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList(),
+                        Sprint = _dbSprints.GetById(1),
                     },
                 new Story()
                 {
@@ -606,7 +610,8 @@ namespace DataBaseInitializer
                     Description = "This page has info about client's taxes.",
                     User = _dbUsers.GetById(4),
                     Status = StoryStatus.InProgress,
-                    Defects = _dbDefects.GetAll().Where(d => d.DefectId < 8).ToList()
+                    Defects = _dbDefects.GetAll().Where(d => d.DefectId < 8).ToList(),
+                    Sprint = _dbSprints.GetById(2),
                 },
                 new Story()
                 {
@@ -615,7 +620,8 @@ namespace DataBaseInitializer
                     Description = "Every api controller has to use odata requests",
                     User = _dbUsers.GetById(5),
                     Status = StoryStatus.TestComplete,
-                    Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList()
+                    Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList(),
+                    Sprint = _dbSprints.GetById(1),
                 },
                 new Story()
                 {
@@ -624,7 +630,8 @@ namespace DataBaseInitializer
                     Description = "Cantains home page with general description of application and main links.",
                     User = _dbUsers.GetById(11),
                     Status = StoryStatus.Accepted,
-                    Defects = _dbDefects.GetAll().Where(d => d.DefectId < 8).ToList()
+                    Defects = _dbDefects.GetAll().Where(d => d.DefectId < 8).ToList(),
+                    Sprint = _dbSprints.GetById(2),
                 },
                 new Story()
                 {
@@ -633,7 +640,8 @@ namespace DataBaseInitializer
                     Description = "Should be a popup menu, with main button and links inside",
                     User = _dbUsers.GetById(6),
                     Status = StoryStatus.InProgress,
-                    Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList()
+                    Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList(),
+                    Sprint = _dbSprints.GetById(3),
                 },
                 new Story()
                 {
@@ -642,7 +650,8 @@ namespace DataBaseInitializer
                     Description = "contains a link to the home page",
                     User = _dbUsers.GetById(12),
                     Status = StoryStatus.PendingApproval,
-                    Defects = _dbDefects.GetAll().Where(d => d.DefectId < 8).ToList()
+                    Defects = _dbDefects.GetAll().Where(d => d.DefectId < 8).ToList(),
+                    Sprint = _dbSprints.GetById(3),
                 },
                 new Story()
                 {
@@ -651,7 +660,8 @@ namespace DataBaseInitializer
                     Description = "there should be a possibility to get json file in client page. It will contain info about client.",
                     User = _dbUsers.GetById(7),
                     Status = StoryStatus.DevComplete,
-                    Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList()
+                    Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList(),
+                    Sprint = _dbSprints.GetById(1),
                 }
             };
 
@@ -820,8 +830,8 @@ namespace DataBaseInitializer
 
                     new SprintStagesHistory()
                     {
-                        Begined = DateTime.Today - new TimeSpan(10,0,0,0),
-                        Ended =  DateTime.Today + new TimeSpan(31,0,0,0)
+                        Begined = new DateTime(2018,06,28),
+                        Ended =  new DateTime(2018,07,24)
                     }
             };
 
@@ -843,7 +853,8 @@ namespace DataBaseInitializer
                     Retrospective = " What went well in the Sprint: command work. What could be improved: Speed of development. What will we commit to improve in the next Sprint: icrease development speed",
                     Review = "",
                     Stage = SprintStage.Progress,
-                    History = _dbHisories.GetById(1)
+                    History = _dbHisories.GetById(1),
+                    Backlog = _dbStories.GetAll().ToList()
                 },
                 new Sprint()
                 {

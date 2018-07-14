@@ -48,6 +48,8 @@ export class UserGrid extends Grid {
             </th>
         </tr>;
     }
+    protected URL_EDIT = "UserEdit/";
+
     protected GetFiltersRow(): JSX.Element {
         let filetrs = [
             new IntFilter({ filterKey: "userId" }),

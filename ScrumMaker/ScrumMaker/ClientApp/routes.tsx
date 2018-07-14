@@ -18,6 +18,7 @@ import { Error } from './components/Error';
 import { SimpleChat } from './components/Chats/SimpleChat'
 import { Chart } from './components/Charts/Chart'
 import { EditStory } from "./components/EditPages/EditStory";
+import { UserEdit } from "./components/EditPages/UserEdit";
 import { MyCalendar } from "./components/MyCalendar";
 import { SprintEdit } from './components/EditPages/SprintEdit';
 
@@ -46,6 +47,7 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/SimpleChat' component={SimpleChat} />
         <LayoutRoute path='/Chart' component={Chart} />
         <LayoutRoute path='/EditStory' component={EditStory} />
+        <LayoutRoute path='/UserEdit' component={UserEdit}/>
         <LayoutRoute path='/Calendar' component={MyCalendar} />
         <LayoutRoute path='/SprintEdit' component={SprintEdit} />
 
