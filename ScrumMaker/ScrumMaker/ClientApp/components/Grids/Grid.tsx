@@ -20,7 +20,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
     private readonly URL_COUNT: string = '&$count=true';
     protected readonly URL_EDIT: string = "!!!NOT_IMPLEMENTED!!!/";
 
-    protected readonly FILTER_MANAGER_REF = "FilterManager"
+    protected readonly FILTER_MANAGER_REF = "FilterManager";
     protected customUrlFilters: string = '';
     protected filteringOn: boolean = false;
     private urlFilters: string = '';
@@ -36,7 +36,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
     constructor() {
         super();
         this.recalcPagingUrl();
-        this.readQueryParams()
+        this.readQueryParams();
         this.isLoading = true;
     }
 
@@ -67,7 +67,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         )
     }
     public componentDidMount() {
-        let manager = this.refs[this.FILTER_MANAGER_REF] as FiltersManager
+        let manager = this.refs[this.FILTER_MANAGER_REF] as FiltersManager;
         if (manager)
             this.urlFilters = manager.GetFilteringQuery();
         console.log(this.urlFilters);
@@ -154,30 +154,30 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         let title = "Are you sure you want to delete this item?";
 
         return <ConfirmMadal
-            onCanceled={this.onDeleteCancel.bind(this)}
-            onConfirmed={this.onDeleteConfirmed.bind(this)}
-            title={title}
-            id={"ConfirmDeleteDialog"} />
+                   onCanceled={this.onDeleteCancel.bind(this)}
+                   onConfirmed={this.onDeleteConfirmed.bind(this)}
+                   title={title}
+                   id={"ConfirmDeleteDialog"}/>;
     }
 
 
 
     private firstPageClick() {
         this.CurrentPage = 0;
-        this.recalcPagingUrl()
+        this.recalcPagingUrl();
         this.LoadData();
     }
     private previousPageClick() {
         if (this.CurrentPage > 0) {
             this.CurrentPage--;
-            this.recalcPagingUrl()
+            this.recalcPagingUrl();
             this.LoadData();
         }
     }
     private nextPageClick() {
         if (this.CurrentPage < (this.totalCount / this.pageSize) - 1) {
             this.CurrentPage++;
-            this.recalcPagingUrl()
+            this.recalcPagingUrl();
             this.LoadData();
         }
     }
@@ -193,7 +193,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
 
     protected FilterButtonClick(e: any) {
-        this.filteringOn = !this.filteringOn
+        this.filteringOn = !this.filteringOn;
         this.forceUpdate();
     }
     protected ApplyFiltersHandler(e: any) {
@@ -260,9 +260,9 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
                 this.lastOrderingDir = false;
 
             if (!this.lastOrderingDir)
-                data.sort((a, b) => this.SafeCompare(a, b, arg))
+                data.sort((a, b) => this.SafeCompare(a, b, arg));
             else
-                data.sort((a, b) => -this.SafeCompare(a, b, arg))
+                data.sort((a, b) => -this.SafeCompare(a, b, arg));
 
             this.lastOrderingArg = arg;
             this.forceUpdate();
@@ -303,14 +303,14 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         console.log(params);
 
         for (let iterator in params) {
-            this.customUrlFilters += params[iterator]
+            this.customUrlFilters += params[iterator];
         }
         console.log("filter: " + this.customUrlFilters);
 
     }
     private GetUrlParams(): any[] {
         let vars: any = {};
-        let queryBegin = window.location.href.indexOf('?')
+        let queryBegin = window.location.href.indexOf('?');
 
         if (queryBegin < 0)
             return [];

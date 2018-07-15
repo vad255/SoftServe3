@@ -108,6 +108,8 @@ namespace ScrumMaker
             services.AddScoped(typeof(ITasksManager), typeof(TasksManager));
             services.AddScoped(typeof(IStoriesManager), typeof(StoriesManager));
             services.AddScoped(typeof(BL.Chatting.IGlobalChatManager), typeof(BL.Chatting.GlobalChatManager));
+            services.AddScoped(typeof(BL.Chatting.IRetrospectiveChatMananger), typeof(BL.Chatting.RetrospectiveChatManager));
+
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -137,6 +139,8 @@ namespace ScrumMaker
             app.UseSignalR(routes =>
             {
                 routes.MapHub<GlobalChat>("/chat");
+                routes.MapHub<RetrospectiveHub>("/retrospective/chat");
+
             });
 
             app.UseMvc(routes =>    

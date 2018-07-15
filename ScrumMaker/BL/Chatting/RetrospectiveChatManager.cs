@@ -8,7 +8,6 @@ using DAL.Access;
 using DAL.Models;
 using DAL;
 using Microsoft.AspNetCore;
-
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -16,22 +15,24 @@ using ScrumMaker.Logger;
 
 namespace BL.Chatting
 {
-    public class GlobalChatManager : IGlobalChatManager
+    public class RetrospectiveChatManager : IRetrospectiveChatMananger
     {
-        public const string ROOM_NAME = "ScrumMakerGlobalChat";
+        public const string ROOM_NAME = "RetrospectiveRoom";
         private static List<User> _authorizedGuests = new List<User>();
         private static int _totalGuestsCount;
 
         private IRepository<ChatRoom> _chats;
         private IRepository<Message> _msgs;
         private IRepository<User> _users;
+        private IRepository<RetrospectiveMessage> _rmsgs;
         private ChatRoom _room;
 
 
-        public GlobalChatManager(IRepository<ChatRoom> chats, IRepository<Message> msgs, IRepository<User> users)
+        public RetrospectiveChatManager(IRepository<ChatRoom> chats, IRepository<Message> msgs, IRepository<User> users, IRepository<RetrospectiveMessage> rmsgs)
         {
             _chats = chats;
             _msgs = msgs;
+            _rmsgs = rmsgs;
             _users = users;
             _room = _chats.GetAll().Where(c => c.Name == ROOM_NAME).FirstOrDefault();
 
@@ -108,22 +109,16 @@ namespace BL.Chatting
             return user;
         }
 
+        public void AddRetrospectiveMessage(RetrospectiveMessage message)
+        {
+            message.ChatId = _room.Id;
+            _rmsgs.Create(message);
+            _rmsgs.Save();
+        }
+
         public virtual Message AddMessage(string text)
         {
-            int authorId = GetCurrentUserId();
-
-            Message msg = new Message()
-            {
-                AuthorId = authorId > 0 ? (int?)authorId : null,
-                ChatId = _room.Id,
-                Sent = DateTime.UtcNow,
-                Text = text
-            };
-
-            _msgs.Create(msg);
-            _msgs.Save();
-
-            return _msgs.GetAll().Where(m => m.Id == msg.Id).Include(m => m.Author).FirstOrDefault();
+            return new Message();
         }
 
 
@@ -169,3 +164,4 @@ namespace BL.Chatting
 
     }
 }
+

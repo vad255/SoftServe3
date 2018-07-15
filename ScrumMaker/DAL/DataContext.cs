@@ -42,7 +42,12 @@ namespace DAL
 
         public DbSet<Calendar> Calendars { get; set; }
 
-        
+        public DbSet<RetrospectiveMeeting> RetrospectiveMeetings { get; set; }
+
+        public DbSet<RetrospectiveMessage> RetrospectiveMessages { get; set; }
+
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Role>().HasIndex(x => x.Name).IsUnique();

@@ -65,6 +65,11 @@ export class NavMenu extends React.Component<{}, {}> {
                             <span></span> Chart
                             </NavLink>
                     </li>
+                    <li>
+                        <NavLink to={'/RetrospectiveMeeting'} activeClassName='active'>
+                            <span></span> Retrospective meeting
+                            </NavLink>
+                    </li>
                 </ul>
             </div>
             <div className="nav_bg">

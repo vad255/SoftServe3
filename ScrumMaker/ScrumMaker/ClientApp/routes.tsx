@@ -20,6 +20,7 @@ import { Chart } from './components/Charts/Chart'
 import { EditStory } from "./components/EditPages/EditStory";
 import { MyCalendar } from "./components/MyCalendar";
 import { SprintEdit } from './components/EditPages/SprintEdit';
+import { RetrospectiveMeeting } from './components/Chats/RetrospectiveMeeting'
 
 
 const LayoutRoute = ({ ...props }) => {
@@ -48,6 +49,8 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/EditStory' component={EditStory} />
         <LayoutRoute path='/Calendar' component={MyCalendar} />
         <LayoutRoute path='/SprintEdit' component={SprintEdit} />
+        <LayoutRoute path='/RetrospectiveMeeting' component={RetrospectiveMeeting} />
+
 
         <Route path='/login' component={Login} />
         <Route path='/Error' component={Error} />

@@ -3,23 +3,32 @@ import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr'
 
-export class Message{
+export class Message {
 
-    public author: string;
-    public post: Date;
-    public text: string;
+    public id: number = -1;
+    public sent: Date;
+    public text: string = "";
+    public authorId: number = -1;
+    public authorName: string = "";
+    public chatId: number = -1;
+
 
     constructor(params: any) {
-        this.author = params.sender;
-        this.post = new Date(params.post);
-        this.text = params.text;
+        this.id = params.Id;
+        this.sent = new Date(params.Sent);
+        this.text = params.Text;
+        this.authorId = params.AuthorId;
+        this.authorName = params.AuthorName;
+        this.chatId = params.ChatId;
+       
+
     }
 
 
 
 
     render() {
-        return '(' + this.post + ') ' + this.author + ': ' + this.text;
+        return '(' + this.sent + ') ' + this.authorName + ': ' + this.text;
     }
 
 
