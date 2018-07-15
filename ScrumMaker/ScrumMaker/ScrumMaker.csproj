@@ -54,6 +54,7 @@
     <None Remove="ClientApp\components\Models\Story.tsx" />
     <None Remove="ClientApp\components\Models\Task.tsx" />
     <None Remove="ClientApp\components\EditPages\FeatureEdit.tsx" />
+    <None Remove="ClientApp\components\SprintReview.tsx" />
     <None Remove="ClientApp\components\SprintsGrid.tsx" />
     <None Remove="ClientApp\components\TeamGrid.tsx" />
     <None Remove="ClientApp\css\editUser.css" />
@@ -111,6 +112,7 @@
     <TypeScriptCompile Include="ClientApp\components\Models\Defect.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Models\Story.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\FeatureEdit.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\SprintReview\SprintReview.tsx" />
     <TypeScriptCompile Include="ClientApp\components\SprintsGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Grids\TeamGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\css\editUser.css" />
