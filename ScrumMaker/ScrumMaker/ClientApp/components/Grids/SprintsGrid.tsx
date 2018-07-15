@@ -1,8 +1,15 @@
 ﻿import * as React from 'react';
 import 'isomorphic-fetch';
 import { Sprint } from '../Models/Sprint';
-import { SprintsFiltersRow } from '../Filters/SprintsFiltersRow'
 import { Grid } from './Grid'
+
+import { FiltersManager } from '../Filters/FiltersManager';
+import { TextFilter } from '../Filters/TextFilter'
+import { IntFilter } from '../Filters/IntFilter'
+import { EnumFilter } from '../Filters/EnumFilter'
+import { SprintStage } from '../Models/SprintStage'
+import { EmptyFilter } from '../Filters/EmptyFilter';
+
 
 
 export class SprintsGrid extends Grid {
@@ -10,12 +17,13 @@ export class SprintsGrid extends Grid {
     protected URL_BASE: string = 'odata/sprints';
     protected URL_EXPANDS: string = '?$expand=Team($expand=members),history'
     protected URL_ORDERING: string = '&$orderby=id'
+    protected URL_EDIT: string = "SprintEdit/"
     protected headerText: string = 'Sprints'
-
 
     constructor() {
         super();
-        this.LoadData();
+        this.pageSize = 10;
+        this.recalcPagingUrl();
     }
 
     protected instantiate(item: any) {
@@ -40,13 +48,23 @@ export class SprintsGrid extends Grid {
     }
 
     protected GetFiltersRow() {
-        return <SprintsFiltersRow
+        let filetrs = [
+            new IntFilter({ filterKey: "id" }),
+            new TextFilter({ filterKey: "name" }),
+            new TextFilter({ filterKey: "team/name" }),
+            new EnumFilter({ filterKey: "stage", enumType: SprintStage }),
+            new TextFilter({ filterKey: "review" }),
+            new EmptyFilter(),
+            new TextFilter({ filterKey: "retrospective" })
+        ]
+
+        return <FiltersManager
+            ref={this.FILTER_MANAGER_REF}
+            filters={filetrs}
             onApply={this.ApplyFiltersHandler.bind(this)}
             display={this.filteringOn}
+            externalConstraints={this.customUrlFilters}
         />
     }
 }
-
-
-
 

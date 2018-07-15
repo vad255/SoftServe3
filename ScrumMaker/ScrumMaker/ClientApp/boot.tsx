@@ -4,12 +4,14 @@ import './css/navMenu.css';
 import './css/GridsSubMenu.css';
 import './css/gridsMenu.css';
 import './css/editUser.css';
+import './css/editPage.css';
 import './css/siteStyle.css';
 import './css/switchImg.css';
 import './css/selectStyle.css';
 import './css/tooltips.css';
 import './css/login.css';
 import './css/chat.css';
+import './css/calendar.css'
 import 'bootstrap';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';

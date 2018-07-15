@@ -40,6 +40,10 @@ namespace DAL
         
         public DbSet<SprintReview> SprintReviews { get; set; }
 
+        public DbSet<Meetings> Meetings { get; set; }
+
+        public DbSet<Calendar> Calendars { get; set; }
+
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

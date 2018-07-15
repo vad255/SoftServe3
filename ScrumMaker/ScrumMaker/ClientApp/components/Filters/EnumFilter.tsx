@@ -9,6 +9,11 @@ export class EnumFilter extends Filter {
     constructor(params: IEnumFilterConfiguration) {
         super(params);
         this.enumType = params.enumType;
+
+        for (let iterator in this.enumType) {
+            if (!parseInt(iterator))
+                this.enumNames.push(iterator.toString());
+        }
     }
 
     enumType: {} = [];
@@ -16,8 +21,10 @@ export class EnumFilter extends Filter {
     label: string = 'All'
     dispalyItems: boolean = false;
 
+    enumNames: string[] = [];
+
     public Reset(): void {
-        let selects = document.getElementById(this.state.filterKey + "Filter") as any;
+        let selects = document.getElementById(this.filterKey + "Filter") as any;
         for (let i = 0; i < selects.options.length; i++) {
             selects.options[i].selected = false;
         }
@@ -42,7 +49,7 @@ export class EnumFilter extends Filter {
                 this.filteringString += ' or '
 
             this.filteringString +=
-                this.state.filterKey.toString() + ' eq \'' +
+                this.filterKey.toString() + ' eq \'' +
                 enumVal.value.toString() +
                 '\'';
         }
@@ -61,26 +68,27 @@ export class EnumFilter extends Filter {
             selectedCount === 1 ?
                 selectedCount + ' type' :
                 selectedCount + ' types';
-        this.forceUpdate();
-        this.state.onFilterChanged(this.state.filterKey, this.filteringString);
+
+        if (this.requesRedraw) this.requesRedraw();
+        this.onFilterChanged(this.filterKey, this.filteringString);
     }
 
     onDpopdownClick() {
         this.dispalyItems = !this.dispalyItems;
-        this.forceUpdate();
+        this.requesRedraw();
     }
 
     onMouseLeave() {
         this.dispalyItems = false;
-        this.forceUpdate();
+        this.requesRedraw();
     }
 
     onMouseEnter() {
-        this.dispalyItems = true;
-        this.forceUpdate();
+        this.dispalyItems = true;        
+        this.requesRedraw();
     }
 
-    public render() {
+    public render() {      
         return <div className="dropdown"
             onMouseLeave={this.onMouseLeave.bind(this)}
         //    onMouseEnter={this.onMouseEnter.bind(this)}
@@ -96,20 +104,14 @@ export class EnumFilter extends Filter {
     }
 
     private renderSelect() {
-        let names: string[] = [];
-        for (let iterator in this.enumType) {
-            if (!parseInt(iterator))
-                names.push(iterator.toString());
-        }
 
         let items: JSX.Element[] = [];
-        for (var i = 0; i < names.length; i++) {
-            items.push(<option key={i + 1} value={names[i]}>{names[i]}</option>);
+        for (var i = 0; i < this.enumNames.length; i++) {
+            items.push(<option key={i + 1} value={this.enumNames[i]}>{this.enumNames[i]}</option>);
         }
 
-
         return <select
-            id={this.state.filterKey + "Filter"}
+            id={this.filterKey + "Filter"}
             className={this.dispalyItems ?
                 "dropdown-menu autooverflow display" :
                 "dropdown-menu autooverflow"}

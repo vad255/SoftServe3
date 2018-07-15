@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using DAL.Stubs;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -22,8 +20,9 @@ namespace DAL.Models
 
         public StoryStatus Status { get; set; }
 
-        // in future, we will need to use more specific type, like TeamMember or etc.
-        public User AssignedTo { get; set; }
+        [ForeignKey("User")]
+        public int? UserId { get; set; }
+        public virtual User User { get; set; }
 
         public Feature Feature { get; set; }
 
@@ -34,7 +33,7 @@ namespace DAL.Models
 
         [ForeignKey("Sprint")]
         public int? SprintId { get; set; }
-        public Sprint Sprint { get; set; }
+        public virtual Sprint Sprint { get; set; }
 
         [NotMapped]
         public StoryValue Value { get; set; }

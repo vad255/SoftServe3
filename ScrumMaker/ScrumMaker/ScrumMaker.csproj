@@ -36,6 +36,7 @@
     <None Remove="ClientApp\components\AddUser.tsx" />
     <None Remove="ClientApp\components\Charts\Chart.tsx" />
     <None Remove="ClientApp\components\EditPages\EditStory.tsx" />
+    <None Remove="ClientApp\components\EditPages\UserEdit.tsx" />
     <None Remove="ClientApp\components\EditUser.tsx" />
     <None Remove="ClientApp\components\Error.tsx" />
     <None Remove="ClientApp\components\Filters\DefectsFiltersRow.tsx" />
@@ -54,10 +55,14 @@
     <None Remove="ClientApp\components\Models\Story.tsx" />
     <None Remove="ClientApp\components\Models\Task.tsx" />
     <None Remove="ClientApp\components\EditPages\FeatureEdit.tsx" />
+    <None Remove="ClientApp\components\MyCalendar.tsx" />
+    <None Remove="ClientApp\components\Models\TaskState.tsx" />
+    <None Remove="ClientApp\components\Models\TaskType.tsx" />
     <None Remove="ClientApp\components\SprintReview.tsx" />
     <None Remove="ClientApp\components\SprintsGrid.tsx" />
     <None Remove="ClientApp\components\TeamGrid.tsx" />
     <None Remove="ClientApp\css\editUser.css" />
+    <Content Remove="wwwroot\images\ScrumMakerLogo.png" />
     <Content Remove="wwwroot\images\Thumbs.db" />
     <Content Remove="wwwroot\img\ScrumMakerLogo.jpg" />
     <Content Remove="wwwroot\img\______________2018_06_12____15_33_52_fdV_icon.png" />
@@ -82,7 +87,6 @@
     <None Include="wwwroot\img\28883217.jpg" />
     <None Include="wwwroot\img\face.jpg" />
     <None Include="wwwroot\img\mid_246485_6469.jpg" />
-    <None Include="wwwroot\img\ScrumMakerLogo.jpg" />
     <None Include="wwwroot\img\______________2018_06_12____15_33_52_fdV_icon.png" />
   </ItemGroup>
 
@@ -94,8 +98,10 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\AddUser.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\MyCalendar.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Charts\Chart.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\EditStory.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\EditPages\UserEdit.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Error.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Filters\TasksFiltersRow.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Filters\FeaturesFiltersRow.tsx" />
@@ -113,6 +119,8 @@
     <TypeScriptCompile Include="ClientApp\components\Models\Story.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\FeatureEdit.tsx" />
     <TypeScriptCompile Include="ClientApp\components\SprintReview\SprintReview.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Models\TaskState.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Models\TaskType.tsx" />
     <TypeScriptCompile Include="ClientApp\components\SprintsGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Grids\TeamGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\css\editUser.css" />
