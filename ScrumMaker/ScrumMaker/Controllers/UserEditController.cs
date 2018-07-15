@@ -100,7 +100,7 @@ namespace ScrumMaker.Controllers
             }
         }
 
-        private string GetLogin()
+        public string GetLogin()
         {
             var value = HttpContext.Request.Cookies["Authorization"];
             string login = null;
