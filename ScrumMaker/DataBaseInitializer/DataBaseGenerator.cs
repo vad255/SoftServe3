@@ -20,7 +20,8 @@ namespace DataBaseInitializer
         static IRepository<Feature> _dbFeatures;
         static IRepository<SprintStagesHistory> _dbHisories;
         static IRepository<Sprint> _dbSprints;
-
+        static IRepository<SprintReview> _dbSprintsReviews;
+             
         public static void FillDataBase(DbContext context)
         {
             _context = context;
@@ -44,9 +45,11 @@ namespace DataBaseInitializer
             FillSprintStagesData();
             ShowStatus(90);
             FillSprintsData();
+            ShowStatus(95);
+            FillSprintReviewsData();
             ShowStatus(100);
         }
-
+        
         public static void FillRolesData()
         {
             _dbRoles = new Repository<Role>(_context);
@@ -762,8 +765,8 @@ namespace DataBaseInitializer
                         FeatureName = "Login Page",
                         Stories = _dbStories.GetAll().Where(s => s.Id <= 2).ToList(),
                         Owner = users[counter],
-                        ProgramIncrement = "Login and registration page",
-                        OwnerUserId = 2
+                        OwnerUserId = users[counter].UserId,
+                        ProgramIncrement = "Login and registration page"
                     },
                     new Feature()
                     {
@@ -772,8 +775,8 @@ namespace DataBaseInitializer
                         FeatureName = "Home Page",
                         Stories = _dbStories.GetAll().Where(s => s.Id <= 4 && s.Id > 2).ToList(),
                         Owner = users[counter-1],
-                        ProgramIncrement = "Home page",
-                        OwnerUserId = 3
+                        OwnerUserId = users[counter-1].UserId,
+                        ProgramIncrement = "Home page"
                     },
                     new Feature()
                     {
@@ -783,8 +786,8 @@ namespace DataBaseInitializer
                         FeatureName = "Client Page",
                         Stories = _dbStories.GetAll().Where(s => s.Id <= 6 && s.Id > 4).ToList(),
                         Owner = users[counter-2],
-                        ProgramIncrement = "Home and client page",
-                        OwnerUserId = 6
+                        OwnerUserId = users[counter-2].UserId,
+                        ProgramIncrement = "Home and client page"
                     },
                     new Feature()
                     {
@@ -793,8 +796,8 @@ namespace DataBaseInitializer
                         FeatureName = "Footer",
                         Stories = _dbStories.GetAll().Where(s => s.Id <= 8 && s.Id > 6).ToList(),
                         Owner = users[counter-3],
-                        ProgramIncrement = "Site with footer",
-                        OwnerUserId = 1
+                        OwnerUserId = users[counter-3].UserId,
+                        ProgramIncrement = "Site with footer"
                     },
                     new Feature()
                     {
@@ -803,8 +806,8 @@ namespace DataBaseInitializer
                         FeatureName = "Header",
                         Stories = _dbStories.GetAll().Where(s => s.Id <= 10 && s.Id > 8).ToList(),
                         Owner = users[counter-4],
-                        ProgramIncrement = "Site with header",
-                        OwnerUserId = 4
+                        OwnerUserId = users[counter-4].UserId,
+                        ProgramIncrement = "Site with header"
                     },
                     new Feature()
                     {
@@ -813,8 +816,8 @@ namespace DataBaseInitializer
                         FeatureName = "Board",
                         Stories = _dbStories.GetAll().Where(s => s.Id <= 10 && s.Id > 8).ToList(),
                         Owner = users[counter-5],
-                        ProgramIncrement = "SCRUMBoard",
-                        OwnerUserId = 31
+                        OwnerUserId = users[counter-5].UserId,
+                        ProgramIncrement = "SCRUMBoard"
                     }
             };
 
@@ -934,6 +937,24 @@ namespace DataBaseInitializer
 
             _dbSprints.Save();
 
+        }
+
+        private static void FillSprintReviewsData()
+        {
+            _dbSprintsReviews = new Repository<SprintReview>(_context);
+            var sprints = _dbSprints.GetAll().ToList();
+            var firstSprint = sprints.FirstOrDefault();
+            var counter = sprints.Count() - 1;
+
+            SprintReview[] sprintReviews = new SprintReview[]
+            {
+                new SprintReview() { Goal = "New goal", Sprint = sprints[counter], SprintId = sprints[counter].Id },
+                new SprintReview() { Goal = "Implement calandar and chart in grids.", Sprint = sprints[counter-1], SprintId = sprints[counter-1].Id },
+                new SprintReview() { Goal = "", Sprint = sprints[counter-2], SprintId = sprints[counter-2].Id},
+                new SprintReview() { Goal = "", Sprint = sprints[counter-3], SprintId = sprints[counter-3].Id }
+            };
+
+            AddToDatabase(sprintReviews, _dbSprintsReviews);
         }
 
         public static void ShowStatus(int percentsDone)

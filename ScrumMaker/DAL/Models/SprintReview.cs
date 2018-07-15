@@ -14,7 +14,6 @@ namespace DAL.Models
         [ForeignKey("Sprint")]
         [Required]
         public int SprintId { get; set; }
-
         public virtual Sprint Sprint { get; set; }
 
         [Required]
