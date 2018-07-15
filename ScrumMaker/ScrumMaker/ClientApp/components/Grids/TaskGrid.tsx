@@ -4,7 +4,7 @@ import 'isomorphic-fetch';
 import { Grid } from './Grid';
 import { Task } from "../Models/Task";
 import { Login } from '../Login';
-import { IDbModel, IFetchState } from '../Models/IDbModel';
+import { IDbModel, IFetchState } from '../Models/Abstraction';
 
 import { FiltersManager } from '../Filters/FiltersManager';
 import { TextFilter } from '../Filters/TextFilter'

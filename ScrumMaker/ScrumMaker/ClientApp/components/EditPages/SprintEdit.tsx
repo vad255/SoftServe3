@@ -4,9 +4,10 @@ import { Sprint } from '../Models/Sprint';
 import { Story } from '../Models/Story';
 import { State } from '../Models/FeatureState';
 import { NavLink } from 'react-router-dom';
-import { IDbModel } from '../Models/IDbModel'
+import { IDbModel } from '../Models/Abstraction'
 import { SprintStage } from '../Models/SprintStage';
 import { Team } from '../Models/Team';
+import '../../css/editPage.css';
 
 
 interface ISprintEditState extends IEditState {
@@ -317,14 +318,7 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
 
     private handleSave(event: any) {
 
-        let item = this.state.item;
-        let updateModel = {
-            Name: item.name,
-            TeamId: item.teamId,
-            Stage: item.stage,
-            Review: item.review,
-            Retrospective: item.retrospective,
-        };
+        let updateModel = this.state.item.getUpdateModel();
 
         fetch(this.UPDATE_URL + this.state.item.id, {
             method: 'Patch',

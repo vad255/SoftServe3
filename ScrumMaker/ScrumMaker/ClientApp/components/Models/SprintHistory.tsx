@@ -1,13 +1,7 @@
 import * as React from 'react';
-import { IDbModel } from './IDbModel';
+import { IDbModel, ICommitableDbModel } from './Abstraction';
 
-export class SprintHistory implements IDbModel {
-    getId(): number {
-        throw new Error("Method not implemented.");
-    }
-    toArray(): any[] {
-        throw new Error("Method not implemented.");
-    }
+export class SprintHistory implements ICommitableDbModel {
 
     public empty: boolean = true;
     public id: number = -1;
@@ -31,6 +25,25 @@ export class SprintHistory implements IDbModel {
             return "";
         return this.begined.toLocaleDateString();
     }
+
+    getUpdateModel(): object {
+        return {
+            Id: this.id,
+            Begined: this.begined ? this.begined.toISOString() : "",
+            Ended: this.ended ? this.begined.toISOString() : ""
+        }
+    }
+    getId(): number {
+        return this.id;
+    }
+    toArray(): any[] {
+        return [
+            this.id,
+            this.begined,
+            this.ended
+        ]
+    }
+
 
     public renderAsMenu() {
         if (this.empty)

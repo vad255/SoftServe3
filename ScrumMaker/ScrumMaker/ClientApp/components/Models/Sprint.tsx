@@ -4,10 +4,11 @@ import 'isomorphic-fetch';
 import { Team } from './Team'
 import { SprintStage } from './SprintStage'
 import { SprintHistory } from './SprintHistory'
-import { IDbModel } from './IDbModel'
+import { IDbModel, ICommitableDbModel } from './Abstraction'
 
 
-export class Sprint implements IDbModel {
+export class Sprint implements ICommitableDbModel {
+
     id: number = -1;
     name: string = '';
     stage: SprintStage = 0;
@@ -34,7 +35,7 @@ export class Sprint implements IDbModel {
         this.dailyScrums = params.DailyScrums;
         this.review = params.Review;
         this.retrospective = params.Retrospective;
-        this.teamId  = params.TeamId;
+        this.teamId = params.TeamId;
         this.team = new Team(params.Team);
     }
 
@@ -63,7 +64,15 @@ export class Sprint implements IDbModel {
     getId() {
         return this.id
     }
-
+    getUpdateModel(){
+        return {
+            Name: this.name,
+            TeamId: this.teamId,
+            Stage: this.stage,
+            Review: this.review,
+            Retrospective: this.retrospective,
+        };
+    }
 
     private cutStirng(str: string, targetLength: number): string {
 

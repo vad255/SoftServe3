@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { Feature } from '../Models/Feature';
 import { Grid } from './Grid'
-import { IDbModel } from '../Models/IDbModel';
+import { IDbModel } from '../Models/Abstraction';
 
 import { FiltersManager } from '../Filters/FiltersManager';
 import { TextFilter } from '../Filters/TextFilter'

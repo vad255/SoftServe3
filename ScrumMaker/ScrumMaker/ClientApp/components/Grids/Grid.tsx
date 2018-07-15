@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
-import { IDbModel, IFetchState } from '../Models/IDbModel';
+import { IDbModel, IFetchState } from '../Models/Abstraction';
 import { NavLink } from 'react-router-dom'
 import { Content } from 'react-bootstrap/lib/Tab';
 import { Filter } from '../Filters/Filter';

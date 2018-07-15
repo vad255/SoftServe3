@@ -5,7 +5,7 @@ import { DropdownButton, MenuItem } from 'react-bootstrap';
 import { Team } from '../Models/Team';
 import { User } from '../Models/User';
 import { Grid } from './Grid';
-import { IDbModel, IFetchState } from '../Models/IDbModel';
+import { IDbModel, IFetchState } from '../Models/Abstraction';
 
 import { FiltersManager } from '../Filters/FiltersManager';
 import { TextFilter } from '../Filters/TextFilter'

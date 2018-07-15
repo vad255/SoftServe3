@@ -2,7 +2,7 @@
 import 'isomorphic-fetch';
 import { User } from '../Models/User';
 import { Grid } from './Grid';
-import { IDbModel, IFetchState } from '../Models/IDbModel';
+import { IDbModel, IFetchState } from '../Models/Abstraction';
 
 import { FiltersManager } from '../Filters/FiltersManager';
 import { TextFilter } from '../Filters/TextFilter'

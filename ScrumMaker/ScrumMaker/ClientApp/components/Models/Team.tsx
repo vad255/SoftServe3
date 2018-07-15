@@ -2,7 +2,7 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { User } from './User'
-import { IDbModel } from './IDbModel'
+import { IDbModel } from './Abstraction'
 
 
 export class Team implements IDbModel {
