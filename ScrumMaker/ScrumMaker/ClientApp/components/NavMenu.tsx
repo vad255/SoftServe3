@@ -66,8 +66,8 @@ export class NavMenu extends React.Component<{}, {}> {
                             </NavLink>
                     </li>
                     <li>
-                        <NavLink to={'/SprintReview'} activeClassName='active'>
-                            <span></span> Sprint review
+                        <NavLink to={'/SprintReviewEdit'} activeClassName='active'>
+                            <span></span> Sprint review edit
                             </NavLink>
                     </li>
                 </ul>

@@ -47,7 +47,8 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
     }
 
     public renderContent() {
-        return <div><h4>{this.EditName()}</h4>
+        return <div>
+            <h4>{this.EditFeature()}</h4>
             <h4>{this.OnDataReceived.bind(this)}</h4>
             <h4>{this.setUsers.bind(this)}</h4>
         </div>
@@ -115,7 +116,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
         });
     }
 
-    public EditName() {
+    public EditFeature() {
         return <form onSubmit={this.handleSave} name="oldForm" >
             <div className="text-center">
                 <h2 style={{ margin: "10px", padding: "5px", textAlign: "center" }}>"{this.state.FeatureName}" feature editing page</h2>

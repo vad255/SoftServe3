@@ -17,7 +17,7 @@ import { FeatureEdit } from './components/EditPages/FeatureEdit';
 import { Error } from './components/Error';
 import { SimpleChat } from './components/Chats/SimpleChat'
 import { Chart } from './components/Charts/Chart'
-import { SprintReview } from './components/SprintReview/SprintReview';
+import { SprintReviewEdit } from './components/EditPages/SprintReviewEdit';
 import { EditStory } from "./components/EditPages/EditStory";
 import { UserEdit } from "./components/EditPages/UserEdit";
 import { MyCalendar } from "./components/MyCalendar";
@@ -48,7 +48,7 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/SimpleChat' component={SimpleChat} />
         <LayoutRoute path='/Chart' component={Chart} />
         <LayoutRoute path='/EditStory' component={EditStory} />
-        <LayoutRoute path='/SprintReview' component={SprintReview} />
+        <LayoutRoute path='/SprintReviewEdit' component={SprintReviewEdit} />
         <LayoutRoute path='/UserEdit' component={UserEdit}/>
         <LayoutRoute path='/Calendar' component={MyCalendar} />
         <LayoutRoute path='/SprintEdit' component={SprintEdit} />

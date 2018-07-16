@@ -14,17 +14,35 @@ namespace ScrumMaker.Controllers
     [ApiController]
     public class SprintReviewController : ODataController
     {
-        private IRepository<Sprint> sprintRepository;
+        private IRepository<SprintReview> sprintReviewRepository;
 
-        public SprintReviewController(IRepository<Sprint> sr)
+        public SprintReviewController(IRepository<SprintReview> srr)
         {
-            sprintRepository = sr;
+            sprintReviewRepository = srr;
         }
 
-        [EnableQuery]
+        [EnableQuery(MaxExpansionDepth = 3)]
         public IActionResult Get()
         {
-            return Ok(sprintRepository.GetAll());
+            return Ok(sprintReviewRepository.GetAll());
+        }
+
+        [AcceptVerbs("PATCH", "MERGE")]
+        public IActionResult Patch([FromODataUri] int key, Delta<SprintReview> updateSprintReviewRequestModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            SprintReview sprintReview = sprintReviewRepository.GetById(key);
+            if (sprintReview == null)
+            {
+                return NotFound();
+            }
+            updateSprintReviewRequestModel.Patch(sprintReview);
+            sprintReviewRepository.Save();
+
+            return Updated(sprintReview);
         }
     }
 }

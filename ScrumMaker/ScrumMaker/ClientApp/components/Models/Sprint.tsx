@@ -2,6 +2,7 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { Team } from './Team'
+import { Story } from './Story';
 import { SprintStage } from './SprintStage'
 import { SprintHistory } from './SprintHistory'
 import { IDbModel } from './IDbModel'
@@ -12,7 +13,7 @@ export class Sprint implements IDbModel {
     name: string = '';
     stage: SprintStage = 0;
     history: SprintHistory;
-    backlog: string = '';
+    backlog: Story [] = [];
     defects: string = '';
     dailyScrums: string = '';
     review: string = '';
@@ -28,12 +29,19 @@ export class Sprint implements IDbModel {
         this.name = params.Name;
         this.stage = params.Stage;
         this.history = new SprintHistory(params.History);
-        this.backlog = params.Backlog;
         this.defects = params.Defects;
         this.dailyScrums = params.DailyScrums;
         this.review = params.Review;
         this.retrospective = params.Retrospective;
         this.team = new Team(params.Team);
+
+        if (params.Backlog) {
+            var backlog = [];
+            for (var i = 0; i < params.Backlog.length; i++)
+                backlog[i] = new Story(params.Backlog[i]);
+
+            this.backlog = backlog;
+        }
     }
 
     public toString(): string {
