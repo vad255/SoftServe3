@@ -8,10 +8,13 @@ import { IDbModel } from '../Models/Abstraction'
 import { SprintStage } from '../Models/SprintStage';
 import { Team } from '../Models/Team';
 import '../../css/editPage.css';
+import { ConfirmMadal } from '../ConfirmModal';
+import { SprintHistory } from '../Models/SprintHistory';
 
 
 interface ISprintEditState extends IEditState {
     item: Sprint
+    history: SprintHistory;
     teams: Team[]
 }
 
@@ -25,15 +28,14 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
     readonly id: number = -1;
     private URL: string = "";
     private UPDATE_URL: string = "/odata/sprints/";
-    private MAIN_URL: string = "odata/sprints?$expand=team,backlog,history&$filter=id eq ";
+    private SPRINT_URL: string = "odata/sprints?$expand=team&$filter=id eq ";
+    private HISTORY_URL: string = "odata/SprintStagesHistory?$filter=id eq "
 
     constructor() {
         super();
-        console.log("Constructor");
 
         let link = window.location.href;
         this.id = parseInt(link.substr(link.lastIndexOf('/') + 1));
-        this.URL = "odata/sprints?$expand=team,backlog,history&$filter=id eq " + this.id;
 
         this.handleSave = this.handleSave.bind(this);
         //this.handleInputChange = this.handleInputChange.bind(this);
@@ -44,21 +46,13 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
     }
 
     public LoadData() {
-        fetch(this.URL)
+        let url = this.SPRINT_URL + this.id;
+
+        fetch(url, { credentials: "include" })
             .then(response => response.json() as any)
             .then(data => {
                 this.OnDataReceived(data);
             }).catch(e => console.error(e));
-
-        fetch("api/teams/getFreeTeams", { credentials: "include" }).
-            then(response => response.json() as any).
-            then(data => {
-                let teamsTemp: Team[] = [];
-                (data as any[]).map(t => teamsTemp.push(new Team(t)));
-                this.setState({ teams: teamsTemp });
-            }).
-            catch(e => console.error(e));
-
     }
     public render() {
         let contents: JSX.Element;
@@ -83,13 +77,12 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
                     {this.getReviewInput()}
                     {this.getRetrospectiveInput()}
                     {this.getButtons()}
+                    {this.GetDeleteConfirmModal()}
                 </div>
             )
         }
         return contents;
     }
-
-
 
 
 
@@ -195,8 +188,13 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
             </div >
         );
     }
-
     getHistoyBlock() {
+        if (!this.state.history)
+            return <div>
+                <h3 className="hStyle">History</h3>
+                <p><em>Loading...</em></p>
+            </div>
+
         return (
             <div>
                 <h3 className="hStyle">History</h3>
@@ -204,31 +202,18 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
                 <input
                         className="form-control inline-block"
                         type="text"
-                        value={this.state.item.name}
-                        onChange={this.handleNameChange.bind(this)}
+                        value={this.state.history.begined.toLocaleString()}
+                        onChange={this.handleBeginedChange.bind(this)}
                     />
                 </h4>
-                {/* <h4 className="hStyle">End:&nbsp;&nbsp;&nbsp;&nbsp;
-                <div className="container">
-                        <div className="row">
-                            <div className='col-sm-6'>
-                                <div className="form-group">
-                                    <div className='input-group date' id='datetimepicker1'>
-                                        <input type='text' className="form-control" />
-                                        <span className="input-group-addon">
-                                            <span className="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            {/* <script type="text/javascript">
-                                $(function () {
-                                    $('#datetimepicker1').datetimepicker();
-                                });
-        </script> }
-                        </div>
-                    </div>
-                </h4> */}
+                <h4 className="hStyle">End:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input
+                        className="form-control inline-block"
+                        type="text"
+                        value={this.state.history.ended.toLocaleString()}
+                        onChange={this.handleEndedChange.bind(this)}
+                    />
+                </h4>
             </div>
         );
     }
@@ -242,7 +227,7 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
                     name="Description"
                     type="text"
                     value={this.state.item.review}
-                    onChange={this.handleReviewChange}
+                    onChange={this.handleReviewChange.bind(this)}
                 />
             </div>
         )
@@ -257,7 +242,7 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
                     name="Description"
                     type="text"
                     value={this.state.item.retrospective}
-                    onChange={this.handleRetrospChange}
+                    onChange={this.handleRetrospChange.bind(this)}
                 />
             </div>
         )
@@ -267,7 +252,11 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
             <div className="text-center">
                 <button
                     className="btn"
-                    onClick={this.handleSave.bind(this)}
+                    data-toggle="modal"
+                    data-target="#ConfirmDialog"
+                    role="button"
+
+                //onClick={this.handleSave.bind(this)}
                 >Update</button>
 
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -279,12 +268,40 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
             </div>
         );
     }
+    private GetDeleteConfirmModal() {
+        let title = "Confirm changes ?";
 
+        return <ConfirmMadal
+            onCanceled={this.handleCancel.bind(this)}
+            onConfirmed={this.handleSave.bind(this)}
+            title={title}
+            id={"ConfirmDialog"} />
+    }
 
     OnDataReceived(data: any) {
+        fetch("api/teams/getFreeTeams", { credentials: "include" }).
+            then(response => response.json() as any).
+            then(data => {
+                let teamsTemp: Team[] = [];
+                (data as any[]).map(t => teamsTemp.push(new Team(t)));
+                this.setState({ teams: teamsTemp });
+            }).
+            catch(e => console.error(e));
+
+
         this.isLoading = false;
         let currentItem = new Sprint(data['value'][0]);
         this.setState({ item: currentItem })
+
+        if (this.state.item.historyId > 0)
+            fetch(this.HISTORY_URL + this.state.item.historyId, { credentials: "include" }).
+                then(response => response.json() as any).
+                then(data => {
+                    let historyTemp: SprintHistory = new SprintHistory(data['value'][0]);
+                    
+                    this.setState({ history: historyTemp });
+                }).
+                catch(e => console.error(e));
     }
 
     handleNameChange(event: any) {
@@ -312,11 +329,25 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
         newState.teamId = event.target.value;
         this.setState({ item: newState });
     }
+    handleBeginedChange(event: any) {
+        let newState = this.state.item;
+        newState.history.begined = new Date(event.target.value);
+        this.setState({ item: newState });
+    }
+    handleEndedChange(event: any) {
+        let newState = this.state.item;
+        console.log(new Date(event.target.value));
+        
+        newState.history.ended = new Date(event.target.value);
+        this.setState({ item: newState });
+    }
+
     handleCancel() {
         this.props.history.push('/sprints');
     }
 
-    private handleSave(event: any) {
+
+    private handleSave() {
 
         let updateModel = this.state.item.getUpdateModel();
 

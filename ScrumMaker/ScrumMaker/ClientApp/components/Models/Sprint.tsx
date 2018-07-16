@@ -12,6 +12,7 @@ export class Sprint implements ICommitableDbModel {
     id: number = -1;
     name: string = '';
     stage: SprintStage = 0;
+    historyId: number = -1;
     history: SprintHistory;
     backlog: string = '';
     defects: string = '';
@@ -29,6 +30,7 @@ export class Sprint implements ICommitableDbModel {
         this.id = params.Id;
         this.name = params.Name;
         this.stage = params.Stage;
+        this.historyId = params.HistoryId;
         this.history = new SprintHistory(params.History);
         this.backlog = params.Backlog;
         this.defects = params.Defects;

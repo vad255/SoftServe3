@@ -55,7 +55,6 @@ export class FiltersManager extends React.Component<IFilterManagerState, IFilter
         let filterString = Filter.QUERY_HEAD;
 
         let noConstrainsYet = true;
-        console.log("FM_EC" + this.state.externalConstraints);
 
         if (this.state.externalConstraints != undefined && 
             this.state.externalConstraints != null && 

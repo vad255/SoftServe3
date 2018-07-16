@@ -18,6 +18,7 @@ namespace DAL.Models
 
         public SprintStage Stage { get; set; }
 
+        public int? HistoryId { get; set; }
         public virtual SprintStagesHistory History { get; set; }
 
         public virtual ICollection<Story> Backlog { get; set; }

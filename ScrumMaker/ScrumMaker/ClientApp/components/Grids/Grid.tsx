@@ -111,17 +111,10 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
         result += this.URL_COUNT;
 
-        console.log(result);
-
         return result;
     }
     updateFilterUrl(): any {
         let manager = this.refs[this.FILTER_MANAGER_REF] as FiltersManager;
-
-        console.log(this.refs[this.FILTER_MANAGER_REF]);
-
-        console.log(manager);
-
 
         if (manager)
             this.urlFilters = manager.GetFilteringQuery();
@@ -313,8 +306,6 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         for (let iterator in params) {
             this.customUrlFilters += params[iterator]
         }
-        console.log("Externalfilter: " + this.customUrlFilters);
-
     }
     private GetUrlParams(): any[] {
         let vars: any = {};
