@@ -16,10 +16,12 @@ namespace ScrumMaker.Controllers
     public class SprintsController : ODataController
     {
         private IRepository<Sprint> _sprints;
+        private IRepository<SprintStagesHistory> _history;
 
-        public SprintsController(IRepository<Sprint> repository)
+        public SprintsController(IRepository<Sprint> sprints, IRepository<SprintStagesHistory> history)
         {
-            _sprints = repository;
+            _sprints = sprints;
+            _history = history;
         }
 
         [EnableQuery]
@@ -69,6 +71,11 @@ namespace ScrumMaker.Controllers
         [AcceptVerbs("DELETE")]
         public IActionResult Delete([FromODataUri] int key)
         {
+            var target = _sprints.GetById(key);
+            int? historyId = target?.HistoryId;
+            if (historyId > 0)
+                _history.Delete(historyId.Value);
+
             _sprints.Delete(key);
             _sprints.Save();
             return NoContent();

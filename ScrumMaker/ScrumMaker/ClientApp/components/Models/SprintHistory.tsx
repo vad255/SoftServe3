@@ -6,38 +6,35 @@ export class SprintHistory implements ICommitableDbModel {
 
     public empty: boolean = true;
     public id: number = -1;
-    begined: moment.Moment;
-    ended: moment.Moment;
+    begined: moment.Moment = moment.min();
+    ended: moment.Moment = moment.min();
 
     constructor(params: any) {
-        if (params === null || params === undefined) {
+        if (!params)
             return;
-        }
 
         this.begined = params.Begined ? moment(params.Begined) : moment.min();
         this.ended = params.Ended ? moment(params.Ended) : moment.min();
 
-        this.id = params.Id;
+        this.id = params.Id ? params.Id : -1;
         this.empty = false;
     }
 
     public toString(): string {
-        if (this.empty)
-            return "";
-        return this.begined ? this.begined.toISOString() : "";
+        return this.empty ? this.begined.toISOString() : "";
     }
 
-    getUpdateModel(): object {
+    public getUpdateModel(): object {
         return {
             Id: this.id,
             Begined: this.begined ? this.begined.toISOString() : "",
             Ended: this.ended ? this.ended.toISOString() : ""
         }
     }
-    getId(): number {
+    public getId(): number {
         return this.id;
     }
-    toArray(): any[] {
+    public toArray(): any[] {
         return [
             this.id,
             this.begined,

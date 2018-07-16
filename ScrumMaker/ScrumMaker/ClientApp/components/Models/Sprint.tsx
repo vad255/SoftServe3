@@ -23,9 +23,8 @@ export class Sprint implements ICommitableDbModel {
     team: Team;
 
     public constructor(params: any) {
-        if (params === null || params === undefined) {
+        if (!params)
             return;
-        }
 
         this.id = params.Id;
         this.name = params.Name;
@@ -46,7 +45,6 @@ export class Sprint implements ICommitableDbModel {
     }
 
     public toArray(): any[] {
-
         let elements: any[] = [
             this.id,
             this.name,
@@ -63,10 +61,10 @@ export class Sprint implements ICommitableDbModel {
 
         return elements;
     }
-    getId() {
+    public getId() {
         return this.id
     }
-    getUpdateModel(){
+    public getUpdateModel() {
         return {
             Name: this.name,
             TeamId: this.teamId,
