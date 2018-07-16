@@ -70,6 +70,7 @@ export class Sprint implements ICommitableDbModel {
         return {
             Name: this.name,
             TeamId: this.teamId,
+            HistoryId: this.historyId,
             Stage: this.stage,
             Review: this.review,
             Retrospective: this.retrospective,

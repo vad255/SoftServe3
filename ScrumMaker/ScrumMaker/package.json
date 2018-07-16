@@ -25,9 +25,7 @@
     "isomorphic-fetch": "2.2.1",
     "jquery": "3.2.1",
     "json-loader": "0.5.4",
-    "moment": "2.22.2",
     "react": "15.6.1",
-    "react-calendar": "2.16.0",
     "react-dom": "15.6.1",
     "react-hot-loader": "3.0.0-beta.7",
     "react-router-dom": "4.1.1",
@@ -39,5 +37,9 @@
     "webpack": "2.5.1",
     "webpack-hot-middleware": "2.18.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@types/react-datepicker": "^1.1.5",
+    "react-calendar": "^2.16.1",
+    "react-datepicker": "^1.5.0"
+  }
 }

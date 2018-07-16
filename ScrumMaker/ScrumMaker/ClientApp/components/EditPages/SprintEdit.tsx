@@ -1,36 +1,37 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Sprint } from '../Models/Sprint';
-import { Story } from '../Models/Story';
-import { State } from '../Models/FeatureState';
 import { NavLink } from 'react-router-dom';
-import { IDbModel } from '../Models/Abstraction'
 import { SprintStage } from '../Models/SprintStage';
 import { Team } from '../Models/Team';
 import '../../css/editPage.css';
 import { ConfirmMadal } from '../ConfirmModal';
 import { SprintHistory } from '../Models/SprintHistory';
+import DatePicker from 'react-datepicker'
+import * as moment from 'moment';
+import 'react-datepicker/dist/react-datepicker.css';
 
 
-interface ISprintEditState extends IEditState {
-    item: Sprint
+interface ISprintEditState {
+    sprint: Sprint
     history: SprintHistory;
     teams: Team[]
 }
 
-export interface IEditState {
-    item: IDbModel
-}
 
 export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprintEditState> {
 
-    private isLoading: boolean = true;
+    private sprintLoading: boolean = true;
+    private teamLoading: boolean = true;
+    private historyLoading: boolean = true;
+    private historyModified: boolean = false;
+    private historyCreatedNew: boolean = false;
+
     readonly id: number = -1;
-    private URL: string = "";
     private UPDATE_URL: string = "/odata/sprints/";
     private SPRINT_URL: string = "odata/sprints?$expand=team&$filter=id eq ";
-    private HISTORY_URL: string = "odata/SprintStagesHistory?$filter=id eq "
-
+    private HISTORY_URL: string = "odata/SprintStagesHistory?$filter=id eq ";
+    private HISTORY_UPDATE_URL: string = "odata/SprintStagesHistory/";
     constructor() {
         super();
 
@@ -41,23 +42,63 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
         //this.handleInputChange = this.handleInputChange.bind(this);
     }
 
-    componentDidMount() {
-        this.LoadData();
+    public componentDidMount() {
+        this.LoadSprint().then(data => {
+            this.LoadOrCreateHistory();
+            this.LoadTeams();
+        }).catch(e => console.error(e));
     }
-
-    public LoadData() {
+    LoadSprint(): Promise<any> {
         let url = this.SPRINT_URL + this.id;
 
-        fetch(url, { credentials: "include" })
-            .then(response => response.json() as any)
-            .then(data => {
-                this.OnDataReceived(data);
-            }).catch(e => console.error(e));
+        return fetch(url, { credentials: "include" }).
+            then(response => response.json() as any).
+            then((data) => {
+
+                this.sprintLoading = false;
+                let currentItem = new Sprint(data['value'][0]);
+                this.setState({ sprint: currentItem })
+            });
     }
+    LoadOrCreateHistory() {
+
+        if (this.state.sprint.historyId > 0) {
+            fetch(this.HISTORY_URL + this.state.sprint.historyId, { credentials: "include" }).
+                then(response => response.json() as any).
+                then(data => {
+                    let historyTemp: SprintHistory = new SprintHistory(data['value'][0]);
+                    this.historyLoading = false;
+                    this.historyCreatedNew = false;
+                    this.historyModified = false;
+
+                    this.setState({ history: historyTemp });
+                }).
+                catch(e => console.error(e));
+        }
+        else {
+            this.historyLoading = false;
+            this.historyCreatedNew = true;
+            this.historyModified = true;
+            this.setState({ history: new SprintHistory({}) });
+        }
+    }
+    LoadTeams() {
+        fetch("api/teams/getFreeTeams", { credentials: "include" }).
+            then(response => response.json() as any).
+            then(data => {
+                let teamsTemp: Team[] = [];
+                (data as any[]).map(t => teamsTemp.push(new Team(t)));
+                this.setState({ teams: teamsTemp });
+            }).
+            catch(e => console.error(e));
+    }
+
+
+
     public render() {
         let contents: JSX.Element;
 
-        if (this.isLoading)
+        if (this.sprintLoading)
             contents = <p><em>Loading...</em></p>
         else {
             contents = (
@@ -71,7 +112,7 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
                     </div>
 
                     <div className="sprintHistoryBlock inline-block">
-                        {this.getHistoyBlock()}
+                        {this.getHistoryBlock()}
                     </div>
 
                     {this.getReviewInput()}
@@ -83,14 +124,11 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
         }
         return contents;
     }
-
-
-
     getHeader() {
         return <div className="editHead">
             <h2> Sprint editing page</h2>
             <br />
-            <h3>"{this.state.item.name}"</h3>
+            <h3>"{this.state.sprint.name}"</h3>
         </div>;
     }
     getNameInput() {
@@ -100,7 +138,7 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
                 <input
                         className="form-control inline-block"
                         type="text"
-                        value={this.state.item.name}
+                        value={this.state.sprint.name}
                         onChange={this.handleNameChange.bind(this)}
                     />
                 </h3>
@@ -112,10 +150,10 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
         let options: JSX.Element[] = [];
         let index = 0;
 
-        if (this.state.item.team) {
+        if (this.state.sprint.team) {
             options.push(
-                <option key={index++} value={this.state.item.team.id}>
-                    {this.state.item.team.name}
+                <option key={index++} value={this.state.sprint.team.id}>
+                    {this.state.sprint.team.name}
                 </option>
             )
         }
@@ -138,7 +176,7 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
                 <h3 className="hStyle">Team:&nbsp;&nbsp;&nbsp;
                 <select
                         className="form-control inline-block"
-                        value={this.state.item.teamId}
+                        value={this.state.sprint.teamId}
                         onChange={this.handleTeamChange.bind(this)}
                     >
                         {options}
@@ -165,7 +203,7 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
                 <h3 className="hStyle">State:&nbsp;&nbsp;&nbsp;&nbsp;
                     <select
                         className="form-control inline-block"
-                        value={this.state.item.stage}
+                        value={this.state.sprint.stage}
                         onChange={this.handleStageChange.bind(this)}>
                         {items};
                     </select>
@@ -188,7 +226,7 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
             </div >
         );
     }
-    getHistoyBlock() {
+    getHistoryBlock() {
         if (!this.state.history)
             return <div>
                 <h3 className="hStyle">History</h3>
@@ -198,26 +236,40 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
         return (
             <div>
                 <h3 className="hStyle">History</h3>
+
                 <h4 className="hStyle">Begin:&nbsp;&nbsp;
-                <input
-                        className="form-control inline-block"
-                        type="text"
-                        value={this.state.history.begined.toLocaleString()}
-                        onChange={this.handleBeginedChange.bind(this)}
-                    />
+                <div className="inline-block">
+                        <DatePicker
+                            locale="uk-ua"
+                            className="form-control"
+                            selected={this.state.history.begined}
+                            dateFormat={"DD.MM.YYYY HH:mm"}
+                            onChange={this.handleBeginChange.bind(this)}
+                            showTimeSelect
+                            timeFormat="HH:mm"
+                            timeIntervals={15}
+                        />
+                    </div>
+
                 </h4>
                 <h4 className="hStyle">End:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input
-                        className="form-control inline-block"
-                        type="text"
-                        value={this.state.history.ended.toLocaleString()}
-                        onChange={this.handleEndedChange.bind(this)}
-                    />
+                <div className="inline-block">
+                        <DatePicker
+                            locale="uk-ua"
+                            className="form-control"
+                            selected={moment(this.state.history.ended)}
+                            dateFormat={"DD.MM.YYYY  HH:mm"}
+                            onChange={this.handleEndChange.bind(this)}
+                            showTimeSelect
+                            timeFormat="HH:mm"
+                            timeIntervals={15}
+                        // timeCaption="time"
+                        />
+                    </div>
                 </h4>
             </div>
         );
     }
-
     getReviewInput() {
         return (
             <div>
@@ -226,7 +278,7 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
                     className="areaStyle"
                     name="Description"
                     type="text"
-                    value={this.state.item.review}
+                    value={this.state.sprint.review}
                     onChange={this.handleReviewChange.bind(this)}
                 />
             </div>
@@ -241,7 +293,7 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
 
                     name="Description"
                     type="text"
-                    value={this.state.item.retrospective}
+                    value={this.state.sprint.retrospective}
                     onChange={this.handleRetrospChange.bind(this)}
                 />
             </div>
@@ -268,7 +320,7 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
             </div>
         );
     }
-    private GetDeleteConfirmModal() {
+    GetDeleteConfirmModal() {
         let title = "Confirm changes ?";
 
         return <ConfirmMadal
@@ -278,91 +330,142 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
             id={"ConfirmDialog"} />
     }
 
-    OnDataReceived(data: any) {
-        fetch("api/teams/getFreeTeams", { credentials: "include" }).
-            then(response => response.json() as any).
-            then(data => {
-                let teamsTemp: Team[] = [];
-                (data as any[]).map(t => teamsTemp.push(new Team(t)));
-                this.setState({ teams: teamsTemp });
-            }).
-            catch(e => console.error(e));
 
-
-        this.isLoading = false;
-        let currentItem = new Sprint(data['value'][0]);
-        this.setState({ item: currentItem })
-
-        if (this.state.item.historyId > 0)
-            fetch(this.HISTORY_URL + this.state.item.historyId, { credentials: "include" }).
-                then(response => response.json() as any).
-                then(data => {
-                    let historyTemp: SprintHistory = new SprintHistory(data['value'][0]);
-                    
-                    this.setState({ history: historyTemp });
-                }).
-                catch(e => console.error(e));
-    }
 
     handleNameChange(event: any) {
-        let newState = this.state.item;
+        let newState = this.state.sprint;
         newState.name = event.target.value;
-        this.setState({ item: newState });
+        this.setState({ sprint: newState });
     }
     handleReviewChange(event: any) {
-        let newState = this.state.item;
+        let newState = this.state.sprint;
         newState.review = event.target.value;
-        this.setState({ item: newState });
+        this.setState({ sprint: newState });
     }
     handleRetrospChange(event: any) {
-        let newState = this.state.item;
+        let newState = this.state.sprint;
         newState.retrospective = event.target.value;
-        this.setState({ item: newState });
+        this.setState({ sprint: newState });
     }
     handleStageChange(event: any) {
-        let newState = this.state.item;
+        let newState = this.state.sprint;
         newState.stage = event.target.value;
-        this.setState({ item: newState });
+        this.setState({ sprint: newState });
     }
     handleTeamChange(event: any) {
-        let newState = this.state.item;
+        let newState = this.state.sprint;
         newState.teamId = event.target.value;
-        this.setState({ item: newState });
+        this.setState({ sprint: newState });
     }
-    handleBeginedChange(event: any) {
-        let newState = this.state.item;
-        newState.history.begined = new Date(event.target.value);
-        this.setState({ item: newState });
+    handleBeginChange(date: moment.Moment) {
+        this.historyModified = true;
+
+        let historyNew = this.state.history;
+        historyNew.begined = date;
+        this.setState({
+            history: historyNew
+        });
+        console.log(this.state.history.begined.toLocaleString());
     }
-    handleEndedChange(event: any) {
-        let newState = this.state.item;
-        console.log(new Date(event.target.value));
-        
-        newState.history.ended = new Date(event.target.value);
-        this.setState({ item: newState });
+    handleEndChange(date: moment.Moment) {
+        this.historyModified = true;
+
+        let historyNew = this.state.history;
+        historyNew.ended = date;
+        this.setState({
+            history: historyNew
+        });
+        console.log(this.state.history.ended.toLocaleString());
     }
 
-    handleCancel() {
+
+
+    private handleCancel() {
         this.props.history.push('/sprints');
     }
-
-
     private handleSave() {
-
-        let updateModel = this.state.item.getUpdateModel();
-
-        fetch(this.UPDATE_URL + this.state.item.id, {
-            method: 'Patch',
-            body: JSON.stringify({
-                '@odata.type': 'DAL.Models.Sprint',
-                ...updateModel
+        if (this.historyModified)
+            if (this.historyCreatedNew)
+                this.PostHistoryAndConnectToSprint().
+                    then(() => this.PatchSprint());
+            else {
+                this.PatchHistory();
+                this.PatchSprint();
             }
-            ),
-            headers: {
-                'OData-Version': '4.0',
-                'Content-Type': 'application/json;odata.metadata=minimal',
-                'Accept': 'application/json'
-            }
-        }).then(response => { this.props.history.push('/sprints') });
+        else
+            this.PatchSprint();
+    }
+    PostHistoryAndConnectToSprint(): Promise<any> {
+
+        let historyUpdateModel = this.state.history.getUpdateModel();
+
+        return fetch(this.HISTORY_UPDATE_URL,
+            {
+                method: 'POST',
+                body: JSON.stringify({
+                    '@odata.type': 'DAL.Models.SprintStagesHistory',
+                    ...historyUpdateModel
+                }
+                ),
+                headers: {
+                    'OData-Version': '4.0',
+                    'Content-Type': 'application/json;odata.metadata=minimal',
+                    'Accept': 'application/json'
+                }
+            }).then(response => response.json() as any).
+            then(data => {
+                let historyTemp: SprintHistory = new SprintHistory(data);
+
+                this.state.sprint.historyId = historyTemp.id;
+                this.historyCreatedNew = false;
+                this.historyModified = false;
+
+                this.setState({ history: historyTemp });
+
+            });
+    }
+    PatchHistory(): Promise<any> {
+
+        let historyUpdateModel = this.state.history.getUpdateModel();
+
+        return fetch(this.HISTORY_UPDATE_URL + this.state.sprint.historyId,
+            {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    '@odata.type': 'DAL.Models.SprintStagesHistory',
+                    ...historyUpdateModel
+                }
+                ),
+                headers: {
+                    'OData-Version': '4.0',
+                    'Content-Type': 'application/json;odata.metadata=minimal',
+                    'Accept': 'application/json'
+                }
+            }).
+            then(() => {
+                this.historyCreatedNew = false;
+                this.historyModified = false;
+            })
+    }
+    PatchSprint(): Promise<any> {
+        let sprintUpdateModel = this.state.sprint.getUpdateModel();
+
+        return fetch(this.UPDATE_URL + this.state.sprint.id,
+            {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    '@odata.type': 'DAL.Models.Sprint',
+                    ...sprintUpdateModel
+                }
+                ),
+                headers: {
+                    'OData-Version': '4.0',
+                    'Content-Type': 'application/json;odata.metadata=minimal',
+                    'Accept': 'application/json'
+                }
+            }).
+            then(() =>
+                this.props.history.push('/sprints')
+            );
     }
 }
