@@ -37,6 +37,7 @@
     <None Remove="ClientApp\components\Charts\Chart.tsx" />
     <None Remove="ClientApp\components\Chats\RetrospectiveMeeting.tsx" />
     <None Remove="ClientApp\components\Chats\RetrospectiveMessage.tsx" />
+    <None Remove="ClientApp\components\Chats\RetrospectiveTable.tsx" />
     <None Remove="ClientApp\components\EditPages\EditStory.tsx" />
     <None Remove="ClientApp\components\EditUser.tsx" />
     <None Remove="ClientApp\components\Error.tsx" />
@@ -100,6 +101,7 @@
     <TypeScriptCompile Include="ClientApp\components\AddUser.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Chats\RetrospectiveMeeting.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Chats\RetrospectiveMessage.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Chats\RetrospectiveTable.tsx" />
     <TypeScriptCompile Include="ClientApp\components\MyCalendar.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Charts\Chart.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\EditStory.tsx" />

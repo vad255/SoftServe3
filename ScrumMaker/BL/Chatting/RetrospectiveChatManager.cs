@@ -44,7 +44,6 @@ namespace BL.Chatting
             _chats.Save();
         }
 
-
         public ClaimsPrincipal User { get; set; }
 
         public string GetGroupIdentifier
@@ -148,7 +147,7 @@ namespace BL.Chatting
         }
 
 
-        private int GetCurrentUserId()
+        public int GetCurrentUserId()
         {
             ClaimsIdentity identity = User?.Identity as ClaimsIdentity;
 
@@ -162,6 +161,24 @@ namespace BL.Chatting
             return authorId;
         }
 
+
+        public DateTime GetCurrentDate()
+        {
+            return DateTime.Now;
+        }
+
+        public string GetCurrentUserName()
+        {
+            int userId = GetCurrentUserId();
+            User user = _users.GetAll().FirstOrDefault(u => u.UserId == userId);
+            if (user != null)
+            {
+                return user.Login;
+            }
+
+            return "Anonim";
+        }
+
+
     }
 }
-

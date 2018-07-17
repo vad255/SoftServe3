@@ -3,8 +3,8 @@ import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 import { User } from '../Models/User';
-import { UserBox } from './UsersBox';
-import { RetrospectiveMessage } from "./RetrospectiveMessage"
+import { RetrospectiveMessage } from "./RetrospectiveMessage";
+import { RetrospectiveTable } from "./RetrospectiveTable";
 
 interface IRetrospectiveState {
     wentWellOutPut: string;
@@ -18,12 +18,10 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
     connection: HubConnection;
     name: string = "defaultName";
     message: RetrospectiveMessage = new RetrospectiveMessage("");
-    usersBox: UserBox = new UserBox();
+    table: RetrospectiveTable = new RetrospectiveTable();
     wentWell: string = "";
     improved: string = "";
     commitTo: string = "";
-    messageInfo: string = "";
-    user: User = new User("");
     dateString: string = "";
 
     constructor() {
@@ -35,10 +33,6 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
         this.connection.on("receiveUsers", this.receiveUsers.bind(this));
         this.connection.on("userConnected", this.userConnected.bind(this));
         this.connection.on("userDisconnect", this.userDisconnected.bind(this));
-        this.connection.onclose(() => {
-            this.messageInfo = "CONNECTION CLOSED";
-            this.receiveMessage(this.message);
-        });
 
         this.connection.start().
             then(() => {
@@ -62,9 +56,6 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
     }
 
     receiveHistory(messages: string[]) {
-        //messages.forEach(element => {
-        //    this.receiveMessage(element.toString());
-        //});
     }
 
     public receiveUsers(users: User[]) {
@@ -77,27 +68,31 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
         console.log("Conected: " + user);
 
         if (user !== null && user !== undefined) {
-            this.usersBox.users.push(user);
-            this.user = user;
+            this.table.addUser(user);
             this.forceUpdate();
+            this.table.updateLayout(this.table.getListitems());
+            this.forceUpdate();
+
         }
+
     }
 
     userDisconnected(user: User) {
         console.log("Disconected: " + user);
 
         if (user !== null && user !== undefined) {
-            this.usersBox.users = this.usersBox.users.filter(u => u.login !== user.login);
+            this.table.removeUser(user);
             this.forceUpdate();
+            this.table.updateLayout(this.table.getListitems());
+            this.forceUpdate();
+
         }
     }
 
     public receiveMessage(message: RetrospectiveMessage) {
 
-        console.log(message);
-
         const s = message.sendingDate.toString().replace("T", ", ").replace("Z", "");
-    
+
         this.wentWell += message.userName + ' (' + s + ') : ' + message.wentWell + '\n';
         this.improved += message.userName + ' (' + s + ') : ' + message.couldBeImproved + '\n';
         this.commitTo += message.userName + ' (' + s + ') : ' + message.commitToDoing + '\n';
@@ -105,31 +100,16 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
         this.setState({ wentWellOutPut: this.wentWell, improvedOutput: this.improved, commitOutput: this.commitTo });
     }
 
-    getCurrentDate() {
-        const date = new Date();
-
-        this.dateString = date.getFullYear().toString() + "-" +
-            (date.getMonth() + 1).toString() + "-" +                 //????
-            date.getDate().toString() + "T" +
-            date.getHours().toString() + ":" +
-            date.getMinutes().toString() + ":" +
-            date.getSeconds().toString() + "Z";
-
-        console.log(this.dateString);
-    }
-
     buildMessageToSend() {
-        this.getCurrentDate();
+
         let wentWellInput = document.getElementById("wentWell") as any;
         let improveInput = document.getElementById("couldBeImproved") as any;
         let commitToDoigInput = document.getElementById("commitToDoing") as any;
 
         if (wentWellInput.value !== '' && improveInput !== '' && commitToDoigInput !== '') {
 
-            var obj = JSON.parse('{ "SendingDate": "' + this.dateString + '", "WentWell": "' +
-                wentWellInput.value + '", "CouldBeImproved": "' + improveInput.value +
-                '", "CommitToDoing": "' + commitToDoigInput.value + '", "UserId": ' +
-                this.user.userId + ', "UserName": "' + this.user.login + '" }');
+            var obj = JSON.parse('{ "WentWell": "' + wentWellInput.value + '", "CouldBeImproved": "'
+                + improveInput.value + '", "CommitToDoing": "' + commitToDoigInput.value + '" }');
             this.message = new RetrospectiveMessage(obj);
         }
     }
@@ -138,8 +118,6 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
 
         this.buildMessageToSend();
 
-        console.log(this.message);
-
         if (this.message !== null) {
             this.send();
         }
@@ -147,20 +125,28 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
 
     render() {
         return <div className="chatWindow">
-            <div className="chatOutputWindow">
-                <div className="chatOutput">
-                    <p>What went well in the Sprint?</p>
-                    <textarea id="WellOutput" className="chatOutputArea" rows={15} readOnly={true} value={this.state
-                        .wentWellOutPut} />
-                    <p>What could be improved?</p>
-                    <textarea id="ImprovedOutput" className="chatOutputArea" rows={15} readOnly={true} value={this
-                        .state.improvedOutput} />
-                    <p>What will we commit to improve in the next Sprint?</p>
-                    <textarea id="CommitOutput" className="chatOutputArea" rows={15} readOnly={true} value={this.state
-                        .commitOutput} />
+            <div className="RetrospectiveTable" style={{ background: `url("img/RetrospectiveTable.jpg") no-repeat` }}>
+                {this.table.render()}
+            </div>
+            <hr />
+            <div className="RetrospectivechatOutputWindow">
+                <div className="RetrospectivechatOutput">
+                    <p className="PChat">What went well in the Sprint?</p>
+                    <textarea id="WellOutput" className="RetrospectivechatOutputArea"
+                        rows={15} readOnly={true} value={this.state
+                            .wentWellOutPut} />
                 </div>
-                <div className="chatUsersBlock">
-                    {this.usersBox.render()}
+                <div className="RetrospectivechatOutput">
+                    <p className="PChat">What could be improved?</p>
+                    <textarea id="ImprovedOutput" className="RetrospectivechatOutputArea"
+                        rows={15} readOnly={true} value={this
+                            .state.improvedOutput} />
+                </div>
+                <div className="RetrospectivechatOutput">
+                    <p className="PChat">What will we commit to improve in the next Sprint?</p>
+                    <textarea id="CommitOutput" className="RetrospectivechatOutputArea"
+                        rows={15} readOnly={true} value={this.state
+                            .commitOutput} />
                 </div>
             </div>
             <hr />

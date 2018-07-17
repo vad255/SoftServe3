@@ -8,5 +8,8 @@ namespace BL.Chatting
     public interface IRetrospectiveChatMananger : IChatManager
     {
         void AddRetrospectiveMessage(RetrospectiveMessage text);
+        int GetCurrentUserId();
+        string GetCurrentUserName();
+        DateTime GetCurrentDate();
     }
 }

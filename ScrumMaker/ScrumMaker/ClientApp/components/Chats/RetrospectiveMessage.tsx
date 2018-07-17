@@ -7,7 +7,7 @@ import { User } from "../Models/User";
 export class RetrospectiveMessage {
 
     public id: number = -1;
-    public sendingDate: Date;
+    public sendingDate: Date = new Date();
     public wentWell: string = "";
     public couldBeImproved: string = "";
     public commitToDoing: string = "";
@@ -18,7 +18,6 @@ export class RetrospectiveMessage {
 
     constructor(params: any) {
         this.id = params.Id;
-        this.sendingDate = new Date(params.SendingDate);
         this.wentWell = params.WentWell;
         this.couldBeImproved = params.CouldBeImproved;
         this.commitToDoing = params.CommitToDoing;

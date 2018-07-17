@@ -20,7 +20,10 @@ namespace ScrumMaker.Controllers.Chatting
         public async Task SendMessage(RetrospectiveMessage message)
         {
             _manager.User = Context.User;
-           
+
+            message.SendingDate = _manager.GetCurrentDate();
+            message.UserName = _manager.GetCurrentUserName();
+            message.UserId = _manager.GetCurrentUserId();
             await Clients.Group(_manager.GetGroupIdentifier).SendAsync("receiveMessage", message);
 
             _manager.AddRetrospectiveMessage(message);
@@ -36,7 +39,6 @@ namespace ScrumMaker.Controllers.Chatting
         {
             await Clients.Caller.SendAsync("receiveUsers", _manager.GetOnlineUsers());
         }
-
 
         public override async Task OnConnectedAsync()
         {
