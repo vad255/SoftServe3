@@ -4,7 +4,7 @@ import 'isomorphic-fetch';
 import { DefectPriority } from './DefectPriority'
 import { DefectState } from './DefectState'
 import { DefectStatus } from './DefectStatus'
-import { IDbModel } from './IDbModel'
+import { IDbModel } from './Abstraction'
 
 
 export class Defect implements IDbModel {

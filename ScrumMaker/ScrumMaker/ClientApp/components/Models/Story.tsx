@@ -3,7 +3,7 @@ import { RouteComponentProps  } from 'react-router';
 import 'isomorphic-fetch';
 import { Team } from './Team';
 import { Link } from 'react-router-dom';
-import { IDbModel } from './IDbModel';
+import { IDbModel } from './Abstraction';
 
 export enum StoryStatus {
     PendingApproval = 1,

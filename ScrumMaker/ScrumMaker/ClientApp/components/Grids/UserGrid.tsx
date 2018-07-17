@@ -2,7 +2,7 @@
 import 'isomorphic-fetch';
 import { User } from '../Models/User';
 import { Grid } from './Grid';
-import { IDbModel, IFetchState } from '../Models/IDbModel';
+import { IDbModel, IFetchState } from '../Models/Abstraction';
 
 import { FiltersManager } from '../Filters/FiltersManager';
 import { TextFilter } from '../Filters/TextFilter'
@@ -61,11 +61,12 @@ export class UserGrid extends Grid {
         ]
 
         return <FiltersManager
+            ref={this.FILTER_MANAGER_REF}
             filters={filetrs}
             onApply={this.ApplyFiltersHandler.bind(this)}
             display={this.filteringOn}
             externalConstraints={this.customUrlFilters}
-            />
+        />
     }
 }
 

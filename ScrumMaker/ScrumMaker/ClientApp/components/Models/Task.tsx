@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { Story } from './Story';
 import { User } from './User';
-import { IDbModel } from './IDbModel'
+import { IDbModel } from './Abstraction'
 import { Login } from '../Login';
 
 
