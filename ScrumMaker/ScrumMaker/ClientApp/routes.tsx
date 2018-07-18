@@ -17,11 +17,12 @@ import { FeatureEdit } from './components/EditPages/FeatureEdit';
 import { Error } from './components/Error';
 import { SimpleChat } from './components/Chats/SimpleChat'
 import { Chart } from './components/Charts/Chart'
-import { SprintReviewEdit } from './components/EditPages/SprintReviewEdit';
+import { SprintReviewEdit } from './components/Meetings/SprintReviewEdit';
 import { EditStory } from "./components/EditPages/EditStory";
 import { UserEdit } from "./components/EditPages/UserEdit";
 import { MyCalendar } from "./components/MyCalendar";
 import { SprintEdit } from './components/EditPages/SprintEdit';
+import { SelectSprint } from './components/Meetings/SelectSprint';
 
 
 const LayoutRoute = ({ ...props }) => {
@@ -51,6 +52,7 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/SprintReviewEdit' component={SprintReviewEdit} />
         <LayoutRoute path='/UserEdit' component={UserEdit}/>
         <LayoutRoute path='/Calendar' component={MyCalendar} />
+        <LayoutRoute path='/SelectSprint' component={SelectSprint} />
         <LayoutRoute path='/SprintEdit' component={SprintEdit} />
 
         <Route path='/login' component={Login} />

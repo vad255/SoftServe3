@@ -7,7 +7,8 @@ export class SprintReview  {
 
     id: number = 0;
     sprintId: number = 0;
-    goal: string = '';
+    isGoalAchived: boolean = false;
+    isStoriesCompleted: boolean = false;
     sprint: Sprint;
    
     public constructor(params: any) {
@@ -20,7 +21,7 @@ export class SprintReview  {
             this.sprint = new Sprint(params.Sprint);
         }
         this.sprintId = params.SprintId;
-        
-        this.goal = params.Goal;
+        this.isGoalAchived = params.IsGoalAchived;
+        this.isStoriesCompleted = params.IsStoriesCompleted;
     }
 }

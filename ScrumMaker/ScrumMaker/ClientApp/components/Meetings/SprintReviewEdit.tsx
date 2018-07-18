@@ -3,13 +3,15 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { User } from '../Models/User';
 import { Sprint } from '../Models/Sprint';
-import { Story } from '../Models/Story';
+import { Story, StoryStatus } from '../Models/Story';
 import { SprintReview } from '../Models/SprintReview';
+import { Role } from '../Models/Role';
 
 interface ISprintReviewFetchingState {
-    Goal: string;
+    IsGoalAchived: boolean;
     Sprint: Sprint;
     SprintId: number;
+    IsStoriesCompleted: boolean;
 }
 
 export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, ISprintReviewFetchingState> {
@@ -21,9 +23,11 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
-    private getSprintReviewURL: string = "odata/SprintReview?$expand=sprint($expand=backlog,team($expand=members))&$filter=id eq 16&";
+    private link: string = (window.location.href);
+    readonly id: string = this.link.substr(this.link.lastIndexOf('/') + 1);
+    private getSprintReviewURL: string = "odata/SprintReview?$expand=sprint($expand=backlog,team($expand=members($expand=role)))&$filter=id eq ";
     private isLoading: boolean = true;
-    private updateURL: string = "odata/SprintReview/16"
+    private updateURL: string = "odata/SprintReview/"
     
     public render() {
         let contents = this.isLoading
@@ -45,15 +49,15 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
         return <div>
             <h1 className="text-center">Sprint "{this.state.Sprint.name}" review</h1>
             <div className="row">
-                <div className="col-md-6">
+                <div className="col-md-3">
                     {this.GetTeamTable()}
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-9">
                     {this.GetBacklogTable()}
                 </div>
             </div>
             <div>
-                {this.GetGoal()}
+                {this.GetDone()}
             </div>
         </div>
     }
@@ -62,11 +66,7 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
         return <table className='table table-scrum table-hover td-scrum'>
             <thead> 
                 <tr>
-                    <th className="well col-md-1"><b>Team:</b>
-                    </th>
-                </tr>
-                <tr>
-                    <th className="well col-md-1">{this.state.Sprint.team.name}
+                    <th className="well col-md-1"><b>{this.state.Sprint.team.name}</b>
                     </th>
                 </tr>
             </thead> 
@@ -77,11 +77,11 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
     }
 
     public GetBacklogTable() {
-        return<table className='table table-scrum table-hover td-scrum'>
+        return <table className='table table-scrum table-hover td-scrum'>
             <thead>
                 <tr>
                     <th colSpan={2}
-                        className="well col-md-2"><b>Backlog</b>
+                        className="well col-md-2"><b>Sprint backlog</b>
                     </th>
                     
                 </tr>
@@ -98,16 +98,20 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
         </table>
     }
 
-    public GetGoal() {
+    public GetDone() {
         return <div>
-            <p>Edit goal:</p>
             <form onSubmit={this.handleSave} name="oldForm">
-                <textarea
-                    style={{ width: "100%", height: "80px", fontSize: 20, padding: "7px"}}
-                    className="fa-text-height"
-                    name="Goal"
-                    type="text"
-                    value={this.state.Goal}
+                <p>Done goal:</p>
+                <input
+                    name="IsGoalAchived"
+                    type="checkbox"
+                    checked={this.state.IsGoalAchived}
+                    onChange={this.handleInputChange} />
+                <p>Done stories:</p>
+                <input
+                    name="IsStoriesCompleted"
+                    type="checkbox"
+                    checked={this.state.IsStoriesCompleted}
                     onChange={this.handleInputChange} />
                 <div>
                     <button className="login100-form-btn">Save goal</button>
@@ -118,7 +122,7 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
 
     handleInputChange(event: any) {
         const target = event.target;
-        const value = target.value;
+        const value = target.checked;
         const name = target.name;
 
         this.setState({
@@ -129,15 +133,17 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
     private handleSave(event: any) {
         event.preventDefault();
         var form = new FormData(event.target);
-        var goalUpdate = {
-            Goal: this.state.Goal
+        var doneUpdate = {
+            IsGoalAchived: this.state.IsGoalAchived,
+            IsStoriesCompleted: this.state.IsStoriesCompleted
         };
 
-        fetch(this.updateURL,{
+        fetch(this.updateURL + this.id, {
+            credentials: 'include',
             method: 'Patch',
             body: JSON.stringify({
                 '@odata.type': 'DAL.Models.SprintReview',
-                ...goalUpdate
+                ...doneUpdate
             }
             ),
             headers: {
@@ -149,18 +155,36 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
     }
 
     private renderMember(user: User) {
-        return <tr key={user.userId}><td>{user.login}</td></tr>
+        if (user.role.name !== "ScrumMaster")
+            return <tr key={user.userId}>
+                <td>
+                    {user.login}
+                </td>
+            </tr >
+        return <tr key={user.userId}>
+            <td>
+                {user.login} (<b>{user.role.name}</b>)
+            </td>
+        </tr>
+            
     }
 
     private renderStory(story: Story) {
         return <tr key={story.id}>
             <td>{story.name}</td>
-            <td>{story.status}</td>
+            {this.selectExpiredStories(story)}
         </tr>
     }
 
+    private selectExpiredStories(story: Story) {
+        if (story.status.toString() !== "DevComplete")
+            return<td style={{ color: "red" }}>{story.status}</td>
+        return<td>{story.status}</td>
+    }
+    
     private getSprintReview() {
-        fetch(this.getSprintReviewURL, {
+        fetch(this.getSprintReviewURL + this.id, {
+            credentials: 'include',
         })
             .then(response => response.json() as any)
             .then(data => {
@@ -174,9 +198,10 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
         var sprintReview = new SprintReview(sprintReviewData);
         this.setState(
             {
-                Goal: sprintReview.goal,
+                IsGoalAchived: sprintReview.isGoalAchived,
                 Sprint: sprintReview.sprint,
-                SprintId: sprintReview.sprintId
+                SprintId: sprintReview.sprintId,
+                IsStoriesCompleted: sprintReview.isStoriesCompleted
             });
     }
 }

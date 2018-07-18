@@ -65,10 +65,15 @@ export class NavMenu extends React.Component<{}, {}> {
                             <span></span> Chart
                             </NavLink>
                     </li>
-                    <li>
-                        <NavLink to={'/SprintReviewEdit'} activeClassName='active'>
-                            <span></span> Sprint review edit
-                            </NavLink>
+                    <li><a>Meetings<span className="arrow-left"></span></a>
+                        <ul className='dropdown nav navbar-nav'>
+
+                            <li>
+                                <NavLink to={'/SelectSprint'} activeClassName='active'>
+                                    <span className='glyphicon glyphicon-th-list columnGrid'></span> Sprint review
+                                    </NavLink>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>

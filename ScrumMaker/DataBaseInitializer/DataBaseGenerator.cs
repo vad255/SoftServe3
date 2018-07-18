@@ -844,8 +844,7 @@ namespace DataBaseInitializer
         public static void FillSprintsData()
         {
             _dbSprints = new Repository<Sprint>(_context);
-
-
+           
             Sprint[] sprints = new Sprint[]
             {
 
@@ -948,10 +947,10 @@ namespace DataBaseInitializer
 
             SprintReview[] sprintReviews = new SprintReview[]
             {
-                new SprintReview() { Goal = "New goal", Sprint = sprints[counter], SprintId = sprints[counter].Id },
-                new SprintReview() { Goal = "Implement calandar and chart in grids.", Sprint = sprints[counter-1], SprintId = sprints[counter-1].Id },
-                new SprintReview() { Goal = "", Sprint = sprints[counter-2], SprintId = sprints[counter-2].Id},
-                new SprintReview() { Goal = "", Sprint = sprints[counter-3], SprintId = sprints[counter-3].Id }
+                new SprintReview() { IsGoalAchived = false, IsStoriesCompleted = false, Sprint = sprints[counter], SprintId = sprints[counter].Id},
+                new SprintReview() { IsGoalAchived = false, IsStoriesCompleted = false, Sprint = sprints[counter-1], SprintId = sprints[counter-1].Id},
+                new SprintReview() { IsGoalAchived = false, IsStoriesCompleted = false, Sprint = sprints[counter-2], SprintId = sprints[counter-2].Id},
+                new SprintReview() { IsGoalAchived = false, IsStoriesCompleted = false, Sprint = sprints[counter-3], SprintId = sprints[counter-3].Id}
             };
 
             AddToDatabase(sprintReviews, _dbSprintsReviews);

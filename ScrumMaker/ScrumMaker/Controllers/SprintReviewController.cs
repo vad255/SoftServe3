@@ -7,10 +7,13 @@ using DAL.Models;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ScrumMaker.Attributes;
 
 namespace ScrumMaker.Controllers
 {
     [Route("api/[controller]")]
+    [RefreshToken]
+    [CookieAuthorize]
     [ApiController]
     public class SprintReviewController : ODataController
     {
@@ -21,7 +24,7 @@ namespace ScrumMaker.Controllers
             sprintReviewRepository = srr;
         }
 
-        [EnableQuery(MaxExpansionDepth = 3)]
+        [EnableQuery(MaxExpansionDepth = 4)]
         public IActionResult Get()
         {
             return Ok(sprintReviewRepository.GetAll());

@@ -17,6 +17,9 @@ namespace DAL.Models
         public virtual Sprint Sprint { get; set; }
 
         [Required]
-        public string Goal { get; set; }
+        public bool IsGoalAchived { get; set; }
+
+        [Required]
+        public bool IsStoriesCompleted { get; set; }
     }
 }
