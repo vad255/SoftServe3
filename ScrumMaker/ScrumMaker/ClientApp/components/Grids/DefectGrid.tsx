@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { Grid } from './Grid'
 import { Defect } from '../Models/Defect';
-import { IDbModel } from '../Models/IDbModel';
+import { IDbModel } from '../Models/Abstraction';
 
 import { FiltersManager } from '../Filters/FiltersManager';
 import { TextFilter } from '../Filters/TextFilter'
@@ -48,21 +48,22 @@ export class DefectGrid extends Grid {
     }
     protected GetFiltersRow(): JSX.Element {
         let filetrs = [
-            new IntFilter({ filterKey: "defectId"}),
-            new TextFilter({ filterKey: "name"}),
-            new TextFilter({ filterKey: "description"}),
-            new EnumFilter({ filterKey: "priority", enumType: DefectPriority}),
-            new EnumFilter({ filterKey: "status", enumType: DefectState}),
-            new EnumFilter({ filterKey: "status", enumType: DefectStatus}),
-            new TextFilter({ filterKey: "actualResults"}),
-            new TextFilter({ filterKey: "fixResults"}),
+            new IntFilter({ filterKey: "defectId" }),
+            new TextFilter({ filterKey: "name" }),
+            new TextFilter({ filterKey: "description" }),
+            new EnumFilter({ filterKey: "priority", enumType: DefectPriority }),
+            new EnumFilter({ filterKey: "status", enumType: DefectState }),
+            new EnumFilter({ filterKey: "status", enumType: DefectStatus }),
+            new TextFilter({ filterKey: "actualResults" }),
+            new TextFilter({ filterKey: "fixResults" }),
         ]
 
         return <FiltersManager
+            ref={this.FILTER_MANAGER_REF}
             filters={filetrs}
             onApply={this.ApplyFiltersHandler.bind(this)}
             display={this.filteringOn}
             externalConstraints={this.customUrlFilters}
-            />
+        />
     }
 }

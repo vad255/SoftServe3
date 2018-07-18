@@ -9,13 +9,24 @@ using System.Linq;
 
 namespace BL
 {
-    class TeamsManager: ITeamsManager
+    public class TeamsManager: ITeamsManager
     {
         public IUnitOfWork _unit;
 
         public TeamsManager(IUnitOfWork uof)
         {
             _unit = uof;
+        }
+
+        public IQueryable<Team> GetUnemployedTeams()
+        {
+            var sprints = _unit.Sprints;
+            var teams = _unit.Teams;
+
+            var teamsInSprint = sprints.GetAll().Select(s => s.Team);
+            var result = teams.GetAll().Except(teamsInSprint);
+
+            return result;
         }
     }
 }

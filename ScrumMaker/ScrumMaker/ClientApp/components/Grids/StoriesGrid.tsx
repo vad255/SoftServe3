@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { Grid } from './Grid';
 import { Story, StoryStatus } from "../Models/Story";
-import { IDbModel } from '../Models/IDbModel';
+import { IDbModel } from '../Models/Abstraction';
 
 
 import { FiltersManager } from '../Filters/FiltersManager';
@@ -53,13 +53,15 @@ export class StoriesGrid extends Grid {
             new TextFilter({ filterKey: "name" }),
             new TextFilter({ filterKey: "description" }),
             new EnumFilter({ filterKey: "status", enumType: StoryStatus })
-        ];
+        ]
 
         return <FiltersManager
-                   filters={filetrs}
-                   onApply={this.ApplyFiltersHandler.bind(this)}
-                   display={this.filteringOn}
-                   externalConstraints={this.customUrlFilters}/>;
+            ref={this.FILTER_MANAGER_REF}
+            filters={filetrs}
+            onApply={this.ApplyFiltersHandler.bind(this)}
+            display={this.filteringOn}
+            externalConstraints={this.customUrlFilters}
+        />
     }
 }
 
