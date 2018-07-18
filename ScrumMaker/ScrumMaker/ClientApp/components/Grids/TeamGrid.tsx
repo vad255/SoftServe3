@@ -5,7 +5,7 @@ import { DropdownButton, MenuItem } from 'react-bootstrap';
 import { Team } from '../Models/Team';
 import { User } from '../Models/User';
 import { Grid } from './Grid';
-import { IDbModel, IFetchState } from '../Models/IDbModel';
+import { IDbModel, IFetchState } from '../Models/Abstraction';
 
 import { FiltersManager } from '../Filters/FiltersManager';
 import { TextFilter } from '../Filters/TextFilter'
@@ -44,17 +44,18 @@ export class TeamGrid extends Grid {
     }
     protected GetFiltersRow(): JSX.Element {
         let filetrs = [
-            new IntFilter({ filterKey: "id"}),
-            new TextFilter({ filterKey: "name"}),
+            new IntFilter({ filterKey: "id" }),
+            new TextFilter({ filterKey: "name" }),
             new EmptyFilter()
         ]
 
         return <FiltersManager
+            ref={this.FILTER_MANAGER_REF}
             filters={filetrs}
             onApply={this.ApplyFiltersHandler.bind(this)}
             display={this.filteringOn}
             externalConstraints={this.customUrlFilters}
-            />
+        />
     }
 }
 

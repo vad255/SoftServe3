@@ -4,6 +4,17 @@
     color: green;
 }
 
+.editHead {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.editWindow {
+    text-align: left;
+    margin-top: 10px;
+    padding: 5px;
+}
+
 .areaStyle {
     width: 100%;
     padding: 7px;
@@ -11,4 +22,14 @@
     resize: none;
     overflow: auto;
     height: 12em;
+}
+
+.sprintMainBlock {
+    vertical-align: top;
+    width: 40%;
+}
+
+.sprintHistoryBlock {
+    vertical-align: top;
+    width: 60%;
 }

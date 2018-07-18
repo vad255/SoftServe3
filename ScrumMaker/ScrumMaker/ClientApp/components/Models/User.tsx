@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { Role } from './Role';
 import { Team } from './Team';
-import { IDbModel } from './IDbModel'
+import { IDbModel } from './Abstraction'
 
 export class User implements IDbModel {
     empty: boolean = true;

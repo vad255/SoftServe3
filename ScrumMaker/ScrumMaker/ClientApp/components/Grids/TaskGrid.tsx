@@ -4,7 +4,7 @@ import 'isomorphic-fetch';
 import { Grid } from './Grid';
 import { Task } from "../Models/Task";
 import { Login } from '../Login';
-import { IDbModel, IFetchState } from '../Models/IDbModel';
+import { IDbModel, IFetchState } from '../Models/Abstraction';
 
 import { FiltersManager } from '../Filters/FiltersManager';
 import { TextFilter } from '../Filters/TextFilter'
@@ -72,6 +72,7 @@ export class TaskGrid extends Grid {
         ]
 
         return <FiltersManager
+            ref={this.FILTER_MANAGER_REF}
             filters={filetrs}
             onApply={this.ApplyFiltersHandler.bind(this)}
             display={this.filteringOn}
