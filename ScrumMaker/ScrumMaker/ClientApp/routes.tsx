@@ -20,7 +20,8 @@ import { Chart } from './components/Charts/Chart'
 import { EditStory } from "./components/EditPages/EditStory";
 import { MyCalendar } from "./components/MyCalendar";
 import { SprintEdit } from './components/EditPages/SprintEdit';
-
+import { Velocity } from './components/Charts/Velocity';
+import { EditTeam } from './components/EditPages/EditTeam';
 
 const LayoutRoute = ({ ...props }) => {
     return (
@@ -48,6 +49,8 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/EditStory' component={EditStory} />
         <LayoutRoute path='/Calendar' component={MyCalendar} />
         <LayoutRoute path='/SprintEdit' component={SprintEdit} />
+        <LayoutRoute path='/VelocityChart' component={Velocity} />
+        <LayoutRoute path='/EditTeam' component={EditTeam} />
 
         <Route path='/login' component={Login} />
         <Route path='/Error' component={Error} />

@@ -22,8 +22,9 @@ export class TeamGrid extends Grid {
 
     protected headerText: string = "Team Grid";
     protected URL_BASE: string = 'odata/teams';
-    protected URL_EXPANDS: string = '?$expand=members'
-    protected URL_ORDERING: string = '&$orderby=id'
+    protected URL_EXPANDS: string = '?$expand=members';
+    protected URL_ORDERING: string = '&$orderby=id';
+    protected URL_EDIT: string = "EditTeam/";
 
 
     protected instantiate(item: any): IDbModel {

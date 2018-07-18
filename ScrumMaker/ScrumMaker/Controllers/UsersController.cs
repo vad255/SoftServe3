@@ -29,5 +29,45 @@ namespace ScrumMaker.Controllers
             return Ok(_users.GetAll());
         }
 
+        [HttpPost]
+        [Route("api/sers/SetUsers")]
+        public void SetUser([FromBody]List<User> model)
+        {
+            int? teamid = model[0].TeamId;
+            List<User> temp = _users.GetAll().Where(u => u.TeamId == teamid).ToList();
+     
+            foreach(var i in temp)
+            { 
+                foreach(var z in model)
+                {
+                    if(z.UserId == i.UserId)
+                    {
+                        i.TeamId = null;
+                    }
+                    z.TeamId = teamid;
+                }
+            }
+
+            foreach (var i in temp)
+            {
+                if (i.TeamId != null)
+                {
+                    User user = _users.GetById(i.UserId);
+                    user.TeamId = null;
+                    _users.Update(user);
+                    break;
+                }
+            }
+
+            foreach (var i in model)
+            {
+                User user = _users.GetById(i.UserId);
+                user.TeamId = i.TeamId;
+                _users.Update(user);
+            }
+
+
+            _users.Save();
+        }
     }
 }

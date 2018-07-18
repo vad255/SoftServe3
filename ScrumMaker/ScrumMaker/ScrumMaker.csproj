@@ -35,7 +35,9 @@
   <ItemGroup>
     <None Remove="ClientApp\components\AddUser.tsx" />
     <None Remove="ClientApp\components\Charts\Chart.tsx" />
+    <None Remove="ClientApp\components\Charts\Velocity.tsx" />
     <None Remove="ClientApp\components\EditPages\EditStory.tsx" />
+    <None Remove="ClientApp\components\EditPages\EditTeam.tsx" />
     <None Remove="ClientApp\components\EditUser.tsx" />
     <None Remove="ClientApp\components\Error.tsx" />
     <None Remove="ClientApp\components\Filters\DefectsFiltersRow.tsx" />
@@ -69,6 +71,7 @@
     <None Remove="ClientApp\components\AddUser.tsx" />
     <None Remove="ClientApp\components\MailSender.tsx" />
     <None Remove="ClientApp\components\SprintsGrid.tsx" />
+    <None Remove="ClientApp\css\modalWindow.css" />
   </ItemGroup>
 
   <ItemGroup>
@@ -96,6 +99,8 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\AddUser.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Charts\Velocity.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\EditPages\EditTeam.tsx" />
     <TypeScriptCompile Include="ClientApp\components\MyCalendar.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Charts\Chart.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\EditStory.tsx" />
@@ -120,6 +125,7 @@
     <TypeScriptCompile Include="ClientApp\components\SprintsGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Grids\TeamGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\css\editUser.css" />
+    <TypeScriptCompile Include="ClientApp\css\modalWindow.css" />
   </ItemGroup>
 
   <ItemGroup>
