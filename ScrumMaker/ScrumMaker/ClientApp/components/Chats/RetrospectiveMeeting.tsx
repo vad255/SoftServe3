@@ -23,9 +23,10 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
     improved: string = "";
     commitTo: string = "";
     dateString: string = "";
+    sprintId: number = -1;
 
-    constructor() {
-        super();
+    constructor(props: any) {
+        super(props);
         this.state = { wentWellOutPut: "", improvedOutput: "", commitOutput: "" };
         this.connection = new HubConnectionBuilder().withUrl(this.chatUrl).build();
         this.connection.on("receiveMessage", this.receiveMessage.bind(this));
@@ -41,10 +42,13 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
             }).catch(err => console.error(err));
 
         this.handleSendButton = this.handleSendButton.bind(this);
+        this.sprintId = this.props.location.state.sprintId as number;
+        console.log(this.sprintId);
     }
 
     public send() {
-        this.connection.invoke("SendMessage", this.message);
+        this.connection.invoke("SendMessage", this.message, this.sprintId);
+
     }
 
     loadHistory() {
@@ -74,7 +78,6 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
             this.forceUpdate();
 
         }
-
     }
 
     userDisconnected(user: User) {

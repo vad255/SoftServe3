@@ -17,17 +17,24 @@ namespace ScrumMaker.Controllers.Chatting
             _manager = manager;
         }
 
-        public async Task SendMessage(RetrospectiveMessage message)
+        public async Task SendMessage(RetrospectiveMessage message, int sprintId)
         {
             _manager.User = Context.User;
 
             message.SendingDate = _manager.GetCurrentDate();
             message.UserName = _manager.GetCurrentUserName();
             message.UserId = _manager.GetCurrentUserId();
+            _manager.SprintId = sprintId;
             await Clients.Group(_manager.GetGroupIdentifier).SendAsync("receiveMessage", message);
 
             _manager.AddRetrospectiveMessage(message);
         }
+
+        //public async Task SetSprintId(int spintId)
+        //{
+        //    _manager.SprintId = spintId;
+        //    await Clients.Group(_manager.GetGroupIdentifier).SendAsync("recieve", "assigned"); 
+        //}
 
         public async Task GetHistory()
         {

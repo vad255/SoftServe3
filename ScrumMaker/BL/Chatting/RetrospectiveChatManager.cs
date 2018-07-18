@@ -11,6 +11,7 @@ using Microsoft.AspNetCore;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Security;
 using ScrumMaker.Logger;
 
 namespace BL.Chatting
@@ -26,10 +27,13 @@ namespace BL.Chatting
         private IRepository<User> _users;
         private IRepository<RetrospectiveMessage> _rmsgs;
         private ChatRoom _room;
+        private IRepository<Sprint> _sprints;
+        public int SprintId { get; set; }
 
 
-        public RetrospectiveChatManager(IRepository<ChatRoom> chats, IRepository<Message> msgs, IRepository<User> users, IRepository<RetrospectiveMessage> rmsgs)
+        public RetrospectiveChatManager(IRepository<ChatRoom> chats, IRepository<Message> msgs, IRepository<User> users, IRepository<RetrospectiveMessage> rmsgs, IRepository<Sprint> sprints)
         {
+            _sprints = sprints;
             _chats = chats;
             _msgs = msgs;
             _rmsgs = rmsgs;
@@ -53,6 +57,7 @@ namespace BL.Chatting
                 return ROOM_NAME;
             }
         }
+
 
         /// <summary>
         /// !!! Not thread safe
@@ -113,6 +118,18 @@ namespace BL.Chatting
             message.ChatId = _room.Id;
             _rmsgs.Create(message);
             _rmsgs.Save();
+
+            if (SprintId >= 0)
+            {
+                var sprint = _sprints.GetById(SprintId);
+                sprint.Retrospective += message.UserName + " " +
+                                       message.SendingDate.ToShortDateString() + " " +
+                                       "went well: " + message.WentWell + " " +
+                                       "improve to doing: " + message.CouldBeImproved + " " +
+                                       "commit to next sprint: " + message.CommitToDoing + Environment.NewLine;
+                _sprints.Update(sprint);
+                _sprints.Save();
+            }
         }
 
         public virtual Message AddMessage(string text)

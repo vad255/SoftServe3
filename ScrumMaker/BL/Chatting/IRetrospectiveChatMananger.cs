@@ -11,5 +11,6 @@ namespace BL.Chatting
         int GetCurrentUserId();
         string GetCurrentUserName();
         DateTime GetCurrentDate();
+        int SprintId { get; set; }
     }
 }

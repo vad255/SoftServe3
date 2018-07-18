@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Layout } from './components/Layout';
@@ -20,7 +19,8 @@ import { Chart } from './components/Charts/Chart'
 import { EditStory } from "./components/EditPages/EditStory";
 import { MyCalendar } from "./components/MyCalendar";
 import { SprintEdit } from './components/EditPages/SprintEdit';
-import { RetrospectiveMeeting } from './components/Chats/RetrospectiveMeeting'
+import { RetrospectiveMeeting } from './components/Chats/RetrospectiveMeeting';
+import { SelectSprintPage } from './components/Chats/RetrospectivePages/SelectSprintPage';
 
 
 const LayoutRoute = ({ ...props }) => {
@@ -50,6 +50,7 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/Calendar' component={MyCalendar} />
         <LayoutRoute path='/SprintEdit' component={SprintEdit} />
         <LayoutRoute path='/RetrospectiveMeeting' component={RetrospectiveMeeting} />
+        <LayoutRoute path='/SelectSprint' component={SelectSprintPage} />
 
 
         <Route path='/login' component={Login} />
