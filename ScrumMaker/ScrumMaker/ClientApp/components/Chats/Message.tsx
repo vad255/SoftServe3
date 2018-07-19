@@ -14,12 +14,14 @@ export class Message extends React.Component<{ msg: MessageProps, myMessage: boo
             <div className={my ? "message-container darker" : "message-container"}>
                 <div className={my ? "right" : ""}>
                     <img src={"/api/userphoto/" + this.props.msg.author.userId} alt="Avatar" className={my ? "right" : ""} />
-                    <p className="login-label">{name}</p>
-                    <span className="time"> {this.props.msg.post.format('DD.MM.YYYY  H:MM')}</span>
+                    <div className="sender-info">
+                        <p className="login-label">{name}</p>
+                        <span className="time"> {this.props.msg.post.format('DD.MM.YYYY  H:MM')}</span>
+                    </div>
                 </div>
                 <p>{this.props.msg.text}</p>
 
-            </div>
+            </div >
         )
 
     }
