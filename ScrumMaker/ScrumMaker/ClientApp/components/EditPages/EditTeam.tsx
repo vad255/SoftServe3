@@ -154,20 +154,10 @@ export class EditTeam extends React.Component<RouteComponentProps<{}>, ITeamFetc
         let user: User;
         for (var i = 0; i < value.length; i++) {
             user = this.state.AllUsers.filter(u => u.login === value[i].label)[0];
-            //if (user.teamId == null) {
-            //    user.teamId == 1;
                 users.push(user);
                 this.setState({
                     Users: users,
                 })
-            //}
-            //if (user.teamId != null) {
-            //    user.teamId = 0;
-            //    users.push(user);
-            //    this.setState({
-            //        Users: users
-            //    })
-            //}
         }
     }
 
