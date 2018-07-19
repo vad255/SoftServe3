@@ -37,6 +37,8 @@ namespace DAL
         public DbSet<ChatRoom> ChatingRooms { get; set; }
 
         public DbSet<Photo> Photos { get; set; }
+        
+        public DbSet<SprintReview> SprintReviews { get; set; }
 
         public DbSet<Meetings> Meetings { get; set; }
 

@@ -67,7 +67,6 @@ namespace ScrumMaker
             string connectionStr = Configuration.GetConnectionString("Pasha");
 
 
-            
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
 
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
@@ -89,6 +88,7 @@ namespace ScrumMaker
                     options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
                     options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                    options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
                 }).
                 SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -107,6 +107,8 @@ namespace ScrumMaker
             services.AddScoped(typeof(IUserManager), typeof(UserManager));
             services.AddScoped(typeof(ITasksManager), typeof(TasksManager));
             services.AddScoped(typeof(IStoriesManager), typeof(StoriesManager));
+            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+            services.AddScoped(typeof(ITeamsManager), typeof(TeamsManager));
             services.AddScoped(typeof(BL.Chatting.IGlobalChatManager), typeof(BL.Chatting.GlobalChatManager));
         }
 
@@ -139,7 +141,7 @@ namespace ScrumMaker
                 routes.MapHub<GlobalChat>("/chat");
             });
 
-            app.UseMvc(routes =>    
+            app.UseMvc(routes =>
             {
                 routes.Select().Expand().Filter().OrderBy().MaxTop(100).Count();
 

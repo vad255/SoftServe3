@@ -16,7 +16,7 @@ export class FiltersManager extends React.Component<IFilterManagerState, IFilter
 
     public fileteringOn: boolean = false;
     protected constraints: any = {};
-    protected externalConstraints = "";
+    //protected externalConstraints = "";
 
     constructor(params: IFilterManagerState) {
         super(params);
@@ -56,8 +56,10 @@ export class FiltersManager extends React.Component<IFilterManagerState, IFilter
 
         let noConstrainsYet = true;
 
-        if (this.externalConstraints != undefined && this.externalConstraints != null && this.externalConstraints != "") {
-            filterString += this.externalConstraints;
+        if (this.state.externalConstraints != undefined && 
+            this.state.externalConstraints != null && 
+            this.state.externalConstraints != "") {
+            filterString += this.state.externalConstraints;
             noConstrainsYet = false;
         }
         for (let iterator in this.constraints) {

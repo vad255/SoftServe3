@@ -1,8 +1,8 @@
 ﻿import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
-import { Feature } from '../Models/Feature'
-import { IDbModel } from './IDbModel'
+import { Feature } from './Feature'
+import { IDbModel } from './Abstraction'
 
 export enum State {
     PendingApproval = 1,

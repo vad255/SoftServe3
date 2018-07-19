@@ -18,7 +18,7 @@ namespace ScrumMaker
             {
                 var builder = new ODataConventionModelBuilder();
                 builder.EntitySet<Sprint>("Sprints").EntityType.HasKey(s => s.Id);
-                builder.EntitySet<SprintStagesHistory>("SprintStagesLog").EntityType.HasKey(s => s.Id);
+                builder.EntitySet<SprintStagesHistory>("SprintStagesHistory").EntityType.HasKey(s => s.Id);
                 builder.EntitySet<Team>("Teams").EntityType.HasKey(t => t.Id);
                 builder.EntitySet<User>("Users").EntityType.HasKey(u => u.UserId);
                 builder.EntitySet<Role>("Roles").EntityType.HasKey(r => r.RoleId);
@@ -27,6 +27,7 @@ namespace ScrumMaker
                 builder.EntitySet<Defect>("Defects").EntityType.HasKey(k => k.DefectId);
                 builder.EntitySet<ScrumTask>("Tasks").EntityType.HasKey(k => k.TaskId);
                 builder.EntitySet<Calendar>("Calendar").EntityType.HasKey(c => c.CalendarId);
+                builder.EntitySet<SprintReview>("SprintReview").EntityType.HasKey(k => k.Id);
 
                 _model = builder.GetEdmModel();
             }

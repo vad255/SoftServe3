@@ -18,6 +18,7 @@ namespace DAL.Models
 
         public SprintStage Stage { get; set; }
 
+        public int? HistoryId { get; set; }
         public virtual SprintStagesHistory History { get; set; }
 
         public virtual ICollection<Story> Backlog { get; set; }
@@ -30,6 +31,8 @@ namespace DAL.Models
 
         public string Retrospective { get; set; }
 
+        [ForeignKey("Team")]
+        public int? TeamId { get; set; }
         public virtual Team Team { get; set; }
     }
 }

@@ -2,10 +2,10 @@
 import { RouteComponentProps, Redirect } from 'react-router';
 import 'isomorphic-fetch';
 import { State } from './FeatureState';
-import { Team } from '../Models/Team';
-import { Story } from '../Models/Story';
+import { Team } from './Team';
+import { Story } from './Story';
 import { NavLink } from 'react-router-dom';
-import { IDbModel } from './IDbModel'
+import { IDbModel } from './Abstraction'
 import { User } from './User';
 
 

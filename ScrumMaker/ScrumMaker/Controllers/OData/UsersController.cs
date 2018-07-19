@@ -28,6 +28,23 @@ namespace ScrumMaker.Controllers
         {
             return Ok(_users.GetAll());
         }
+        [AcceptVerbs("PATCH", "MERGE")]
+        public IActionResult Patch([FromODataUri] int key, Delta<User> updateUserRequestModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            User user = _users.GetAll().Include(x => x.Role).FirstOrDefault(x => x.UserId == key);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            updateUserRequestModel.Patch(user);
+            _users.Save();
+
+            return Updated(user);
+        }
 
         [HttpPost]
         [Route("api/sers/SetUsers")]

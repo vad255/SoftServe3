@@ -7,16 +7,19 @@ using DAL.Access;
 using DAL.Models;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
+using BL;
 
 namespace ScrumMaker.Controllers
 {
     public class TeamsController : ODataController
     {
         private IRepository<Team> _teams;
+        private ITeamsManager _manager;
 
-        public TeamsController(IRepository<Team> repository)
+        public TeamsController(IRepository<Team> repository, ITeamsManager teamsManager)
         {
             _teams = repository;
+            _manager = teamsManager;
         }
 
         [EnableQuery]
@@ -55,6 +58,13 @@ namespace ScrumMaker.Controllers
             _teams.Delete(key);
             _teams.Save();
             return NoContent();
+        }
+
+        [HttpGet]
+        [Route("api/[controller]/getfreeteams")]
+        public IActionResult GetFreeTeams()
+        {
+            return Ok(_manager.GetUnemployedTeams());
         }
     }
 }

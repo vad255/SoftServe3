@@ -17,11 +17,14 @@ import { FeatureEdit } from './components/EditPages/FeatureEdit';
 import { Error } from './components/Error';
 import { SimpleChat } from './components/Chats/SimpleChat'
 import { Chart } from './components/Charts/Chart'
+import { SprintReviewEdit } from './components/Meetings/SprintReviewEdit';
 import { EditStory } from "./components/EditPages/EditStory";
+import { UserEdit } from "./components/EditPages/UserEdit";
 import { MyCalendar } from "./components/MyCalendar";
 import { SprintEdit } from './components/EditPages/SprintEdit';
 import { Velocity } from './components/Charts/Velocity';
 import { EditTeam } from './components/EditPages/EditTeam';
+import { SelectSprint } from './components/Meetings/SelectSprint';
 
 const LayoutRoute = ({ ...props }) => {
     return (
@@ -47,7 +50,10 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/SimpleChat' component={SimpleChat} />
         <LayoutRoute path='/Chart' component={Chart} />
         <LayoutRoute path='/EditStory' component={EditStory} />
+        <LayoutRoute path='/SprintReviewEdit' component={SprintReviewEdit} />
+        <LayoutRoute path='/UserEdit' component={UserEdit}/>
         <LayoutRoute path='/Calendar' component={MyCalendar} />
+        <LayoutRoute path='/SelectSprint' component={SelectSprint} />
         <LayoutRoute path='/SprintEdit' component={SprintEdit} />
         <LayoutRoute path='/VelocityChart' component={Velocity} />
         <LayoutRoute path='/EditTeam' component={EditTeam} />

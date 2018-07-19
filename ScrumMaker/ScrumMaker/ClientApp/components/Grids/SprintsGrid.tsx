@@ -23,7 +23,6 @@ export class SprintsGrid extends Grid {
     constructor() {
         super();
         this.pageSize = 10;
-        this.recalcPagingUrl();
     }
 
     protected instantiate(item: any) {
@@ -54,7 +53,7 @@ export class SprintsGrid extends Grid {
             new TextFilter({ filterKey: "team/name" }),
             new EnumFilter({ filterKey: "stage", enumType: SprintStage }),
             new TextFilter({ filterKey: "review" }),
-            new EmptyFilter(),
+            new IntFilter({ filterKey: "history/begined" }),
             new TextFilter({ filterKey: "retrospective" })
         ]
 

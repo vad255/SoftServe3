@@ -27,13 +27,18 @@ export class Login extends React.Component<RouteComponentProps<any>, LoginViewMo
 
     // This will handle the submit form event.
     private handleSave(event: any) {
-         event.preventDefault();
+        event.preventDefault();
         const data = new FormData(event.target);
         fetch('/token', {
             method: 'POST',
             body: data
         }).then(res => res.json())
-            .then(data => document.cookie = `Authorization=${data.access_token};max-age=` + data.expires+';')
+            .then(data => {
+                console.log(data.access_token);
+
+                document.cookie = `Authorization=${data.access_token};max-age=` + data.expires + ';'
+            }
+            )
             .then(err => this.props.history.push('/'));
     }
 

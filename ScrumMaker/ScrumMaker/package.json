@@ -37,7 +37,6 @@
     "moment": "2.22.2",
     "rc-select": "8.1.0",
     "react": "15.6.1",
-    "react-calendar": "2.16.0",
     "react-dom": "15.6.1",
     "react-dropdown-tree-select": "^1.12.3",
     "react-filtered-multiselect": "^0.5.1",
