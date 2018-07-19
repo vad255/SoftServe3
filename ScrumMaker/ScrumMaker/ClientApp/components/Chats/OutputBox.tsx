@@ -3,9 +3,10 @@ import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr'
 import { MessageProps, Message } from './Message';
+import { User } from '../Models/User';
 
 
-export class OutputBox extends React.Component<{ messages: MessageProps[] }, any> {
+export class OutputBox extends React.Component<{ messages: MessageProps[], myself: User }, any> {
 
     render() {
         return this.renderDiv();
@@ -30,8 +31,11 @@ export class OutputBox extends React.Component<{ messages: MessageProps[] }, any
 
 
     public renderDiv() {
-        return <div id="messageWindow" className="chatMessagesOutputDiv">
-            {this.props.messages.map((m, i) => <Message key={i} msg={m} />)}
+        return <div id="messageWindow" className="chatMessagesOutput">
+            {this.props.messages.map((m, i) => <Message
+                key={i}
+                msg={m}
+                myMessage={this.props.myself.userId === m.author.userId} />)}
         </div>
     }
 

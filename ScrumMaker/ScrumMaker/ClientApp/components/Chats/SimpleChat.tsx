@@ -6,11 +6,11 @@ import { User } from '../Models/User';
 import { UserBox } from './UsersBox';
 import { MessageProps } from './Message';
 import { OutputBox } from './OutputBox';
-import '../../css/chat.css';
 
 export interface IGlobalChat {
     messages: MessageProps[],
-    members: User[]
+    members: User[],
+    myself: User
 }
 
 
@@ -23,7 +23,7 @@ export class SimpleChat extends React.Component<RouteComponentProps<{}>, IGlobal
 
     constructor() {
         super();
-        this.state = { messages: [], members: [] }
+        this.state = { messages: [], members: [], myself: new User({}) }
 
         this.connection = new HubConnectionBuilder().withUrl(this.URL_BASE).build();
         this.connection.on("receiveMessage", this.receiveMessage.bind(this));
@@ -37,37 +37,43 @@ export class SimpleChat extends React.Component<RouteComponentProps<{}>, IGlobal
     }
 
     public componentDidMount() {
-        this.connection.start().
-            then(() => {
-                this.loadHistory();
-                this.loadUsers()
-            }).catch(err => console.error(err));
 
         let div: any = {};
         div = document.getElementById("OutputSection");
         div.setAttribute("style", `height:${window.innerHeight * 0.6}px`);
 
+        this.connection.start().
+            then(() => this.getMyself()).
+            then(() => {
+                this.connection.invoke("GetHistory");
+                this.connection.invoke("GetUsers");
+            }).catch(err => console.error(err));
     }
 
     public Send(message: string) {
         this.connection.invoke("SendMessage", message);
     }
 
-    loadHistory() {
-        this.connection.invoke("GetHistory");
-    }
-
-    loadUsers() {
-        this.connection.invoke("GetUsers");
+    getMyself(): Promise<any> {
+        return fetch('/myself',
+            { credentials: "include" }).
+            then(response => response.json() as Promise<any>).
+            then(data => this.setState({ myself: new User(data) }));
     }
 
     receiveHistory(history: string[]) {
-        let msgs: MessageProps[] = history.map(m => new MessageProps(JSON.parse(m)));
+        let currUserId =
+            this.state.myself.userId > 0 ?
+                this.state.myself.userId :
+                -1;
+
+        let msgs: MessageProps[] = history.map(m => {
+            let result = new MessageProps(JSON.parse(m))
+            result.myMessage = (result.author.userId === currUserId);
+            return result;
+        });
 
         this.setState({ messages: msgs })
-        // messages.forEach(element => {
-        //     this.receiveMessage(element);
-        // });
     }
 
     public receiveUsers(users: User[]) {
@@ -101,6 +107,9 @@ export class SimpleChat extends React.Component<RouteComponentProps<{}>, IGlobal
 
     private handleInput(e: any) {
 
+        console.log(this.state.myself);
+
+
         if (e.key !== 'Enter' || e.shiftKey)
             return;
 
@@ -117,7 +126,7 @@ export class SimpleChat extends React.Component<RouteComponentProps<{}>, IGlobal
         return (
             <div className="chatWindow">
                 <div id="OutputSection" className="chatOutputSection">
-                    <OutputBox messages={this.state.messages} />
+                    <OutputBox messages={this.state.messages} myself={this.state.myself} />
                     <UserBox users={this.state.members} />
                 </div>
                 <hr />

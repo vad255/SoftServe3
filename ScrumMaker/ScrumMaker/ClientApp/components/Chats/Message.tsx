@@ -5,21 +5,23 @@ import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr'
 import * as moment from 'moment';
 import { User } from '../Models/User';
 
-export class Message extends React.Component<{ msg: MessageProps }, any>{
+export class Message extends React.Component<{ msg: MessageProps, myMessage: boolean }, any>{
 
     render() {
+        let my = this.props.myMessage;
+        let name = this.props.msg.author.login || "Anonym";
         return (
-            <div>
-                <h5>{this.props.msg.author.login || "Anonym"}</h5>
-                <span>
-                    {this.props.msg.post.format('DD.MM.YYYY  H:MM')}
-                </span>
-                <label>
-                    {this.props.msg.text}
-                </label>
-                <br />
+            <div className={my ? "message-container darker" : "message-container"}>
+                <div className={my ? "right" : ""}>
+                    <img src={"/api/userphoto/" + this.props.msg.author.userId} alt="Avatar" className={my ? "right" : ""} />
+                    <p className="login-label">{name}</p>
+                    <span className="time"> {this.props.msg.post.format('DD.MM.YYYY  H:MM')}</span>
+                </div>
+                <p>{this.props.msg.text}</p>
+
             </div>
         )
+
     }
 }
 
@@ -29,6 +31,7 @@ export class MessageProps {
     public author: User;
     public post: moment.Moment;
     public text: string;
+    public myMessage: boolean = false;
 
     constructor(msg: any) {
 
