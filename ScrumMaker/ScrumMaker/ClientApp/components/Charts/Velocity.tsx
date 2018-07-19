@@ -36,11 +36,11 @@ export class Velocity extends React.Component<DataFetchingState, DataFetchingSta
             <ComposedChart width={900} height={450} data={this.state.data.map(x => x.props)}
                 margin={{ top: 13, right: 20, left: 10, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="5 5" />
-                <XAxis dataKey="name" tickLine={false} />
+                <XAxis dataKey="Name" tickLine={false} />
                 <Legend />
                 <CartesianGrid stroke='#f5f5f5' vertical={false} />
-                <Bar dataKey="completedTask" fill='green' isAnimationActive={false} />
-                <Bar dataKey="remainingTask" fill='yellow' isAnimationActive={false} />
+                <Bar dataKey="CompletedTask" fill='green' isAnimationActive={false} />
+                <Bar dataKey="RemainingTask" fill='yellow' isAnimationActive={false} />
                 <Tooltip />
             </ComposedChart>
         );

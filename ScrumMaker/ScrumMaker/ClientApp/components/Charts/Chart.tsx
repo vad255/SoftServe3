@@ -36,14 +36,14 @@ export class Chart extends React.Component<DataFetchingState, DataFetchingState>
             <ComposedChart width={900} height={450} data={this.state.data.map(x => x.props)}
                 margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="5 5" />
-                <XAxis dataKey="name" tickLine={false} />
-                <YAxis dataKey="remainingTask" yAxisId="left" orientation='left' />
+                <XAxis dataKey="Name" tickLine={false} />
+                <YAxis dataKey="RemainingTask" yAxisId="left" orientation='left' />
                 <YAxis yAxisId="right" orientation='right'/>
                 <Tooltip />
                 <Legend />
                 <CartesianGrid stroke='#f5f5f5' vertical={false} />
-                <Bar yAxisId="left" dataKey='completedTask' barSize={40} fill='#F7B7B4' />
-                <Line yAxisId="right" type="monotone" dataKey="remainingTask" stroke="#82ca9d" />
+                <Bar yAxisId="left" dataKey='CompletedTask' barSize={40} fill='#F7B7B4' />
+                <Line yAxisId="right" type="monotone" dataKey="RemainingTask" stroke="#82ca9d" />
             </ComposedChart>
         );
     }
