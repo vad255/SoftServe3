@@ -12,6 +12,8 @@ import './css/SwitchImg.css';
 import './css/SelectStyle.css';
 import './css/Login.css';
 import './css/Tooltips.css';
+import './css/modalWindow.css';
+import './css/multiselect.css';
 import 'bootstrap';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';

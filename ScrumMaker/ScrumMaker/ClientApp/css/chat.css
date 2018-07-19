@@ -6,7 +6,13 @@
 .chatOutputSection {
     padding: 0%;
     margin: 0%;
-    width: inherit;
+    width: 100%;
+}
+
+.RetrospectivechatOutputWindow {
+    padding: 0%;
+    margin: 0%;
+    width: 100%;
 }
 
 .chatMessagesOutput {
@@ -34,6 +40,15 @@
     width: 15%;
 }
 
+.RetrospectiveTable {
+    padding: 5px;
+    vertical-align: top;
+    height: 600px;
+    width: 100%;
+    background-color: green;
+}
+
+
 .chatUsersList {
     border: solid;
     border-color: rgba(127, 127, 127, 0.5);
@@ -54,6 +69,7 @@
     height: 5em;
     overflow: auto;
     resize: none;
+    padding: 7px;
 }
 
 hr {
@@ -120,3 +136,4 @@ hr {
     color: #aaa;
     font-style: italic;
 }
+

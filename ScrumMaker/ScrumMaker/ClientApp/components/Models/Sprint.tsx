@@ -2,6 +2,7 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { Team } from './Team'
+import { Story } from './Story';
 import { SprintStage } from './SprintStage'
 import { SprintHistory } from './SprintHistory'
 import { IDbModel, ICommitableDbModel } from './Abstraction'
@@ -14,7 +15,7 @@ export class Sprint implements ICommitableDbModel {
     stage: SprintStage = 0;
     historyId: number = -1;
     history: SprintHistory;
-    backlog: string = '';
+    backlog: Story [] = [];
     defects: string = '';
     dailyScrums: string = '';
     review: string = '';
@@ -31,13 +32,20 @@ export class Sprint implements ICommitableDbModel {
         this.stage = params.Stage;
         this.historyId = params.HistoryId;
         this.history = new SprintHistory(params.History);
-        this.backlog = params.Backlog;
         this.defects = params.Defects;
         this.dailyScrums = params.DailyScrums;
         this.review = params.Review;
         this.retrospective = params.Retrospective;
         this.teamId = params.TeamId;
         this.team = new Team(params.Team);
+
+        if (params.Backlog) {
+            var backlog = [];
+            for (var i = 0; i < params.Backlog.length; i++)
+                backlog[i] = new Story(params.Backlog[i]);
+
+            this.backlog = backlog;
+        }
     }
 
     public toString(): string {

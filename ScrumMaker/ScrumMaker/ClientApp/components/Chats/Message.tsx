@@ -23,7 +23,6 @@ export class Message extends React.Component<{ msg: MessageProps, myMessage: boo
 
             </div >
         )
-
     }
 }
 
@@ -36,7 +35,6 @@ export class MessageProps {
     public myMessage: boolean = false;
 
     constructor(msg: any) {
-
         this.author = new User(msg.Author);
         this.post = moment(msg.Sent);
         this.text = msg.Text;

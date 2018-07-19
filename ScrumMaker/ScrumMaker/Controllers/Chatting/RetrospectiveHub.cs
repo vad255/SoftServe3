@@ -1,43 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BL.Chatting;
+using DAL.Chatting;
+using DAL.Models;
+using Microsoft.AspNetCore.SignalR;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.SignalR;
-using BL.Chatting;
-using DAL.Chatting;
-using Newtonsoft.Json;
 
 namespace ScrumMaker.Controllers.Chatting
 {
-    public class GlobalChat : Hub
+    public class RetrospectiveHub : Hub
     {
-        private IGlobalChatManager _manager;
+        private IRetrospectiveChatMananger _manager;
 
-        public GlobalChat(IGlobalChatManager manager)
+        public RetrospectiveHub(IRetrospectiveChatMananger manager)
         {
             _manager = manager;
-            Console.WriteLine("Hub created");
         }
 
-        public async Task SendMessage(string text)
+        public async Task SendMessage(RetrospectiveMessage message, int sprintId)
         {
             _manager.User = Context.User;
-            
-            Message msg = _manager.AddMessage(text);
-            string msgJSON = msg.ToJSON();
 
+            message.SendingDate = _manager.GetCurrentDate();
+            message.UserName = _manager.GetCurrentUserName();
+            message.UserId = _manager.GetCurrentUserId();
+            _manager.SprintId = sprintId;
+            await Clients.Group(_manager.GetGroupIdentifier).SendAsync("receiveMessage", message);
 
-            await Clients.Group(_manager.GetGroupIdentifier).SendAsync("receiveMessage", msgJSON);
+            _manager.AddRetrospectiveMessage(message);
         }
+
+        //public async Task SetSprintId(int spintId)
+        //{
+        //    _manager.SprintId = spintId;
+        //    await Clients.Group(_manager.GetGroupIdentifier).SendAsync("recieve", "assigned"); 
+        //}
 
         public async Task GetHistory()
         {
-            var history = _manager.GetHistory().Select(m => m.ToJSON());
-
-           
-            foreach (var item in history)
-                Console.WriteLine(item);
-
+            var history = _manager.GetHistory().Select(m => m.ToString());
             await Clients.Caller.SendAsync("receiveHistory", history);
         }
 
@@ -46,15 +47,12 @@ namespace ScrumMaker.Controllers.Chatting
             await Clients.Caller.SendAsync("receiveUsers", _manager.GetOnlineUsers());
         }
 
-
         public override async Task OnConnectedAsync()
         {
             _manager.User = Context.User;
             DAL.Models.User user = _manager.Connect();
-
             await Clients.Group(_manager.GetGroupIdentifier).SendAsync("userConnected", user);
             await Groups.AddToGroupAsync(Context.ConnectionId, _manager.GetGroupIdentifier);
-
             await base.OnConnectedAsync();
         }
 
@@ -62,10 +60,8 @@ namespace ScrumMaker.Controllers.Chatting
         {
             _manager.User = Context.User;
             DAL.Models.User user = _manager.Disconnect();
-
             await Clients.Group(_manager.GetGroupIdentifier).SendAsync("userDisconnect", user);
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, _manager.GetGroupIdentifier);
-
             await base.OnDisconnectedAsync(exception);
         }
     }

@@ -11,26 +11,32 @@ using Microsoft.AspNetCore;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Security;
 using ScrumMaker.Logger;
 
 namespace BL.Chatting
 {
-    public class GlobalChatManager : IGlobalChatManager
+    public class RetrospectiveChatManager : IRetrospectiveChatMananger
     {
-        public const string ROOM_NAME = "ScrumMakerGlobalChat";
+        public const string ROOM_NAME = "RetrospectiveRoom";
         private static List<User> _authorizedGuests = new List<User>();
         private static int _totalGuestsCount;
 
         private IRepository<ChatRoom> _chats;
         private IRepository<Message> _msgs;
         private IRepository<User> _users;
+        private IRepository<RetrospectiveMessage> _rmsgs;
         private ChatRoom _room;
+        private IRepository<Sprint> _sprints;
+        public int SprintId { get; set; }
 
 
-        public GlobalChatManager(IRepository<ChatRoom> chats, IRepository<Message> msgs, IRepository<User> users)
+        public RetrospectiveChatManager(IRepository<ChatRoom> chats, IRepository<Message> msgs, IRepository<User> users, IRepository<RetrospectiveMessage> rmsgs, IRepository<Sprint> sprints)
         {
+            _sprints = sprints;
             _chats = chats;
             _msgs = msgs;
+            _rmsgs = rmsgs;
             _users = users;
             _room = _chats.GetAll().Where(c => c.Name == ROOM_NAME).FirstOrDefault();
 
@@ -42,7 +48,6 @@ namespace BL.Chatting
             _chats.Save();
         }
 
-
         public ClaimsPrincipal User { get; set; }
 
         public string GetGroupIdentifier
@@ -52,6 +57,7 @@ namespace BL.Chatting
                 return ROOM_NAME;
             }
         }
+
 
         /// <summary>
         /// !!! Not thread safe
@@ -107,22 +113,28 @@ namespace BL.Chatting
             return user;
         }
 
+        public void AddRetrospectiveMessage(RetrospectiveMessage message)
+        {
+            message.ChatId = _room.Id;
+            _rmsgs.Create(message);
+            _rmsgs.Save();
+
+            if (SprintId >= 0)
+            {
+                var sprint = _sprints.GetById(SprintId);
+                sprint.Retrospective += message.UserName + " " +
+                                       message.SendingDate.ToShortDateString() + " " +
+                                       "went well: " + message.WentWell + " " +
+                                       "improve to doing: " + message.CouldBeImproved + " " +
+                                       "commit to next sprint: " + message.CommitToDoing + Environment.NewLine;
+                _sprints.Update(sprint);
+                _sprints.Save();
+            }
+        }
+
         public virtual Message AddMessage(string text)
         {
-            int authorId = GetCurrentUserId();
-
-            Message msg = new Message()
-            {
-                AuthorId = authorId > 0 ? (int?)authorId : null,
-                ChatId = _room.Id,
-                Sent = DateTime.UtcNow,
-                Text = text
-            };
-
-            _msgs.Create(msg);
-            _msgs.Save();
-
-            return _msgs.GetAll().Where(m => m.Id == msg.Id).Include(m => m.Author).FirstOrDefault();
+            return new Message();
         }
 
 
@@ -133,18 +145,17 @@ namespace BL.Chatting
 
         public IQueryable<Message> GetHistory(int skip = -1, int top = -1)
         {
-            if (skip >= 0 && top >= 0)
+            if (skip > 0 && top > 0)
                 return _msgs.GetAll().
                     Where(m => m.ChatId == _room.Id).
-                    Include(m => m.Author).
                     OrderBy(m => m.Sent).
+                    Include(m => m.Author).
                     Skip(skip).Take(top);
 
             return _msgs.GetAll().
                 Where(m => m.ChatId == _room.Id).
-                Include(m => m.Author).
-                OrderBy(m => m.Sent);
-
+                OrderBy(m => m.Sent).
+                Include(m => m.Author);
         }
 
         public IQueryable<Message> GetHistory()
@@ -153,7 +164,7 @@ namespace BL.Chatting
         }
 
 
-        private int GetCurrentUserId()
+        public int GetCurrentUserId()
         {
             ClaimsIdentity identity = User?.Identity as ClaimsIdentity;
 
@@ -166,6 +177,25 @@ namespace BL.Chatting
 
             return authorId;
         }
+
+
+        public DateTime GetCurrentDate()
+        {
+            return DateTime.Now;
+        }
+
+        public string GetCurrentUserName()
+        {
+            int userId = GetCurrentUserId();
+            User user = _users.GetAll().FirstOrDefault(u => u.UserId == userId);
+            if (user != null)
+            {
+                return user.Login;
+            }
+
+            return "Anonim";
+        }
+
 
     }
 }

@@ -6,7 +6,7 @@ interface DataFetchingState {
     data: ModelForChart[];
 }
 
-export class Chart extends React.Component<DataFetchingState, DataFetchingState> {
+export class Velocity extends React.Component<DataFetchingState, DataFetchingState> {
     constructor() {
         super();
         this.state = { data: [] };
@@ -34,16 +34,14 @@ export class Chart extends React.Component<DataFetchingState, DataFetchingState>
         console.log(this.state.data);
         return (
             <ComposedChart width={900} height={450} data={this.state.data.map(x => x.props)}
-                margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
+                margin={{ top: 13, right: 20, left: 10, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="5 5" />
                 <XAxis dataKey="Name" tickLine={false} />
-                <YAxis dataKey="RemainingTask" yAxisId="left" orientation='left' />
-                <YAxis yAxisId="right" orientation='right'/>
-                <Tooltip />
                 <Legend />
                 <CartesianGrid stroke='#f5f5f5' vertical={false} />
-                <Bar yAxisId="left" dataKey='CompletedTask' barSize={40} fill='#F7B7B4' />
-                <Line yAxisId="right" type="monotone" dataKey="RemainingTask" stroke="#82ca9d" />
+                <Bar dataKey="CompletedTask" fill='green' isAnimationActive={false} />
+                <Bar dataKey="RemainingTask" fill='yellow' isAnimationActive={false} />
+                <Tooltip />
             </ComposedChart>
         );
     }

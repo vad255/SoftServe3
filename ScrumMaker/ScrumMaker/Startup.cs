@@ -64,7 +64,7 @@ namespace ScrumMaker
                 };
             });
 
-            string connectionStr = Configuration.GetConnectionString("Viktor");
+            string connectionStr = Configuration.GetConnectionString("Pasha");
 
 
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
@@ -110,6 +110,8 @@ namespace ScrumMaker
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
             services.AddScoped(typeof(ITeamsManager), typeof(TeamsManager));
             services.AddScoped(typeof(BL.Chatting.IGlobalChatManager), typeof(BL.Chatting.GlobalChatManager));
+            services.AddScoped(typeof(BL.Chatting.IRetrospectiveChatMananger), typeof(BL.Chatting.RetrospectiveChatManager));
+
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -139,6 +141,8 @@ namespace ScrumMaker
             app.UseSignalR(routes =>
             {
                 routes.MapHub<GlobalChat>("/chat");
+                routes.MapHub<RetrospectiveHub>("/retrospective/chat");
+
             });
 
             app.UseMvc(routes =>

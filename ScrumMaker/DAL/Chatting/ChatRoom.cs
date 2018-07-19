@@ -15,5 +15,7 @@ namespace DAL.Chatting
         public virtual ICollection<User> Members { get; set; }
 
         public virtual ICollection<Message> Message { get; set; }
+
+        public virtual ICollection<RetrospectiveMessage> RetrospectiveMessages { get; set; }
     }
 }
