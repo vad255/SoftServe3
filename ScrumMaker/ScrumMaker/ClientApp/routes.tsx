@@ -23,7 +23,6 @@ import { MyCalendar } from "./components/MyCalendar";
 import { SprintEdit } from './components/EditPages/SprintEdit';
 import { Velocity } from './components/Charts/Velocity';
 import { EditTeam } from './components/EditPages/EditTeam';
-import { SelectSprint } from './components/Meetings/SelectSprint';
 import { RetrospectiveMeeting } from './components/Chats/RetrospectiveMeeting';
 import { SelectSprintPage } from './components/Chats/RetrospectivePages/SelectSprintPage';
 import { SelectSprint } from './components/Meetings/SelectSprint';
