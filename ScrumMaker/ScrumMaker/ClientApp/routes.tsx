@@ -21,11 +21,11 @@ import { EditStory } from "./components/EditPages/EditStory";
 import { UserEdit } from "./components/EditPages/UserEdit";
 import { MyCalendar } from "./components/MyCalendar";
 import { SprintEdit } from './components/EditPages/SprintEdit';
+import { Velocity } from './components/Charts/Velocity';
+import { EditTeam } from './components/EditPages/EditTeam';
 import { RetrospectiveMeeting } from './components/Chats/RetrospectiveMeeting';
 import { SelectSprintPage } from './components/Chats/RetrospectivePages/SelectSprintPage';
 import { SelectSprint } from './components/Meetings/SelectSprint';
-
-
 
 const LayoutRoute = ({ ...props }) => {
     return (
@@ -56,9 +56,10 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/Calendar' component={MyCalendar} />
         <LayoutRoute path='/SelectSprint' component={SelectSprint} />
         <LayoutRoute path='/SprintEdit' component={SprintEdit} />
+        <LayoutRoute path='/VelocityChart' component={Velocity} />
+        <LayoutRoute path='/EditTeam' component={EditTeam} />
         <LayoutRoute path='/RetrospectiveMeeting' component={RetrospectiveMeeting} />
         <LayoutRoute path='/SelectSprintPage' component={SelectSprintPage} />
-
 
         <Route path='/login' component={Login} />
         <Route path='/Error' component={Error} />
