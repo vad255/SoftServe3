@@ -14,6 +14,7 @@ namespace DAL.Access
         IRepositoryUoW<User> Users { get; }
         IRepositoryUoW<ChatRoom> Chats { get; }
         IRepositoryUoW<Message> Messages { get; }
+        IRepositoryUoW<SprintReview> SprintReviews { get; }
 
 
         void Commit();
