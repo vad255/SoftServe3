@@ -14,7 +14,7 @@ namespace DAL.Models
         [Required]
         [MaxLength(50)]
         public string Login { get; set; }
-
+   
 
         [Required]
         [MaxLength(50)]

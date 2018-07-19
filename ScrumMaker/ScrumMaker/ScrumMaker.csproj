@@ -36,6 +36,10 @@
     <None Remove="ClientApp\components\AddUser.tsx" />
     <None Remove="ClientApp\components\Charts\Chart.tsx" />
     <None Remove="ClientApp\components\Charts\Velocity.tsx" />
+    <None Remove="ClientApp\components\Chats\RetrospectiveMeeting.tsx" />
+    <None Remove="ClientApp\components\Chats\RetrospectiveMessage.tsx" />
+    <None Remove="ClientApp\components\Chats\RetrospectivePages\SelectSprintPage.tsx" />
+    <None Remove="ClientApp\components\Chats\RetrospectiveTable.tsx" />
     <None Remove="ClientApp\components\EditPages\EditStory.tsx" />
     <None Remove="ClientApp\components\EditPages\EditTeam.tsx" />
     <None Remove="ClientApp\components\EditPages\UserEdit.tsx" />
@@ -105,6 +109,10 @@
     <TypeScriptCompile Include="ClientApp\components\AddUser.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Charts\Velocity.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\EditTeam.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Chats\RetrospectiveMeeting.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Chats\RetrospectiveMessage.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Chats\RetrospectivePages\SelectSprintPage.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Chats\RetrospectiveTable.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Meetings\SelectSprint.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Models\SprintReview.tsx" />
     <TypeScriptCompile Include="ClientApp\components\MyCalendar.tsx" />

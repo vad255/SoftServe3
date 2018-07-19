@@ -386,7 +386,7 @@ namespace DataBaseInitializer
                         ActualResults = "almost done",
                         FixResults = "button has to work",
                         Blocked = Blocked.No,
-                        DefectName = "Broken button 'Send'",
+                        DefectName = "Broken button 'send'",
                         AssignedTo = _dbUsers.GetById(2),
                         Priority = DefectPriority.HighAttention,
                         State = DefectState.Active,
