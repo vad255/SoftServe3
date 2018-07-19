@@ -23,7 +23,7 @@ namespace DAL.Models
 
         public string ProgramIncrement { get; set; }
 
-        [ForeignKey ("User")]
+        [ForeignKey("User")]
         public int? OwnerUserId { get; set; }
         public virtual User Owner { get; set; }
 
