@@ -9,6 +9,7 @@ export class Message extends React.Component<{ msg: MessageProps, myMessage: boo
 
     render() {
         let my = this.props.myMessage;
+        
         let name = this.props.msg.author.login || "Anonym";
         return (
             <div className={my ? "message-container darker" : "message-container"}>

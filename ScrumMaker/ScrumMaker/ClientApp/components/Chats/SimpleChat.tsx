@@ -59,9 +59,11 @@ export class SimpleChat extends React.Component<RouteComponentProps<{}>, IGlobal
             { credentials: "include" }).
             then(response => response.json() as Promise<any>).
             then(data => {
+                
                 let user = new User(data);
-                if (user.userId = 0)
+                if (user.userId === 0)
                     user.userId = -1;
+
                 this.setState({ myself: user })
             });
     }
@@ -71,6 +73,7 @@ export class SimpleChat extends React.Component<RouteComponentProps<{}>, IGlobal
             this.state.myself.userId > 0 ?
                 this.state.myself.userId :
                 -1;
+        console.log("CurrUsr: " + currUserId);
 
         let msgs: MessageProps[] = history.map(m => {
             let result = new MessageProps(JSON.parse(m))
