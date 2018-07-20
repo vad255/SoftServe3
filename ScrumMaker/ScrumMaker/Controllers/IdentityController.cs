@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using ScrumMaker;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -52,6 +53,17 @@ namespace ScrumMaker.Controllers
             Logger.Logger.LogInfo($"IdentityController:Token():User {loginViewModel.Login} signed in.");
             Response.ContentType = "application/json";
             await Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
+        }
+
+        [Route("/myself")]
+        [HttpGet]
+        public async Task Myself()
+        {
+            int id = this.HttpContext.User.UserId();
+            User user = _users.GetById(id) ?? new User() { Login = "Anonym", UserId = -1 };
+
+            Response.ContentType = "application/json";
+            await Response.WriteAsync(JsonConvert.SerializeObject(user));
         }
     }
 }

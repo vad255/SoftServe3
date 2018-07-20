@@ -3,7 +3,7 @@
     width: 100%;
 }
 
-.chatOutputWindow {
+.chatOutputSection {
     padding: 0%;
     margin: 0%;
     width: 100%;
@@ -15,44 +15,27 @@
     width: 100%;
 }
 
-.chatOutput {
+.chatMessagesOutput {
     width: 85%;
-    padding: 5px;
+    height: 100%;
+    padding: 0 20px;
+    margin: 0 auto;
     display: inline-block;
-}
-
-.RetrospectivechatOutput {
-    width: 33%;
-    padding: 5px;
-    display: inline;
-    margin: 0px;
-    float: left;
-}
-
-.PChat {
-    height: 55px;
-    color: green;
-    padding: 3px;
-}
-
-.RetrospectivechatOutputArea {
-    width: 100%;
     resize: none;
     overflow: auto;
-    box-lines: 15;
-    padding: 7px;
-}
-
-.chatOutputArea {
-    width: 100%;
-    resize: none;
-    overflow: auto;
-    box-lines: 20;
+    border: solid;
+    border-color: rgba(127, 127, 127, 0.5);
+    border-width: 2px;
+    height: 100%;
+    background-color: rgb(245, 245, 245);
+    border-radius: 10px;
 }
 
 .chatUsersBlock {
+    height: 100%;
     padding: 5px;
     display: inline-block;
+    overflow: auto;
     vertical-align: top;
     width: 15%;
 }
@@ -67,14 +50,20 @@
 
 
 .chatUsersList {
-    background-color: white;
-}
-
-.chatInputBlock {
-    width: 100%;
+    border: solid;
+    border-color: rgba(127, 127, 127, 0.5);
+    padding-top: 10px;
+    border-width: 2px;
+    height: 100%;
+    background-color: rgb(245, 245, 245);
+    border-radius: 10px;
 }
 
 .chatInput {
+    border: solid;
+    border-color: rgb(128, 128, 128, 0.8);
+    border-width: 2px;
+    border-radius: 10px;
     margin-top: 10px;
     width: 100%;
     height: 5em;
@@ -91,23 +80,60 @@ hr {
     height: 2px;
 }
 
-#list {
-    height: 400px;
-    width: 694px;
-
-    position: relative;
+.message-container {
+    border: 2px solid #dedede;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
 }
 
-.RetrospectiveUserImage {
-    width: 50px;
-    height: 50px;
+.darker {
+    border-color: #ccc;
+    background-color: #ddd;
 }
 
-.list-item {
-    list-style: none;
-    height: 50px;
-    width: 70px;
-    position: absolute;
-    top: 70%;
-    left: 44%;
+.message-container::after {
+    content: "";
+    clear: both;
+    display: table;
 }
+
+
+.message-container p.login-label {
+    font-weight: bold;
+    text-align: inherit;
+}
+
+
+.message-container img {
+    float: left;
+    max-width: 50px;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+.message-container img.right {
+    float: right;
+    margin-left: 20px;
+    margin-right: 0;
+}
+
+.sender-info {
+    display: inline-block;
+    margin-left: 7px;
+}
+
+
+.right {
+    float: right;
+    text-align: right;
+}
+
+.time {
+    margin-top: 7px;
+    text-align: inherit;
+    color: #aaa;
+    font-style: italic;
+}
+

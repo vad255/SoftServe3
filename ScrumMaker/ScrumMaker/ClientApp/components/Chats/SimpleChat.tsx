@@ -4,18 +4,27 @@ import 'isomorphic-fetch';
 import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr'
 import { User } from '../Models/User';
 import { UserBox } from './UsersBox';
+import { MessageProps } from './Message';
+import { OutputBox } from './OutputBox';
+
+export interface IGlobalChat {
+    messages: MessageProps[],
+    members: User[],
+    myself: User
+}
 
 
-export class SimpleChat extends React.Component<RouteComponentProps<{}>, any> {
+export class SimpleChat extends React.Component<RouteComponentProps<{}>, IGlobalChat> {
 
     protected URL_BASE: string = '/chat';
     connection: HubConnection;
     name: string = "defaultName";
     message: string = "";
-    usersBox: UserBox = new UserBox();
 
     constructor() {
         super();
+        this.state = { messages: [], members: [], myself: new User({}) }
+
         this.connection = new HubConnectionBuilder().withUrl(this.URL_BASE).build();
         this.connection.on("receiveMessage", this.receiveMessage.bind(this));
         this.connection.on("receiveHistory", this.receiveHistory.bind(this));
@@ -23,34 +32,56 @@ export class SimpleChat extends React.Component<RouteComponentProps<{}>, any> {
         this.connection.on("userConnected", this.userConnected.bind(this));
         this.connection.on("userDisconnect", this.userDisconnected.bind(this));
         this.connection.onclose(() => {
-            this.message = "CONNECTION CLOSED"
-            this.receiveMessage(this.message);
-
+            this.receiveMessage("CONNECTION CLOSED");
         })
+    }
+
+    public componentDidMount() {
+
+        let div: any = {};
+        div = document.getElementById("OutputSection");
+        div.setAttribute("style", `height:${window.innerHeight * 0.6}px`);
 
         this.connection.start().
+            then(() => this.getMyself()).
             then(() => {
-                this.loadHistory();
-                this.loadUsers()
+                this.connection.invoke("GetHistory");
+                this.connection.invoke("GetUsers");
             }).catch(err => console.error(err));
     }
 
-    public Send() {
-        this.connection.invoke("SendMessage", this.message);
+    public Send(message: string) {
+        this.connection.invoke("SendMessage", message);
     }
 
-    loadHistory() {
-        this.connection.invoke("GetHistory");
+    getMyself(): Promise<any> {
+        return fetch('/myself',
+            { credentials: "include" }).
+            then(response => response.json() as Promise<any>).
+            then(data => {
+                
+                let user = new User(data);
+                if (user.userId === 0)
+                    user.userId = -1;
+
+                this.setState({ myself: user })
+            });
     }
 
-    loadUsers() {
-        this.connection.invoke("GetUsers");
-    }
+    receiveHistory(history: string[]) {
+        let currUserId =
+            this.state.myself.userId > 0 ?
+                this.state.myself.userId :
+                -1;
+        console.log("CurrUsr: " + currUserId);
 
-    receiveHistory(messages: string[]) {
-        messages.forEach(element => {
-            this.receiveMessage(element);
+        let msgs: MessageProps[] = history.map(m => {
+            let result = new MessageProps(JSON.parse(m))
+            result.myMessage = ((currUserId > 0) && (result.author.userId === currUserId));
+            return result;
         });
+
+        this.setState({ messages: msgs })
     }
 
     public receiveUsers(users: User[]) {
@@ -62,61 +93,55 @@ export class SimpleChat extends React.Component<RouteComponentProps<{}>, any> {
     userConnected(user: User) {
         console.log("Conected: " + user);
 
-        if (user != null && user != undefined) {
-            this.usersBox.users.push(user);
-            this.forceUpdate();
+        if (user) {
+            this.state.members.push(user);
+            this.setState(this.state);
         }
     }
 
     userDisconnected(user: User) {
         console.log("Disconected: " + user);
 
-        if (user != null && user != undefined) {
-            this.usersBox.users = this.usersBox.users.filter(u => u.login != user.login);
-            this.forceUpdate();
+        if (user) {
+            let newList = this.state.members.filter(u => u.login != user.login);
+            this.setState({ members: newList });
         }
     }
 
-    public receiveMessage(message: string) {
-
-        let output = undefined;
-        output = document.getElementById("output") as any;
-        if (output.value != '')
-            output.value += '\n';
-        output.value += message;
-        output.scrollTop = output.scrollHeight;
+    public receiveMessage(response: any) {
+        this.state.messages.push(new MessageProps(JSON.parse(response)));
+        this.setState(this.state);
     }
 
-    private updateMessage(e: any) {
+    private handleInput(e: any) {
+
+        console.log(this.state.myself);
+
 
         if (e.key !== 'Enter' || e.shiftKey)
             return;
 
         let input = undefined;
         input = document.getElementById("messageInput") as any;
-        this.message = input.value;
-        input.value = null;
+        let message = input.value;
+        input.value = "";
         e.preventDefault();
-        if (this.message != undefined && this.message != null && this.message != '')
-            this.Send();
+        if (message)
+            this.Send(message);
     }
 
     render() {
-        return <div className="chatWindow">
-            <div className="chatOutputWindow">
-                <div className="chatOutput">
-                    <textarea id="output" className="chatOutputArea" rows={15} readOnly={true}></textarea>
+        return (
+            <div className="chatWindow">
+                <div id="OutputSection" className="chatOutputSection">
+                    <OutputBox messages={this.state.messages} myself={this.state.myself} />
+                    <UserBox users={this.state.members} />
                 </div>
-                <div className="chatUsersBlock">
-                    {this.usersBox.render()}
-                </div>
+                <hr />
+                <textarea id="messageInput" className="chatInput" onKeyPress={this.handleInput.bind(this)} />
             </div>
-            <hr />
-            <div className="chatInputBlock">
-                <br />
-                <textarea id="messageInput" className="chatInput" onKeyPress={this.updateMessage.bind(this)} />
-            </div>
-        </div>
+
+        )
     }
 
 

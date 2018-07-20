@@ -69,9 +69,9 @@ namespace ScrumMaker
         }
 
 
-        public static string UserLogin(this ClaimsIdentity identity)
+        public static string UserLogin(this ClaimsPrincipal identity)
         {
-            ClaimsIdentity claims = identity as ClaimsIdentity;
+            ClaimsIdentity claims = identity.Identity as ClaimsIdentity;
 
             if (claims == null)
                 return null;
@@ -80,9 +80,9 @@ namespace ScrumMaker
 
             return name;
         }
-        public static int UserId(this ClaimsIdentity identity)
+        public static int UserId(this ClaimsPrincipal identity)
         {
-            ClaimsIdentity claims = identity as ClaimsIdentity;
+            ClaimsIdentity claims = identity.Identity as ClaimsIdentity;
 
             if (claims == null)
                 return -1;
@@ -93,9 +93,9 @@ namespace ScrumMaker
 
             return authorId;
         }
-        public static string UserRole(this ClaimsIdentity identity)
+        public static string UserRole(this ClaimsPrincipal identity)
         {
-            ClaimsIdentity claims = identity as ClaimsIdentity;
+            ClaimsIdentity claims = identity.Identity as ClaimsIdentity;
 
             if (claims == null)
                 return null;

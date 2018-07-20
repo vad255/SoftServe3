@@ -4,7 +4,6 @@ import { Sprint } from '../Models/Sprint';
 import { NavLink } from 'react-router-dom';
 import { SprintStage } from '../Models/SprintStage';
 import { Team } from '../Models/Team';
-import '../../css/editPage.css';
 import { ConfirmMadal } from '../ConfirmModal';
 import { SprintHistory } from '../Models/SprintHistory';
 import DatePicker from 'react-datepicker';
