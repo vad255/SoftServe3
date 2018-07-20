@@ -27,6 +27,7 @@ import { EditTeam } from './components/EditPages/EditTeam';
 import { RetrospectiveMeeting } from './components/Chats/RetrospectiveMeeting';
 import { SelectSprintPage } from './components/Chats/RetrospectivePages/SelectSprintPage';
 import { SelectSprint } from './components/Meetings/SelectSprint';
+import { Backlog } from './components/Backlog/Backlog';
 
 
 const LayoutRoute = ({ ...props }) => {
@@ -63,6 +64,8 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/EditTeam' component={EditTeam} />
         <LayoutRoute path='/RetrospectiveMeeting' component={RetrospectiveMeeting} />
         <LayoutRoute path='/SelectSprintPage' component={SelectSprintPage} />
+        <LayoutRoute path='/backlog' component={Backlog} />
+
 
         <Route path='/login' component={Login} />
         <Route path='/Error' component={Error} />
