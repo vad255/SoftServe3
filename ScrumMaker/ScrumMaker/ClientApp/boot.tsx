@@ -16,7 +16,6 @@ import './css/modalWindow.css';
 import './css/multiselect.css';
 import './css/backlog.css';
 import 'bootstrap';
-import 'react-bootstrap';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
