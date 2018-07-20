@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using BL.Chatting;
 using DAL.Chatting;
-
+using Newtonsoft.Json;
 
 namespace ScrumMaker.Controllers.Chatting
 {
@@ -22,14 +22,21 @@ namespace ScrumMaker.Controllers.Chatting
         public async Task SendMessage(string text)
         {
             _manager.User = Context.User;
-
+            
             Message msg = _manager.AddMessage(text);
-            await Clients.Group(_manager.GetGroupIdentifier).SendAsync("receiveMessage", msg.ToString());
+            string msgJSON = msg.ToJSON();
+
+
+            await Clients.Group(_manager.GetGroupIdentifier).SendAsync("receiveMessage", msgJSON);
         }
 
         public async Task GetHistory()
         {
-            var history = _manager.GetHistory().Select(m => m.ToString());
+            var history = _manager.GetHistory().Select(m => m.ToJSON());
+
+           
+            foreach (var item in history)
+                Console.WriteLine(item);
 
             await Clients.Caller.SendAsync("receiveHistory", history);
         }

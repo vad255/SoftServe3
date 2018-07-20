@@ -2,7 +2,6 @@
   color: transparent;
 } */
 
-
 * {
     margin: 0px;
     padding: 0px;
@@ -12,11 +11,10 @@
 body, html {
     height: 100%;
     font-family: 'Times New Roman';
-    
 }
 
-
 /*---------------------------------------------*/
+
 a {
     font-family: 'Times New Roman';
     font-size: 14px;
@@ -29,16 +27,17 @@ a {
     -moz-transition: all 0.4s;
 }
 
-    a:focus {
-        outline: none !important;
-    }
+a:focus {
+    outline: none !important;
+}
 
-    a:hover {
-        text-decoration: none;
-        color: black;
-    }
+a:hover {
+    text-decoration: none;
+    color: black;
+}
 
 /*---------------------------------------------*/
+
 h1, h2, h3, h4, h5, h6 {
     margin: 0px;
 }
@@ -56,64 +55,63 @@ ul, li {
     list-style-type: none;
 }
 
-
 /*---------------------------------------------*/
+
 input {
     outline: none;
     border: none;
 }
 
-    input[type="number"] {
-        -moz-appearance: textfield;
-        appearance: none;
-        -webkit-appearance: none;
-    }
+input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: none;
+    -webkit-appearance: none;
+}
 
-        input[type="number"]::-webkit-outer-spin-button,
-        input[type="number"]::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-        }
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
 
 textarea {
     outline: none;
     border: none;
 }
 
-    textarea:focus, input:focus {
-        border-color: transparent !important;
-    }
+/* textarea:focus, input:focus {
+    border-color: transparent !important;
+} */
 
-        input:focus::-webkit-input-placeholder {
-            color: transparent;
-        }
+input:focus::-webkit-input-placeholder {
+    color: transparent;
+}
 
-        input:focus:-moz-placeholder {
-            color: transparent;
-        }
+input:focus:-moz-placeholder {
+    color: transparent;
+}
 
-        input:focus::-moz-placeholder {
-            color: transparent;
-        }
+input:focus::-moz-placeholder {
+    color: transparent;
+}
 
-        input:focus:-ms-input-placeholder {
-            color: transparent;
-        }
+input:focus:-ms-input-placeholder {
+    color: transparent;
+}
 
-        textarea:focus::-webkit-input-placeholder {
-            color: transparent;
-        }
+textarea:focus::-webkit-input-placeholder {
+    color: transparent;
+}
 
-        textarea:focus:-moz-placeholder {
-            color: transparent;
-        }
+textarea:focus:-moz-placeholder {
+    color: transparent;
+}
 
-        textarea:focus::-moz-placeholder {
-            color: transparent;
-        }
+textarea:focus::-moz-placeholder {
+    color: transparent;
+}
 
-        textarea:focus:-ms-input-placeholder {
-            color: transparent;
-        }
+textarea:focus:-ms-input-placeholder {
+    color: transparent;
+}
 
 input::-webkit-input-placeholder {
     color: #999999;
@@ -153,23 +151,24 @@ label {
 }
 
 /*---------------------------------------------*/
+
 button {
     outline: none !important;
     border: none;
     background: transparent;
 }
 
-    button:hover {
-        cursor: pointer;
-    }
+button:hover {
+    cursor: pointer;
+}
 
 iframe {
     border: none !important;
 }
 
-
 /*//////////////////////////////////////////////////////////////////
 [ Utility ]*/
+
 .txt1 {
     font-family: 'Times New Roman';
     font-size: 16px;
@@ -182,8 +181,8 @@ iframe {
 
 .limiter {
     width: 100%;
-    margin:0 auto;
-    margin-top:-50px;
+    margin: 0 auto;
+    margin-top: -50px;
 }
 
 .container-login100 {
@@ -201,7 +200,6 @@ iframe {
     background: white;
 }
 
-
 .wrap-login100 {
     width: 670px;
     background: #fff;
@@ -212,6 +210,7 @@ iframe {
 
 /*==================================================================
 [ Title form ]*/
+
 .login100-form-title {
     width: 100%;
     position: relative;
@@ -251,7 +250,6 @@ iframe {
     background-color: #293d3d;
 }
 
-
 /*==================================================================
 [ Form ]*/
 
@@ -265,9 +263,8 @@ iframe {
     flex-wrap: wrap;
     justify-content: space-between;
     padding: 43px 88px 93px 190px;
-    background-color:whitesmoke;
+    background-color: whitesmoke;
 }
-
 
 /*------------------------------------------------------------------
 [ Input ]*/
@@ -291,6 +288,7 @@ iframe {
 }
 
 /*---------------------------------------------*/
+
 .input100 {
     font-family: 'Times New Roman';
     font-size: 17px;
@@ -312,33 +310,32 @@ iframe {
     pointer-events: none;
 }
 
-    .focus-input100::before {
-        content: "";
-        display: block;
-        position: absolute;
-        bottom: -1px;
-        left: 0;
-        width: 0;
-        height: 1px;
-        -webkit-transition: all 0.6s;
-        -o-transition: all 0.6s;
-        -moz-transition: all 0.6s;
-        transition: all 0.6s;
-        background: black;
-    }
-
+.focus-input100::before {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    -webkit-transition: all 0.6s;
+    -o-transition: all 0.6s;
+    -moz-transition: all 0.6s;
+    transition: all 0.6s;
+    background: black;
+}
 
 /*---------------------------------------------*/
+
 input.input100 {
     height: 45px;
 }
 
-
-.input100:focus + .focus-input100::before {
+.input100:focus+.focus-input100::before {
     width: 100%;
 }
 
-.has-val.input100 + .focus-input100::before {
+.has-val.input100+.focus-input100::before {
     width: 100%;
 }
 
@@ -348,7 +345,6 @@ input.input100 {
 .input-checkbox100 {
     display: none;
 }
-
 
 .label-checkbox100 {
     font-family: 'Times New Roman';
@@ -361,40 +357,40 @@ input.input100 {
     cursor: pointer;
 }
 
-    .label-checkbox100::before {
-        content: "\f00c";
-        font-family: FontAwesome;
-        font-size: 13px;
-        color: transparent;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        width: 18px;
-        height: 18px;
-        border-radius: 0;
-        background: #fff;
-        border: 1px solid #e6e6e6;
-        left: 0;
-        top: 50%;
-        -webkit-transform: translateY(-50%);
-        -moz-transform: translateY(-50%);
-        -ms-transform: translateY(-50%);
-        -o-transform: translateY(-50%);
-        transform: translateY(-50%);
-    }
+.label-checkbox100::before {
+    content: "\f00c";
+    font-family: FontAwesome;
+    font-size: 13px;
+    color: transparent;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 0;
+    background: #fff;
+    border: 1px solid #e6e6e6;
+    left: 0;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
 
-.input-checkbox100:checked + .label-checkbox100::before {
+.input-checkbox100:checked+.label-checkbox100::before {
     color: black;
 }
 
-
 /*------------------------------------------------------------------
 [ Button ]*/
+
 .container-login100-form-btn {
     width: 100%;
     display: -webkit-box;
@@ -416,7 +412,7 @@ input.input100 {
     padding: 0 20px;
     min-width: 160px;
     height: 50px;
-    background-color:dimgrey;
+    background-color: dimgrey;
     border-radius: 25px;
     font-family: Poppins-Regular;
     font-size: 16px;
@@ -428,10 +424,9 @@ input.input100 {
     transition: all 0.4s;
 }
 
-    .login100-form-btn:hover {
-        background-color: #333333;
-    }
-
+.login100-form-btn:hover {
+    background-color: #333333;
+}
 
 /*------------------------------------------------------------------
 [ Responsive ]*/
@@ -446,7 +441,6 @@ input.input100 {
     .login100-form {
         padding: 43px 15px 57px 15px;
     }
-
     .label-input100 {
         text-align: left;
         position: unset;
@@ -456,7 +450,6 @@ input.input100 {
         padding: 0 5px;
     }
 }
-
 
 /*------------------------------------------------------------------
 [ Alert validate ]*/
@@ -525,6 +518,7 @@ input.input100 {
 /*[ FONT SIZE ]
 ///////////////////////////////////////////////////////////
 */
+
 .fs-1 {
     font-size: 1px;
 }
@@ -1328,6 +1322,7 @@ input.input100 {
 /*[ PADDING ]
 ///////////////////////////////////////////////////////////
 */
+
 .p-t-0 {
     padding-top: 0px;
 }
@@ -5347,6 +5342,7 @@ input.input100 {
 /*[ MARGIN ]
 ///////////////////////////////////////////////////////////
 */
+
 .m-t-0 {
     margin-top: 0px;
 }
@@ -9376,12 +9372,12 @@ input.input100 {
     margin-right: auto;
 }
 
-
-
 /*[ TEXT ]
 ///////////////////////////////////////////////////////////
 */
+
 /* ------------------------------------ */
+
 .text-white {
     color: white;
 }
@@ -9395,11 +9391,13 @@ input.input100 {
 }
 
 /* ------------------------------------ */
+
 .text-up {
     text-transform: uppercase;
 }
 
 /* ------------------------------------ */
+
 .text-center {
     text-align: center;
 }
@@ -9417,6 +9415,7 @@ input.input100 {
 }
 
 /* ------------------------------------ */
+
 .lh-1-0 {
     line-height: 1.0;
 }
@@ -9497,10 +9496,6 @@ input.input100 {
     line-height: 2.9;
 }
 
-
-
-
-
 /*[ SHAPE ]
 ///////////////////////////////////////////////////////////
 */
@@ -9508,6 +9503,7 @@ input.input100 {
 /*[ Display ]
 -----------------------------------------------------------
 */
+
 .dis-none {
     display: none;
 }
@@ -9535,6 +9531,7 @@ input.input100 {
 /*[ Position ]
 -----------------------------------------------------------
 */
+
 .pos-relative {
     position: relative;
 }
@@ -9550,6 +9547,7 @@ input.input100 {
 /*[ float ]
 -----------------------------------------------------------
 */
+
 .float-l {
     float: left;
 }
@@ -9558,10 +9556,10 @@ input.input100 {
     float: right;
 }
 
-
 /*[ Width & Height ]
 -----------------------------------------------------------
 */
+
 .sizefull {
     width: 100%;
     height: 100%;
@@ -9594,6 +9592,7 @@ input.input100 {
 /*[ Top Bottom Left Right ]
 -----------------------------------------------------------
 */
+
 .top-0 {
     top: 0;
 }
@@ -9626,10 +9625,10 @@ input.input100 {
     right: auto;
 }
 
-
 /*[ Opacity ]
 -----------------------------------------------------------
 */
+
 .op-0-0 {
     opacity: 0;
 }
@@ -9677,6 +9676,7 @@ input.input100 {
 /*[ Background ]
 -----------------------------------------------------------
 */
+
 .bgwhite {
     background-color: white;
 }
@@ -9685,11 +9685,10 @@ input.input100 {
     background-color: black;
 }
 
-
-
 /*[ Wrap Picture ]
 -----------------------------------------------------------
 */
+
 .wrap-pic-w img {
     width: 100%;
 }
@@ -9699,6 +9698,7 @@ input.input100 {
 }
 
 /* ------------------------------------ */
+
 .wrap-pic-h img {
     height: 100%;
 }
@@ -9708,51 +9708,51 @@ input.input100 {
 }
 
 /* ------------------------------------ */
+
 .wrap-pic-cir {
     border-radius: 50%;
     overflow: hidden;
 }
 
-    .wrap-pic-cir img {
-        width: 100%;
-    }
-
-
+.wrap-pic-cir img {
+    width: 100%;
+}
 
 /*[ Hover ]
 -----------------------------------------------------------
 */
+
 .hov-pointer:hover {
     cursor: pointer;
 }
 
 /* ------------------------------------ */
+
 .hov-img-zoom {
     display: block;
     overflow: hidden;
 }
 
-    .hov-img-zoom img {
-        width: 100%;
-        -webkit-transition: all 0.6s;
-        -o-transition: all 0.6s;
-        -moz-transition: all 0.6s;
-        transition: all 0.6s;
-    }
+.hov-img-zoom img {
+    width: 100%;
+    -webkit-transition: all 0.6s;
+    -o-transition: all 0.6s;
+    -moz-transition: all 0.6s;
+    transition: all 0.6s;
+}
 
-    .hov-img-zoom:hover img {
-        -webkit-transform: scale(1.1);
-        -moz-transform: scale(1.1);
-        -ms-transform: scale(1.1);
-        -o-transform: scale(1.1);
-        transform: scale(1.1);
-    }
-
-
+.hov-img-zoom:hover img {
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    transform: scale(1.1);
+}
 
 /*[  ]
 -----------------------------------------------------------
 */
+
 .bo-cir {
     border-radius: 50%;
 }
@@ -9769,12 +9769,10 @@ input.input100 {
     visibility: visible;
 }
 
-
-
-
 /*[ Transition ]
 -----------------------------------------------------------
 */
+
 .trans-0-1 {
     -webkit-transition: all 0.1s;
     -o-transition: all 0.1s;
@@ -9831,8 +9829,6 @@ input.input100 {
     transition: all 1s;
 }
 
-
-
 /*[ Layout ]
 ///////////////////////////////////////////////////////////
 */
@@ -9840,7 +9836,9 @@ input.input100 {
 /*[ Flex ]
 -----------------------------------------------------------
 */
+
 /* ------------------------------------ */
+
 .flex-w {
     display: -webkit-box;
     display: -webkit-flex;
@@ -9855,6 +9853,7 @@ input.input100 {
 }
 
 /* ------------------------------------ */
+
 .flex-l {
     display: -webkit-box;
     display: -webkit-flex;
@@ -9901,6 +9900,7 @@ input.input100 {
 }
 
 /* ------------------------------------ */
+
 .flex-t {
     display: -webkit-box;
     display: -webkit-flex;
@@ -9942,6 +9942,7 @@ input.input100 {
 }
 
 /* ------------------------------------ */
+
 .flex-row {
     display: -webkit-box;
     display: -webkit-flex;
@@ -9995,6 +9996,7 @@ input.input100 {
 }
 
 /* ------------------------------------ */
+
 .flex-c-m {
     display: -webkit-box;
     display: -webkit-flex;
@@ -10084,6 +10086,7 @@ input.input100 {
 }
 
 /* ------------------------------------ */
+
 .flex-col-l {
     display: -webkit-box;
     display: -webkit-flex;
@@ -10207,6 +10210,7 @@ input.input100 {
 }
 
 /* ------------------------------------ */
+
 .flex-col-rev-l {
     display: -webkit-box;
     display: -webkit-flex;
@@ -10267,10 +10271,10 @@ input.input100 {
     align-items: stretch;
 }
 
-
 /*[ Absolute ]
 -----------------------------------------------------------
 */
+
 .ab-c-m {
     position: absolute;
     top: 50%;
@@ -10349,12 +10353,3 @@ input.input100 {
     right: 0px;
     bottom: 0px;
 }
-
-
-
-
-
-
-
-
-

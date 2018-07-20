@@ -20,7 +20,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
     private readonly URL_COUNT: string = '&$count=true';
     protected readonly URL_EDIT: string = "!!!NOT_IMPLEMENTED!!!/";
 
-    protected readonly FILTER_MANAGER_REF = "FilterManager"
+    protected readonly FILTER_MANAGER_REF = "FilterManager";
     protected customUrlFilters: string = '';
     protected filteringOn: boolean = false;
     private urlFilters: string = '';
@@ -36,7 +36,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
     constructor() {
         super();
         this.recalcPagingUrl();
-        this.readQueryParams()
+        this.readQueryParams();
         this.isLoading = true;
     }
 
@@ -71,7 +71,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
     }
     private LoadData() {
         fetch(this.getURL(), { credentials: 'include' })
-            .then(response => response.json() as any)
+            .then(response => response.json())
             .then(data => {
                 this.totalCount = data['@odata.count'];
                 this.OnDataReceived(data);
@@ -100,10 +100,6 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         result += this.URL_EXPANDS;
 
         result += this.urlFilters;
-
-        // if (this.customUrlFilters) {
-        //     result += this.urlFilters ? Filter.CONSTRAIN_DIVIDER + this.customUrlFilters : Filter.QUERY_HEAD + this.customUrlFilters;
-        // }
 
         result += this.URL_ORDERING;
 
@@ -161,10 +157,10 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         let title = "Are you sure you want to delete this item?";
 
         return <ConfirmMadal
-            onCanceled={this.onDeleteCancel.bind(this)}
-            onConfirmed={this.onDeleteConfirmed.bind(this)}
-            title={title}
-            id={"ConfirmDeleteDialog"} />
+                   onCanceled={this.onDeleteCancel.bind(this)}
+                   onConfirmed={this.onDeleteConfirmed.bind(this)}
+                   title={title}
+                   id={"ConfirmDeleteDialog"}/>;
     }
 
 
@@ -194,7 +190,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
 
     protected FilterButtonClick(e: any) {
-        this.filteringOn = !this.filteringOn
+        this.filteringOn = !this.filteringOn;
         this.forceUpdate();
     }
     protected ApplyFiltersHandler(e: any) {
@@ -263,9 +259,9 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
                 this.lastOrderingDir = false;
 
             if (!this.lastOrderingDir)
-                data.sort((a, b) => this.SafeCompare(a, b, arg))
+                data.sort((a, b) => this.SafeCompare(a, b, arg));
             else
-                data.sort((a, b) => -this.SafeCompare(a, b, arg))
+                data.sort((a, b) => -this.SafeCompare(a, b, arg));
 
             this.lastOrderingArg = arg;
             this.forceUpdate();
@@ -304,12 +300,12 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
             return;
 
         for (let iterator in params) {
-            this.customUrlFilters += params[iterator]
+            this.customUrlFilters += params[iterator];
         }
     }
     private GetUrlParams(): any[] {
         let vars: any = {};
-        let queryBegin = window.location.href.indexOf('?')
+        let queryBegin = window.location.href.indexOf('?');
 
         if (queryBegin < 0)
             return [];

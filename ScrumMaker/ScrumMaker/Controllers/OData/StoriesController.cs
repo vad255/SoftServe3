@@ -56,7 +56,7 @@ namespace ScrumMaker.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(key))
+                if (!StoryExists(key))
                 {
                     return NotFound();
                 }
@@ -69,7 +69,7 @@ namespace ScrumMaker.Controllers
             return Updated(story);
         }
 
-        private bool ProductExists(int key)
+        private bool StoryExists(int key)
         {
             return _stories.GetAll().Count(e => e.Id == key) > 0;
         }       

@@ -18,10 +18,11 @@ export class User implements IDbModel {
 
 
     public constructor(params: any) {
-
-        if (params === null || params === undefined) {
+        console.log(params);
+        
+        if (!params)
             return;
-        }
+
         this.userId = params.UserId;
         this.login = params.Login;
         this.password = params.Password;
@@ -31,6 +32,8 @@ export class User implements IDbModel {
         this.role = new Role(params.Role);
         this.team = new Team(params.Team);
         this.empty = false;
+        console.log(this);
+        
     }
 
 

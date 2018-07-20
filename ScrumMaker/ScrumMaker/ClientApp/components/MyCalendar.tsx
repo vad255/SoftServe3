@@ -1,9 +1,11 @@
 ﻿import * as React from 'react';
+import * as Modal from 'react-modal';
 import Calendar, { YearView } from 'react-calendar/dist/entry.nostyle';
 import { render } from 'react-dom';
 import { RouteComponentProps } from 'react-router';
 import { Button } from 'react-bootstrap/lib/InputGroup';
 import { Form, Label } from 'react-bootstrap';
+import { ConfirmMadal, IModalState } from "./ConfirmModal";
 
 interface Meetings {
     meetingId: number,
@@ -15,7 +17,7 @@ interface DataCalendar {
     meetingId: number,
     calendarId: number,
     date: Date,
-    hours: number,
+    hours: number, 
 }
 
 interface CalendarDataExampleState {
@@ -23,13 +25,14 @@ interface CalendarDataExampleState {
     meetings: Meetings[],
     curentDate: Date,
     displayLeft: boolean,
-    displayRigth: boolean
+    displayRigth: boolean,
+    confirmModal: boolean,
 }
 
-export class MyCalendar extends React.Component<RouteComponentProps<{}>, CalendarDataExampleState> {
+export class MyCalendar extends React.Component<RouteComponentProps<IModalState>, CalendarDataExampleState> {
     constructor(props: any) {
         super(props)
-        this.state = { calendar: [], meetings: [], curentDate: new Date(), displayLeft: false, displayRigth: false };
+        this.state = { calendar: [], meetings: [], curentDate: new Date(), displayLeft: false, displayRigth: false, confirmModal: false };
         this.onChange = this.onChange.bind(this);
         this.forceUpdate = this.forceUpdate.bind(this);
         this.handleSave = this.handleSave.bind(this);
@@ -83,15 +86,43 @@ export class MyCalendar extends React.Component<RouteComponentProps<{}>, Calenda
                 if (data.length != 0)
                     this.setState({ calendar: data, displayLeft: true, displayRigth: true, curentDate: this.state.curentDate });
                 else
-                    //Exception
-                    alert("This tims is booked");
+                    this.setState({ confirmModal: true });
             });
-        this.forceUpdate();
+    }
+
+    //private GetConfirmModal() {
+    //    let title = "This tims is booked";
+
+    //    return <ConfirmMadal
+    //        onCanceled={this.onChange}
+    //        onConfirmed={this.onChange}
+    //        title={title}
+    //        id={"ConfirmDeleteDialog"} />
+    //}
+
+    componentWillMount() {
+        Modal.setAppElement('body');
+    }
+
+    openCloseModel = () => {
+        this.setState({
+            confirmModal: !this.state.confirmModal
+        })
     }
 
     render() {
         return (
             <div>
+                <div width="500px;" height="200px;">
+
+                    <Modal isOpen={this.state.confirmModal}
+                        onRequestClose={this.openCloseModel}
+                        className="Modal">
+                        This tims is booked
+                        <button className="modalBtn" onClick={this.openCloseModel}>Ok</button>     
+                    </Modal>
+
+                </div>
                 <Calendar
                     minDate={new Date(2010, 0, 1)}
                     minDetail={"year"}
@@ -114,7 +145,7 @@ export class MyCalendar extends React.Component<RouteComponentProps<{}>, Calenda
                                 <td>{c.date}</td>
                                 <td>{this.state.meetings.map(m => m.meetingId == c.meetingId ? m.meetingName : null)}</td>
                                 <td>{c.hours}:00</td>
-                                </tbody>
+                            </tbody>
                         )}
                     </table>
                 </div>
@@ -135,9 +166,9 @@ export class MyCalendar extends React.Component<RouteComponentProps<{}>, Calenda
                         </select>
                         <label className="selectLabel">Select meetings</label>
                         <select htmlFor="meeting" name="meeting" id="meeting" className="form-control selectEvent">
-                        {this.state.meetings.map(m =>
-                            <option value={m.meetingId}>{m.meetingName}</option>
-                        )}
+                            {this.state.meetings.map(m =>
+                                <option value={m.meetingId}>{m.meetingName}</option>
+                            )}
                         </select>
                         <button type="submit" className="btn save siteColor selectEventButton">
                             Add Event

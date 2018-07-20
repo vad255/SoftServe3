@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import { RouteComponentProps  } from 'react-router';
+import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { Team } from './Team';
 import { Link } from 'react-router-dom';
@@ -76,7 +76,8 @@ export class Story implements IDbModel {
             this.name,
             this.description,
             this.status,
-            this.sprintId
+            this.sprintId,
+            this.getStatus(this.status)
         ]
 
         return elements;
