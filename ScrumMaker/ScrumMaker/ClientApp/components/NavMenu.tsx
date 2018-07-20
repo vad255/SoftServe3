@@ -48,7 +48,16 @@ export class NavMenu extends React.Component<{}, {}> {
                             </li>
                         </ul>
                     </li>
-                    <br/>
+                    <br />
+                    <li><a>Meetings<span className="arrow-left"></span></a>
+                        <ul className='dropdown nav navbar-nav'>
+                            <li>
+                                <NavLink to={'/SprintPlaning'} activeClassName='active'>
+                                    <span className='glyphicon glyphicon-th-list columnGrid'></span> SprintPlaning
+                            </NavLink>
+                            </li>
+                        </ul>
+                    </li>
                     <li>
                         <NavLink to={'/SimpleChat'} id='coulumWidth' activeClassName='active'>
                             Chat

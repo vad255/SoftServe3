@@ -32,7 +32,7 @@ namespace ScrumMaker.Controllers
            return Ok(_stories.GetAll());
         }
 
-
+      
         [AcceptVerbs("PATCH", "MERGE")]
         public IActionResult Patch([FromODataUri] int key, [FromBody] Delta<Story> patch)
         {
@@ -72,7 +72,7 @@ namespace ScrumMaker.Controllers
         private bool ProductExists(int key)
         {
             return _stories.GetAll().Count(e => e.Id == key) > 0;
-        }
+        }       
 
     }
 }
