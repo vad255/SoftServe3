@@ -3,8 +3,15 @@ import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { Story } from './Story';
 import { User } from './User';
-import { IDbModel } from './Abstraction'
 import { Login } from '../Login';
+import { TaskState } from './TaskState';
+import { TaskType } from './TaskType';
+import { IDbModel, ICommitableDbModel } from './Abstraction';
+import * as moment from '../../../node_modules/moment';
+
+
+
+
 
 
 export class Task implements IDbModel{
@@ -15,16 +22,16 @@ export class Task implements IDbModel{
         let elements: any[] = [
             this.taskId,
             this.summary,
-                <div className='align-base m-tooltip'>{this.cutStirng(this.description, 10)}
-                    <span className="m-tooltiptext">{this.description}</span>
+            <div className='align-base m-tooltip'>{this.cutStirng(this.description, 10)}
+                <span className="m-tooltiptext">{this.description}</span>
             </div>,
             this.story.name,
             this.plannedHours,
-            this.started.toLocaleString(),
-            this.completed.toLocaleString(),
+            this.started === null ? "Not started yet" : this.started.toDate().toLocaleString(),
+            this.completed === null ? "Not completed yet" : this.completed.toDate().toLocaleString(),
             this.type,
             this.state,
-            this.user.login,
+            this.user.login
         ]
 
         return elements; 
@@ -35,10 +42,10 @@ export class Task implements IDbModel{
     description: string = '';
     storyId: number = -1;
     plannedHours: number = -1;
-    started: Date;
-    completed: Date;
-    type: string = '';
-    state: string = '';
+    started: null | moment.Moment = moment.min();
+    completed:null | moment.Moment = moment.min();
+    type: TaskType = 0;
+    state: TaskState = 0;
     userId: number = -1;
     story: Story;
     user: User;
@@ -58,8 +65,8 @@ export class Task implements IDbModel{
         this.description = params.Description;
         this.storyId = params.StoryId;
         this.plannedHours = params.PlannedHours;
-        this.started = new Date(params.Started);
-        this.completed = new Date(params.Completed);
+        this.started = params.Started ? moment(params.Started) : params.Started && moment.min();
+        this.completed = params.Completed ? moment(params.Completed) : params.Completed && moment.min();
         this.type = params.Type;
         this.state = params.State;
         this.userId = params.UserId;
@@ -71,6 +78,14 @@ export class Task implements IDbModel{
     public toString(): string {
         return this.taskId.toString();
     }
+
+    public getUpdateModel(): object {
+        return {
+
+            Completed: this.completed ? this.completed.toISOString() : ""
+        }
+    }
+  
 
     private cutStirng(str: string, targetLength: number): string {
         let s = new String(' ');
@@ -89,10 +104,3 @@ export class Task implements IDbModel{
         return str.substring(0, targetLength - 3) + "...";
     }
 }
-
-
-
-
-
-
-

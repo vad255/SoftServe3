@@ -33,3 +33,13 @@
     vertical-align: top;
     width: 60%;
 }
+
+.taskMainBlock {
+    vertical-align: top;
+    width: 40%;
+}
+
+.taskTimeBlock {
+    vertical-align: top;
+    width: 60%;
+}

@@ -8,6 +8,7 @@ using DAL.Access;
 using DAL.Models;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ScrumMaker.Controllers
 {
@@ -28,6 +29,56 @@ namespace ScrumMaker.Controllers
             return Ok(_tasks.GetAll());
         }
 
+        [AcceptVerbs("PATCH", "MERGE")]
+        public IActionResult Patch([FromODataUri] int key, [FromBody] Delta<ScrumTask> patch)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            ScrumTask task = _tasks.GetById(key);
+
+            if (task == null)
+            {
+                return NotFound();
+            }
+
+            patch.Patch(task);
+
+            try
+            {
+                _tasks.Save();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProductExists(key))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return Updated(task);
+        }
+
+        private bool ProductExists(int key)
+        {
+            return _tasks.GetAll().Count(e => e.TaskId == key) > 0;
+        }
+
+
+        [AcceptVerbs("DELETE")]
+        public IActionResult Delete([FromODataUri] int key)
+        {
+            _tasks.Delete(key);
+            _tasks.Save();
+            return NoContent();
+        }
 
     }
 }
+
