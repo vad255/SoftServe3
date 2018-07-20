@@ -3,17 +3,21 @@ import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { User } from '../Models/User';
 
-export class UserBox {
-    
+export class UserBox extends React.Component<{ users: User[] }, User[]> {
+
     protected URL_BASE: string = '/chat';
-    public users: User[] = [];
+    constructor() {
+        super();
+    }
 
     render() {
-        if (this.users === null || this.users == undefined)
-            return <ul id="usersDisplay" className="chatUsersList" />
-        return <ul id="usersDisplay" className="chatUsersList">
-            {this.users.map(u => <li>{u.login}</li>)}
-        </ul>
+        let content = this.props.users.map(u => <li key={u.userId}>{u.login}</li>)
+
+        return <div className="chatUsersBlock">
+            <ul id="usersDisplay" className="chatUsersList">
+                {content}
+            </ul>
+        </div>
     }
 }
 

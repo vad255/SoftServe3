@@ -1,0 +1,27 @@
+﻿.Modal {
+    border-color: black;
+    font-size: 22px;
+    width: 300px;
+    height: 150px;
+    position: absolute;
+    top: 40%;
+    left: 42%;
+    right: auto;
+    bottom: auto;
+    background: #232526;
+    background: -webkit-linear-gradient(to right, #232526, #414345);
+    background: linear-gradient(to right, #232526, #414345);
+    font-family: 'Times New Roman';
+    float: left;
+    text-align: center;
+    padding-top: 25px;
+    color: snow;
+}
+
+.modalBtn {
+    color: blue;
+    margin-top: 25px;
+    margin-left: 45px;
+    float: left;
+    width: 200px;
+}

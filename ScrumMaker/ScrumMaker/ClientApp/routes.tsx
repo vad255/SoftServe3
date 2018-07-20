@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Layout } from './components/Layout';
@@ -17,12 +16,17 @@ import { FeatureEdit } from './components/EditPages/FeatureEdit';
 import { Error } from './components/Error';
 import { SimpleChat } from './components/Chats/SimpleChat'
 import { Chart } from './components/Charts/Chart'
+import { SprintReviewEdit } from './components/Meetings/SprintReviewEdit';
 import { EditStory } from "./components/EditPages/EditStory";
 import { UserEdit } from "./components/EditPages/UserEdit";
 import { MyCalendar } from "./components/MyCalendar";
 import { SprintEdit } from './components/EditPages/SprintEdit';
 import { TaskEdit } from './components/EditPages/TaskEdit';
-
+import { Velocity } from './components/Charts/Velocity';
+import { EditTeam } from './components/EditPages/EditTeam';
+import { RetrospectiveMeeting } from './components/Chats/RetrospectiveMeeting';
+import { SelectSprintPage } from './components/Chats/RetrospectivePages/SelectSprintPage';
+import { SelectSprint } from './components/Meetings/SelectSprint';
 
 
 const LayoutRoute = ({ ...props }) => {
@@ -49,12 +53,16 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/SimpleChat' component={SimpleChat} />
         <LayoutRoute path='/Chart' component={Chart} />
         <LayoutRoute path='/EditStory' component={EditStory} />
+        <LayoutRoute path='/SprintReviewEdit' component={SprintReviewEdit} />
         <LayoutRoute path='/UserEdit' component={UserEdit}/>
         <LayoutRoute path='/Calendar' component={MyCalendar} />
+        <LayoutRoute path='/SelectSprint' component={SelectSprint} />
         <LayoutRoute path='/SprintEdit' component={SprintEdit} />
         <LayoutRoute path='/TaskEdit' component={TaskEdit} />
-
-
+        <LayoutRoute path='/VelocityChart' component={Velocity} />
+        <LayoutRoute path='/EditTeam' component={EditTeam} />
+        <LayoutRoute path='/RetrospectiveMeeting' component={RetrospectiveMeeting} />
+        <LayoutRoute path='/SelectSprintPage' component={SelectSprintPage} />
 
         <Route path='/login' component={Login} />
         <Route path='/Error' component={Error} />

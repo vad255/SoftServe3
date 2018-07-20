@@ -20,7 +20,7 @@ export class StoriesGrid extends Grid {
     protected URL_ORDERING: string = '&$orderby=id';
     protected URL_FEATUREID_FILTER: string = 'feature/id eq ';
     protected headerText: string = 'Stories';
-    protected URL_EDIT: string = "EditStory/"
+    protected URL_EDIT: string = "EditStory/";
 
     constructor() {
         super();

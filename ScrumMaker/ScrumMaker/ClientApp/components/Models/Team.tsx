@@ -13,21 +13,23 @@ export class Team implements IDbModel {
         let elements: any[] = [
             this.id,
             this.name,
-            <select className="btn btn-sm btn-primary" role="button" data-toggle="dropdown">
-                {this.members.map((u, i) =>
-                    <option key={i}>{u.login}</option>
-                )}
-            </select>
-        ]
-
-        return elements;
-    }
-
-    empty: boolean = true;
-    name: string = "";
-    id: number = -1;
-    members: User[] = [];
-
+            <div className="dropdown">
+                <div id={this.id.toString()} role="button" data-toggle="dropdown" className="btn btn-sm btn-primary"><span className="caret"></span>
+            </div>
+            <ul className="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                {this.members.map(u => u.renderAsDropDown())}
+            </ul>
+        </div>
+            ]
+    
+            return elements;
+        }
+    
+        empty: boolean = true;
+        name: string = "";
+        id: number = -1;
+        members: User[] = [];
+    
     constructor(params: any) {
         if (!params)
             return;

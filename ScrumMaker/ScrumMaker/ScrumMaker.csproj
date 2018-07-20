@@ -35,8 +35,14 @@
   <ItemGroup>
     <None Remove="ClientApp\components\AddUser.tsx" />
     <None Remove="ClientApp\components\Charts\Chart.tsx" />
+    <None Remove="ClientApp\components\Charts\Velocity.tsx" />
+    <None Remove="ClientApp\components\Chats\RetrospectiveMeeting.tsx" />
+    <None Remove="ClientApp\components\Chats\RetrospectiveMessage.tsx" />
+    <None Remove="ClientApp\components\Chats\RetrospectivePages\SelectSprintPage.tsx" />
+    <None Remove="ClientApp\components\Chats\RetrospectiveTable.tsx" />
     <None Remove="ClientApp\components\EditPages\EditStory.tsx" />
     <None Remove="ClientApp\components\EditPages\TaskEdit.tsx" />
+    <None Remove="ClientApp\components\EditPages\EditTeam.tsx" />
     <None Remove="ClientApp\components\EditPages\UserEdit.tsx" />
     <None Remove="ClientApp\components\EditUser.tsx" />
     <None Remove="ClientApp\components\Error.tsx" />
@@ -49,16 +55,19 @@
     <None Remove="ClientApp\components\Grids\StoriesGrid.tsx" />
     <None Remove="ClientApp\components\Grids\TaskGrid.tsx" />
     <None Remove="ClientApp\components\MailSender.tsx" />
+    <None Remove="ClientApp\components\Meetings\SelectSprint.tsx" />
     <None Remove="ClientApp\components\Models\Defect.tsx" />
     <None Remove="ClientApp\components\Models\Feature.tsx" />
     <None Remove="ClientApp\components\Models\FeatureState.tsx" />
     <None Remove="ClientApp\components\Models\ModelForChart.tsx" />
+    <None Remove="ClientApp\components\Models\SprintReview.tsx" />
     <None Remove="ClientApp\components\Models\Story.tsx" />
     <None Remove="ClientApp\components\Models\Task.tsx" />
     <None Remove="ClientApp\components\EditPages\FeatureEdit.tsx" />
     <None Remove="ClientApp\components\MyCalendar.tsx" />
     <None Remove="ClientApp\components\Models\TaskState.tsx" />
     <None Remove="ClientApp\components\Models\TaskType.tsx" />
+    <None Remove="ClientApp\components\SprintReview.tsx" />
     <None Remove="ClientApp\components\SprintsGrid.tsx" />
     <None Remove="ClientApp\components\TeamGrid.tsx" />
     <None Remove="ClientApp\css\editUser.css" />
@@ -72,6 +81,7 @@
     <None Remove="ClientApp\components\AddUser.tsx" />
     <None Remove="ClientApp\components\MailSender.tsx" />
     <None Remove="ClientApp\components\SprintsGrid.tsx" />
+    <None Remove="ClientApp\css\modalWindow.css" />
   </ItemGroup>
 
   <ItemGroup>
@@ -99,6 +109,14 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\AddUser.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\TaskEdit.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Charts\Velocity.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\EditPages\EditTeam.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Chats\RetrospectiveMeeting.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Chats\RetrospectiveMessage.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Chats\RetrospectivePages\SelectSprintPage.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Chats\RetrospectiveTable.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Meetings\SelectSprint.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Models\SprintReview.tsx" />
     <TypeScriptCompile Include="ClientApp\components\MyCalendar.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Charts\Chart.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\EditStory.tsx" />
@@ -119,11 +137,13 @@
     <TypeScriptCompile Include="ClientApp\components\Models\Defect.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Models\Story.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\FeatureEdit.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Meetings\SprintReviewEdit.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Models\TaskState.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Models\TaskType.tsx" />
     <TypeScriptCompile Include="ClientApp\components\SprintsGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Grids\TeamGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\css\editUser.css" />
+    <TypeScriptCompile Include="ClientApp\css\modalWindow.css" />
   </ItemGroup>
 
   <ItemGroup>

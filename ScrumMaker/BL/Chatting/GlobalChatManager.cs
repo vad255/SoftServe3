@@ -8,11 +8,9 @@ using DAL.Access;
 using DAL.Models;
 using DAL;
 using Microsoft.AspNetCore;
-
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-
 using ScrumMaker.Logger;
 
 namespace BL.Chatting
@@ -103,7 +101,7 @@ namespace BL.Chatting
                     Logger.LogWarn("Double disconnecting !?!?");
                 }
             }
-      
+
             _totalGuestsCount--;
 
             return user;
@@ -135,21 +133,23 @@ namespace BL.Chatting
 
         public IQueryable<Message> GetHistory(int skip = -1, int top = -1)
         {
-            if (skip > 0 && top > 0)
+            if (skip >= 0 && top >= 0)
                 return _msgs.GetAll().
                     Where(m => m.ChatId == _room.Id).
-                    OrderBy(m => m.Sent).
                     Include(m => m.Author).
+                    OrderBy(m => m.Sent).
                     Skip(skip).Take(top);
 
             return _msgs.GetAll().
-                OrderBy(m => m.Sent).
-                Include(m => m.Author);
+                Where(m => m.ChatId == _room.Id).
+                Include(m => m.Author).
+                OrderBy(m => m.Sent);
+
         }
 
         public IQueryable<Message> GetHistory()
         {
-            return GetHistory(-1,-1);
+            return GetHistory(-1, -1);
         }
 
 
@@ -163,7 +163,7 @@ namespace BL.Chatting
             int authorId = -1;
             string idFromClaims = identity.Claims.Where(c => c.Type == ClaimsKeys.ID).FirstOrDefault()?.Value;
             int.TryParse(idFromClaims, out authorId);
-            
+
             return authorId;
         }
 
