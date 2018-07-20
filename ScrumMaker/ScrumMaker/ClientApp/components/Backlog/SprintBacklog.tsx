@@ -2,7 +2,6 @@
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { Story } from '../Models/Story';
-import { ListGroupItem } from 'react-bootstrap';
 import { Tabs, TabList, TabPanel, Tab } from 'react-tabs';
 import { Sprint } from '../Models/Sprint';
 
@@ -39,9 +38,9 @@ export class SprintBacklog {
                                         </div>
                                         <div id="desc-of-task">
                                             {t.tasks.map(s => <TabPanel key={s.taskId}>
-                                                <ListGroupItem>
+                                                <div className="list-group-item">
                                                     {s.description}
-                                                </ListGroupItem>
+                                                </div>
                                             </TabPanel>)}
                                         </div>
                                     </Tabs>
