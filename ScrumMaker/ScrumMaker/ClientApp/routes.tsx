@@ -59,15 +59,12 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/Calendar' component={MyCalendar} />
         <LayoutRoute path='/SelectSprint' component={SelectSprint} />
         <LayoutRoute path='/SprintEdit' component={SprintEdit} />
-<<<<<<< HEAD
         <LayoutRoute path='/SprintPlaning' component={SprintPlaning} />
-=======
         <LayoutRoute path='/TaskEdit' component={TaskEdit} />
         <LayoutRoute path='/VelocityChart' component={Velocity} />
         <LayoutRoute path='/EditTeam' component={EditTeam} />
         <LayoutRoute path='/RetrospectiveMeeting' component={RetrospectiveMeeting} />
         <LayoutRoute path='/SelectSprintPage' component={SelectSprintPage} />
->>>>>>> master
 
         <Route path='/login' component={Login} />
         <Route path='/Error' component={Error} />

@@ -120,11 +120,43 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
                     </tbody>
                 </table>
 
-                <div role='button' className='btn btn-primary' onClick={this.handleSaveButtonClick}>
+                <div role='button'
+                    className='btn btn-primary'
+                    data-toggle="modal"
+                    data-target="#confirmDeleteModal"                 
+                    onClick={this.handleSaveButtonClick}>
                     Save sprint
                     </div>
+                {this.GetDeleteConfirmModal()}
             </div>
         );
+    }
+
+    private GetDeleteConfirmModal() {
+        let nameStories: any[] = [];
+        nameStories = this.state.stories.map(function (name: any) {
+            return <li>{name.name}</li> 
+        });
+        console.log(nameStories);
+        return <div id="confirmDeleteModal" className="modal fade">
+            <div className="modal-dialog">
+                <div className="modal-content">
+                    <div className="modal-header  text-center" ><button className="close" type="button" data-dismiss="modal">×</button>
+                        <h4 className="modal-title">The next story(ies) was updated:
+                        <ul>{
+                                this.state.stories.map(function (name: any) {
+                                return <li>{name.name}</li>
+                                })
+                            }
+                        </ul> </h4>
+                    </div>
+                    <div className="modal-body text-center">
+                        <button className="btn btn-default" type="button" data-dismiss="modal">
+                            Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>;
     }
 
     GetStoryId() {
