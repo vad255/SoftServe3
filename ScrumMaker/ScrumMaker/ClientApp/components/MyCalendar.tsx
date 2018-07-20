@@ -4,8 +4,6 @@ import Calendar, { YearView } from 'react-calendar/dist/entry.nostyle';
 import { render } from 'react-dom';
 import { RouteComponentProps } from 'react-router';
 import { Button } from 'react-bootstrap/lib/InputGroup';
-import { Form, Label } from 'react-bootstrap';
-import { ConfirmMadal, IModalState } from "./ConfirmModal";
 
 interface Meetings {
     MeetingId: number,
@@ -29,7 +27,7 @@ interface CalendarDataExampleState {
     ConfirmModal: boolean,
 }
 
-export class MyCalendar extends React.Component<RouteComponentProps<IModalState>, CalendarDataExampleState> {
+export class MyCalendar extends React.Component<RouteComponentProps<any>, CalendarDataExampleState> {
     constructor(props: any) {
         super(props)
         this.state = { Calendar: [], Meetings: [], CurentDate: new Date(), DisplayLeft: false, DisplayRigth: false, ConfirmModal: false };
