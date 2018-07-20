@@ -90,16 +90,6 @@ export class MyCalendar extends React.Component<RouteComponentProps<IModalState>
             });
     }
 
-    //private GetConfirmModal() {
-    //    let title = "This tims is booked";
-
-    //    return <ConfirmMadal
-    //        onCanceled={this.onChange}
-    //        onConfirmed={this.onChange}
-    //        title={title}
-    //        id={"ConfirmDeleteDialog"} />
-    //}
-
     componentWillMount() {
         Modal.setAppElement('body');
     }

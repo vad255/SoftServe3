@@ -16,8 +16,10 @@ namespace ScrumMaker.Controllers
     public class UsersController : ODataController
     {
         private IRepository<User> _users;
-        public UsersController(IRepository<User> users)
+        private IRepository<Team> _teams;
+        public UsersController(IRepository<User> users, IRepository<Team> teams)
         {
+            _teams = teams;
             _users = users;
         }
 
@@ -48,41 +50,27 @@ namespace ScrumMaker.Controllers
 
         [HttpPost]
         [Route("api/sers/SetUsers")]
-        public void SetUser([FromBody]List<User> model)
+        public void SetUser([FromBody]WorkWithTeam model)
         {
-            int? teamid = model[0].TeamId;
-            List<User> temp = _users.GetAll().Where(u => u.TeamId == teamid).ToList();
-     
-            foreach(var i in temp)
-            { 
-                foreach(var z in model)
-                {
-                    if(z.UserId == i.UserId)
-                    {
-                        i.TeamId = null;
-                    }
-                    z.TeamId = teamid;
-                }
-            }
 
-            foreach (var i in temp)
-            {
-                if (i.TeamId != null)
-                {
-                    User user = _users.GetById(i.UserId);
-                    user.TeamId = null;
-                    _users.Update(user);
-                    break;
-                }
-            }
+            int teamId = _teams.GetAll().Where(t => t.Name.Equals(model.TeamName)).FirstOrDefault().Id;
 
-            foreach (var i in model)
+            List<User> users = _users.GetAll().Where(u => u.TeamId == teamId).ToList();
+
+
+            foreach(var i in users)
             {
                 User user = _users.GetById(i.UserId);
-                user.TeamId = i.TeamId;
+                user.TeamId = null;
                 _users.Update(user);
             }
 
+            foreach(var i in model.Users)
+            {
+                User user = _users.GetById(i.UserId);
+                user.TeamId = teamId;
+                _users.Update(user);
+            }
 
             _users.Save();
         }
