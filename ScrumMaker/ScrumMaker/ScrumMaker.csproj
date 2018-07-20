@@ -56,11 +56,8 @@
     <None Remove="ClientApp\components\Grids\StoriesGrid.tsx" />
     <None Remove="ClientApp\components\Grids\TaskGrid.tsx" />
     <None Remove="ClientApp\components\MailSender.tsx" />
-<<<<<<< HEAD
     <None Remove="ClientApp\components\Meetings\SprintPlaning.tsx" />
-=======
     <None Remove="ClientApp\components\Meetings\SelectSprint.tsx" />
->>>>>>> master
     <None Remove="ClientApp\components\Models\Defect.tsx" />
     <None Remove="ClientApp\components\Models\Feature.tsx" />
     <None Remove="ClientApp\components\Models\FeatureState.tsx" />
@@ -113,10 +110,8 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\AddUser.tsx" />
-<<<<<<< HEAD
     <TypeScriptCompile Include="ClientApp\components\EditPages\EditDefect.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Meetings\SprintPlaning.tsx" />
-=======
     <TypeScriptCompile Include="ClientApp\components\EditPages\TaskEdit.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Charts\Velocity.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\EditTeam.tsx" />
@@ -126,7 +121,6 @@
     <TypeScriptCompile Include="ClientApp\components\Chats\RetrospectiveTable.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Meetings\SelectSprint.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Models\SprintReview.tsx" />
->>>>>>> master
     <TypeScriptCompile Include="ClientApp\components\MyCalendar.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Charts\Chart.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\EditStory.tsx" />
