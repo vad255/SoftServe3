@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
-import { Story } from 'ClientApp/components/Models/Story';
+import { Story } from '../Models/Story';
 import { ListGroupItem } from 'react-bootstrap';
 import { Tabs, TabList, TabPanel, Tab } from 'react-tabs';
 
@@ -30,9 +30,7 @@ export class ProductBacklog {
                             </div>
                             <div className="tab-task-descrip">
                                 {x.tasks.map(t => <TabPanel key={t.taskId}>
-                                    <ListGroupItem>
                                         {t.description}
-                                    </ListGroupItem>
                                 </TabPanel>)}
                             </div>
                         </Tabs>
