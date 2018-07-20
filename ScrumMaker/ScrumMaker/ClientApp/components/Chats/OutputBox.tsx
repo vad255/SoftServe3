@@ -9,14 +9,12 @@ import { User } from '../Models/User';
 export class OutputBox extends React.Component<{ messages: MessageProps[], myself: User }, any> {
 
     render() {
-        return this.renderDiv();
-        // let val = "";
-        // this.props.messages.map(m => val += m.render() + '\n')
-        // return <div className="chatMessagesOutput">
-        //     <textarea id="output" className="chatOutputArea" rows={15} readOnly={true}
-        //         value={val}></textarea>
-        // </div>
-
+        return <div id="messageWindow" className="chatMessagesOutput">
+            {this.props.messages.map((m, i) => <Message
+                key={i}
+                msg={m}
+            />)}
+        </div>
     }
 
     componentDidUpdate() {
@@ -29,15 +27,6 @@ export class OutputBox extends React.Component<{ messages: MessageProps[], mysel
     }
 
 
-
-    public renderDiv() {
-        return <div id="messageWindow" className="chatMessagesOutput">
-            {this.props.messages.map((m, i) => <Message
-                key={i}
-                msg={m}
-            />)}
-        </div>
-    }
 
 }
 
