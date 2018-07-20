@@ -24,15 +24,15 @@ namespace DAL.Models
         public DateTime? Completed { get; set; }
 
         [Required]
-        public string Type { get; set; }
+        public TaskType Type { get; set; }
 
         [Required]
-        public string State { get; set; }
+        public TaskState State { get; set; }
 
         public bool Blocked { get; set; }
 
         [ForeignKey("User")]
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         public virtual User User { get; set; }
 
         [Required]

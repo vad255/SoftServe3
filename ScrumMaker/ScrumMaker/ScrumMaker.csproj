@@ -36,6 +36,7 @@
     <None Remove="ClientApp\components\AddUser.tsx" />
     <None Remove="ClientApp\components\Charts\Chart.tsx" />
     <None Remove="ClientApp\components\EditPages\EditStory.tsx" />
+    <None Remove="ClientApp\components\EditPages\TaskEdit.tsx" />
     <None Remove="ClientApp\components\EditPages\UserEdit.tsx" />
     <None Remove="ClientApp\components\EditUser.tsx" />
     <None Remove="ClientApp\components\Error.tsx" />
@@ -97,6 +98,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\AddUser.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\EditPages\TaskEdit.tsx" />
     <TypeScriptCompile Include="ClientApp\components\MyCalendar.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Charts\Chart.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\EditStory.tsx" />
@@ -127,6 +129,10 @@
   <ItemGroup>
     <None Include="wwwroot\img\ScrumMakerLogo.jpg" />
     <None Include="wwwroot\img\______________2018_06_12____15_33_52_fdV_icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\components\Новая папка\" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

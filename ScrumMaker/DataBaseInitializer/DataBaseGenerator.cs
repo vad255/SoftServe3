@@ -679,51 +679,51 @@ namespace DataBaseInitializer
                         Summary = "SVN, Project Page",
                         Story = _dbStories.GetById(1),
                         Description = "Set-up SVN, project folders, SharePoint, project page",
-                        User = _dbUsers.GetById(2),
+                        User = _dbUsers.GetById(5),
                         Blocked =  false,
                         PlannedHours = 72,
-                        Started = new DateTime(2018,7,6,12,45,30),
-                        Completed =new DateTime(2018,7,7,18,45,30),
-                        Type = "Coding", State = "ToDo",
+                        Started = null,
+                        Completed = null,
+                        Type = TaskType.Analyses, State = TaskState.ToDo,
                         WorkNotes = "This task should be done in 72 hours"
                     },
                     new ScrumTask()
                     {
-                        Summary = "Add validation to enteties",
+                        Summary = "Validating entity classes",
                         Story = _dbStories.GetById(2),
-                        Description = "Validation saving when saving",
-                        User = _dbUsers.GetById(9),
+                        Description = "Add validation to entity classes",
+                        User = _dbUsers.GetById(13),
                         Blocked =  false,
-                        PlannedHours = 72,
+                        PlannedHours = 48,
                         Started = new DateTime(2018,7,6,12,45,30),
-                        Completed =new DateTime(2018,7,7,18,45,30),
-                        Type = "Coding", State = "InProgress",
+                        Completed = null,
+                        Type = TaskType.Coding, State = TaskState.InProgress,
                         WorkNotes = "This task should be done in 48 hours"
                     },
                     new ScrumTask()
                     {
                         Summary = "Manual tests",
-                        Story = _dbStories.GetById(3),
+                        Story = _dbStories.GetById(7),
                         Description = "Run manual tests",
-                        User = _dbUsers.GetById(3),
+                        User = _dbUsers.GetById(16),
                         Blocked =  false,
-                        PlannedHours = 72,
+                        PlannedHours = 24,
                         Started = new DateTime(2018,7,6,12,45,30),
                         Completed =new DateTime(2018,7,7,18,45,30),
-                        Type = "Documentation", State = "ToDo",
+                        Type =TaskType.Documentation, State = TaskState.Done,
                         WorkNotes = "This task should be done in 24 hours"
                     },
                       new ScrumTask()
                      {
                         Summary = "User docment draft review",
-                        Story = _dbStories.GetById(4),
+                        Story = _dbStories.GetById(8),
                         Description = "User docment draft review",
-                        User = _dbUsers.GetById(10),
+                        User = _dbUsers.GetById(17),
                         Blocked =  false,
-                        PlannedHours = 72,
+                        PlannedHours = 48,
                         Started = new DateTime(2018,7,6,12,45,30),
-                        Completed =new DateTime(2018,7,7,18,45,30),
-                        Type = "Documentation", State = "Done",
+                        Completed = null,
+                        Type = TaskType.Documentation, State = TaskState.InProgress,
                         WorkNotes = "This task should be done in 48 hours"
                       },
                        new ScrumTask()
@@ -731,12 +731,12 @@ namespace DataBaseInitializer
                        Summary = "Automated tests",
                        Story = _dbStories.GetById(9),
                        Description = "Create automated tests",
-                       User = _dbUsers.GetById(4),
+                       User = _dbUsers.GetById(23),
                        Blocked =  false,
                        PlannedHours = 72,
                        Started = new DateTime(2018,7,6,12,45,30),
                        Completed =new DateTime(2018,7,7,18,45,30),
-                       Type = "Testing", State = "Done",
+                       Type = TaskType.Testing, State = TaskState.Done,
                        WorkNotes = "This task should be done in 72 hours"
                        }
             };
@@ -744,6 +744,7 @@ namespace DataBaseInitializer
             AddToDatabase(tasks, _dbTasks);
 
         }
+
 
 
         public static void FillFeaturesData()

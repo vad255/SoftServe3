@@ -27,6 +27,7 @@ export class TaskGrid extends Grid {
     protected URL_EXPANDS: string = '?$expand=User,Story';
     protected URL_ORDERING: string = '&$orderby=taskId';
     protected headerText: string = 'Tasks';
+    protected URL_EDIT: string = "TaskEdit/"
 
     constructor() {
         super();
