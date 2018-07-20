@@ -28,12 +28,12 @@ namespace ScrumMaker.Controllers
             ClaimsIdentity identity = HttpContext.User?.Identity as ClaimsIdentity;
             string idFromClaims = identity.Claims.Where(c => c.Type == ClaimsKeys.ID).FirstOrDefault()?.Value;
 
-            if (_calendar.GetAll().Where(c => c.Date.Equals(DateTime.Parse(date))).Where(c => c.Hours == hours).SingleOrDefault() == null)
+            if (_calendar.GetAll().Where(c => c.Date.Equals(DateTime.Parse(date))).Where(c => c.Hours == hours).Where(c => c.UserId == int.Parse(idFromClaims)).SingleOrDefault() == null)
             {
-                _calendar.Create(new Calendar() { MeetingId = meeting, Hours = hours, Date = DateTime.Parse(date), TeamId = 1, UserId = 1 });
+                _calendar.Create(new Calendar() { MeetingId = meeting, Hours = hours, Date = DateTime.Parse(date), UserId = int.Parse(idFromClaims) });
                 _calendar.Save();
 
-                return _calendar.GetAll().Where(c => c.Date.Equals(DateTime.Parse(date))).OrderBy(c => c.Hours);
+                return _calendar.GetAll().Where(c => c.Date.Equals(DateTime.Parse(date))).Where(c => c.UserId == int.Parse(idFromClaims)).OrderBy(c => c.Hours);
             }
             else
             {
@@ -45,7 +45,10 @@ namespace ScrumMaker.Controllers
         [HttpPost("[action]")]
         public IEnumerable<Calendar> GetThisCalendar(string date)
         {
-            return _calendar.GetAll().Where(c => c.Date.Equals(DateTime.Parse(date))).OrderBy(c => c.Hours);
+            ClaimsIdentity identity = HttpContext.User?.Identity as ClaimsIdentity;
+            string idFromClaims = identity.Claims.Where(c => c.Type == ClaimsKeys.ID).FirstOrDefault()?.Value;
+
+            return _calendar.GetAll().Where(c => c.Date.Equals(DateTime.Parse(date))).Where(c => c.UserId == int.Parse(idFromClaims)).OrderBy(c => c.Hours);
         }
 
         [HttpGet("[action]")]
