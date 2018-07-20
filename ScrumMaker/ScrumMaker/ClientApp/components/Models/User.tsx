@@ -17,9 +17,7 @@ export class User implements IDbModel {
     team: Team;
 
 
-    public constructor(params: any) {
-        console.log(params);
-        
+    public constructor(params: any) {        
         if (!params)
             return;
 
@@ -31,9 +29,7 @@ export class User implements IDbModel {
         this.roleId = params.RoleId;
         this.role = new Role(params.Role);
         this.team = new Team(params.Team);
-        this.empty = false;
-        console.log(this);
-        
+        this.empty = false;        
     }
 
 

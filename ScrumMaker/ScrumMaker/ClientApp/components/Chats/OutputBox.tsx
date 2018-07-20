@@ -35,7 +35,7 @@ export class OutputBox extends React.Component<{ messages: MessageProps[], mysel
             {this.props.messages.map((m, i) => <Message
                 key={i}
                 msg={m}
-                myMessage={this.props.myself.userId === m.author.userId} />)}
+            />)}
         </div>
     }
 

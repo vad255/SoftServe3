@@ -5,11 +5,12 @@ import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr'
 import * as moment from 'moment';
 import { User } from '../Models/User';
 
-export class Message extends React.Component<{ msg: MessageProps, myMessage: boolean }, any>{
+export class Message extends React.Component<{ msg: MessageProps }, any>{
 
     render() {
-        let my = this.props.myMessage;
-        
+        let my = this.props.msg.myMessage;
+        console.log(my);
+
         let name = this.props.msg.author.login || "Anonym";
         return (
             <div className={my ? "message-container darker" : "message-container"}>
