@@ -1,7 +1,9 @@
 ﻿td{
     height: 40px;
 }
-
+.table-border {
+    border: solid 1px #808080;
+}
 .table-scrum {
     /*border: 1px solid black;*/
     border-collapse: collapse;

@@ -21,6 +21,7 @@ import { EditStory } from "./components/EditPages/EditStory";
 import { UserEdit } from "./components/EditPages/UserEdit";
 import { MyCalendar } from "./components/MyCalendar";
 import { SprintEdit } from './components/EditPages/SprintEdit';
+import { SprintPlaning } from './components/Meetings/SprintPlaning'
 import { TaskEdit } from './components/EditPages/TaskEdit';
 import { Velocity } from './components/Charts/Velocity';
 import { EditTeam } from './components/EditPages/EditTeam';
@@ -58,6 +59,7 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/Calendar' component={MyCalendar} />
         <LayoutRoute path='/SelectSprint' component={SelectSprint} />
         <LayoutRoute path='/SprintEdit' component={SprintEdit} />
+        <LayoutRoute path='/SprintPlaning' component={SprintPlaning} />
         <LayoutRoute path='/TaskEdit' component={TaskEdit} />
         <LayoutRoute path='/VelocityChart' component={Velocity} />
         <LayoutRoute path='/EditTeam' component={EditTeam} />
