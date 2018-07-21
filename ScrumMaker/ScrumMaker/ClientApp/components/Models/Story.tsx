@@ -27,6 +27,7 @@ export class Story implements IDbModel {
     userId: number = 0;
     sprint: Sprint;
     tasks: Task[];
+    sprintId: number = 0;
 
 
     public constructor(params: any) {
@@ -53,6 +54,8 @@ export class Story implements IDbModel {
             this.tasks = tasks;
         }
 
+        this.sprintId = params.SprintId
+        
     }
 
     public toString(): string {
@@ -87,6 +90,8 @@ export class Story implements IDbModel {
             this.id,
             this.name,
             this.description,
+            this.status,
+            this.sprintId,
             this.getStatus(this.status)
         ]
 

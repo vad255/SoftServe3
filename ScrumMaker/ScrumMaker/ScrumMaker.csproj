@@ -38,6 +38,7 @@
     <None Remove="ClientApp\components\Backlog\ProductBacklog.tsx" />
     <None Remove="ClientApp\components\Backlog\SprintBacklog.tsx" />
     <None Remove="ClientApp\components\Charts\Chart.tsx" />
+    <None Remove="ClientApp\components\EditPages\EditDefect.tsx" />
     <None Remove="ClientApp\components\Charts\Velocity.tsx" />
     <None Remove="ClientApp\components\Chats\RetrospectiveMeeting.tsx" />
     <None Remove="ClientApp\components\Chats\RetrospectiveMessage.tsx" />
@@ -58,6 +59,7 @@
     <None Remove="ClientApp\components\Grids\StoriesGrid.tsx" />
     <None Remove="ClientApp\components\Grids\TaskGrid.tsx" />
     <None Remove="ClientApp\components\MailSender.tsx" />
+    <None Remove="ClientApp\components\Meetings\SprintPlaning.tsx" />
     <None Remove="ClientApp\components\Meetings\SelectSprint.tsx" />
     <None Remove="ClientApp\components\Models\Defect.tsx" />
     <None Remove="ClientApp\components\Models\Feature.tsx" />
@@ -114,6 +116,8 @@
     <TypeScriptCompile Include="ClientApp\components\Backlog\Backlog.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Backlog\ProductBacklog.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Backlog\SprintBacklog.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\EditPages\EditDefect.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Meetings\SprintPlaning.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\TaskEdit.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Charts\Velocity.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\EditTeam.tsx" />
