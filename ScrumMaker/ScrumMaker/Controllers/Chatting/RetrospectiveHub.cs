@@ -10,6 +10,8 @@ namespace ScrumMaker.Controllers.Chatting
 {
     public class RetrospectiveHub : Hub
     {
+        private string _sprintId;
+
         private IRetrospectiveChatMananger _manager;
 
         public RetrospectiveHub(IRetrospectiveChatMananger manager)
@@ -25,7 +27,7 @@ namespace ScrumMaker.Controllers.Chatting
             message.UserName = _manager.GetCurrentUserName();
             message.UserId = _manager.GetCurrentUserId();
             _manager.SprintId = sprintId;
-            await Clients.Group(_manager.GetGroupIdentifier).SendAsync("receiveMessage", message);
+            await Clients.Group(sprintId.ToString()).SendAsync("receiveMessage", message);
 
             _manager.AddRetrospectiveMessage(message);
         }
@@ -45,6 +47,7 @@ namespace ScrumMaker.Controllers.Chatting
         {
             _manager.User = Context.User;
             DAL.Models.User user = _manager.Connect();
+            
             await Clients.Group(_manager.GetGroupIdentifier).SendAsync("userConnected", user);
             await Groups.AddToGroupAsync(Context.ConnectionId, _manager.GetGroupIdentifier);
             await base.OnConnectedAsync();

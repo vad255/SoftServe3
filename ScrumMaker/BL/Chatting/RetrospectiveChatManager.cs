@@ -60,11 +60,6 @@ namespace BL.Chatting
             }
         }
 
-
-        /// <summary>
-        /// !!! Not thread safe
-        /// </summary>
-        /// <param name="identifier"></param>
         public User Connect()
         {
             int userId = GetCurrentUserId();
@@ -88,10 +83,7 @@ namespace BL.Chatting
 
             return user;
         }
-        /// <summary>
-        /// !!! Not thread safe
-        /// </summary>
-        /// <param name="identifier"></param>
+
         public User Disconnect()
         {
             int userId = GetCurrentUserId();
@@ -124,8 +116,8 @@ namespace BL.Chatting
             if (SprintId >= 0)
             {
                 var sprint = _sprints.GetById(SprintId);
-                sprint.Retrospective += message.UserName + " " +
-                                       message.SendingDate.ToShortDateString() + " " +
+                sprint.Retrospective += message.UserName + " (" +
+                                       message.SendingDate.ToShortDateString() + ") " +
                                        "went well: " + message.WentWell + " " +
                                        "improve to doing: " + message.CouldBeImproved + " " +
                                        "commit to next sprint: " + message.CommitToDoing + Environment.NewLine;

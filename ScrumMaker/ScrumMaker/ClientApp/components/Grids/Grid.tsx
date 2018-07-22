@@ -88,7 +88,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
     }
     protected onCatch(e: any) {
         console.error(e);
-        //this.props.history.push("/Error")
+        //this.props.history.push("/Error");
     }
 
     protected getURL() {

@@ -26,29 +26,14 @@ namespace DAL.Models
 
         public Feature Feature { get; set; }
 
-        [NotMapped]
-        public ProgramIncrement ProgramIncrement { get; set; }
-
         public Team Team { get; set; }
 
         [ForeignKey("Sprint")]
         public int? SprintId { get; set; }
         public virtual Sprint Sprint { get; set; }
 
-        [NotMapped]
-        public StoryValue Value { get; set; }
-
-        [NotMapped]
-        public StoryEffort Effort { get; set; }
-
-        [NotMapped]
-        public ICollection<AcceptanceCriteria> AC { get; set; }
-
         public ICollection<Defect> Defects { get; set; }
 
         public virtual ICollection<ScrumTask> Tasks { get; set; }
-
-        [NotMapped]
-        public Chat Chat { get; set; }
     }
 }

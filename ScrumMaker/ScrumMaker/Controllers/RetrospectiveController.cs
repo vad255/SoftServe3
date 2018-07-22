@@ -27,7 +27,7 @@ namespace ScrumMaker.Controllers
         public void SendEmail(int sprintId, string toEmail)
         {
             var sprint = _sprints.GetById(sprintId);
-            MailMessage emailMessage = new MailMessage("scrummaker325@gmail.com", "kyzyma77@gmail.com")
+            MailMessage emailMessage = new MailMessage("scrummaker325@gmail.com", "prystaiko.roman@gmail.com")
             {
                 Subject = "Retrospective Meeting Result",
                 Body = sprint.Retrospective
