@@ -9,25 +9,25 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using ScrumMaker.Attributes;
+using BL.Interface;
 
 namespace ScrumMaker.Controllers
 {
-
     [RefreshToken]
     [CookieAuthorize]
     public class SprintReviewController : ODataController
     {
-        private IRepository<SprintReview> sprintReviewRepository;
+        private ISprintReviewManager sprintReviewManager;
 
-        public SprintReviewController(IRepository<SprintReview> srr)
+        public SprintReviewController(ISprintReviewManager sprintReviewManager)
         {
-            sprintReviewRepository = srr;
+            this.sprintReviewManager = sprintReviewManager;
         }
 
         [EnableQuery(MaxExpansionDepth = 4)]
         public IActionResult Get()
         {
-            return Ok(sprintReviewRepository.GetAll());
+            return Ok(sprintReviewManager.Get());
         }
 
         [AcceptVerbs("PATCH", "MERGE")]
@@ -39,13 +39,15 @@ namespace ScrumMaker.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-                SprintReview sprintReview = sprintReviewRepository.GetById(key);
+
+                SprintReview sprintReview = sprintReviewManager.GetById(key);
                 if (sprintReview == null)
                 {
                     return NotFound();
                 }
+
                 updateSprintReviewRequestModel.Patch(sprintReview);
-                sprintReviewRepository.Save();
+                sprintReviewManager.Update(sprintReview);
 
                 return Updated(sprintReview);
             }
@@ -58,8 +60,7 @@ namespace ScrumMaker.Controllers
         {
             try
             {
-                sprintReviewRepository.Create(sprintReview);
-                sprintReviewRepository.Save();
+                sprintReviewManager.Create(sprintReview);
                 return Ok(sprintReview);
             }
             catch (Exception e)

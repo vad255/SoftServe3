@@ -94,7 +94,7 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
         var sprintReviewId = this.findSprintReview(sprint);
         return <li key={sprint.id}>
             <br />
-            {sprint.name}
+            <b>{sprint.name}</b>
             {this.renderSprintReviewButton(sprint, sprintReviewId)}
         </li>
     }
@@ -109,14 +109,12 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
 
     private renderSprintReviewButton(sprint: Sprint, sprintReviewId: any) {
         if (sprintReviewId) {
-            return <button>
-                <NavLink to={`/SprintReviewEdit/` + sprintReviewId}>
-                    <span></span> Review
-                </NavLink>
+            return <button className="btn btn-default" onClick={() => this.props.history.push('/SprintReviewEdit/' + sprintReviewId)}>
+                    Review
             </button >
         }
 
-        return <button onClick={() => this.createSprintReview(sprint.id)}>
+        return <button className="btn btn-default" onClick={() => this.createSprintReview(sprint.id)}>
            Create
         </button >
     }

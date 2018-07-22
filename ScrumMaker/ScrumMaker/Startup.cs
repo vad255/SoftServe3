@@ -29,6 +29,7 @@ using BL;
 using BL.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using BL.Chart;
+using BL.Interface;
 
 namespace ScrumMaker
 {
@@ -103,6 +104,7 @@ namespace ScrumMaker
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
             services.AddScoped(typeof(ITeamsManager), typeof(TeamsManager));
             services.AddScoped(typeof(IChartManager), typeof(ChartManager));
+            services.AddScoped(typeof(ISprintReviewManager), typeof(SprintReviewManager));
             services.AddScoped(typeof(BL.Chatting.IGlobalChatManager), typeof(BL.Chatting.GlobalChatManager));
             services.AddScoped(typeof(BL.Chatting.IRetrospectiveChatMananger), typeof(BL.Chatting.RetrospectiveChatManager));
 
