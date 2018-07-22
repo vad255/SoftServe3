@@ -12,6 +12,7 @@ interface ISprintReviewFetchingState {
     Sprint: Sprint;
     SprintId: number;
     IsStoriesCompleted: boolean;
+    Myself: User;
 }
 
 export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, ISprintReviewFetchingState> {
@@ -19,6 +20,7 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
     constructor() {
         super();
         this.getSprintReview();
+        this.getMyself();
         this.handleSave = this.handleSave.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
     }
@@ -27,7 +29,7 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
     readonly id: string = this.link.substr(this.link.lastIndexOf('/') + 1);
     private getSprintReviewURL: string = "odata/SprintReview?$expand=sprint($expand=backlog,team($expand=members($expand=role)))&$filter=id eq ";
     private isLoading: boolean = true;
-    private updateURL: string = "odata/SprintReview/"
+    private updateURL: string = "odata/SprintReview/";
     
     public render() {
         let contents = this.isLoading
@@ -101,26 +103,40 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
     public GetDone() {
         return <div>
             <form onSubmit={this.handleSave} name="oldForm">
-                <p>Done goal:</p>
-                <input
-                    name="IsGoalAchived"
-                    type="checkbox"
-                    checked={this.state.IsGoalAchived}
-                    onChange={this.handleInputChange} />
-                <p>Done stories:</p>
-                <input
-                    name="IsStoriesCompleted"
-                    type="checkbox"
-                    checked={this.state.IsStoriesCompleted}
-                    onChange={this.handleInputChange} />
                 <div>
-                    <button className="login100-form-btn">Save goal</button>
+                    <div className="col-xs-6">
+                        <p>Done goal:</p>
+                        <input
+                            name="IsGoalAchived"
+                            type="checkbox"
+                            checked={this.state.IsGoalAchived}
+                            onChange={this.handleInputChange} />
+                    </div>
+                    <div className="col-xs-6">
+                        <p>Done stories:</p>
+                        <input
+                            name="IsStoriesCompleted"
+                            type="checkbox"
+                            checked={this.state.IsStoriesCompleted}
+                            onChange={this.handleInputChange} />
+                    </div>
+                </div>
+                <div>
+                    <button className="login100-form-btn" disabled={!this.userIsScrumMaster()}>Save</button>
                 </div>
             </form>
         </div>
     }
 
+    userIsScrumMaster() {
+        if (this.state.Myself.role.name == "ScrumMaster") {
+            return true;
+        }
+        return false;
+    }
+
     handleInputChange(event: any) {
+        
         const target = event.target;
         const value = target.checked;
         const name = target.name;
@@ -181,7 +197,20 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
             return<td style={{ color: "red" }}>{story.status}</td>
         return<td>{story.status}</td>
     }
-    
+
+    getMyself(): Promise<any> {
+        return fetch('/myself',
+            { credentials: "include" }).
+            then(response => response.json() as Promise<any>).
+            then(data => {
+                let user = new User(data);
+                if (user.userId === 0)
+                    user.userId = -1;
+
+                this.setState({ Myself: user })
+            });
+    }
+
     private getSprintReview() {
         fetch(this.getSprintReviewURL + this.id, {
             credentials: 'include',

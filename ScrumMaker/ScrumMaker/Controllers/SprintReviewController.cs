@@ -7,14 +7,14 @@ using DAL.Models;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using ScrumMaker.Attributes;
 
 namespace ScrumMaker.Controllers
 {
-    [Route("api/[controller]")]
+    
     [RefreshToken]
     [CookieAuthorize]
-    [ApiController]
     public class SprintReviewController : ODataController
     {
         private IRepository<SprintReview> sprintReviewRepository;
@@ -33,19 +33,23 @@ namespace ScrumMaker.Controllers
         [AcceptVerbs("PATCH", "MERGE")]
         public IActionResult Patch([FromODataUri] int key, Delta<SprintReview> updateSprintReviewRequestModel)
         {
-            if (!ModelState.IsValid)
+            if(HttpContext.User.UserRole() == "ScrumMaster")
             {
-                return BadRequest(ModelState);
-            }
-            SprintReview sprintReview = sprintReviewRepository.GetById(key);
-            if (sprintReview == null)
-            {
-                return NotFound();
-            }
-            updateSprintReviewRequestModel.Patch(sprintReview);
-            sprintReviewRepository.Save();
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                SprintReview sprintReview = sprintReviewRepository.GetById(key);
+                if (sprintReview == null)
+                {
+                    return NotFound();
+                }
+                updateSprintReviewRequestModel.Patch(sprintReview);
+                sprintReviewRepository.Save();
 
-            return Updated(sprintReview);
+                return Updated(sprintReview);
+            }
+            return BadRequest(ModelState);
         }
     }
 }
