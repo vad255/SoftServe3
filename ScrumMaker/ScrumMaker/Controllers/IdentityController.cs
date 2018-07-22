@@ -65,5 +65,11 @@ namespace ScrumMaker.Controllers
             Response.ContentType = "application/json";
             await Response.WriteAsync(JsonConvert.SerializeObject(user));
         }
+        [Route("/logout")]
+        public IActionResult LogOut()
+        {
+            HttpContext.Response.Cookies.Delete("Authorization");
+            return Redirect("/login");
+        }
     }
 }
