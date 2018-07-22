@@ -71,14 +71,7 @@ namespace ScrumMaker
 
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
 
-            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
-            services.AddScoped(typeof(ISprintManager), typeof(SprintManager));
-            services.AddScoped(typeof(IFeaturesManager), typeof(FeaturesManager));
-            services.AddScoped(typeof(IDefectsManager), typeof(DefectsManager));
-            services.AddScoped(typeof(IUserManager), typeof(UserManager));
-            services.AddScoped(typeof(ITasksManager), typeof(TasksManager));
-            services.AddScoped(typeof(IStoriesManager), typeof(StoriesManager));
-            services.AddScoped(typeof(IChartManager), typeof(ChartManager));
+           
             ConfigureDI(services);
 
             services.AddOData();
@@ -116,6 +109,7 @@ namespace ScrumMaker
             services.AddScoped(typeof(IStoriesManager), typeof(StoriesManager));
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
             services.AddScoped(typeof(ITeamsManager), typeof(TeamsManager));
+            services.AddScoped(typeof(IChartManager), typeof(ChartManager));
             services.AddScoped(typeof(BL.Chatting.IGlobalChatManager), typeof(BL.Chatting.GlobalChatManager));
             services.AddScoped(typeof(BL.Chatting.IRetrospectiveChatMananger), typeof(BL.Chatting.RetrospectiveChatManager));
 

@@ -133,17 +133,18 @@ namespace BL.Chatting
 
         public IQueryable<Message> GetHistory(int skip = -1, int top = -1)
         {
-            if (skip > 0 && top > 0)
+            if (skip >= 0 && top >= 0)
                 return _msgs.GetAll().
                     Where(m => m.ChatId == _room.Id).
-                    OrderBy(m => m.Sent).
                     Include(m => m.Author).
+                    OrderBy(m => m.Sent).
                     Skip(skip).Take(top);
 
             return _msgs.GetAll().
                 Where(m => m.ChatId == _room.Id).
-                OrderBy(m => m.Sent).
-                Include(m => m.Author);
+                Include(m => m.Author).
+                OrderBy(m => m.Sent);
+
         }
 
         public IQueryable<Message> GetHistory()

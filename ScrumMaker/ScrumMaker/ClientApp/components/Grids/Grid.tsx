@@ -71,7 +71,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
     }
     private LoadData() {
         fetch(this.getURL(), { credentials: 'include' })
-            .then(response => response.json() as any)
+            .then(response => response.json())
             .then(data => {
                 this.totalCount = data['@odata.count'];
                 this.OnDataReceived(data);
@@ -100,10 +100,6 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         result += this.URL_EXPANDS;
 
         result += this.urlFilters;
-
-        // if (this.customUrlFilters) {
-        //     result += this.urlFilters ? Filter.CONSTRAIN_DIVIDER + this.customUrlFilters : Filter.QUERY_HEAD + this.customUrlFilters;
-        // }
 
         result += this.URL_ORDERING;
 

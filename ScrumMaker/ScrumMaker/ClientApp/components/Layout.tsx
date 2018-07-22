@@ -22,7 +22,7 @@ export class Layout extends React.Component<LayoutProps, {}> {
                                     <li><Link to="/sprints">Sprints</Link></li>
                                 </ul>
                             </li>
-                            <li><a className=""> <img src='./ScrumMakerLogo.png' width="35px" height="35px" alt="lorem" className="userAvatar"></img><span id="userLogin">Login</span></a>
+                            <li><a className=""  href="/login"> <img src='./ScrumMakerLogo.png' width="35px" height="35px" alt="lorem" className="userAvatar"></img><span id="userLogin">Login</span></a>
                                 <ul className="dropdown">
                                     <li><a href="/edituser">Edit user</a></li>
                                     <li><Link to="/#">About</Link></li>

@@ -35,11 +35,15 @@
   <ItemGroup>
     <None Remove="ClientApp\components\AddUser.tsx" />
     <None Remove="ClientApp\components\Charts\Chart.tsx" />
+    <None Remove="ClientApp\components\EditPages\EditDefect.tsx" />
+    <None Remove="ClientApp\components\Charts\Velocity.tsx" />
     <None Remove="ClientApp\components\Chats\RetrospectiveMeeting.tsx" />
     <None Remove="ClientApp\components\Chats\RetrospectiveMessage.tsx" />
     <None Remove="ClientApp\components\Chats\RetrospectivePages\SelectSprintPage.tsx" />
     <None Remove="ClientApp\components\Chats\RetrospectiveTable.tsx" />
     <None Remove="ClientApp\components\EditPages\EditStory.tsx" />
+    <None Remove="ClientApp\components\EditPages\TaskEdit.tsx" />
+    <None Remove="ClientApp\components\EditPages\EditTeam.tsx" />
     <None Remove="ClientApp\components\EditPages\UserEdit.tsx" />
     <None Remove="ClientApp\components\EditUser.tsx" />
     <None Remove="ClientApp\components\Error.tsx" />
@@ -52,6 +56,7 @@
     <None Remove="ClientApp\components\Grids\StoriesGrid.tsx" />
     <None Remove="ClientApp\components\Grids\TaskGrid.tsx" />
     <None Remove="ClientApp\components\MailSender.tsx" />
+    <None Remove="ClientApp\components\Meetings\SprintPlaning.tsx" />
     <None Remove="ClientApp\components\Meetings\SelectSprint.tsx" />
     <None Remove="ClientApp\components\Models\Defect.tsx" />
     <None Remove="ClientApp\components\Models\Feature.tsx" />
@@ -78,6 +83,7 @@
     <None Remove="ClientApp\components\AddUser.tsx" />
     <None Remove="ClientApp\components\MailSender.tsx" />
     <None Remove="ClientApp\components\SprintsGrid.tsx" />
+    <None Remove="ClientApp\css\modalWindow.css" />
   </ItemGroup>
 
   <ItemGroup>
@@ -104,7 +110,11 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\AddUser.tsx" />
-
+    <TypeScriptCompile Include="ClientApp\components\EditPages\EditDefect.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Meetings\SprintPlaning.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\EditPages\TaskEdit.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Charts\Velocity.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\EditPages\EditTeam.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Chats\RetrospectiveMeeting.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Chats\RetrospectiveMessage.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Chats\RetrospectivePages\SelectSprintPage.tsx" />
@@ -137,11 +147,16 @@
     <TypeScriptCompile Include="ClientApp\components\SprintsGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Grids\TeamGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\css\editUser.css" />
+    <TypeScriptCompile Include="ClientApp\css\modalWindow.css" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="wwwroot\img\ScrumMakerLogo.jpg" />
     <None Include="wwwroot\img\______________2018_06_12____15_33_52_fdV_icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\components\Новая папка\" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
