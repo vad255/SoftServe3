@@ -24,6 +24,7 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
     commitTo: string = "";
     dateString: string = "";
     sprintId: number = -1;
+    user: User = new User("");
 
     constructor(props: any) {
         super(props);
@@ -42,13 +43,13 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
             }).catch(err => console.error(err));
 
         this.handleSendButton = this.handleSendButton.bind(this);
+        this.handleSendEmailButtonClick = this.handleSendEmailButtonClick.bind(this);
         this.sprintId = this.props.location.state.sprintId as number;
-        console.log(this.sprintId);
+        this.downloadTxtFile = this.downloadTxtFile.bind(this);
     }
 
     public send() {
         this.connection.invoke("SendMessage", this.message, this.sprintId);
-
     }
 
     loadHistory() {
@@ -76,7 +77,6 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
             this.forceUpdate();
             this.table.updateLayout(this.table.getListitems());
             this.forceUpdate();
-
         }
     }
 
@@ -126,45 +126,70 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
         }
     }
 
-    render() {
-        return <div className="chatWindow">
-            <div className="RetrospectiveTable" style={{ background: `url("img/RetrospectiveTable.jpg") no-repeat` }}>
-                {this.table.render()}
-            </div>
-            <hr />
-            <div className="RetrospectivechatOutputWindow">
-                <div className="RetrospectivechatOutput">
-                    <p className="PChat">What went well in the Sprint?</p>
-                    <textarea id="WellOutput" className="RetrospectivechatOutputArea"
-                        rows={15} readOnly={true} value={this.state
-                            .wentWellOutPut} />
-                </div>
-                <div className="RetrospectivechatOutput">
-                    <p className="PChat">What could be improved?</p>
-                    <textarea id="ImprovedOutput" className="RetrospectivechatOutputArea"
-                        rows={15} readOnly={true} value={this
-                            .state.improvedOutput} />
-                </div>
-                <div className="RetrospectivechatOutput">
-                    <p className="PChat">What will we commit to improve in the next Sprint?</p>
-                    <textarea id="CommitOutput" className="RetrospectivechatOutputArea"
-                        rows={15} readOnly={true} value={this.state
-                            .commitOutput} />
-                </div>
-            </div>
-            <hr />
-            <div className="chatInputBlock">
-                <br />
-                <p>What went well in the Sprint?</p>
-                <textarea id="wentWell" className="chatInput" />
-                <p>What could be improved?</p>
-                <textarea id="couldBeImproved" className="chatInput" />
-                <p>What will we commit to improve in the next Sprint?</p>
-                <textarea id="commitToDoing" className="chatInput" />
-            </div>
-            <div className="text-center">
-                <button style={{ marginTop: "10px" }} className="button" onClick={this.handleSendButton}>Send</button>
-            </div>
-        </div>;
+    downloadTxtFile(){
+        fetch('/SaveTxtFile');
     }
-}
+
+    handleSendEmailButtonClick() {
+
+        const data = new FormData();
+        data.append("sprintId", this.sprintId.toString());
+        data.append("toEmail", this.user.login);
+
+        fetch('/SendEmail',
+            {
+                method: 'POST',
+                body: data
+    });
+    }
+
+    render() {
+            return <div className="chatWindow">
+                <div>
+                    <div className="RetrospectiveTable" style={{ background: `url("img/RetrospectiveTable.jpg") no-repeat` }}>
+                        {this.table.render()}
+                    </div>
+                    <div>
+                        <button style={{ margin: "10px" }}
+                            className="btn-success" onClick={this.downloadTxtFile}>Save Meeting Result</button>
+                        <button style={{ margin: "10px" }}
+                            className="btn-success" onClick={this.handleSendEmailButtonClick}>Send meeting result to email</button>
+                    </div>
+                </div>
+                <hr />
+                <div className="RetrospectivechatOutputWindow">
+                    <div className="RetrospectivechatOutput">
+                        <p className="PChat">What went well in the Sprint?</p>
+                        <textarea id="WellOutput" className="RetrospectivechatOutputArea"
+                            rows={15} readOnly={true} value={this.state
+                                .wentWellOutPut} />
+                    </div>
+                    <div className="RetrospectivechatOutput">
+                        <p className="PChat">What could be improved?</p>
+                        <textarea id="ImprovedOutput" className="RetrospectivechatOutputArea"
+                            rows={15} readOnly={true} value={this
+                                .state.improvedOutput} />
+                    </div>
+                    <div className="RetrospectivechatOutput">
+                        <p className="PChat">What will we commit to improve in the next Sprint?</p>
+                        <textarea id="CommitOutput" className="RetrospectivechatOutputArea"
+                            rows={15} readOnly={true} value={this.state
+                                .commitOutput} />
+                    </div>
+                </div>
+                <hr />
+                <div className="chatInputBlock">
+                    <br />
+                    <p>What went well in the Sprint?</p>
+                    <textarea id="wentWell" className="chatInput" />
+                    <p>What could be improved?</p>
+                    <textarea id="couldBeImproved" className="chatInput" />
+                    <p>What will we commit to improve in the next Sprint?</p>
+                    <textarea id="commitToDoing" className="chatInput" />
+                </div>
+                <div className="text-center">
+                    <button style={{ marginTop: "10px" }} className="button" onClick={this.handleSendButton}>Send</button>
+                </div>
+            </div>;
+        }
+    }
