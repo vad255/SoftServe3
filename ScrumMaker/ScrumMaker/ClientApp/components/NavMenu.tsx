@@ -1,14 +1,38 @@
 ﻿import * as React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { ButtonToolbar, DropdownButton, MenuItem, Button } from 'react-bootstrap';
+import { RegistrationButton } from './ForAdmin/RegistrationButton'
+import { Role } from './Models/Role';
+import { User } from './Models/User';
+import { RouteComponentProps } from 'react-router';
 
-export class NavMenu extends React.Component<{}, {}> {
+export class NavMenu extends React.Component<{}, {role: Role }> {
+    constructor(props: any) {
+        super(props);
+        this.state = (({
+            role: Role
+        }) as any);
+        this.loadUser();
+
+    }
+    loadUser() {
+        fetch('/getrole', { credentials: 'include' })
+            .then(responce => responce.json() as Promise<any>)
+            .then(data => {
+                let temp = new Role(data);
+                this.setState({ role: temp });
+            })
+    }
     public render() {
+        var register;
+        if (this.state.role.name === "Admin")
+            register = <RegistrationButton />;
+
         return <nav>
             <div id='myUl' className="navigation fontFamily siteColor">
                 <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/adduser">Registration</a></li>
+                    <li><a href="/">Home</a></li><br />
+                    {register}
                     <li><a>Grids<span className="arrow-left"></span></a>
                         <ul className='dropdown nav navbar-nav'>
                             <li>
