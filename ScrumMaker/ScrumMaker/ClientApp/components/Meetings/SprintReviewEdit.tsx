@@ -103,22 +103,32 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
     public GetDone() {
         return <div>
             <form onSubmit={this.handleSave} name="oldForm">
+                <p>Sprint goal:</p>
+                <input
+                    style={{ width: "100%", height: "100px", fontSize: 20, padding: "7px" }}
+                    className="fa-text-height"
+                    name="Rewiev"
+                    type="textarea"
+                    value={this.state.Sprint.review} />
+                <br/>
                 <div>
                     <div className="col-xs-6">
-                        <p>Done goal:</p>
+                        <p>Goal achived: 
                         <input
                             name="IsGoalAchived"
                             type="checkbox"
                             checked={this.state.IsGoalAchived}
-                            onChange={this.handleInputChange} />
+                                onChange={this.handleInputChange} />
+                        </p>
                     </div>
                     <div className="col-xs-6">
-                        <p>Done stories:</p>
+                        <p>Stories completed: 
                         <input
                             name="IsStoriesCompleted"
                             type="checkbox"
                             checked={this.state.IsStoriesCompleted}
-                            onChange={this.handleInputChange} />
+                                onChange={this.handleInputChange} />
+                        </p>
                     </div>
                 </div>
                 <div>

@@ -12,7 +12,7 @@ using ScrumMaker.Attributes;
 
 namespace ScrumMaker.Controllers
 {
-    
+
     [RefreshToken]
     [CookieAuthorize]
     public class SprintReviewController : ODataController
@@ -33,7 +33,7 @@ namespace ScrumMaker.Controllers
         [AcceptVerbs("PATCH", "MERGE")]
         public IActionResult Patch([FromODataUri] int key, Delta<SprintReview> updateSprintReviewRequestModel)
         {
-            if(HttpContext.User.UserRole() == "ScrumMaster")
+            if (HttpContext.User.UserRole() == "ScrumMaster")
             {
                 if (!ModelState.IsValid)
                 {
@@ -50,6 +50,23 @@ namespace ScrumMaker.Controllers
                 return Updated(sprintReview);
             }
             return BadRequest(ModelState);
+        }
+
+        [HttpPost]
+        [AcceptVerbs("POST")]
+        public IActionResult CreateReview([FromBody] SprintReview sprintReview)
+        {
+            try
+            {
+                sprintReviewRepository.Create(sprintReview);
+                sprintReviewRepository.Save();
+                return Ok(sprintReview);
+            }
+            catch (Exception e)
+            {
+                Logger.Logger.LogError("Creating failed.", e);
+                return BadRequest();
+            }
         }
     }
 }
