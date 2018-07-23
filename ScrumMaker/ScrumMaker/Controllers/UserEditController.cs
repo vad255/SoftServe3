@@ -85,7 +85,7 @@ namespace ScrumMaker.Controllers
 
         [HttpPost]
         [Route("api/User/EditPassword")]
-        public void EditPassword(string repeatpassword, string password)
+        public bool EditPassword(string repeatpassword, string password)
         {
             if (password.Equals(repeatpassword))
             {
@@ -93,9 +93,11 @@ namespace ScrumMaker.Controllers
                 newUser.Password = password;
                 _user.Update(newUser);
                 _user.Save();
+                return true;
             }
             else
             {
+                return false;
                 throw new Exception();
             }
         }

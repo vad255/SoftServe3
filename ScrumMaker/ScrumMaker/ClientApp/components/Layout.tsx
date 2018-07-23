@@ -1,13 +1,41 @@
 import * as React from 'react';
 import {Link} from 'react-router-dom'
 import { NavMenu } from './NavMenu';
+import { stack } from 'd3-shape';
 
 export interface LayoutProps {
     children?: React.ReactNode;
 }
 
-export class Layout extends React.Component<LayoutProps, {}> {
+interface User {
+    Login: string,
+    Photo: 'api/User/ShowPhoto'
+}
+
+export class Layout extends React.Component<LayoutProps, User> {
+
+    constructor(props: any) {
+        super(props);
+        this.state = {
+            Login: '',
+            Photo: 'api/User/ShowPhoto'
+        }
+
+        fetch('api/Home/GetLogin', {
+            method: 'POST',
+        })  .then(response => response.json())
+            .then(data => {
+                this.setState({ Login: data });
+            });
+    }
+
     public render() {
+        let { Photo } = this.state;
+        let $imagePreview = null;
+        if (Photo) {
+            $imagePreview = (<img width="35px" height="35px" alt="lorem" className="userAvatar" src={Photo} />);
+        }
+
         return <div className='container-fluid'>
             <div id="headerPosition" className='header siteColor'>
                 <img src="./img/NewLogo.png" width="150" height="50" className="myLogo"/>
@@ -22,7 +50,7 @@ export class Layout extends React.Component<LayoutProps, {}> {
                                     <li><Link to="/sprints">Sprints</Link></li>
                                 </ul>
                             </li>
-                            <li><a className=""> <img src='./ScrumMakerLogo.png' width="35px" height="35px" alt="lorem" className="userAvatar"></img><span id="userLogin">Login</span></a>
+                            <li><a className=""> <div>{$imagePreview}</div>{this.state.Login}</a>
                                 <ul className="dropdown">
                                     <li><a href="/edituser">Edit user</a></li>
                                     <li><Link to="/#">About</Link></li>
