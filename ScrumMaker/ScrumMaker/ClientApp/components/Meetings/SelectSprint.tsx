@@ -7,6 +7,7 @@ import { SprintReview } from '../Models/SprintReview';
 interface ISprintsFetchingState {
     Sprints: Sprint[];
     SprintReviews: SprintReview[];
+    SprintReview: SprintReview;
 }
 
 export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISprintsFetchingState> {
@@ -93,8 +94,8 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
         var sprintReviewId = this.findSprintReview(sprint);
         return <li key={sprint.id}>
             <br />
-            {sprint.name}
-            {this.renderSprintReviewButton(sprintReviewId)}
+            <b>{sprint.name}</b>
+            {this.renderSprintReviewButton(sprint, sprintReviewId)}
         </li>
     }
 
@@ -106,19 +107,39 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
         }
     }
 
-    private renderSprintReviewButton(sprintReviewId: any) {
+    private renderSprintReviewButton(sprint: Sprint, sprintReviewId: any) {
         if (sprintReviewId) {
-            return <button>
-                <NavLink to={`/SprintReviewEdit/` + sprintReviewId}>
-                    <span></span> Review
-                </NavLink>
+            return <button className="btn btn-default" onClick={() => this.props.history.push('/SprintReviewEdit/' + sprintReviewId)}>
+                    Review
             </button >
         }
 
-        return <button disabled>
-            <NavLink to={`/`}>
-                <span></span> Create
-                </NavLink>
+        return <button className="btn btn-default" onClick={() => this.createSprintReview(sprint.id)}>
+           Create
         </button >
+    }
+
+    createSprintReview(sprintId: number) {
+        console.log(sprintId)
+        let newSprintReview = new SprintReview({ SprintId: sprintId, IsGoalAchived: false, IsStoriesCompleted: false });
+        console.log(newSprintReview);
+        fetch("SprintReview/CreateReview/", {
+            credentials: 'include',
+            method: 'POST',
+            body: JSON.stringify({
+                '@odata.type': 'DAL.Models.SprintReview',
+                ...newSprintReview
+            }),
+            headers: {
+                'OData-Version': '4.0',
+                'Content-Type': 'application/json;odata.metadata=minimal',
+                'Accept': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                this.props.history.push('/SprintReviewEdit/'+ data.Id) 
+            });
     }
 }

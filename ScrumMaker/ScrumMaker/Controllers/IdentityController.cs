@@ -21,10 +21,12 @@ namespace ScrumMaker.Controllers
     public class IdentityController : Controller
     {
         private IRepository<User> _users;
+        private IRepository<Role> _roles;
 
-        public IdentityController(IRepository<User> users)
+        public IdentityController(IRepository<User> users, IRepository<Role> roles)
         {
             _users = users;
+            _roles = roles;
         }
 
         [Route("/token")]
@@ -61,7 +63,7 @@ namespace ScrumMaker.Controllers
         {
             int id = this.HttpContext.User.UserId();
             User user = _users.GetById(id) ?? new User() { Login = "Anonym", UserId = -1 };
-
+            user.Role = _roles.GetById(user.RoleId);
             Response.ContentType = "application/json";
             await Response.WriteAsync(JsonConvert.SerializeObject(user));
         }

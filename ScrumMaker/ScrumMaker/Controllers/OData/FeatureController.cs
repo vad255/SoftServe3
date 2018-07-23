@@ -39,7 +39,7 @@ namespace ScrumMaker.Controllers
         {
             return Ok(featureRepository.GetById(id));
         }
-        
+
         [AcceptVerbs("PATCH", "MERGE")]
         public IActionResult Patch([FromODataUri] int key, Delta<Feature> updateFeatureRequestModel)
         {
