@@ -1,73 +1,72 @@
 ﻿import * as React from "react";
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
-import { Story } from "../Models/Story";
-import { StoryStatus } from "../Models/Story";
+import { Defect } from "../Models/Defect";
+import { DefectStatus } from "../Models/DefectStatus";
+import { DefectPriority } from "../Models/DefectPriority";
+import { DefectState } from "../Models/DefectState";
 import { User } from "../Models/User";
 import { Team } from "../Models/Team";
 
 
 interface IEditPageState {
-    story: Story;
+    defect: Defect;
     id: string;
-    statusValue: string;
-    inputValue: string;
-    textAreaValue: string;
-    users: User[];
-    teamId: number;
-    userId: number;
+    nameValue: string;
+    statusValue: DefectStatus;    
+    priorityValue: DefectPriority;    
+    stateValue: DefectState;    
+    actualResultValue: string; 
+    fixResultValue: string;
+    textAreaValue: string;   
 }
 
 export class EditDefect extends React.Component<RouteComponentProps<any>, IEditPageState> {
     constructor(props: any) {
         super(props);
         this.state = (({
-            id: this.props.location.pathname.substring((this.props.location.pathname.indexOf('/') + 11)),
-            story: Story,
+            id: this.props.location.pathname.substring((this.props.location.pathname.lastIndexOf('/') + 1)),
+            defect: Defect,
             statusValue: "",
-            inputValue: "",
+            nameValue: "",
             textAreaValue: "",
-            users: [], teamId: 0,
-            userId: 0
+            priorityValue: "",
+            stateValue: "",
+            actualResultValue: "",
+            fixResultValue:  ""    
         }) as any);
 
         this.handleSaveButtonClick = this.handleSaveButtonClick.bind(this);
         this.handleStatusSelect = this.handleStatusSelect.bind(this);
         this.handleChangeInput = this.handleChangeInput.bind(this);
         this.handleChangeTextArea = this.handleChangeTextArea.bind(this);
-        this.handleUserSelect = this.handleUserSelect.bind(this);
-
-        fetch("odata/Stories?$expand=team&$filter=id eq " + this.state.id)
+        this.handlePrioritySelect = this.handlePrioritySelect.bind(this);
+        this.handleStateSelect = this.handleStateSelect.bind(this);
+        this.handleChangeInputActualResult = this.handleChangeInputActualResult.bind(this);
+        this.handleChangeInputFixResult = this.handleChangeInputFixResult.bind(this);
+         
+        fetch("odata/Defects?expand=()&$filter=DefectId eq " + this.state.id)
             .then(response => response.json() as Promise<any>)
             .then(data => {
-                let story1 = new Story(data["value"][0]);
+                let defect1 = new Defect(data["value"][0]);
+               
                 this.setState({
-                    story: story1,
-                    statusValue: story1.status.toString(),
-                    inputValue: story1.name,
-                    textAreaValue: story1.description,
-                    teamId: story1.team.id,
-                    userId: story1.userId
-                });
-            }).then(() => this.getUsers());
+                    defect: defect1,
+                    statusValue: (defect1.status.toString()=='Open')?0:1,
+                    nameValue: defect1.name,
+                    textAreaValue: defect1.description,
+                    priorityValue: defect1.priority,
+                    stateValue: defect1.state,
+                    actualResultValue: defect1.actualResults,
+                    fixResultValue: defect1.fixResults
+                   
+                }); console.log(this.state.statusValue)
+            })
+       
     }
-
-    getUsers() {
-        fetch("odata/users?$filter=TeamId eq " + this.state.teamId)
-            .then(response => response.json() as Promise<any>)
-            .then(data => {
-
-                var usersData = [];
-                for (var i = 0; i < data["value"].length; i++) {
-                    usersData[i] = new User(data["value"][i]);
-                }
-
-                this.setState({ users: usersData });
-            });
-    }
-
+      
     handleSaveButtonClick() {
-        fetch('odata/Stories(' + this.state.id + ')',
+        fetch('odata/Defects(' + this.state.id + ')',
             {
                 method: 'PATCH',
                 headers: {
@@ -78,24 +77,24 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
                 },
                 body: JSON.stringify({
 
-                    '@odata.type': 'DAL.Models.Story',
-                    'Name': this.state.inputValue,
+                    '@odata.type': 'DAL.Models.Defect',
+                    'DefectName': this.state.nameValue,
                     'Description': this.state.textAreaValue,
+                    'Priority': this.state.priorityValue,
+                    'State': this.state.stateValue,
                     'Status': this.state.statusValue,
-                    'UserId': this.state.userId,
+                    'ActualResults': this.state.actualResultValue,
+                    'FixResults': this.state.fixResultValue                  
                 })
             });
-
-
     }
-
 
     private GetDeleteConfirmModal() {
         return <div id="confirmDeleteModal" className="modal fade">
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header  text-center" ><button className="close" type="button" data-dismiss="modal">×</button>
-                        <h4 className="modal-title">The story "{this.state.story.name}" was updated.</h4>
+                        <h4 className="modal-title">The defect "{this.state.defect.name}" was updated.</h4>
                     </div>
                     <div className="modal-body text-center">
                         <button className="btn btn-default" type="button" data-dismiss="modal">
@@ -105,18 +104,24 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
             </div>
         </div>;
     }
-
-    handleUserSelect(event: any) {
-        console.log(this.state.userId);
-        this.setState({ userId: event.target.value });
-    }
-
+    
     handleStatusSelect(event: any) {
         this.setState({ statusValue: event.target.value });
     }
-
+    handlePrioritySelect(event: any) {
+        this.setState({ priorityValue: event.target.value });
+    }
+    handleStateSelect(event: any) {
+        this.setState({ stateValue: event.target.value });
+    }
+    handleChangeInputActualResult(event: any) {
+        this.setState({ actualResultValue: event.target.value });
+    }
+    handleChangeInputFixResult(event: any) {
+        this.setState({ fixResultValue: event.target.value });
+    }
     handleChangeInput(event: any) {
-        this.setState({ inputValue: event.target.value });
+        this.setState({ nameValue: event.target.value });
     }
 
     handleChangeTextArea(event: any) {
@@ -126,11 +131,11 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
     public render() {
         return <div className="text-left">
             <div className="text-center">
-                <h2 style={{ margin: "10px", padding: "5px" }}>Editing story by Id = {this.state.id}</h2>
+                <h2 style={{ margin: "10px", padding: "5px" }}>Editing defect by Id = {this.state.id}</h2>
             </div>
             <div>
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Name:</h3>
-                <input className="input-lg" onChange={this.handleChangeInput} type="text" value={this.state.inputValue} />
+                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Defect name:</h3>
+                <input className="input-lg" onChange={this.handleChangeInput} type="text" value={this.state.nameValue} />
             </div>
             <div>
                 <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Description:</h3>
@@ -138,22 +143,28 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
             </div>
             <div>
                 <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Status:</h3>
-                <select className="form-control-static" onChange={this.handleStatusSelect} >
-                    <option value="0">Pending approval</option>
-                    <option value="1">Ready to start</option>
-                    <option value="2">In progress</option>
-                    <option value="3">Developing сomplete</option>
-                    <option value="4">Test сomplete</option>
-                    <option value="5">Accepted</option>
+                <select className="form-control-static" value={this.state.statusValue} onChange={this.handleStatusSelect} >
+                    <option value="0">Open</option>
+                    <option value="1">Close</option>                   
                 </select>
             </div>
-
             <div>
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Assign to:</h3>
-                <select className="form-control-static" onChange={this.handleUserSelect}>
-                    {this.state.users.map(user => <option key={user.userId} value={user.userId}>{user.login}</option>)}
-                </select>
+                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>State:</h3>
+                {this.renderStates()}
             </div>
+            <div>
+                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Priority:</h3>
+                {this.renderPriority()}
+            </div>
+            <div>
+                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>ActualResult:</h3>
+                <input className="input-lg" onChange={this.handleChangeInputActualResult} type="text" value={this.state.actualResultValue} />
+            </div>
+            <div>
+                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>FixResult:</h3>
+                <input className="input-lg" onChange={this.handleChangeInputFixResult} type="text" value={this.state.fixResultValue} />
+            </div>
+           
 
             <div className="text-center">
                 <button style={{ margin: "10px" }} data-toggle="modal"
@@ -162,8 +173,44 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
             </div>
             {this.GetDeleteConfirmModal()}
         </div>;
-
-
-
     }
+    private renderStates() {
+        let names: string[] = [];
+        for (let iterator in DefectState) {
+            if (!parseInt(iterator))
+                names.push(iterator.toString());
+        }
+
+        let items: JSX.Element[] = [];
+        for (var i = 0; i < names.length; i++) {
+            items.push(<option key={i} value={names[i]}>{names[i]}</option>);
+        }
+
+        return <select
+            value={this.state.stateValue}
+            name="State"
+            onChange={this.handleStateSelect}>
+            {items}
+        </select>
+    }
+    private renderPriority() {
+        let names: string[] = [];
+        for (let iterator in DefectPriority) {
+            if (!parseInt(iterator))
+                names.push(iterator.toString());
+        }
+
+        let items: JSX.Element[] = [];
+        for (var i = 0; i < names.length; i++) {
+            items.push(<option key={i } value={names[i]}>{names[i]}</option>);
+        }
+
+        return <select
+            value={this.state.priorityValue}
+            name="Priority"
+            onChange={this.handlePrioritySelect}>
+            {items}
+        </select>
+    }
+       
 }

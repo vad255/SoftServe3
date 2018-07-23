@@ -10,16 +10,11 @@ import { Story } from '../Models/Story';
 interface IUserDataFetchingState {
     users: User[];
     stories: Story[];
+    storiesName: string[];
 }
-var divStyle = {
-    marginRight: "10px"
-};
-var border = {
-    borderBottom: "solid 3px #808080",
-    borderTop: "solid 3px #808080",
-    backgroundColor: "rgba(229, 229, 229, 0.63)"
-}
+
 export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUserDataFetchingState> {
+
     protected URL_BASE_Users: string = 'odata/Users';
     protected URL_BASE_Stories: string = 'odata/Stories';
     protected headerText: string = 'SprintPlaning';
@@ -27,7 +22,7 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
     constructor(props: any) {
         super(props);
 
-        this.state = { users: [], stories: [] };
+        this.state = { users: [], stories: [], storiesName:[] };
         this.handleSaveButtonClick = this.handleSaveButtonClick.bind(this);
         this.LoadData();
     }
@@ -36,8 +31,7 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
         
         let idStorys = this.GetStoryId();
 
-        for (var i = 0; i < idStorys.length; i++) {
-            console.log(idStorys[i])
+        for (var i = 0; i < idStorys.length; i++) {           
             fetch('odata/Stories(' + idStorys[i] + ')'  ,
                 {
                     method: 'PATCH',
@@ -54,9 +48,10 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
                     })
                 })
         }
-    }
+    }    
 
     componentDidMount() {
+
         var $tabs = $('#t_draggable2')
         $("tbody.t_sortable").sortable({
             connectWith: ".t_sortable",
@@ -71,15 +66,17 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
             hoverClass: "ui-state-hover",
             drop: function (event: any, ui: any) { return false; }
         });
+
+        this.GetStoryName();
     }
 
     render() {
         return (
             <div>
                 <h1 className="text-center">{this.headerText}</h1>
-                <table className="well col-md-1 table-hover td-scrum table-border" style={divStyle}><caption><h4>Users</h4></caption>
+                <table className="well col-md-1 table-hover td-scrum table-border" style={{ marginRight: "10px"}}><caption><h4>Users</h4></caption>
                     <thead className="table-scrum td-scrum">
-                        <tr style={border}>
+                        <tr className="border">
                             <td><h5>User_name</h5></td>
                         </tr>
                     </thead>
@@ -92,10 +89,9 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
                     </tbody>
                 </table>
 
-                <table className=" menu_links col-md-1 td-scrum" style={divStyle} id="t_draggable1"><caption><h4>Product Backlog</h4></caption>
-
+                <table className=" menu_links col-md-1 td-scrum" style={{ marginRight: "10px" }}  id="t_draggable1"><caption><h4>Product Backlog</h4></caption>
                     <tbody className="t_sortable table-scrum td-scrum">
-                        <tr className="td-scrum" style={border}>
+                        <tr className="td-scrum border">
                             <td className="well"><h5>ID</h5></td>
                             <td className="well"><h5>Story_name</h5></td>
                             <td className="well"><h5>Story_description</h5></td>
@@ -110,42 +106,39 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
                     </tbody>
                 </table>
 
-                <table className="well menu_links col-md-1 td-scrum" style={divStyle} id="t_draggable2"><caption><h4>Sprint Backlog</h4></caption>
-                    <tbody className="t_sortable table-scrum">
-                        <tr style={border}>
+                <table className="well menu_links col-md-1 td-scrum" id="t_draggable2"><caption><h4>Sprint Backlog</h4></caption>
+                    <tbody className="t_sortable table-scrum td-scrum">
+                        <tr className="td-scrum border">
                             <td className="well"><h5>ID</h5></td>
-                            <td className="well">Story_name</td>
-                            <td className="well">Story_description</td>
+                            <td className="well"><h5>Story_name</h5></td>
+                            <td className="well"><h5>Story_description</h5></td>
                         </tr>
                     </tbody>
                 </table>
 
                 <div role='button'
                     className='btn btn-primary'
+                    style={{ marginLeft: "10px", marginTop: "-1px" }} 
                     data-toggle="modal"
                     data-target="#confirmDeleteModal"                 
                     onClick={this.handleSaveButtonClick}>
                     Save sprint
-                    </div>
+                </div>
                 {this.GetDeleteConfirmModal()}
             </div>
         );
     }
-
-    private GetDeleteConfirmModal() {
-        let nameStories: any[] = [];
-        nameStories = this.state.stories.map(function (name: any) {
-            return <li>{name.name}</li> 
-        });
-        console.log(nameStories);
+    
+    private GetDeleteConfirmModal() {      
+        
         return <div id="confirmDeleteModal" className="modal fade">
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header  text-center" ><button className="close" type="button" data-dismiss="modal">×</button>
                         <h4 className="modal-title">The next story(ies) was updated:
                         <ul>{
-                                this.state.stories.map(function (name: any) {
-                                return <li>{name.name}</li>
+                                this.GetStoryName().map(function (name: any) {
+                                return <li>{name}</li>
                                 })
                             }
                         </ul> </h4>
@@ -160,16 +153,29 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
     }
 
     GetStoryId() {
+
         let storyId: string[] = [];
         let list = document.getElementById("t_draggable2") as any;
 
         for (var n = 3; n < list.getElementsByTagName("td").length; n += 3)
-            storyId.push(list.getElementsByTagName("td")[n].textContent);           
-
+            storyId.push(list.getElementsByTagName("td")[n].textContent);                
         return storyId;       
     }
 
+    GetStoryName() {
+
+        let list
+        if (document.getElementById("t_draggable2") != null) {
+            list = document.getElementById("t_draggable2") as any;
+
+            for (var m = 4; m < list.getElementsByTagName("td").length; m += 3)
+                this.state.storiesName.push(list.getElementsByTagName("td")[m].textContent);
+        }
+        return this.state.storiesName;
+    }
+
     protected LoadData() {
+
         fetch(this.getUrlUsers(), { credentials: 'include' })
             .then(response => response.json() as any)
             .then(data => {
@@ -196,11 +202,13 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
     }
 
     private getUrlUsers() {
+
         let result = this.URL_BASE_Users;
         return result;
     }
 
     private getUrlStories() {
+
         let result = this.URL_BASE_Stories;
         return result;
     }

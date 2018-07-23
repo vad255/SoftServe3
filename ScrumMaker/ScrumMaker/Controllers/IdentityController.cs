@@ -63,7 +63,7 @@ namespace ScrumMaker.Controllers
         {
             int id = this.HttpContext.User.UserId();
             User user = _users.GetById(id) ?? new User() { Login = "Anonym", UserId = -1 };
-
+            user.Role = _roles.GetById(user.RoleId);
             Response.ContentType = "application/json";
             await Response.WriteAsync(JsonConvert.SerializeObject(user));
         }
