@@ -1,14 +1,39 @@
 ﻿import * as React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { ButtonToolbar, DropdownButton, MenuItem, Button } from 'react-bootstrap';
+import { RegistrationButton } from './ForAdmin/RegistrationButton'
+import { Role } from './Models/Role';
+import { User } from './Models/User';
+import { RouteComponentProps } from 'react-router';
 
-export class NavMenu extends React.Component<{}, {}> {
+export class NavMenu extends React.Component<{}, { role: string }> {
+    constructor(props: any) {
+        super(props);
+        this.state = (({
+            role: ""
+        }) as any);
+        this.loadUser();
+
+    }
+    loadUser() {
+        fetch('/getrole', { credentials: 'include' })
+            .then(responce => responce.text() as Promise<any>)
+            .then(data => {
+                let temp = data;
+                console.log(data);
+                this.setState({ role: temp });
+            })
+    }
     public render() {
+        var register;
+        if (this.state.role == "\"Admin\"")
+            register = <RegistrationButton />;
+
         return <nav>
             <div id='myUl' className="navigation fontFamily siteColor">
                 <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/adduser">Registration</a></li>
+                    <li><a href="/">Home</a></li><br />
+                    {register}
                     <li><a>Grids<span className="arrow-left"></span></a>
                         <ul className='dropdown nav navbar-nav'>
                             <li>
@@ -84,8 +109,12 @@ export class NavMenu extends React.Component<{}, {}> {
                             <span></span> Chart
                             </NavLink>
                     </li>
-
-
+                    <br />
+                    <li>
+                        <NavLink to={'/backlog'} activeClassName='active'>
+                            <span></span> Backlog
+                            </NavLink>
+                    </li>
                 </ul>
             </div>
             <div className="nav_bg">

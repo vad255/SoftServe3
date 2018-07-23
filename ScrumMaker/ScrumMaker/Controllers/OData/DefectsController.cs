@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-//using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 using BL;
 using DAL;
@@ -8,6 +8,7 @@ using DAL.Access;
 using DAL.Models;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ScrumMaker.Controllers
 {
@@ -32,6 +33,49 @@ namespace ScrumMaker.Controllers
             
             return Ok(result);
         }
-    }
     
+
+    [AcceptVerbs("PATCH", "MERGE")]
+    public IActionResult Patch([FromODataUri] int key, [FromBody] Delta<Defect> patch)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        Defect defect = _defect.GetById(key);
+
+        if (defect == null)
+        {
+            return NotFound();
+        }
+
+        patch.Patch(defect);
+
+        try
+        {
+            _defect.Save();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!DefectExists(key))
+            {
+                return NotFound();
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        return Updated(defect);
+    }
+
+    private bool DefectExists(int key)
+    {
+        return _defect.GetAll().Count(e => e.DefectId == key) > 0;
+    }
+
 }
+}
+
