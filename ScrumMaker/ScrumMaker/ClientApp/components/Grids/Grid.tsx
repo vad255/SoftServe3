@@ -71,7 +71,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
     }
     private LoadData() {
         fetch(this.getURL(), { credentials: 'include' })
-            .then(response => response.json() as any)
+            .then(response => response.json())
             .then(data => {
                 this.totalCount = data['@odata.count'];
                 this.OnDataReceived(data);
@@ -88,7 +88,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
     }
     protected onCatch(e: any) {
         console.error(e);
-        //this.props.history.push("/Error")
+        //this.props.history.push("/Error");
     }
 
     protected getURL() {
@@ -100,10 +100,6 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         result += this.URL_EXPANDS;
 
         result += this.urlFilters;
-
-        // if (this.customUrlFilters) {
-        //     result += this.urlFilters ? Filter.CONSTRAIN_DIVIDER + this.customUrlFilters : Filter.QUERY_HEAD + this.customUrlFilters;
-        // }
 
         result += this.URL_ORDERING;
 
@@ -189,9 +185,6 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         this.CurrentPage = Math.ceil((this.totalCount / this.pageSize)) - 1;
         this.LoadData();
     }
-
-
-
 
     protected FilterButtonClick(e: any) {
         this.filteringOn = !this.filteringOn;

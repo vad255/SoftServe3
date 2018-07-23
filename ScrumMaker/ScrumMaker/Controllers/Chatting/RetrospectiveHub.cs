@@ -5,11 +5,13 @@ using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Microsoft.CodeAnalysis.CSharp;
+    
 namespace ScrumMaker.Controllers.Chatting
 {
     public class RetrospectiveHub : Hub
     {
+
         private IRetrospectiveChatMananger _manager;
 
         public RetrospectiveHub(IRetrospectiveChatMananger manager)
@@ -25,16 +27,10 @@ namespace ScrumMaker.Controllers.Chatting
             message.UserName = _manager.GetCurrentUserName();
             message.UserId = _manager.GetCurrentUserId();
             _manager.SprintId = sprintId;
-            await Clients.Group(_manager.GetGroupIdentifier).SendAsync("receiveMessage", message);
+            await Clients.Group(sprintId.ToString()).SendAsync("receiveMessage", message);
 
             _manager.AddRetrospectiveMessage(message);
         }
-
-        //public async Task SetSprintId(int spintId)
-        //{
-        //    _manager.SprintId = spintId;
-        //    await Clients.Group(_manager.GetGroupIdentifier).SendAsync("recieve", "assigned"); 
-        //}
 
         public async Task GetHistory()
         {
@@ -44,24 +40,35 @@ namespace ScrumMaker.Controllers.Chatting
 
         public async Task GetUsers()
         {
-            await Clients.Caller.SendAsync("receiveUsers", _manager.GetOnlineUsers());
+            var httpContext1 = Context.GetHttpContext();
+            var sprintId = httpContext1.Request.Query["Token"][0];
+
+            await Clients.Caller.SendAsync("receiveUsers", _manager.GetOnlineUsersInfo(), int.Parse(sprintId));
         }
 
         public override async Task OnConnectedAsync()
         {
+            var httpContext1 = Context.GetHttpContext();
+            var sprintId = httpContext1.Request.Query["Token"][0];
+
             _manager.User = Context.User;
+            _manager.SprintId = int.Parse(sprintId);
             DAL.Models.User user = _manager.Connect();
-            await Clients.Group(_manager.GetGroupIdentifier).SendAsync("userConnected", user);
-            await Groups.AddToGroupAsync(Context.ConnectionId, _manager.GetGroupIdentifier);
+
+            await Groups.AddToGroupAsync(Context.ConnectionId, sprintId);
+            await Clients.Group(sprintId).SendAsync("userConnected", user);
             await base.OnConnectedAsync();
         }
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
+            var httpContext1 = Context.GetHttpContext();
+            var sprintId = httpContext1.Request.Query["Token"][0];
+
             _manager.User = Context.User;
             DAL.Models.User user = _manager.Disconnect();
-            await Clients.Group(_manager.GetGroupIdentifier).SendAsync("userDisconnect", user);
-            await Groups.RemoveFromGroupAsync(Context.ConnectionId, _manager.GetGroupIdentifier);
+            await Clients.Group(sprintId).SendAsync("userDisconnect", user);
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, sprintId);
             await base.OnDisconnectedAsync(exception);
         }
     }

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using ScrumMaker;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,10 +21,12 @@ namespace ScrumMaker.Controllers
     public class IdentityController : Controller
     {
         private IRepository<User> _users;
+        private IRepository<Role> _roles;
 
-        public IdentityController(IRepository<User> users)
+        public IdentityController(IRepository<User> users, IRepository<Role> roles)
         {
             _users = users;
+            _roles = roles;
         }
 
         [Route("/token")]
@@ -52,6 +55,30 @@ namespace ScrumMaker.Controllers
             Logger.Logger.LogInfo($"IdentityController:Token():User {loginViewModel.Login} signed in.");
             Response.ContentType = "application/json";
             await Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
+        }
+
+        [Route("/myself")]
+        [HttpGet]
+        public async Task Myself()
+        {
+            int id = this.HttpContext.User.UserId();
+            User user = _users.GetById(id) ?? new User() { Login = "Anonym", UserId = -1 };
+            user.Role = _roles.GetById(user.RoleId);
+            Response.ContentType = "application/json";
+            await Response.WriteAsync(JsonConvert.SerializeObject(user));
+        }
+        [Route("/logout")]
+        public IActionResult LogOut()
+        {
+            HttpContext.Response.Cookies.Delete("Authorization");
+            return Redirect("/login");
+        }
+        [Route("/getrole")]
+        [HttpGet]
+        public async Task GetRole()
+        {
+            Response.ContentType = "application/json";
+            await Response.WriteAsync(JsonConvert.SerializeObject(HttpContext.User.UserRole()));
         }
     }
 }

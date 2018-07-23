@@ -25,22 +25,30 @@
 
   <ItemGroup>
     <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
+    <Compile Remove="ClientApp\components\Новая папка\**" />
     <Compile Remove="Data\**" />
     <Content Remove="ClientApp\**" />
     <Content Remove="Data\**" />
+    <EmbeddedResource Remove="ClientApp\components\Новая папка\**" />
     <EmbeddedResource Remove="Data\**" />
+    <None Remove="ClientApp\components\Новая папка\**" />
     <None Remove="Data\**" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="ClientApp\components\AddUser.tsx" />
+    <None Remove="ClientApp\components\Backlog\Backlog.tsx" />
+    <None Remove="ClientApp\components\Backlog\ProductBacklog.tsx" />
+    <None Remove="ClientApp\components\Backlog\SprintBacklog.tsx" />
     <None Remove="ClientApp\components\Charts\Chart.tsx" />
+    <None Remove="ClientApp\components\EditPages\EditDefect.tsx" />
     <None Remove="ClientApp\components\Charts\Velocity.tsx" />
     <None Remove="ClientApp\components\Chats\RetrospectiveMeeting.tsx" />
     <None Remove="ClientApp\components\Chats\RetrospectiveMessage.tsx" />
     <None Remove="ClientApp\components\Chats\RetrospectivePages\SelectSprintPage.tsx" />
     <None Remove="ClientApp\components\Chats\RetrospectiveTable.tsx" />
     <None Remove="ClientApp\components\EditPages\EditStory.tsx" />
+    <None Remove="ClientApp\components\EditPages\TaskEdit.tsx" />
     <None Remove="ClientApp\components\EditPages\EditTeam.tsx" />
     <None Remove="ClientApp\components\EditPages\UserEdit.tsx" />
     <None Remove="ClientApp\components\EditUser.tsx" />
@@ -50,10 +58,16 @@
     <None Remove="ClientApp\components\Filters\TasksFiltersRow.tsx" />
     <None Remove="ClientApp\components\Filters\TeamFiltersRow.tsx" />
     <None Remove="ClientApp\components\Filters\StoriesFiltersRow.tsx" />
+
+    <None Remove="ClientApp\components\GetError.tsx" />
+
+    <None Remove="ClientApp\components\ForAdmin\RegistrationButton.tsx" />
+
     <None Remove="ClientApp\components\Grids\DefectGrid.tsx" />
     <None Remove="ClientApp\components\Grids\StoriesGrid.tsx" />
     <None Remove="ClientApp\components\Grids\TaskGrid.tsx" />
     <None Remove="ClientApp\components\MailSender.tsx" />
+    <None Remove="ClientApp\components\Meetings\SprintPlaning.tsx" />
     <None Remove="ClientApp\components\Meetings\SelectSprint.tsx" />
     <None Remove="ClientApp\components\Models\Defect.tsx" />
     <None Remove="ClientApp\components\Models\Feature.tsx" />
@@ -107,6 +121,17 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\AddUser.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Backlog\Backlog.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Backlog\ProductBacklog.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Backlog\SprintBacklog.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\EditPages\EditDefect.tsx" />
+
+    <TypeScriptCompile Include="ClientApp\components\GetError.tsx" />
+
+    <TypeScriptCompile Include="ClientApp\components\ForAdmin\RegistrationButton.tsx" />
+
+    <TypeScriptCompile Include="ClientApp\components\Meetings\SprintPlaning.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\EditPages\TaskEdit.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Charts\Velocity.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\EditTeam.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Chats\RetrospectiveMeeting.tsx" />

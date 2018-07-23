@@ -22,9 +22,7 @@ export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDa
         this.state = { id: 0, login: "", password: "", roles: [], ConfirmModal: false };
         fetch('odata/roles')
             .then(response => response.json() as any)
-            .then(data => {
-                console.log(data['value']);
-                
+            .then(data => {                
                 this.setState({ roles: data['value']});
             });
         this.handleSave = this.handleSave.bind(this);

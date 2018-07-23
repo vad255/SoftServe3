@@ -30,6 +30,7 @@ namespace ScrumMaker.Controllers
         {
             return Ok(_users.GetAll());
         }
+
         [AcceptVerbs("PATCH", "MERGE")]
         public IActionResult Patch([FromODataUri] int key, Delta<User> updateUserRequestModel)
         {

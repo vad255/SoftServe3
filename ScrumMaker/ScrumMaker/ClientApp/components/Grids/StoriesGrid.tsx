@@ -38,6 +38,7 @@ export class StoriesGrid extends Grid {
             <th className="well well-sm col-md-2" onClick={() => this.OrderBy("name")}>Name</th>
             <th className="well well-sm col-md-4" onClick={() => this.OrderBy("description")}>Description</th>
             <th className="well well-sm col-md-3" onClick={() => this.OrderBy("status")}>Status</th>
+            <th className="well well-sm col-md-3" onClick={() => this.OrderBy("sprintId")}>SprintId</th>
             <th className="well well-sm col-md-3">
                 <div onClick={this.FilterButtonClick.bind(this)}>
                     <span className="nowrap">Show Filters<span className="caret"></span></span>
@@ -52,7 +53,8 @@ export class StoriesGrid extends Grid {
             new IntFilter({ filterKey: "id" }),
             new TextFilter({ filterKey: "name" }),
             new TextFilter({ filterKey: "description" }),
-            new EnumFilter({ filterKey: "status", enumType: StoryStatus })
+            new EnumFilter({ filterKey: "status", enumType: StoryStatus }),
+            new TextFilter({ filterKey: "sprintId" })
         ]
 
         return <FiltersManager

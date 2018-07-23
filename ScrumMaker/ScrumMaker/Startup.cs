@@ -29,6 +29,9 @@ using BL;
 using BL.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using BL.Chart;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
+using BL.Interface;
 
 namespace ScrumMaker
 {
@@ -64,19 +67,12 @@ namespace ScrumMaker
                 };
             });
 
-            string connectionStr = Configuration.GetConnectionString("Pasha");
+            string connectionStr = Configuration.GetConnectionString("ScrumMakerDB");
 
 
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
 
-            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
-            services.AddScoped(typeof(ISprintManager), typeof(SprintManager));
-            services.AddScoped(typeof(IFeaturesManager), typeof(FeaturesManager));
-            services.AddScoped(typeof(IDefectsManager), typeof(DefectsManager));
-            services.AddScoped(typeof(IUserManager), typeof(UserManager));
-            services.AddScoped(typeof(ITasksManager), typeof(TasksManager));
-            services.AddScoped(typeof(IStoriesManager), typeof(StoriesManager));
-            services.AddScoped(typeof(IChartManager), typeof(ChartManager));
+           
             ConfigureDI(services);
 
             services.AddOData();
@@ -93,6 +89,11 @@ namespace ScrumMaker
                 SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddSignalR();
+
+            services.AddSingleton<IFileProvider>(
+                new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
+  
         }
 
         private static void ConfigureDI(IServiceCollection services)
@@ -109,6 +110,8 @@ namespace ScrumMaker
             services.AddScoped(typeof(IStoriesManager), typeof(StoriesManager));
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
             services.AddScoped(typeof(ITeamsManager), typeof(TeamsManager));
+            services.AddScoped(typeof(IChartManager), typeof(ChartManager));
+            services.AddScoped(typeof(ISprintReviewManager), typeof(SprintReviewManager));
             services.AddScoped(typeof(BL.Chatting.IGlobalChatManager), typeof(BL.Chatting.GlobalChatManager));
             services.AddScoped(typeof(BL.Chatting.IRetrospectiveChatMananger), typeof(BL.Chatting.RetrospectiveChatManager));
 

@@ -6,16 +6,15 @@ interface DataFetchingState {
     data: ModelForChart[];
 }
 
-export class Chart extends React.Component<DataFetchingState, DataFetchingState> {
+export class BurnDown extends React.Component<DataFetchingState, DataFetchingState> {
     constructor() {
         super();
         this.state = { data: [] };
 
         this.LoadData();
-        this.test();
     }
     private LoadData() {
-        fetch("/getdata", { credentials: 'include' })
+        fetch("/getburndown", { credentials: 'include' })
             .then(response => response.json() as any)
             .then(data => {
                 var temp = [];
@@ -25,13 +24,7 @@ export class Chart extends React.Component<DataFetchingState, DataFetchingState>
                 this.setState({ data: temp });
             });
     }
-    private test() {
-        for (var i = 0; i < this.state.data.length; i++) {
-            alert(this.state.data[i].completedTask);
-        }
-    }
     public render() {
-        console.log(this.state.data);
         return (
             <ComposedChart width={900} height={450} data={this.state.data.map(x => x.props)}
                 margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>

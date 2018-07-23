@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { IDbModel, ICommitableDbModel } from './Abstraction';
-import * as moment from '../../../node_modules/moment';
+import * as moment from 'moment';
 
 export class SprintHistory implements ICommitableDbModel {
 

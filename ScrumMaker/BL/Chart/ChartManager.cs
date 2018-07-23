@@ -23,6 +23,10 @@ namespace BL.Chart
         {
             return _sprints.GetAll().Include(x => x.History).Include(x => x.Backlog).FirstOrDefault(x => x.History.Begined < DateTime.Now && x.History.Ended > DateTime.Now); ;
         }
+        public IQueryable<Sprint> GetSprintForVelocity()
+        {
+            return _sprints.GetAll().Include(x => x.History).Include(x => x.Backlog).Where(x => x.History.Ended < DateTime.Now);
+        }
         public List<DateTime> GetWorkingDaysOfSprint()
         {
             List<DateTime> result = new List<DateTime>();
@@ -43,9 +47,8 @@ namespace BL.Chart
             }
             return result;
         }
-        public ICollection<Story> GetStoriesOfSprint()
+        public ICollection<Story> GetStoriesOfSprint(Sprint sprint)
         {
-            Sprint sprint = GetSprintByDate();
             ICollection<Story> result = new List<Story>();
             ICollection<Story> stories = _stories.GetAll().Include(x => x.Tasks).ToList();
             foreach(Story story in sprint.Backlog)
@@ -57,7 +60,7 @@ namespace BL.Chart
         public ICollection<ScrumTask> GetTasksOfStories()
         {
             ICollection<ScrumTask> tasks = new List<ScrumTask>();
-            ICollection<Story> stories = GetStoriesOfSprint();
+            ICollection<Story> stories = GetStoriesOfSprint(GetSprintByDate());
             foreach(Story story in stories)
             {
                 foreach (ScrumTask task in story.Tasks)
@@ -65,7 +68,7 @@ namespace BL.Chart
             }
             return tasks;
         }
-        public ICollection<ModelForCharts> GetData()
+        public ICollection<ModelForCharts> GetDataBurnDown()
         {
             ICollection<ModelForCharts> result = new List<ModelForCharts>();
             List<DateTime> listOfDate = GetWorkingDaysOfSprint();
@@ -73,11 +76,29 @@ namespace BL.Chart
             int remainingTasks = tasks.Count;
             for (int i = 1; i <= listOfDate.Count; i++)
             {
-                int completedTask = tasks.Where(x => x.Completed == listOfDate[i - 1]).Count();
+                int completedTask = tasks.Where(x => x.Completed != null && x.Completed.Value.DayOfYear == listOfDate[i - 1].DayOfYear).Count();
                 remainingTasks -= completedTask;
                 result.Add(new ModelForCharts { Name = "Day "+ i, RemainingTask = remainingTasks, CompletedTask = completedTask});
             }
             return result;
         }
+
+        public ICollection<ModelForCharts> GetDataVelocity()
+        {
+            ICollection<ModelForCharts> result = new List<ModelForCharts>();
+            foreach(Sprint sprint in GetSprintForVelocity())
+            {
+                int remainingTasks = 0;
+                int completedTasks = 0;
+                foreach(Story story in GetStoriesOfSprint(sprint))
+                {
+                    remainingTasks += story.Tasks.Count();
+                    completedTasks += story.Tasks.Where(x => x.Completed != null && x.Completed.Value.DayOfYear <= sprint.History.Ended.Value.DayOfYear).Count();
+                }
+                result.Add(new ModelForCharts() { Name = sprint.Name, CompletedTask = completedTasks, RemainingTask = remainingTasks });
+            }
+            return result;
+        }
+
     }
 }

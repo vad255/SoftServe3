@@ -32,8 +32,8 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
     private isLoading: boolean = true;
     private link: string = (window.location.href);
     readonly id: string = this.link.substr(this.link.lastIndexOf('/') + 1);
-    private URL: string = "odata/team?$expand=members&$filter=id eq " + this.id;
-    private updateURL: string = "/odata/teamgrid/";
+    private URL: string = "odata/feature?$expand=owner,stories($expand=team)&$filter=id eq " + this.id;
+    private updateURL: string = "/odata/feature/";
     private getUserURL: string = "odata/users/";
     
     public render() {

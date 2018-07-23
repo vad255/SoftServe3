@@ -23,11 +23,17 @@ namespace ScrumMaker.Controllers
             _chartManager = chartManager; 
         }
         
-        [Route("/getdata")]
-        public ICollection<ModelForCharts> GetData()
+        [Route("/getburndown")]
+        public ICollection<ModelForCharts> GetBurnDown()
         {
             ChartManager manager = new ChartManager(_sprints, _stories);
-            return _chartManager.GetData();
+            return _chartManager.GetDataBurnDown();
+        }
+        [Route("/getvelocity")]
+        public ICollection<ModelForCharts> GetVelocity()
+        {
+            ChartManager manager = new ChartManager(_sprints, _stories);
+            return _chartManager.GetDataVelocity();
         }
     }
 }

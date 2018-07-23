@@ -14,12 +14,12 @@ using System.Threading.Tasks;
 
 namespace ScrumMaker.Controllers
 {
-    public class UserEditController : Controller
+    public class UserController : Controller
     {
         private IRepository<Photo> _repository;
         private IRepository<User> _user;
 
-        public UserEditController(IRepository<Photo> repository, IRepository<User> user)
+        public UserController(IRepository<Photo> repository, IRepository<User> user)
         {
             _user = user;
             _repository = repository;
@@ -74,11 +74,24 @@ namespace ScrumMaker.Controllers
             }
             catch
             {
-                FileStream file = System.IO.File.OpenRead(Path.GetFullPath("wwwroot/img/unknown.jpg"));
-                ms = new MemoryStream();
-                file.CopyTo(ms);
-                ms.Position = 0;
+                ms = GetDefaultAvatar().Result;
             }
+
+            return new FileStreamResult(ms, "image/jpeg");
+        }
+
+
+
+        [HttpGet]
+        [Route("api/UserPhoto/{userId?}")]
+        public async Task<FileStreamResult> GetAvatar(int userId)
+        {
+            var photo = _repository.GetAll().Where(p => p.UserId == userId).FirstOrDefault();
+            MemoryStream ms = null;
+            if (photo != null)
+                ms = new MemoryStream(photo.UserPhoto);
+            else
+                ms = await GetDefaultAvatar();
 
             return new FileStreamResult(ms, "image/jpeg");
         }
@@ -117,9 +130,15 @@ namespace ScrumMaker.Controllers
 
         private User GetUser()
         {
-            User user = _user.GetAll().Where(u => u.Login.Equals(GetLogin())).FirstOrDefault(); 
+            User user = _user.GetAll().Where(u => u.Login.Equals(GetLogin())).FirstOrDefault();
 
             return user;
+        }
+
+        private static async Task<MemoryStream> GetDefaultAvatar()
+        {
+            byte[] fs = await System.IO.File.ReadAllBytesAsync(Path.GetFullPath("wwwroot/img/unknown.jpg"));
+            return new MemoryStream(fs);
         }
     }
 }

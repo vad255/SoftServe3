@@ -24,11 +24,13 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
     commitTo: string = "";
     dateString: string = "";
     sprintId: number = -1;
+    user: User = new User("");
 
     constructor(props: any) {
         super(props);
         this.state = { wentWellOutPut: "", improvedOutput: "", commitOutput: "" };
-        this.connection = new HubConnectionBuilder().withUrl(this.chatUrl).build();
+        this.sprintId = this.props.location.state.sprintId as number;
+        this.connection = new HubConnectionBuilder().withUrl(this.chatUrl + "?token=" + this.sprintId).build();
         this.connection.on("receiveMessage", this.receiveMessage.bind(this));
         this.connection.on("receiveHistory", this.receiveHistory.bind(this));
         this.connection.on("receiveUsers", this.receiveUsers.bind(this));
@@ -42,13 +44,12 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
             }).catch(err => console.error(err));
 
         this.handleSendButton = this.handleSendButton.bind(this);
-        this.sprintId = this.props.location.state.sprintId as number;
-        console.log(this.sprintId);
+        this.handleSendEmailButtonClick = this.handleSendEmailButtonClick.bind(this);
+        this.downloadTxtFile = this.downloadTxtFile.bind(this);
     }
 
     public send() {
         this.connection.invoke("SendMessage", this.message, this.sprintId);
-
     }
 
     loadHistory() {
@@ -62,9 +63,12 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
     receiveHistory(messages: string[]) {
     }
 
-    public receiveUsers(users: User[]) {
+    public receiveUsers(users: UserInfo[], sI: number) {
+
         users.forEach(element => {
-            this.userConnected(element);
+            if (sI === element.sprintId) {
+                this.userConnected(element.user);
+            }
         });
     }
 
@@ -76,7 +80,6 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
             this.forceUpdate();
             this.table.updateLayout(this.table.getListitems());
             this.forceUpdate();
-
         }
     }
 
@@ -94,11 +97,11 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
 
     public receiveMessage(message: RetrospectiveMessage) {
 
-        const s = message.sendingDate.toString().replace("T", ", ").replace("Z", "");
+        let s = message.sendingDate.toString().replace("T", "  ").slice(0, 20);
 
-        this.wentWell += message.userName + ' (' + s + ') : ' + message.wentWell + '\n';
-        this.improved += message.userName + ' (' + s + ') : ' + message.couldBeImproved + '\n';
-        this.commitTo += message.userName + ' (' + s + ') : ' + message.commitToDoing + '\n';
+        this.wentWell += message.userName + ' (' + s + '): ' + message.wentWell + '\n';
+        this.improved += message.userName + ' (' + s + '): ' + message.couldBeImproved + '\n';
+        this.commitTo += message.userName + ' (' + s + '): ' + message.commitToDoing + '\n';
 
         this.setState({ wentWellOutPut: this.wentWell, improvedOutput: this.improved, commitOutput: this.commitTo });
     }
@@ -109,12 +112,15 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
         let improveInput = document.getElementById("couldBeImproved") as any;
         let commitToDoigInput = document.getElementById("commitToDoing") as any;
 
-        if (wentWellInput.value !== '' && improveInput !== '' && commitToDoigInput !== '') {
-
-            var obj = JSON.parse('{ "WentWell": "' + wentWellInput.value + '", "CouldBeImproved": "'
-                + improveInput.value + '", "CommitToDoing": "' + commitToDoigInput.value + '" }');
+            var obj = JSON.parse('{ "WentWell": "' +
+                wentWellInput.value +
+                '", "CouldBeImproved": "' +
+                improveInput.value +
+                '", "CommitToDoing": "' +
+                commitToDoigInput.value +
+                '" }');
             this.message = new RetrospectiveMessage(obj);
-        }
+
     }
 
     handleSendButton(event: any) {
@@ -124,12 +130,65 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
         if (this.message !== null) {
             this.send();
         }
+
+        let input = document.getElementById("wentWell") as any;
+        let input1 = document.getElementById("couldBeImproved") as any;
+        let input2 = document.getElementById("commitToDoing") as any;
+        input.value = "";
+        input1.value = "";
+        input2.value = "";
+    }
+
+    downloadTxtFile() {
+        fetch('/SaveTxtFile');
+    }
+
+    private getDeleteConfirmModal() {
+        return <div id="confirmDeleteModal" className="modal fade">
+                   <div className="modal-dialog">
+                       <div className="modal-content">
+                           <div className="modal-header  text-center" ><button className="close" type="button" data-dismiss="modal">×</button>
+                               <h4 className="modal-title">The Sprint Retrospective was sent to email</h4>
+                           </div>
+                           <div className="modal-body text-center">
+                               <button className="btn btn-default" type="button" data-dismiss="modal">
+                                   Ok</button>
+                           </div>
+                       </div>
+                   </div>
+               </div>;
+    }
+
+    handleSendEmailButtonClick() {
+
+        const data = new FormData();
+        data.append("sprintId", this.sprintId.toString());
+        data.append("toEmail", this.user.login);
+
+        fetch('/SendEmail',
+            {
+                method: 'POST',
+                body: data
+            });
     }
 
     render() {
         return <div className="chatWindow">
-            <div className="RetrospectiveTable" style={{ background: `url("img/RetrospectiveTable.jpg") no-repeat` }}>
-                {this.table.render()}
+            <div>
+                <div className="RDiv">
+                    <div className="RetrospectiveTable" style={{ background: `url("img/RetrospectiveTable.jpg") no-repeat` }}>
+                        {this.table.render()}
+                    </div>
+                    <div style={{ width: "30%" }}>
+                        <button style={{ margin: "10px" }}
+                            className="btn-success" onClick={this.downloadTxtFile}>Save Meeting Result</button>
+                        <button style={{ margin: "10px" }}
+                            className="btn-success"
+                                data-toggle="modal"
+                                data-target="#confirmDeleteModal"
+                            onClick={this.handleSendEmailButtonClick}>Send meeting result to email</button>
+                    </div>
+                </div>
             </div>
             <hr />
             <div className="RetrospectivechatOutputWindow">
@@ -163,8 +222,15 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
                 <textarea id="commitToDoing" className="chatInput" />
             </div>
             <div className="text-center">
-                <button style={{ marginTop: "10px" }} className="button" onClick={this.handleSendButton}>Send</button>
+                <button style={{ marginTop: "10px" }}
+                    className="button" onClick={this.handleSendButton}>Send</button>
             </div>
+            {this.getDeleteConfirmModal()}
         </div>;
     }
+}
+
+export class UserInfo {
+    user: User = new User("");
+    sprintId: number = -1;
 }

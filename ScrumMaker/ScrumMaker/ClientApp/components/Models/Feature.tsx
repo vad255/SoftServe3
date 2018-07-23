@@ -51,11 +51,30 @@ export class Feature implements IDbModel {
             this.featureName,
             this.description,
             this.renderStories(),
-            this.state,
+            this.getStatus(this.state),
             this.blocked === true ? "true" : "false"
         ]
 
         return elements;
+    }
+
+    getStatus(status: any) {
+        switch (status) {
+            case "PendingApproval":
+                return "Pending approval";
+            case "ReadyToStart":
+                return "Ready to start";
+            case "InProgress":
+                return "In progress";
+            case "DevComplete":
+                return "Developing complete";
+            case "TestComplete":
+                return "Test complete";
+            case "Accepted":
+                return "Accepted";
+            default:
+                return "";
+        }
     }
 
     public renderStories() {

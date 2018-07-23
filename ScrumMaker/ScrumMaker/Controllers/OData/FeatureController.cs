@@ -39,7 +39,7 @@ namespace ScrumMaker.Controllers
         {
             return Ok(featureRepository.GetById(id));
         }
-        
+
         [AcceptVerbs("PATCH", "MERGE")]
         public IActionResult Patch([FromODataUri] int key, Delta<Feature> updateFeatureRequestModel)
         {
@@ -61,9 +61,17 @@ namespace ScrumMaker.Controllers
         [AcceptVerbs("DELETE")]
         public IActionResult Delete([FromODataUri] int key)
         {
-            featureRepository.Delete(key);
-            featureRepository.Save();
-            return NoContent();
+            try
+            {
+                featureRepository.Delete(key);
+                featureRepository.Save();
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                Logger.Logger.LogError("Deleting failed.", e);
+                return BadRequest();
+            }
         }
     }
 }
