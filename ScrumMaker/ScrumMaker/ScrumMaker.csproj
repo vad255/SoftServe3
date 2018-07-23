@@ -52,6 +52,7 @@
     <None Remove="ClientApp\components\Filters\TasksFiltersRow.tsx" />
     <None Remove="ClientApp\components\Filters\TeamFiltersRow.tsx" />
     <None Remove="ClientApp\components\Filters\StoriesFiltersRow.tsx" />
+    <None Remove="ClientApp\components\GetError.tsx" />
     <None Remove="ClientApp\components\Grids\DefectGrid.tsx" />
     <None Remove="ClientApp\components\Grids\StoriesGrid.tsx" />
     <None Remove="ClientApp\components\Grids\TaskGrid.tsx" />
@@ -111,6 +112,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\AddUser.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\EditDefect.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\GetError.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Meetings\SprintPlaning.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\TaskEdit.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Charts\Velocity.tsx" />

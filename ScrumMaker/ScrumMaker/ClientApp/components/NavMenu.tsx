@@ -84,8 +84,11 @@ export class NavMenu extends React.Component<{}, {}> {
                             <span></span> Chart
                             </NavLink>
                     </li>
-
-
+                    <li>
+                        <NavLink to={'/GetError'} activeClassName='active'>
+                            <span></span> Error Page
+                        </NavLink>
+                    </li>
                 </ul>
             </div>
             <div className="nav_bg">

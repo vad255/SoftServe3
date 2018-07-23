@@ -7,6 +7,7 @@ namespace BL.Chatting
 {
     public interface IRetrospectiveChatMananger : IChatManager
     {
+        IEnumerable<UserInfo> GetOnlineUsersInfo();
         void AddRetrospectiveMessage(RetrospectiveMessage text);
         int GetCurrentUserId();
         string GetCurrentUserName();

@@ -28,6 +28,7 @@ import { EditTeam } from './components/EditPages/EditTeam';
 import { RetrospectiveMeeting } from './components/Chats/RetrospectiveMeeting';
 import { SelectSprintPage } from './components/Chats/RetrospectivePages/SelectSprintPage';
 import { SelectSprint } from './components/Meetings/SelectSprint';
+import { GetError } from "./components/GetError";
 
 
 const LayoutRoute = ({ ...props }) => {
@@ -55,7 +56,7 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/Chart' component={Chart} />
         <LayoutRoute path='/EditStory' component={EditStory} />
         <LayoutRoute path='/SprintReviewEdit' component={SprintReviewEdit} />
-        <LayoutRoute path='/UserEdit' component={UserEdit}/>
+        <LayoutRoute path='/UserEdit' component={UserEdit} />
         <LayoutRoute path='/Calendar' component={MyCalendar} />
         <LayoutRoute path='/SelectSprint' component={SelectSprint} />
         <LayoutRoute path='/SprintEdit' component={SprintEdit} />
@@ -65,6 +66,7 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/EditTeam' component={EditTeam} />
         <LayoutRoute path='/RetrospectiveMeeting' component={RetrospectiveMeeting} />
         <LayoutRoute path='/SelectSprintPage' component={SelectSprintPage} />
+        <LayoutRoute path='/GetError' component={GetError} />
 
         <Route path='/login' component={Login} />
         <Route path='/Error' component={Error} />

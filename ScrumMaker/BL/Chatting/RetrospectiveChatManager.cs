@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
+using System.Collections.ObjectModel;
 using System.Text;
 using DAL.Chatting;
 using System.Linq;
@@ -18,11 +19,18 @@ using System.Net.Mail;
 
 namespace BL.Chatting
 {
+    public class UserInfo
+    {
+        public User User { get; set; }
+        public int SprintId { get; set; }
+    }
+
     public class RetrospectiveChatManager : IRetrospectiveChatMananger
     {
         public const string ROOM_NAME = "RetrospectiveRoom";
         private static List<User> _authorizedGuests = new List<User>();
         private static int _totalGuestsCount;
+        private static List<UserInfo> _usersInfo = new List<UserInfo>();
 
         private readonly IRepository<ChatRoom> _chats;
         private readonly IRepository<Message> _msgs;
@@ -72,6 +80,7 @@ namespace BL.Chatting
                 if (target == -1)
                 {
                     _authorizedGuests.Add(_users.GetById(userId));
+                    _usersInfo.Add(new UserInfo() { User = _users.GetById(userId), SprintId = this.SprintId });
                 }
                 else
                 {
@@ -95,6 +104,7 @@ namespace BL.Chatting
                 {
                     user = _authorizedGuests[target];
                     _authorizedGuests.RemoveAt(target);
+                    _usersInfo.RemoveAt(target);
                 }
                 else
                 {
@@ -131,6 +141,10 @@ namespace BL.Chatting
             return new Message();
         }
 
+        public virtual IEnumerable<UserInfo> GetOnlineUsersInfo()
+        {
+            return _usersInfo;
+        }
 
         public virtual IEnumerable<User> GetOnlineUsers()
         {
@@ -189,7 +203,5 @@ namespace BL.Chatting
 
             return "Anonim";
         }
-
-
     }
 }
