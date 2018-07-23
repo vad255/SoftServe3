@@ -34,6 +34,9 @@
 
   <ItemGroup>
     <None Remove="ClientApp\components\AddUser.tsx" />
+    <None Remove="ClientApp\components\Backlog\Backlog.tsx" />
+    <None Remove="ClientApp\components\Backlog\ProductBacklog.tsx" />
+    <None Remove="ClientApp\components\Backlog\SprintBacklog.tsx" />
     <None Remove="ClientApp\components\Charts\Chart.tsx" />
     <None Remove="ClientApp\components\EditPages\EditDefect.tsx" />
     <None Remove="ClientApp\components\Charts\Velocity.tsx" />
@@ -110,6 +113,9 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\AddUser.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Backlog\Backlog.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Backlog\ProductBacklog.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Backlog\SprintBacklog.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\EditDefect.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Meetings\SprintPlaning.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\TaskEdit.tsx" />

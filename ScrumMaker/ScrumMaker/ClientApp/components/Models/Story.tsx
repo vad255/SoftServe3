@@ -4,6 +4,10 @@ import 'isomorphic-fetch';
 import { Team } from './Team';
 import { Link } from 'react-router-dom';
 import { IDbModel } from './Abstraction';
+import { Task } from './Task';
+import { Sprint } from './Sprint';
+
+
 
 export enum StoryStatus {
     PendingApproval = 1,
@@ -21,6 +25,8 @@ export class Story implements IDbModel {
     description: string = '';
     team: Team;
     userId: number = 0;
+    sprint: Sprint;
+    tasks: Task[];
     sprintId: number = 0;
 
 
@@ -35,11 +41,20 @@ export class Story implements IDbModel {
         this.status = params.Status;
         this.description = params.Description;
         this.userId = params.UserId;
-        this.sprintId = params.SprintId
-        if (params.Team === null || params.Team === undefined)
-            return;
+        if (params.Sprint)
+            this.sprint = new Sprint(params.Sprint);
+        if (params.Team)
+            this.team = new Team(params.Team);
 
-        this.team = new Team(params.Team);
+        var tasks = [];
+
+        if (params.Tasks) {
+            for (var i = 0; i < params.Tasks.length; i++)
+                tasks[i] = new Task(params.Tasks[i]);
+            this.tasks = tasks;
+        }
+
+        this.sprintId = params.SprintId
         
     }
 
