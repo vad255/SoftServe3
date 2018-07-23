@@ -44,6 +44,7 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
         this.handleStateSelect = this.handleStateSelect.bind(this);
         this.handleChangeInputActualResult = this.handleChangeInputActualResult.bind(this);
         this.handleChangeInputFixResult = this.handleChangeInputFixResult.bind(this);
+        this.handleOK = this.handleOK.bind(this);
          
         fetch("odata/Defects?expand=()&$filter=DefectId eq " + this.state.id)
             .then(response => response.json() as Promise<any>)
@@ -52,7 +53,7 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
                
                 this.setState({
                     defect: defect1,
-                    statusValue: (defect1.status.toString()=='Open')?0:1,
+                    statusValue: defect1.status,
                     nameValue: defect1.name,
                     textAreaValue: defect1.description,
                     priorityValue: defect1.priority,
@@ -60,12 +61,13 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
                     actualResultValue: defect1.actualResults,
                     fixResultValue: defect1.fixResults
                    
-                }); console.log(this.state.statusValue)
+                }); 
             })
        
     }
       
     handleSaveButtonClick() {
+        console.log(this.state.stateValue)
         fetch('odata/Defects(' + this.state.id + ')',
             {
                 method: 'PATCH',
@@ -73,7 +75,6 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
                     'OData-Version': '4.0',
                     'Accept': 'application/json',
                     'Content-Type': 'application/json;odata.metadata=minimal',
-
                 },
                 body: JSON.stringify({
 
@@ -97,14 +98,17 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
                         <h4 className="modal-title">The defect "{this.state.defect.name}" was updated.</h4>
                     </div>
                     <div className="modal-body text-center">
-                        <button className="btn btn-default" type="button" data-dismiss="modal">
+                        <button className="btn btn-default" type="button" onClick={this.handleOK} data-dismiss="modal">
                             Ok</button>
                     </div>
                 </div>
             </div>
         </div>;
     }
-    
+    handleOK(event: any) {
+        this.props.history.push('/defects');
+    }
+    //.then(response => { this.props.history.push('/feature') })
     handleStatusSelect(event: any) {
         this.setState({ statusValue: event.target.value });
     }
@@ -113,6 +117,7 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
     }
     handleStateSelect(event: any) {
         this.setState({ stateValue: event.target.value });
+      //  console.log(event.target.value);
     }
     handleChangeInputActualResult(event: any) {
         this.setState({ actualResultValue: event.target.value });
@@ -144,8 +149,8 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
             <div>
                 <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Status:</h3>
                 <select className="form-control-static" value={this.state.statusValue} onChange={this.handleStatusSelect} >
-                    <option value="0">Open</option>
-                    <option value="1">Close</option>                   
+                    <option value="Open">Open</option>
+                    <option value="Close">Close</option>                   
                 </select>
             </div>
             <div>
