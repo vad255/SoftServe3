@@ -6,7 +6,7 @@ interface DataFetchingState {
     data: ModelForChart[];
 }
 
-export class Chart extends React.Component<DataFetchingState, DataFetchingState> {
+export class BurnDown extends React.Component<DataFetchingState, DataFetchingState> {
     constructor() {
         super();
         this.state = { data: [] };
@@ -14,7 +14,7 @@ export class Chart extends React.Component<DataFetchingState, DataFetchingState>
         this.LoadData();
     }
     private LoadData() {
-        fetch("/getdata", { credentials: 'include' })
+        fetch("/getburndown", { credentials: 'include' })
             .then(response => response.json() as any)
             .then(data => {
                 var temp = [];

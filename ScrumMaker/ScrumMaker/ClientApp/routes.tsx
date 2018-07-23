@@ -15,7 +15,7 @@ import { TaskGrid } from './components/Grids/TaskGrid';
 import { FeatureEdit } from './components/EditPages/FeatureEdit';
 import { Error } from './components/Error';
 import { SimpleChat } from './components/Chats/SimpleChat'
-import { Chart } from './components/Charts/Chart'
+import { BurnDown } from './components/Charts/Chart'
 import { SprintReviewEdit } from './components/Meetings/SprintReviewEdit';
 import { EditStory } from "./components/EditPages/EditStory";
 import { UserEdit } from "./components/EditPages/UserEdit";
@@ -58,7 +58,7 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/tasks' component={TaskGrid} />
         <LayoutRoute path='/featureEdit' component={FeatureEdit} />
         <LayoutRoute path='/SimpleChat' component={SimpleChat} />
-        <LayoutRoute path='/Chart' component={Chart} />
+        <LayoutRoute path='/burndown' component={BurnDown} />
         <LayoutRoute path='/EditStory' component={EditStory} />
         <LayoutRoute path='/SprintReviewEdit' component={SprintReviewEdit} />
         <LayoutRoute path='/UserEdit' component={UserEdit} />
@@ -67,7 +67,7 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/SprintEdit' component={SprintEdit} />
         <LayoutRoute path='/SprintPlaning' component={SprintPlaning} />
         <LayoutRoute path='/TaskEdit' component={TaskEdit} />
-        <LayoutRoute path='/VelocityChart' component={Velocity} />
+        <LayoutRoute path='/velocity' component={Velocity} />
         <LayoutRoute path='/EditTeam' component={EditTeam} />
         <LayoutRoute path='/EditDefect' component={EditDefect} />
         <LayoutRoute path='/RetrospectiveMeeting' component={RetrospectiveMeeting} />

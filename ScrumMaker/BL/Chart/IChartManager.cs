@@ -10,8 +10,10 @@ namespace BL.Chart
     {
         Sprint GetSprintByDate();
         List<DateTime> GetWorkingDaysOfSprint();
-        ICollection<Story> GetStoriesOfSprint();
+        ICollection<Story> GetStoriesOfSprint(Sprint sprint);
         ICollection<ScrumTask> GetTasksOfStories();
-        ICollection<ModelForCharts> GetData();
+        ICollection<ModelForCharts> GetDataBurnDown();
+        ICollection<ModelForCharts> GetDataVelocity();
+
     }
 }
