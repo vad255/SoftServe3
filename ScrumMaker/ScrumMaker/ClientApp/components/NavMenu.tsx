@@ -87,7 +87,7 @@ export class NavMenu extends React.Component<{}, { role: string }> {
                             </li>
                             <li>
                                 <NavLink to={'/SelectSprintPage'} activeClassName='active'>
-                                    <span className='glyphicon glyphicon-th-list fa-columns'></span> Retrospective meeting
+                                    <span className='glyphicon glyphicon-th-list columnGrid'></span> Retrospective meeting
                                  </NavLink>
                             </li>
                         </ul>
