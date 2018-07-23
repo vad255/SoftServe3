@@ -73,7 +73,7 @@ namespace BL.Chart
             int remainingTasks = tasks.Count;
             for (int i = 1; i <= listOfDate.Count; i++)
             {
-                int completedTask = tasks.Where(x => x.Completed == listOfDate[i - 1]).Count();
+                int completedTask = tasks.Where(x => x.Completed != null && x.Completed.Value.DayOfYear == listOfDate[i - 1].DayOfYear).Count();
                 remainingTasks -= completedTask;
                 result.Add(new ModelForCharts { Name = "Day "+ i, RemainingTask = remainingTasks, CompletedTask = completedTask});
             }

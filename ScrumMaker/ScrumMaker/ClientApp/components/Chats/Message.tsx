@@ -9,7 +9,6 @@ export class Message extends React.Component<{ msg: MessageProps }, any>{
 
     render() {
         let my = this.props.msg.myMessage;
-        console.log(my);
 
         let name = this.props.msg.author.login || "Anonym";
         return (

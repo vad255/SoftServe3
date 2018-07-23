@@ -20,7 +20,6 @@ export class NavMenu extends React.Component<{}, { role: string }> {
             .then(responce => responce.text() as Promise<any>)
             .then(data => {
                 let temp = data;
-                console.log(data);
                 this.setState({ role: temp });
             })
     }
