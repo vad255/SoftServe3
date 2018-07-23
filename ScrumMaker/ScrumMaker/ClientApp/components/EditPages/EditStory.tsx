@@ -6,7 +6,6 @@ import { StoryStatus } from "../Models/Story";
 import { User } from "../Models/User";
 import { Team } from "../Models/Team";
 
-
 interface IEditPageState {
     story: Story;
     id: string;
@@ -36,6 +35,7 @@ export class EditStory extends React.Component<RouteComponentProps<any>, IEditPa
         this.handleChangeInput = this.handleChangeInput.bind(this);
         this.handleChangeTextArea = this.handleChangeTextArea.bind(this);
         this.handleUserSelect = this.handleUserSelect.bind(this);
+        this.handleOkButtonClick = this.handleOkButtonClick.bind(this);
 
         fetch("odata/Stories?$expand=team&$filter=id eq " + this.state.id)
             .then(response => response.json() as Promise<any>)
@@ -74,7 +74,6 @@ export class EditStory extends React.Component<RouteComponentProps<any>, IEditPa
                     'OData-Version': '4.0',
                     'Accept': 'application/json',
                     'Content-Type': 'application/json;odata.metadata=minimal',
-
                 },
                 body: JSON.stringify({
 
@@ -98,12 +97,16 @@ export class EditStory extends React.Component<RouteComponentProps<any>, IEditPa
                         <h4 className="modal-title">The story "{this.state.story.name}" was updated.</h4>
                     </div>
                     <div className="modal-body text-center">
-                        <button className="btn btn-default" type="button" data-dismiss="modal">
+                        <button className="btn btn-default" type="button" data-dismiss="modal" onClick={this.handleOkButtonClick} >
                             Ok</button>
                     </div>
                 </div>
             </div>
         </div>;
+    }
+
+    handleOkButtonClick() {
+        this.props.history.push("/Stories");
     }
 
     handleUserSelect(event: any) {
@@ -162,8 +165,5 @@ export class EditStory extends React.Component<RouteComponentProps<any>, IEditPa
             </div>
             {this.GetDeleteConfirmModal()}
         </div>;
-
-
-
     }
 }

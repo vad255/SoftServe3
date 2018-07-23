@@ -32,7 +32,14 @@ namespace ScrumMaker.Controllers
            return Ok(_stories.GetAll());
         }
 
-      
+        [AcceptVerbs("DELETE")]
+        public IActionResult Delete([FromODataUri] int key)
+        {
+            _stories.Delete(key);
+            _stories.Save();
+            return NoContent();
+        }
+
         [AcceptVerbs("PATCH", "MERGE")]
         public IActionResult Patch([FromODataUri] int key, [FromBody] Delta<Story> patch)
         {

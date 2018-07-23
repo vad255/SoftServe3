@@ -29,7 +29,8 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
     constructor(props: any) {
         super(props);
         this.state = { wentWellOutPut: "", improvedOutput: "", commitOutput: "" };
-        this.connection = new HubConnectionBuilder().withUrl(this.chatUrl).build();
+        this.sprintId = this.props.location.state.sprintId as number;
+        this.connection = new HubConnectionBuilder().withUrl(this.chatUrl + "?token=" + this.sprintId).build();
         this.connection.on("receiveMessage", this.receiveMessage.bind(this));
         this.connection.on("receiveHistory", this.receiveHistory.bind(this));
         this.connection.on("receiveUsers", this.receiveUsers.bind(this));
@@ -44,7 +45,6 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
 
         this.handleSendButton = this.handleSendButton.bind(this);
         this.handleSendEmailButtonClick = this.handleSendEmailButtonClick.bind(this);
-        this.sprintId = this.props.location.state.sprintId as number;
         this.downloadTxtFile = this.downloadTxtFile.bind(this);
     }
 
@@ -63,9 +63,12 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
     receiveHistory(messages: string[]) {
     }
 
-    public receiveUsers(users: User[]) {
+    public receiveUsers(users: UserInfo[], sI: number) {
+
         users.forEach(element => {
-            this.userConnected(element);
+            if (sI === element.sprintId) {
+                this.userConnected(element.user);
+            }
         });
     }
 
@@ -225,4 +228,9 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
             {this.getDeleteConfirmModal()}
         </div>;
     }
+}
+
+export class UserInfo {
+    user: User = new User("");
+    sprintId: number = -1;
 }
