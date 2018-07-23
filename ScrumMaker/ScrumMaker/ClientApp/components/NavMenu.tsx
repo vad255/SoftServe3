@@ -103,10 +103,19 @@ export class NavMenu extends React.Component<{}, { role: string }> {
                             </NavLink>
                     </li>
                     <br />
-                    <li>
-                        <NavLink to={'/Chart'} activeClassName='active'>
-                            <span></span> Chart
-                            </NavLink>
+                    <li><a>Charts<span className="arrow-left"></span></a>
+                        <ul className='dropdown nav navbar-nav'>
+                            <li>
+                                <NavLink to={'/burndown'} activeClassName='active'>
+                                    <span className='glyphicon glyphicon-th-list columnGrid'></span> BurnDown
+                                    </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to={'/velocity'} activeClassName='active'>
+                                    <span className='glyphicon glyphicon-th-list columnGrid'></span> Velocity
+                                    </NavLink>
+                            </li>
+                        </ul>
                     </li>
                     <br />
                     <li>

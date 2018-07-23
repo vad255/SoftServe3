@@ -12,10 +12,9 @@ export class Velocity extends React.Component<DataFetchingState, DataFetchingSta
         this.state = { data: [] };
 
         this.LoadData();
-        this.test();
     }
     private LoadData() {
-        fetch("/getdata", { credentials: 'include' })
+        fetch("/getvelocity", { credentials: 'include' })
             .then(response => response.json() as any)
             .then(data => {
                 var temp = [];
@@ -25,13 +24,8 @@ export class Velocity extends React.Component<DataFetchingState, DataFetchingSta
                 this.setState({ data: temp });
             });
     }
-    private test() {
-        for (var i = 0; i < this.state.data.length; i++) {
-            alert(this.state.data[i].completedTask);
-        }
-    }
+    
     public render() {
-        console.log(this.state.data);
         return (
             <ComposedChart width={900} height={450} data={this.state.data.map(x => x.props)}
                 margin={{ top: 13, right: 20, left: 10, bottom: 5 }}>
