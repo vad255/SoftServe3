@@ -20,6 +20,7 @@ export class DefectGrid extends Grid {
     protected URL_EXPANDS: string = '?expand=()';
     protected URL_ORDERING: string = '&$orderby=DefectId';
     protected headerText: string = 'Defects';
+    protected URL_EDIT: string = "EditDefect/";
 
     constructor() {
         super();

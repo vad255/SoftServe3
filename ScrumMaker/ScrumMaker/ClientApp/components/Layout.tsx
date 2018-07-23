@@ -26,7 +26,7 @@ export class Layout extends React.Component<LayoutProps, {}> {
                                 <ul className="dropdown">
                                     <li><a href="/edituser">Edit user</a></li>
                                     <li><Link to="/#">About</Link></li>
-                                    <li><Link to="/#">Log Out</Link></li>
+                                    <li><a href="/logout">Log Out</a></li>
                                 </ul>
                             </li>
                         </ul>

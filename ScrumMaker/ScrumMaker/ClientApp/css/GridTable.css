@@ -4,6 +4,11 @@
 .table-border {
     border: solid 1px #808080;
 }
+.border  {
+    border-bottom: solid 3px #808080; 
+    border-top: solid 3px #808080; 
+    background-color: rgba(229, 229, 229, 0.63)
+}
 .table-scrum {
     /*border: 1px solid black;*/
     border-collapse: collapse;

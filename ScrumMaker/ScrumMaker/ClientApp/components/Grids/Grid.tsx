@@ -186,9 +186,6 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         this.LoadData();
     }
 
-
-
-
     protected FilterButtonClick(e: any) {
         this.filteringOn = !this.filteringOn;
         this.forceUpdate();
