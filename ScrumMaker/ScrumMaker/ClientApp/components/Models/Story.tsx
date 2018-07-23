@@ -53,10 +53,7 @@ export class Story implements IDbModel {
             for (var i = 0; i < params.Tasks.length; i++)
                 tasks[i] = new Task(params.Tasks[i]);
             this.tasks = tasks;
-        }
-
-        this.sprintId = params.SprintId
-        
+        } 
     }
 
     public toString(): string {

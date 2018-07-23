@@ -49,7 +49,7 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
 
     public EditSprintReview() {
         return <div>
-            <h1 className="text-center">Sprint "{this.state.Sprint.name}" review</h1>
+            <h1 className="text-center">Sprint "<i>{this.state.Sprint.name}</i>" review</h1>
             <div className="row">
                 <div className="col-md-3">
                     {this.GetTeamTable()}
@@ -132,10 +132,30 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
                     </div>
                 </div>
                 <div>
-                    <button className="login100-form-btn" disabled={!this.userIsScrumMaster()}>Save</button>
+                    <button className="login100-form-btn"
+                        disabled={!this.userIsScrumMaster()}
+                        data-toggle="modal"
+                        data-target="#confirmDeleteModal">Save</button>
                 </div>
             </form>
+            {this.GetSaveConfirmModal()}
         </div>
+    }
+
+    private GetSaveConfirmModal() {
+        return <div id="confirmDeleteModal" className="modal fade">
+            <div className="modal-dialog">
+                <div className="modal-content">
+                    <div className="modal-header  text-center" ><button className="close" type="button" data-dismiss="modal">×</button>
+                        <h4 className="modal-title">The review for "<i>{this.state.Sprint.name}</i>" was saved.</h4>
+                    </div>
+                    <div className="modal-body text-center">
+                        <button className="btn btn-default" type="button" data-dismiss="modal">
+                            Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>;
     }
 
     userIsScrumMaster() {

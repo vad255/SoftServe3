@@ -61,9 +61,17 @@ namespace ScrumMaker.Controllers
         [AcceptVerbs("DELETE")]
         public IActionResult Delete([FromODataUri] int key)
         {
-            featureRepository.Delete(key);
-            featureRepository.Save();
-            return NoContent();
+            try
+            {
+                featureRepository.Delete(key);
+                featureRepository.Save();
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                Logger.Logger.LogError("Deleting failed.", e);
+                return BadRequest();
+            }
         }
     }
 }
