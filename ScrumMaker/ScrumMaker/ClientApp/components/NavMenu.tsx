@@ -6,26 +6,27 @@ import { Role } from './Models/Role';
 import { User } from './Models/User';
 import { RouteComponentProps } from 'react-router';
 
-export class NavMenu extends React.Component<{}, {role: Role }> {
+export class NavMenu extends React.Component<{}, { role: string }> {
     constructor(props: any) {
         super(props);
         this.state = (({
-            role: Role
+            role: ""
         }) as any);
         this.loadUser();
 
     }
     loadUser() {
         fetch('/getrole', { credentials: 'include' })
-            .then(responce => responce.json() as Promise<any>)
+            .then(responce => responce.text() as Promise<any>)
             .then(data => {
-                let temp = new Role(data);
+                let temp = data;
+                console.log(data);
                 this.setState({ role: temp });
             })
     }
     public render() {
         var register;
-        if (this.state.role.name === "Admin")
+        if (this.state.role == "\"Admin\"")
             register = <RegistrationButton />;
 
         return <nav>

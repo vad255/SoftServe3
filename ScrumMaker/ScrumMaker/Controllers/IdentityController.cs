@@ -77,9 +77,8 @@ namespace ScrumMaker.Controllers
         [HttpGet]
         public async Task GetRole()
         {
-            Role role = _roles.GetById(_users.GetById(HttpContext.User.UserId()).RoleId);
             Response.ContentType = "application/json";
-            await Response.WriteAsync(JsonConvert.SerializeObject(role));
+            await Response.WriteAsync(JsonConvert.SerializeObject(HttpContext.User.UserRole()));
         }
     }
 }
