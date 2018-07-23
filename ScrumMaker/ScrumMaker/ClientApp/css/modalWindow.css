@@ -18,10 +18,26 @@
     color: snow;
 }
 
+.LoginModal {
+    border-color: black;
+    font-size: 22px;
+    width: 350px;
+    height: 200px;
+    position: absolute;
+    margin-top: 20%;
+    margin-left: 37%;
+    right: auto;
+    bottom: auto;
+    background-color: #293d3d;
+    font-family: 'Times New Roman';
+    text-align: center;
+    padding-top: 25px;
+    color: snow;
+}
+
 .modalBtn {
     color: blue;
-    margin-top: 25px;
-    margin-left: 45px;
-    float: left;
+    margin-top: 10%;
+    text-align: center;
     width: 200px;
 }

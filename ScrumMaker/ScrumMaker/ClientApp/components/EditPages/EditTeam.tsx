@@ -194,9 +194,14 @@ export class EditTeam extends React.Component<RouteComponentProps<{}>, ITeamFetc
             }
         })
 
+        var teamsUpdate = {
+            Users: this.state.Users,
+            TeamName: this.state.TeamName
+        }
+
         fetch('api/sers/SetUsers', {
             method: 'POST',
-            body: JSON.stringify(this.state.Users),
+            body: JSON.stringify(teamsUpdate),
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
