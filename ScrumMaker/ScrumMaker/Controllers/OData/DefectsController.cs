@@ -75,7 +75,13 @@ namespace ScrumMaker.Controllers
     {
         return _defect.GetAll().Count(e => e.DefectId == key) > 0;
     }
-
-}
+        [AcceptVerbs("DELETE")]
+        public IActionResult Delete([FromODataUri] int key)
+        {
+            _defect.Delete(key);
+            _defect.Save();
+            return NoContent();
+        }
+    }
 }
 
