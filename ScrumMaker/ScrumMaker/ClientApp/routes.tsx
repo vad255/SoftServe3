@@ -75,4 +75,3 @@ export const routes = <BrowserRouter >
         <Route path='/Error' component={Error} />
     </Switch>
 </BrowserRouter  >;
-

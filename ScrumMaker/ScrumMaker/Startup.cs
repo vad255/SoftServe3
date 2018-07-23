@@ -29,6 +29,8 @@ using BL;
 using BL.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using BL.Chart;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 using BL.Interface;
 
 namespace ScrumMaker
@@ -65,7 +67,7 @@ namespace ScrumMaker
                 };
             });
 
-            string connectionStr = Configuration.GetConnectionString("Mikle");
+            string connectionStr = Configuration.GetConnectionString("Viktor");
 
 
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
@@ -87,6 +89,11 @@ namespace ScrumMaker
                 SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddSignalR();
+
+            services.AddSingleton<IFileProvider>(
+                new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
+  
         }
 
         private static void ConfigureDI(IServiceCollection services)

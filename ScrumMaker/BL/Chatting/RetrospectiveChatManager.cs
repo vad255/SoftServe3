@@ -4,6 +4,7 @@ using System.Collections.Concurrent;
 using System.Text;
 using DAL.Chatting;
 using System.Linq;
+using System.Net;
 using DAL.Access;
 using DAL.Models;
 using DAL;
@@ -13,6 +14,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Security;
 using ScrumMaker.Logger;
+using System.Net.Mail;
 
 namespace BL.Chatting
 {
@@ -22,12 +24,12 @@ namespace BL.Chatting
         private static List<User> _authorizedGuests = new List<User>();
         private static int _totalGuestsCount;
 
-        private IRepository<ChatRoom> _chats;
-        private IRepository<Message> _msgs;
-        private IRepository<User> _users;
-        private IRepository<RetrospectiveMessage> _rmsgs;
-        private ChatRoom _room;
-        private IRepository<Sprint> _sprints;
+        private readonly IRepository<ChatRoom> _chats;
+        private readonly IRepository<Message> _msgs;
+        private readonly IRepository<User> _users;
+        private readonly IRepository<RetrospectiveMessage> _rmsgs;
+        private readonly ChatRoom _room;
+        private readonly IRepository<Sprint> _sprints;
         public int SprintId { get; set; }
 
 
@@ -58,11 +60,6 @@ namespace BL.Chatting
             }
         }
 
-
-        /// <summary>
-        /// !!! Not thread safe
-        /// </summary>
-        /// <param name="identifier"></param>
         public User Connect()
         {
             int userId = GetCurrentUserId();
@@ -86,10 +83,7 @@ namespace BL.Chatting
 
             return user;
         }
-        /// <summary>
-        /// !!! Not thread safe
-        /// </summary>
-        /// <param name="identifier"></param>
+
         public User Disconnect()
         {
             int userId = GetCurrentUserId();
@@ -122,8 +116,8 @@ namespace BL.Chatting
             if (SprintId >= 0)
             {
                 var sprint = _sprints.GetById(SprintId);
-                sprint.Retrospective += message.UserName + " " +
-                                       message.SendingDate.ToShortDateString() + " " +
+                sprint.Retrospective += message.UserName + " (" +
+                                       message.SendingDate.ToShortDateString() + ") " +
                                        "went well: " + message.WentWell + " " +
                                        "improve to doing: " + message.CouldBeImproved + " " +
                                        "commit to next sprint: " + message.CommitToDoing + Environment.NewLine;

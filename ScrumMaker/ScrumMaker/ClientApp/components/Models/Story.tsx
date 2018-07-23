@@ -41,6 +41,9 @@ export class Story implements IDbModel {
         this.status = params.Status;
         this.description = params.Description;
         this.userId = params.UserId;
+        this.sprintId = params.SprintId;
+        if (params.Team === null || params.Team === undefined)
+            return;
         if (params.Sprint)
             this.sprint = new Sprint(params.Sprint);
         if (params.Team)
@@ -90,10 +93,9 @@ export class Story implements IDbModel {
             this.id,
             this.name,
             this.description,
-            this.status,
-            this.sprintId,
-            this.getStatus(this.status)
-        ]
+            this.getStatus(this.status),
+            this.sprintId
+        ];
 
         return elements;
     }
