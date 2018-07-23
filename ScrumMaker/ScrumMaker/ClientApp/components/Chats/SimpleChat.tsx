@@ -63,8 +63,6 @@ export class SimpleChat extends React.Component<RouteComponentProps<{}>, IGlobal
                 let user = new User(data);
                 if (user.userId === 0)
                     user.userId = -1;
-                console.log("receive");
-                console.log(user);
 
                 this.setState({ myself: user })
             });
@@ -79,8 +77,6 @@ export class SimpleChat extends React.Component<RouteComponentProps<{}>, IGlobal
         let msgs: MessageProps[] = history.map(m => {
             let result = new MessageProps(JSON.parse(m))
             result.myMessage = (result.author.userId === currUserId);
-            console.log(currUserId + " == " + result.author.userId + " = " + result.myMessage);
-
 
             return result;
         });
@@ -95,7 +91,6 @@ export class SimpleChat extends React.Component<RouteComponentProps<{}>, IGlobal
     }
 
     userConnected(user: User) {
-        console.log("Conected: " + user);
 
         if (user) {
             this.state.members.push(user);
@@ -104,7 +99,6 @@ export class SimpleChat extends React.Component<RouteComponentProps<{}>, IGlobal
     }
 
     userDisconnected(user: User) {
-        console.log("Disconected: " + user);
 
         if (user) {
             let newList = this.state.members.filter(u => u.login != user.login);
@@ -118,9 +112,6 @@ export class SimpleChat extends React.Component<RouteComponentProps<{}>, IGlobal
     }
 
     private handleInput(e: any) {
-
-        console.log(this.state.myself);
-
 
         if (e.key !== 'Enter' || e.shiftKey)
             return;

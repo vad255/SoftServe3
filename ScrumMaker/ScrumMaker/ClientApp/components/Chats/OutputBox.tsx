@@ -20,8 +20,6 @@ export class OutputBox extends React.Component<{ messages: MessageProps[], mysel
     componentDidUpdate() {
         let div: any = {};
         div = document.getElementById("messageWindow");
-        console.log(div);
-        console.log(div.scrollHeight);
 
         div.scrollTop = div.scrollHeight;
     }

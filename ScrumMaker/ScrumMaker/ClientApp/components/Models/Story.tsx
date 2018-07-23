@@ -42,8 +42,6 @@ export class Story implements IDbModel {
         this.description = params.Description;
         this.userId = params.UserId;
         this.sprintId = params.SprintId;
-        if (params.Team === null || params.Team === undefined)
-            return;
         if (params.Sprint)
             this.sprint = new Sprint(params.Sprint);
         if (params.Team)
