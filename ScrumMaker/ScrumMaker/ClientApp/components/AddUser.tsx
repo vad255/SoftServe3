@@ -1,12 +1,14 @@
 ﻿import * as React from 'react';
+import * as Modal from 'react-modal';
 import { RouteComponentProps } from 'react-router';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 interface AddUserDataState {
     id: number;
     login: string;
     password: string;
     roles: Role[];
+    ConfirmModal: boolean;
 }
 interface Role {
     RoleId: number;
@@ -17,7 +19,7 @@ export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDa
     constructor(props: any) {
         super(props);
 
-        this.state = { id: 0, login: "", password: "", roles: [] };
+        this.state = { id: 0, login: "", password: "", roles: [], ConfirmModal: false };
         fetch('odata/roles')
             .then(response => response.json() as any)
             .then(data => {                
@@ -47,19 +49,17 @@ export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDa
         </div>;
     }
 
-    // This will handle the submit form event.
     private handleSave(event: any) {
         event.preventDefault();
         const data = new FormData(event.target);
-
         fetch('api/User/Create', {
             method: 'POST',
             body: data,
 
-        }).then((response) => response.json())
-            .then((responseJson) => {
-                this.props.history.push("/");
-            })
+        }).then(response => response.json() as Promise<boolean>)
+            .then(data => {
+                data != false ? this.setState({ ConfirmModal: true }) : null;
+            });
     }
 
     // This will handle Cancel button click event.
@@ -68,9 +68,23 @@ export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDa
         this.props.history.push("/");
     }
 
+    openCloseModel = () => {
+        this.setState({
+            ConfirmModal: !this.state.ConfirmModal
+        })
+    }
+
     private renderCreateForm(cityList: Array<any>) {
         return (
-            <form onSubmit={this.handleSave} >
+            <div>
+            <Modal isOpen={this.state.ConfirmModal}
+                onRequestClose={this.openCloseModel}
+                className="Modal">
+                <h3>User successfully created</h3>
+                <button className="modalBtn" onClick={this.openCloseModel}>Ok</button>
+            </Modal>
+
+                <form onSubmit={this.handleSave} method="post">
                 <div className="form-group row" >
                     <input type="hidden" name="employeeId" value={this.state.id} />
                 </div>
@@ -100,8 +114,8 @@ export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDa
                     <button type="submit" className="btn">Register</button>
                     <button className="btn" onClick={this.handleCancel}>Cancel</button>
                 </div >
-            </form >
+                </form >
+            </div>
         )
     }
-
 }

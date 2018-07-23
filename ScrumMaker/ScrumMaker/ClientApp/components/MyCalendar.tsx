@@ -103,7 +103,7 @@ export class MyCalendar extends React.Component<RouteComponentProps<any>, Calend
                     <Modal isOpen={this.state.ConfirmModal}
                         onRequestClose={this.openCloseModel}
                         className="Modal">
-                        This tims is booked
+                        <h3>This tims is booked</h3>
                         <button className="modalBtn" onClick={this.openCloseModel}>Ok</button>     
                     </Modal>
 

@@ -1,13 +1,16 @@
 ﻿import { Component } from "react";
 import * as React from "react";
 import { RouteComponentProps } from "react-router";
+import * as Modal from 'react-modal';
+import { Brand } from "react-bootstrap/lib/Navbar";
 
 interface FileLoad {
     imagePreviewUrl: 'api/User/ShowPhoto'
-    //imagePreviewUrl: ''
     file: ''
     password: ""
     repeatPassword: ""
+    ConfirmModalPhoto: boolean,
+    ConfirmModalPassword: boolean,
 }
 
 export class EditUser extends Component<RouteComponentProps<any>, FileLoad> {
@@ -16,17 +19,30 @@ export class EditUser extends Component<RouteComponentProps<any>, FileLoad> {
         this.state = {
             file: '',
             imagePreviewUrl: 'api/User/ShowPhoto',
-            //imagePreviewUrl: '',
             password: "",
-            repeatPassword: ""
+            repeatPassword: "",
+            ConfirmModalPhoto: false,
+            ConfirmModalPassword: false,
         };
 
         this._handleImageChange = this._handleImageChange.bind(this);
         this._handleSubmit = this._handleSubmit.bind(this);
+        this.handleSave = this.handleSave.bind(this);
+    }
+
+    openCloseModelPhoto = () => {
+        this.setState({
+            ConfirmModalPhoto: !this.state.ConfirmModalPhoto
+        })
+    }
+
+    openCloseModelPassword = () => {
+        this.setState({
+            ConfirmModalPassword: !this.state.ConfirmModalPassword
+        })
     }
 
     _handleSubmit(event: any) {
-
         const formData = new FormData(event.target)
         fetch('api/User/EditPhoto', {
             credentials: 'include',
@@ -40,7 +56,7 @@ export class EditUser extends Component<RouteComponentProps<any>, FileLoad> {
         var type = ['image/bmp', 'image/gif', 'image/jpg', 'image/jpeg', 'image/png'];
         var width = 1024;
         var height = 768;
-        var size = 5000000; // bytes
+        var size = 5000000;
         var file = e.target.files[0];
         if (file.size < size) {
 
@@ -56,27 +72,22 @@ export class EditUser extends Component<RouteComponentProps<any>, FileLoad> {
             reader.readAsDataURL(file)
         }
         if (file.size > size || type.indexOf(file.type) == -1) {
-            alert('Incorect Size or Type');
+            this.openCloseModelPhoto();
             return false;
         }
     }
 
     private handleSave(event: any) {
+        event.preventDefault();
         const data = new FormData(event.target);
-        var password = (document.getElementById('password') as any).value;
-        var newpassword = (document.getElementById('repeatpassword') as any).value;
-        if (password === newpassword) {
             fetch('api/User/EditPassword', {
                 credentials: 'include',
                 method: 'POST',
                 body: data,
-            })
-            event.PreventDefault();
-        }
-        else {
-            alert("Password not same");
-            event.PreventDefault();
-        }
+            }).then(response => response.json() as Promise<boolean>)
+                .then(data => {
+                    data != false ? null : this.setState({ ConfirmModalPassword: true });;
+                });
     }
 
 
@@ -89,6 +100,21 @@ export class EditUser extends Component<RouteComponentProps<any>, FileLoad> {
 
         return (
             <main className="page">
+
+                <Modal isOpen={this.state.ConfirmModalPhoto}
+                    onRequestClose={this.openCloseModelPhoto}
+                    className="Modal">
+                    <h3>Incorrect size or type</h3>
+                        <button className="modalBtn" onClick={this.openCloseModelPhoto}>Ok</button>
+                </Modal>
+
+                <Modal isOpen={this.state.ConfirmModalPassword}
+                    onRequestClose={this.openCloseModelPassword}
+                    className="Modal">
+                    <h3>Password not same</h3>
+                        <button className="modalBtn" onClick={this.openCloseModelPassword}>Ok</button>
+                </Modal>
+
                 <div className='myDiv'>{$imagePreview}</div>
                 <form onSubmit={this._handleSubmit} asp-controller="UserEdit" asp-action="UploadFile" method="post">
                     <div className="file-upload siteColor">
@@ -97,7 +123,7 @@ export class EditUser extends Component<RouteComponentProps<any>, FileLoad> {
                             <span>Choose</span>
                         </label>
                     </div>
-                    <button type="submit" className="btn save siteColor" onClick={this._handleSubmit}>Upload Image</button>
+                    <button type="submit" className="btn save siteColor">Upload Image</button>
                 </form>
 
                 <p>____________________________________________________________________________________________</p>
