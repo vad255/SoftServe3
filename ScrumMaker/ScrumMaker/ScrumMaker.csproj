@@ -25,10 +25,13 @@
 
   <ItemGroup>
     <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
+    <Compile Remove="ClientApp\components\Новая папка\**" />
     <Compile Remove="Data\**" />
     <Content Remove="ClientApp\**" />
     <Content Remove="Data\**" />
+    <EmbeddedResource Remove="ClientApp\components\Новая папка\**" />
     <EmbeddedResource Remove="Data\**" />
+    <None Remove="ClientApp\components\Новая папка\**" />
     <None Remove="Data\**" />
   </ItemGroup>
 
@@ -55,6 +58,7 @@
     <None Remove="ClientApp\components\Filters\TasksFiltersRow.tsx" />
     <None Remove="ClientApp\components\Filters\TeamFiltersRow.tsx" />
     <None Remove="ClientApp\components\Filters\StoriesFiltersRow.tsx" />
+    <None Remove="ClientApp\components\ForAdmin\RegistrationButton.tsx" />
     <None Remove="ClientApp\components\Grids\DefectGrid.tsx" />
     <None Remove="ClientApp\components\Grids\StoriesGrid.tsx" />
     <None Remove="ClientApp\components\Grids\TaskGrid.tsx" />
@@ -117,6 +121,7 @@
     <TypeScriptCompile Include="ClientApp\components\Backlog\ProductBacklog.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Backlog\SprintBacklog.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\EditDefect.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\ForAdmin\RegistrationButton.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Meetings\SprintPlaning.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\TaskEdit.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Charts\Velocity.tsx" />
@@ -159,10 +164,6 @@
   <ItemGroup>
     <None Include="wwwroot\img\ScrumMakerLogo.jpg" />
     <None Include="wwwroot\img\______________2018_06_12____15_33_52_fdV_icon.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ClientApp\components\Новая папка\" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

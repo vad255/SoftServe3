@@ -73,5 +73,12 @@ namespace ScrumMaker.Controllers
             HttpContext.Response.Cookies.Delete("Authorization");
             return Redirect("/login");
         }
+        [Route("/getrole")]
+        [HttpGet]
+        public async Task GetRole()
+        {
+            Response.ContentType = "application/json";
+            await Response.WriteAsync(JsonConvert.SerializeObject(HttpContext.User.UserRole()));
+        }
     }
 }
