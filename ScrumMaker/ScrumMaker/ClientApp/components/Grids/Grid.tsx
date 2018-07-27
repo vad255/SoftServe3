@@ -19,6 +19,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
     protected readonly abstract URL_ORDERING: string;
     private readonly URL_COUNT: string = '&$count=true';
     protected readonly URL_EDIT: string = "!!!NOT_IMPLEMENTED!!!/";
+    protected readonly URL_NEW: string = "!!!NOT_IMPLEMENTED!!!/";
 
     protected readonly FILTER_MANAGER_REF = "FilterManager";
     protected customUrlFilters: string = '';
@@ -29,7 +30,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
     private CurrentPage = 0;
     private totalCount = 0;
     protected pageSize: number = 5;
-
+    private itemToDelete: number = -1;
     private lastOrderingArg: string = '';
     private lastOrderingDir: boolean = false;
 
@@ -47,9 +48,17 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
         return (
             <div>
-                <h1>{this.headerText}</h1>
+                <h1 >{this.headerText}</h1>
+                <div className="text-right">
+                    <NavLink to={this.URL_NEW }
+                        activeClassName='active'>
+                        <button className="btn btn-default" type="button" style={{ marginTop: "-10px" }}>
+                            Create</button>
+                       </NavLink>                   
+                </div>
+
                 <div>
-                    <table className='table table-scrum table-hover td-scrum'>
+                    <table className='table table-scrum table-hover td-scrum' style={{ marginTop:"1px" }}>
                         <thead>
                             {this.GetHeaderRow()}
                             {this.GetFiltersRow()}
@@ -66,9 +75,11 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
             </div>
         )
     }
+
     public componentDidMount() {
         this.LoadData();
     }
+
     private LoadData() {
         fetch(this.getURL(), { credentials: 'include' })
             .then(response => response.json())
@@ -77,6 +88,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
                 this.OnDataReceived(data);
             }).catch(e => this.onCatch(e));
     }
+
     protected OnDataReceived(data: any): void {
         this.isLoading = false;
 
@@ -86,6 +98,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
         this.setState({ items: itemsTemp });
     }
+   
     protected onCatch(e: any) {
         console.error(e);
         //this.props.history.push("/Error");
@@ -125,9 +138,11 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
     protected abstract GetHeaderRow(): JSX.Element;
     protected abstract GetFiltersRow(): JSX.Element;
+
     protected GetBodyRows(): JSX.Element[] {
         return this.state.items.map((s) => this.toGridItem(s.toArray(), s.getId()))
     }
+
     private GetFooterRow() {
         if (this.totalCount <= this.pageSize) {
             return <tr></tr>
@@ -163,24 +178,25 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
                    id={"ConfirmDeleteDialog"}/>;
     }
 
-
-
     private firstPageClick() {
         this.CurrentPage = 0;
         this.LoadData();
     }
+
     private previousPageClick() {
         if (this.CurrentPage > 0) {
             this.CurrentPage--;
             this.LoadData();
         }
     }
+
     private nextPageClick() {
         if (this.CurrentPage < (this.totalCount / this.pageSize) - 1) {
             this.CurrentPage++;
             this.LoadData();
         }
     }
+
     private lastPageClick() {
         this.CurrentPage = Math.ceil((this.totalCount / this.pageSize)) - 1;
         this.LoadData();
@@ -190,17 +206,16 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         this.filteringOn = !this.filteringOn;
         this.forceUpdate();
     }
+
     protected ApplyFiltersHandler(e: any) {
         this.urlFilters = e;
         this.LoadData();
     }
-
-
-
-    private itemToDelete: number = -1;
+    
     private setItemToDelete(id: number) {
         this.itemToDelete = id;
     }
+
     protected onDeleteConfirmed() {
         if (this.CurrentPage == (Math.ceil(this.totalCount / this.pageSize) - 1))
             if (this.totalCount % this.pageSize === 1) {
@@ -214,11 +229,11 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
                 credentials: 'include',
             }).then(() => this.LoadData());
     }
+
     protected onDeleteCancel() {
         this.itemToDelete = -1;
     }
-
-
+    
     protected toGridItem(items: JSX.Element[], id: number) {
         return (
             <tr key={id}>
@@ -244,7 +259,6 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         );
     }
 
-
     protected OrderBy(arg: string) {
                 
         try {
@@ -266,6 +280,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
             alert(e);
         }
     }
+
     private SafeCompare(a: any, b: any, arg: string) {
         let aUndef = a === undefined || a === null || a[arg] === undefined || a[arg] === null;
         let bUndef = b === undefined || b === null || b[arg] === undefined || b[arg] === null;
@@ -281,14 +296,13 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
         return -1;
     }
+
     private Compare(a: any, b: any): number {
         if (typeof a === 'number' && typeof b === 'number')
             return a - b;
         else
             return a.toString().localeCompare(b.toString());
     }
-
-
 
     private readQueryParams() {
         let params = this.GetUrlParams();
@@ -300,6 +314,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
             this.customUrlFilters += params[iterator];
         }
     }
+
     private GetUrlParams(): any[] {
         let vars: any = {};
         let queryBegin = window.location.href.indexOf('?');

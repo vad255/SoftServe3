@@ -5,8 +5,6 @@ import { Defect } from "../Models/Defect";
 import { DefectStatus } from "../Models/DefectStatus";
 import { DefectPriority } from "../Models/DefectPriority";
 import { DefectState } from "../Models/DefectState";
-import { User } from "../Models/User";
-import { Team } from "../Models/Team";
 
 
 interface IEditPageState {
@@ -21,17 +19,17 @@ interface IEditPageState {
     textAreaValue: string;   
 }
 
-export class EditDefect extends React.Component<RouteComponentProps<any>, IEditPageState> {
+export class CreateDefect extends React.Component<RouteComponentProps<any>, IEditPageState> {
     constructor(props: any) {
         super(props);
         this.state = (({
             id: this.props.location.pathname.substring((this.props.location.pathname.lastIndexOf('/') + 1)),
             defect: Defect,
-            statusValue: "",
+            statusValue: "Open",
             nameValue: "",
             textAreaValue: "",
-            priorityValue: "",
-            stateValue: "",
+            priorityValue: "ResolveImmediately",
+            stateValue: "Active",
             actualResultValue: "",
             fixResultValue:  ""    
         }) as any);
@@ -44,33 +42,14 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
         this.handleStateSelect = this.handleStateSelect.bind(this);
         this.handleChangeInputActualResult = this.handleChangeInputActualResult.bind(this);
         this.handleChangeInputFixResult = this.handleChangeInputFixResult.bind(this);
-        this.handleOK = this.handleOK.bind(this);
-         
-        fetch("odata/Defects?expand=()&$filter=DefectId eq " + this.state.id)
-            .then(response => response.json() as Promise<any>)
-            .then(data => {
-                let defect1 = new Defect(data["value"][0]);
-               
-                this.setState({
-                    defect: defect1,
-                    statusValue: defect1.status,
-                    nameValue: defect1.name,
-                    textAreaValue: defect1.description,
-                    priorityValue: defect1.priority,
-                    stateValue: defect1.state,
-                    actualResultValue: defect1.actualResults,
-                    fixResultValue: defect1.fixResults
-                   
-                }); 
-            })
-       
+        this.handleOK = this.handleOK.bind(this);             
     }
       
     handleSaveButtonClick() {
-        console.log(this.state.stateValue)
-        fetch('odata/Defects(' + this.state.id + ')',
+       
+        fetch('odata/Defects',
             {
-                method: 'PATCH',
+                method: 'POST',
                 headers: {
                     'OData-Version': '4.0',
                     'Accept': 'application/json',
@@ -95,7 +74,7 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header  text-center" ><button className="close" type="button" data-dismiss="modal">×</button>
-                        <h4 className="modal-title">The defect "{this.state.defect.name}" was updated.</h4>
+                        <h4 className="modal-title">The new defect "{this.state.nameValue}" was added.</h4>
                     </div>
                     <div className="modal-body text-center">
                         <button className="btn btn-default" type="button" onClick={this.handleOK} data-dismiss="modal">
@@ -105,26 +84,31 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
             </div>
         </div>;
     }
+
     handleOK(event: any) {
         this.props.history.push('/defects');
     }
-   
+    
     handleStatusSelect(event: any) {
         this.setState({ statusValue: event.target.value });
     }
+
     handlePrioritySelect(event: any) {
         this.setState({ priorityValue: event.target.value });
     }
+
     handleStateSelect(event: any) {
-        this.setState({ stateValue: event.target.value });
-      //  console.log(event.target.value);
+        this.setState({ stateValue: event.target.value });      
     }
+
     handleChangeInputActualResult(event: any) {
         this.setState({ actualResultValue: event.target.value });
     }
+
     handleChangeInputFixResult(event: any) {
         this.setState({ fixResultValue: event.target.value });
     }
+
     handleChangeInput(event: any) {
         this.setState({ nameValue: event.target.value });
     }
@@ -136,7 +120,7 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
     public render() {
         return <div className="text-left">
             <div className="text-center">
-                <h2 style={{ margin: "10px", padding: "5px" }}>Editing defect by Id = {this.state.id}</h2>
+                <h2 style={{ margin: "10px", padding: "5px" }}>Create defect</h2>
             </div>
             <div>
                 <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Defect name:</h3>
@@ -168,8 +152,7 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
             <div>
                 <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>FixResult:</h3>
                 <input className="input-lg" style={{ width: "35%" }}  onChange={this.handleChangeInputFixResult} type="text" value={this.state.fixResultValue} />
-            </div>
-           
+            </div>           
 
             <div className="text-center">               
 
@@ -178,16 +161,15 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
                     data-toggle="modal"
                     data-target="#confirmDeleteModal"
                     onClick={this.handleSaveButtonClick}>
-                    Update
+                    Add element
                 </div>
-            </div>
-
-           
+            </div>          
 
             {this.GetDeleteConfirmModal()}
         </div>;
     }
     private renderStates() {
+
         let names: string[] = [];
         for (let iterator in DefectState) {
             if (!parseInt(iterator))
@@ -209,6 +191,7 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
         </select>
     }
     private renderPriority() {
+
         let names: string[] = [];
         for (let iterator in DefectPriority) {
             if (!parseInt(iterator))
@@ -228,6 +211,5 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
             onChange={this.handlePrioritySelect}>
             {items}
         </select>
-    }
-       
+    }       
 }
