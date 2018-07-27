@@ -72,7 +72,7 @@ namespace ScrumMaker
 
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
 
-           
+
             ConfigureDI(services);
 
             services.AddOData();
@@ -93,7 +93,7 @@ namespace ScrumMaker
             services.AddSingleton<IFileProvider>(
                 new PhysicalFileProvider(
                     Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
-  
+
         }
 
         private static void ConfigureDI(IServiceCollection services)
