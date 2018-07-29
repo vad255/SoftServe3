@@ -140,12 +140,12 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
     protected abstract GetFiltersRow(): JSX.Element;
 
     protected GetBodyRows(): JSX.Element[] {
-        return this.state.items.map((s) => this.toGridItem(s.toArray(), s.getId()))
+        return this.state.items.map((s) => this.toGridItem(s.toArray(), s.getId()));
     }
 
     private GetFooterRow() {
         if (this.totalCount <= this.pageSize) {
-            return <tr></tr>
+            return <tr></tr>;
         }
         return <tr>
             <td colSpan={10}>
