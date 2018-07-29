@@ -564,7 +564,7 @@ namespace DataBaseInitializer
         public static void FillStoriesData()
         {
             _dbStories = new Repository<Story>(_context);
-
+            
             Story[] stories = new Story[]
             {
                     new Story()
@@ -845,7 +845,9 @@ namespace DataBaseInitializer
         public static void FillSprintsData()
         {
             _dbSprints = new Repository<Sprint>(_context);
-           
+            var stories = _dbStories.GetAll().ToList();
+            var counter = stories.Count() - 1;
+
             Sprint[] sprints = new Sprint[]
             {
 
@@ -854,7 +856,7 @@ namespace DataBaseInitializer
                     Team = _dbTeams.GetById(1),
                     Name = "Sprint 1",
                     Retrospective = " What went well in the Sprint: command work. What could be improved: Speed of development. What will we commit to improve in the next Sprint: icrease development speed",
-                    Review = "",
+                    Goal = "",
                     Stage = SprintStage.Progress,
                     History = _dbHisories.GetById(1),
                     Backlog = _dbStories.GetAll().ToList()
@@ -864,7 +866,7 @@ namespace DataBaseInitializer
                     Team =  _dbTeams.GetById(2),
                     Name = "Sprint 2",
                     Retrospective = "",
-                    Review = "",
+                    Goal = "",
                     Stage = SprintStage.Planning,
                     History = _dbHisories.GetById(1)
                 },
@@ -873,26 +875,49 @@ namespace DataBaseInitializer
                     Team =  _dbTeams.GetById(3),
                     Name = "Sprint 3",
                     Retrospective = " What went well in the Sprint: finished in time. What could be improved: the code review. What will we commit to improve in the next Sprint: give more time for code review.",
-                    Review = " all stories and tasks has been done. We are planning to do: ",
+                    Goal = " all stories and tasks has been done. We are planning to do: ",
                     Stage = SprintStage.Review,
-                    History = _dbHisories.GetById(1)
+                    History = _dbHisories.GetById(1),
+                    Backlog = new List<Story>
+                    {
+                        stories[counter],
+                        stories[counter-1],
+                        stories[counter-2],
+                        stories[counter-3],
+                    }
                 },
                 new Sprint()
                 {
                     Team = _dbTeams.GetById(4),
                     Name = "Sprint 4",
                     Retrospective = " What went well in the Sprint: finished all stories and tasks in right way. What could be improved: Sprint was not finished. What will we commit to improve in the next Sprint: monitor timely for performance of all tasks.",
-                    Review = "",
+                    Goal = "",
                     Stage = SprintStage.Retrospective,
                     History = _dbHisories.GetById(1)
-                },new Sprint()
+                },
+                new Sprint()
                 {
                     Team = _dbTeams.GetById(5),
                     Name = "Sprint 5",
                     Retrospective = " What went well in the Sprint: all tasks were done. What could be improved: communication skiils with client. What will we commit to improve in the next Sprint: improve communcation skills",
-                    Review = "all planned tasks have been done except: database",
+                    Goal = "all planned tasks have been done except: database",
                     Stage = SprintStage.Finished,
                     History =_dbHisories.GetById(1)
+                },
+                new Sprint()
+                {
+                    Team = _dbTeams.GetById(6),
+                    Name = "Sprint 6",
+                    Retrospective = "What went well in the Sprint: all tasks were done. What could be improved: communication skiils with client. What will we commit to improve in the next Sprint: improve communcation skills",
+                    Goal = "Implement login page.",
+                    Stage = SprintStage.Review,
+                    History = _dbHisories.GetById(2),
+                    Backlog = new List<Story>
+                    {
+                        stories[counter-3],
+                        stories[counter-4],
+                        stories[counter-5],
+                    }
                 }
 
             };
@@ -948,10 +973,10 @@ namespace DataBaseInitializer
 
             SprintReview[] sprintReviews = new SprintReview[]
             {
-                new SprintReview() { IsGoalAchived = false, IsStoriesCompleted = false, Sprint = sprints[counter], SprintId = sprints[counter].Id},
-                new SprintReview() { IsGoalAchived = false, IsStoriesCompleted = false, Sprint = sprints[counter-1], SprintId = sprints[counter-1].Id},
-                new SprintReview() { IsGoalAchived = false, IsStoriesCompleted = false, Sprint = sprints[counter-2], SprintId = sprints[counter-2].Id},
-                new SprintReview() { IsGoalAchived = false, IsStoriesCompleted = false, Sprint = sprints[counter-3], SprintId = sprints[counter-3].Id}
+                new SprintReview() { IsGoalAchived = false, Sprint = sprints[counter], SprintId = sprints[counter].Id},
+                new SprintReview() { IsGoalAchived = false, Sprint = sprints[counter-1], SprintId = sprints[counter-1].Id},
+                new SprintReview() { IsGoalAchived = false, Sprint = sprints[counter-2], SprintId = sprints[counter-2].Id},
+                new SprintReview() { IsGoalAchived = false, Sprint = sprints[counter-3], SprintId = sprints[counter-3].Id}
             };
 
             AddToDatabase(sprintReviews, _dbSprintsReviews);

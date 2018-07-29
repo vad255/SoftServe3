@@ -27,7 +27,7 @@ namespace DAL.Models
 
         public virtual ICollection<DailyScrumInfo> DailyScrums { get; set; }
 
-        public string Review { get; set; }
+        public string Goal { get; set; }
 
         public string Retrospective { get; set; }
 
