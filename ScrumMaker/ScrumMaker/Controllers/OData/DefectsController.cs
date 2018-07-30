@@ -71,10 +71,11 @@ namespace ScrumMaker.Controllers
         return Updated(defect);
     }
 
-    private bool DefectExists(int key)
-    {
-        return _defect.GetAll().Count(e => e.DefectId == key) > 0;
-    }
+        private bool DefectExists(int key)
+        {
+            return _defect.GetAll().Count(e => e.DefectId == key) > 0;
+        }
+
         [AcceptVerbs("DELETE")]
         public IActionResult Delete([FromODataUri] int key)
         {
@@ -82,6 +83,27 @@ namespace ScrumMaker.Controllers
             _defect.Save();
             return NoContent();
         }
+
+        [AcceptVerbs("POST")]
+        public IActionResult Post([FromBody] Defect createDefect)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _defect.Create(createDefect);
+            //if (defect == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //createDefect.Patch(defect);
+            _defect.Save();
+
+            return Created(createDefect);
+        }
     }
 }
+
 

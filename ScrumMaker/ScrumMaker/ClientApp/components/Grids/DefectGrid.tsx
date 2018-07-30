@@ -21,6 +21,7 @@ export class DefectGrid extends Grid {
     protected URL_ORDERING: string = '&$orderby=DefectId';
     protected headerText: string = 'Defects';
     protected URL_EDIT: string = "EditDefect/";
+    protected URL_NEW: string = "/CreateDefect";
 
     constructor() {
         super();
