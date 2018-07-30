@@ -22,7 +22,7 @@ export class SprintsGrid extends Grid {
 
     constructor() {
         super();
-        this.pageSize = 10;
+        //this.pageSize = 10;
     }
 
     protected instantiate(item: any) {
