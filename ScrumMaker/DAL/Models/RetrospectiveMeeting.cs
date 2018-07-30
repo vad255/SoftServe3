@@ -11,7 +11,7 @@ namespace DAL.Models
         [Key]
         public int Id { get; private set; }
 
-        public ICollection<RetrospectiveMessage> Messages { get; set; }
+        public virtual ICollection<RetrospectiveMessage> Messages { get; set; }
 
         public string MeetingInfo { get; set; }
 
