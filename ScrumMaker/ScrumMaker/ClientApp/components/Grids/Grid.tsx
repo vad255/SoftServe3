@@ -167,9 +167,8 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
     }
 
     private GetFooterRow() {
-        if (this.totalCount <= this.pageSize) {
+        if (this.totalCount <= this.state.pageSize) {
             return <tr></tr>;
-
         }
 
         return <tr>                  
