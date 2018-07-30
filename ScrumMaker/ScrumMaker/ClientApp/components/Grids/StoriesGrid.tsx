@@ -21,6 +21,7 @@ export class StoriesGrid extends Grid {
     protected URL_FEATUREID_FILTER: string = 'feature/id eq ';
     protected headerText: string = 'Stories';
     protected URL_EDIT: string = "EditStory/";
+    protected URL_NEW: string = "/CreateStory";
 
     constructor() {
         super();
@@ -48,22 +49,20 @@ export class StoriesGrid extends Grid {
     }
 
     protected GetFiltersRow() {
-
         let filetrs = [
             new IntFilter({ filterKey: "id" }),
             new TextFilter({ filterKey: "name" }),
             new TextFilter({ filterKey: "description" }),
             new EnumFilter({ filterKey: "status", enumType: StoryStatus }),
             new TextFilter({ filterKey: "sprintId" })
-        ]
+        ];
 
         return <FiltersManager
             ref={this.FILTER_MANAGER_REF}
             filters={filetrs}
             onApply={this.ApplyFiltersHandler.bind(this)}
             display={this.filteringOn}
-            externalConstraints={this.customUrlFilters}
-        />
+            externalConstraints={this.customUrlFilters} />;
     }
 }
 

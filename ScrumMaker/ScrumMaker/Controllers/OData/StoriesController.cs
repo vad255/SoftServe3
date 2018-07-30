@@ -15,7 +15,7 @@ namespace ScrumMaker.Controllers
     [Route("api/[controller]")]
     public class StoriesController : ODataController
     {
-        private IRepository<Story> _stories;
+        private readonly IRepository<Story> _stories;
         private IStoriesManager _manager;
         private DataContext _db;
 
@@ -79,7 +79,20 @@ namespace ScrumMaker.Controllers
         private bool StoryExists(int key)
         {
             return _stories.GetAll().Count(e => e.Id == key) > 0;
-        }       
+        }
 
+        [AcceptVerbs("POST")]
+        public IActionResult Post([FromBody] Story story)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _stories.Create(story);
+            _stories.Save();
+
+            return Created(story);
+        }
     }
 }

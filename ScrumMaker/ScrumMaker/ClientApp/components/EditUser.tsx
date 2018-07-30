@@ -56,7 +56,7 @@ export class EditUser extends Component<RouteComponentProps<any>, FileLoad> {
         var type = ['image/bmp', 'image/gif', 'image/jpg', 'image/jpeg', 'image/png'];
         var width = 1024;
         var height = 768;
-        var size = 5000000;
+        var size = 500000;
         var file = e.target.files[0];
         if (file.size < size) {
 
