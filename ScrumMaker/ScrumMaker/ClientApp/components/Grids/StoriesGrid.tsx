@@ -32,6 +32,9 @@ export class StoriesGrid extends Grid {
         return new Story(item);
     }
 
+    protected onCatch(e: any) {
+        this.props.history.push('/login');
+    }
 
     protected GetHeaderRow() {
         return <tr>

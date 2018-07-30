@@ -49,17 +49,21 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
         return (
             <div>
-                <h1 >{this.headerText}</h1>
-                <div className="text-right">
-                    <NavLink to={this.URL_NEW }
-                        activeClassName='active'>
-                        <button className="btn btn-default" type="button" style={{ marginTop: "-10px" }}>
-                            Create</button>
-                    </NavLink>                     
-                </div>
 
-                <div>       
-                    <label>Number elements:
+                <div className="RDiv">
+                    <h1 style={{width: "90%"}}>{this.headerText}</h1>
+					
+                    <div style={{marginBottom: "10px"}}>
+                        <NavLink to={this.URL_NEW}
+                            activeClassName='active'>
+                            <button className="btn btn-default" type="button">
+                                Create</button>
+                        </NavLink>
+                    </div>
+					
+				
+                </div>
+					<label>Number elements:
                         <select style={{ marginLeft: "5px" }} onChange={this.handleSizeSelect.bind(this)}>
                             <option value="5">5</option>
                             <option value="10">10</option>
@@ -67,7 +71,9 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
                             <option value="50">50</option>
                         </select>
                     </label>
-                    <table className='table table-scrum table-hover td-scrum' style={{ marginTop:"1px" }}>
+                <div>
+                    <table className='table table-scrum table-hover td-scrum' style={{ marginTop: "1px" }}>
+
                         <thead>
                             {this.GetHeaderRow()}
                             {this.GetFiltersRow()}
@@ -109,7 +115,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
         this.setState({ items: itemsTemp });
     }
-   
+
     protected onCatch(e: any) {
         console.error(e);       
     }
@@ -202,10 +208,10 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         let title = "Are you sure you want to delete this item?";
 
         return <ConfirmMadal
-                   onCanceled={this.onDeleteCancel.bind(this)}
-                   onConfirmed={this.onDeleteConfirmed.bind(this)}
-                   title={title}
-                   id={"ConfirmDeleteDialog"}/>;
+            onCanceled={this.onDeleteCancel.bind(this)}
+            onConfirmed={this.onDeleteConfirmed.bind(this)}
+            title={title}
+            id={"ConfirmDeleteDialog"} />;
     }
 
     private firstPageClick() {
@@ -241,7 +247,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         this.urlFilters = e;
         this.LoadData();
     }
-    
+
     private setItemToDelete(id: number) {
         this.itemToDelete = id;
     }
@@ -263,7 +269,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
     protected onDeleteCancel() {
         this.itemToDelete = -1;
     }
-    
+
     protected toGridItem(items: JSX.Element[], id: number) {
         return (
             <tr key={id}>
@@ -290,7 +296,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
     }
 
     protected OrderBy(arg: string) {
-                
+
         try {
             let data = this.state.items;
 
