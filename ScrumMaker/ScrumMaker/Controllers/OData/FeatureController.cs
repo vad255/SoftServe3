@@ -13,6 +13,7 @@ using BL;
 using Microsoft.AspNet.OData;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using ScrumMaker.Attributes;
 
 namespace ScrumMaker.Controllers
 {
@@ -27,7 +28,8 @@ namespace ScrumMaker.Controllers
             this.storyRepository = storyRepository;
         }
 
-
+        [RefreshToken]
+        [CookieAuthorize]
         [EnableQuery]
         public IActionResult Get()
         {

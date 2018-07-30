@@ -18,8 +18,5 @@ namespace DAL.Models
 
         [Required]
         public bool IsGoalAchived { get; set; }
-
-        [Required]
-        public bool IsStoriesCompleted { get; set; }
     }
 }

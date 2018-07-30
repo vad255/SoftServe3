@@ -22,7 +22,7 @@ export class SprintsGrid extends Grid {
 
     constructor() {
         super();
-        this.pageSize = 10;
+        //this.pageSize = 10;
     }
 
     protected instantiate(item: any) {
@@ -39,9 +39,8 @@ export class SprintsGrid extends Grid {
             <th className="well menu_links col-md-1" onClick={() => this.OrderBy("name")}>Name</th>
             <th className="well menu_links col-md-1" onClick={() => this.OrderBy("team")}>Team</th>
             <th className="well menu_links col-md-1" onClick={() => this.OrderBy("stage")}>Stage</th>
-            <th className="well menu_links col-md-1" onClick={() => this.OrderBy("review")}>Review</th>
+            <th className="well menu_links col-md-1" onClick={() => this.OrderBy("review")}>Goal</th>
             <th className="well menu_links col-md-1" onClick={() => this.OrderBy("history")}>History</th>
-            <th className="well menu_links col-md-1" onClick={() => this.OrderBy("retrospective")}>Retrospective</th>
             <th className="well menu_links col-md-1">
                 <div onClick={this.FilterButtonClick.bind(this)}>
                     <span className="nowrap">Show Filters<span className="caret"></span></span>
@@ -57,8 +56,7 @@ export class SprintsGrid extends Grid {
             new TextFilter({ filterKey: "team/name" }),
             new EnumFilter({ filterKey: "stage", enumType: SprintStage }),
             new TextFilter({ filterKey: "review" }),
-            new IntFilter({ filterKey: "history/begined" }),
-            new TextFilter({ filterKey: "retrospective" })
+            new IntFilter({ filterKey: "history/begined" })
         ]
 
         return <FiltersManager
