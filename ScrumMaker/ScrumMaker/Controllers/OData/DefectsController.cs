@@ -9,6 +9,7 @@ using DAL.Models;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ScrumMaker.Attributes;
 
 namespace ScrumMaker.Controllers
 {
@@ -26,6 +27,8 @@ namespace ScrumMaker.Controllers
             _manager = manager;
         }
 
+        [RefreshToken]
+        [CookieAuthorize]
         [EnableQuery]       
         public IActionResult Get()
         {            

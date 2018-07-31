@@ -277,7 +277,7 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
                     className="areaStyle"
                     name="Description"
                     type="text"
-                    value={this.state.sprint.review}
+                    value={this.state.sprint.goal}
                     onChange={this.handleReviewChange.bind(this)}
                 />
             </div>
@@ -334,7 +334,7 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
     }
     handleReviewChange(event: any) {
         let newState = this.state.sprint;
-        newState.review = event.target.value;
+        newState.goal = event.target.value;
         this.setState({ sprint: newState });
     }
     handleRetrospChange(event: any) {
