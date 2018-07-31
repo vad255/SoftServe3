@@ -13,7 +13,7 @@ export class SelectSprintPage extends React.Component<RouteComponentProps<any>, 
     constructor(props: any) {
         super(props);
         this.state = { sprints: [], sprintId: -1 };
-        fetch('odata/sprints').then(response => response.json() as Promise<any>)
+        fetch('odata/sprints', { credentials: 'include' }).then(response => response.json() as Promise<any>)
             .then(data => {
                 var sprintsData = [] as Sprint[];
                 console.log(data);

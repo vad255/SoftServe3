@@ -42,7 +42,7 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
         this.handleOkButtonClick = this.handleOkButtonClick.bind(this);
         this.handleSprintSelect = this.handleSprintSelect.bind(this);
 
-        fetch('odata/sprints?$expand=team($Expand=members)').then(response => response.json() as Promise<any>)
+        fetch('odata/sprints?$expand=team($Expand=members)', { credentials: 'include' }).then(response => response.json() as Promise<any>)
             .then(data => {
                 let s = data["value"];
                 let sprints: Sprint[] = [];
