@@ -693,6 +693,8 @@ namespace DataBaseInitializer
                         User = _dbUsers.GetById(5),
                         Blocked =  false,
                         PlannedHours = 72,
+                        RemainingHours = 72,
+                        ActualHours = 0,
                         Started = null,
                         Completed = null,
                         Type = TaskType.Analyses, State = TaskState.ToDo,
@@ -705,11 +707,13 @@ namespace DataBaseInitializer
                         Description = "Add validation to entity classes",
                         User = _dbUsers.GetById(13),
                         Blocked =  false,
-                        PlannedHours = 48,
+                        PlannedHours = 72,
+                        RemainingHours = 48,
+                        ActualHours = 24,
                         Started = new DateTime(2018,7,6,12,45,30),
                         Completed = null,
                         Type = TaskType.Coding, State = TaskState.InProgress,
-                        WorkNotes = "This task should be done in 48 hours"
+                        WorkNotes = "This task should be done in 72 hours"
                     },
                     new ScrumTask()
                     {
@@ -718,11 +722,13 @@ namespace DataBaseInitializer
                         Description = "Run manual tests",
                         User = _dbUsers.GetById(16),
                         Blocked =  false,
-                        PlannedHours = 24,
+                        PlannedHours = 26,
+                        RemainingHours = 0,
+                        ActualHours = 24,
                         Started = new DateTime(2018,7,6,12,45,30),
-                        Completed =new DateTime(2018,7,7,18,45,30),
+                        Completed =new DateTime(2018,7,7,12,45,30),
                         Type =TaskType.Documentation, State = TaskState.Done,
-                        WorkNotes = "This task should be done in 24 hours"
+                        WorkNotes = "This task should be done in 26 hours"
                     },
                       new ScrumTask()
                      {
@@ -731,11 +737,13 @@ namespace DataBaseInitializer
                         Description = "User docment draft review",
                         User = _dbUsers.GetById(17),
                         Blocked =  false,
-                        PlannedHours = 48,
+                        PlannedHours = 56,
+                        RemainingHours = 8,
+                        ActualHours = 48,
                         Started = new DateTime(2018,7,6,12,45,30),
                         Completed = null,
                         Type = TaskType.Documentation, State = TaskState.InProgress,
-                        WorkNotes = "This task should be done in 48 hours"
+                        WorkNotes = "This task should be done in 56 hours"
                       },
                        new ScrumTask()
                        {
@@ -745,8 +753,10 @@ namespace DataBaseInitializer
                        User = _dbUsers.GetById(23),
                        Blocked =  false,
                        PlannedHours = 72,
+                       RemainingHours = 0,
+                       ActualHours = 56,
                        Started = new DateTime(2018,7,6,12,45,30),
-                       Completed =new DateTime(2018,7,7,18,45,30),
+                       Completed =new DateTime(2018,7,8,20,45,30),
                        Type = TaskType.Testing, State = TaskState.Done,
                        WorkNotes = "This task should be done in 72 hours"
                        }

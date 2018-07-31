@@ -43,7 +43,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
     public render() {
         let contents = this.isLoading
-            ? <tr><td colSpan={10}><p><em>Loading...</em></p></td></tr>
+            ? <tr><td colSpan={14}><p><em>Loading...</em></p></td></tr>
             : this.GetBodyRows();
 
         return (
@@ -148,7 +148,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
             return <tr></tr>;
         }
         return <tr>
-            <td colSpan={10}>
+            <td colSpan={14}>
                 <div className="text-center">
                     <div role='button' className='btn btn-sq-xs align-base' onClick={this.firstPageClick.bind(this)}>
                         <span className="glyphicon glyphicon-step-backward dark"></span>
