@@ -29,7 +29,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
     private CurrentPage = 0;
     private totalCount = 0;
-   
+
     private itemToDelete: number = -1;
     private lastOrderingArg: string = '';
     private lastOrderingDir: boolean = false;
@@ -39,8 +39,9 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         this.state = { pageSize: 5, items: [] };
         this.recalcPagingUrl(this.state.pageSize);
         this.readQueryParams();
-        this.isLoading = true;     
+        this.isLoading = true;
     }
+
 
     public render() {
         let contents = this.isLoading
@@ -51,26 +52,26 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
             <div>
 
                 <div className="RDiv">
-                    <h1 style={{width: "90%"}}>{this.headerText}</h1>
-					
-                    <div style={{marginBottom: "10px"}}>
+                    <h1 style={{ width: "90%" }}>{this.headerText}</h1>
+
+                    <div style={{ marginBottom: "10px" }}>
                         <NavLink to={this.URL_NEW}
                             activeClassName='active'>
                             <button className="btn btn-default" type="button">
                                 Create</button>
                         </NavLink>
                     </div>
-					
-				
+
+
                 </div>
-					<label>Number elements:
+                <label>Number elements:
                         <select style={{ marginLeft: "5px" }} onChange={this.handleSizeSelect.bind(this)}>
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="50">50</option>
-                        </select>
-                    </label>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                    </select>
+                </label>
                 <div>
                     <table className='table table-scrum table-hover td-scrum' style={{ marginTop: "1px" }}>
 
@@ -90,17 +91,23 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
             </div>
         )
     }
-       
+
     protected LoadData() {
-        
         fetch(this.getURL(this.state.pageSize), { credentials: 'include' })
-            .then(response => response.json())
-            .then(data => {
-                this.totalCount = data['@odata.count'];            
-               
-                this.OnDataReceived(data);
+            .then(response => {
+                if (response.url.indexOf('login') !== -1) {
+                    this.props.history.push('/login');      // Go to loginPage; 
+                } else {
+                    let data = response.json();             // parse data
+                    data.then(data => {
+                        this.totalCount = data['@odata.count'];
+                        this.OnDataReceived(data);
+                    });
+                }
             }).catch(e => this.onCatch(e));
     }
+
+
 
     componentDidMount() {
         this.LoadData();
@@ -108,7 +115,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
     protected OnDataReceived(data: any): void {
         this.isLoading = false;
-        
+
         let itemsTemp: IDbModel[] = [];
         for (var i = 0; i < data['value'].length; i++)
             itemsTemp[i] = this.instantiate(data["value"][i]);
@@ -117,11 +124,11 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
     }
 
     protected onCatch(e: any) {
-        console.error(e);       
+        this.props.history.push('/Error');
     }
 
     protected getURL(sizePage: number) {
-        
+
         this.updateFilterUrl();
 
         let result = this.URL_BASE;
@@ -153,7 +160,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         if (this.totalCount < pageSize)
             return '&$top=' + pageSize;
         else
-            return '&$skip=' + (this.CurrentPage * pageSize) + '&$top=' + pageSize;      
+            return '&$skip=' + (this.CurrentPage * pageSize) + '&$top=' + pageSize;
     }
 
     protected abstract instantiate(item: any): IDbModel;
@@ -171,8 +178,8 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
             return <tr></tr>;
         }
 
-        return <tr>                  
-            <td colSpan={9}>            
+        return <tr>
+            <td colSpan={9}>
                 <div className="text-center">
                     <div role='button' className='btn btn-sq-xs align-base' onClick={this.firstPageClick.bind(this)}>
                         <span className="glyphicon glyphicon-step-backward dark"></span>
@@ -194,13 +201,13 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
     }
 
     handleSizeSelect(event: any) {
-      
+
         fetch(this.getURL(event.target.value), { credentials: 'include' })
             .then(response => response.json())
-            .then(data => {              
+            .then(data => {
                 this.OnDataReceived(data);
             }).catch(e => this.onCatch(e));
-        this.setState({ pageSize: event.target.value });          
+        this.setState({ pageSize: event.target.value });
     }
 
     private GetDeleteConfirmModal() {
