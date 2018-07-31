@@ -20,17 +20,14 @@ export class SelectSprintPage extends React.Component<RouteComponentProps<any>, 
                 for (var i = 0; i < data["value"].length; i++) {
                     sprintsData[i] = new Sprint(data["value"][i]);
                 }
-
-                let nSprints = sprintsData.filter(s => s.retrospective === "" || s.retrospective === null);
-                this.setState({ sprints: sprintsData, sprintId: -1 });
+                this.setState({ sprints: sprintsData, sprintId: sprintsData[0].id });
             }).catch(e => console.log(e));
-        console.log(this.state.sprints);
+
         this.handleButtinClick = this.handleButtinClick.bind(this);
         this.handleSelectChange = this.handleSelectChange.bind(this);
     }
 
     handleButtinClick() {
-
         this.props.history.push({
             pathname: '/RetrospectiveMeeting',
             state: { sprintId: this.state.sprintId }
@@ -44,16 +41,14 @@ export class SelectSprintPage extends React.Component<RouteComponentProps<any>, 
 
     public render() {
         return <div style={{ marginTop: "10px" }} className="text-center">
-
             <h1 style={{ marginTop: "10px" }}>Select sprint to make a retrospective</h1>
-            <select style={{ marginTop: "10px" }} className="form-control-static" onChange={this.handleSelectChange}>
+            <select style={{ marginTop: "10px" }} className="form-control inline-block" onChange={this.handleSelectChange}>
                 {this.state.sprints.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
             </select>
             <div>
-                
-                    <button style={{ marginTop: "10px" }} onClick={this.handleButtinClick} className="btn-success">Go to meeting</button>
-              
-
+                <button style={{ marginTop: "10px" }}
+                    onClick={this.handleButtinClick}
+                    className="btn">Go to meeting</button>
             </div>
         </div>;
     }

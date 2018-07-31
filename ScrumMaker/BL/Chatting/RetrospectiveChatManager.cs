@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Security;
 using ScrumMaker.Logger;
 using System.Net.Mail;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace BL.Chatting
 {
@@ -37,17 +38,20 @@ namespace BL.Chatting
         private readonly IRepository<User> _users;
         private readonly IRepository<RetrospectiveMessage> _rmsgs;
         private readonly ChatRoom _room;
+        private readonly RetrospectiveMeeting _meeting;
         private readonly IRepository<Sprint> _sprints;
+        private readonly IRepository<RetrospectiveMeeting> _rMeetings;
         public int SprintId { get; set; }
 
 
-        public RetrospectiveChatManager(IRepository<ChatRoom> chats, IRepository<Message> msgs, IRepository<User> users, IRepository<RetrospectiveMessage> rmsgs, IRepository<Sprint> sprints)
+        public RetrospectiveChatManager(IRepository<ChatRoom> chats, IRepository<Message> msgs, IRepository<User> users, IRepository<RetrospectiveMessage> rmsgs, IRepository<Sprint> sprints, IRepository<RetrospectiveMeeting> rMeetings)
         {
             _sprints = sprints;
             _chats = chats;
             _msgs = msgs;
             _rmsgs = rmsgs;
             _users = users;
+            _rMeetings = rMeetings;
             _room = _chats.GetAll().Where(c => c.Name == ROOM_NAME).FirstOrDefault();
 
             if (_room != null)
@@ -125,15 +129,37 @@ namespace BL.Chatting
 
             if (SprintId >= 0)
             {
-                var sprint = _sprints.GetById(SprintId);
-                sprint.Retrospective += message.UserName + " (" +
-                                       message.SendingDate.ToShortDateString() + ") " +
-                                       "went well: " + message.WentWell + " " +
-                                       "improve to doing: " + message.CouldBeImproved + " " +
-                                       "commit to next sprint: " + message.CommitToDoing + Environment.NewLine;
-                _sprints.Update(sprint);
-                _sprints.Save();
+                var meeting = _rMeetings.GetAll().FirstOrDefault(m => m.SprintId == this.SprintId);
+
+                if (meeting != null)
+                {
+                    meeting.Messages = new List<RetrospectiveMessage>
+                    {
+                        message
+                    };
+
+                    _rMeetings.Update(meeting);
+                    _rMeetings.Save();
+                }
+                else
+                {
+                    var m = new RetrospectiveMeeting
+                    {
+                        SprintId = this.SprintId
+                    };
+
+
+                    m.Messages = new List<RetrospectiveMessage>
+                    {
+                        message
+                    };
+
+                    _rMeetings.Create(m);
+                    _rMeetings.Save();
+                }
             }
+
+
         }
 
         public virtual Message AddMessage(string text)
