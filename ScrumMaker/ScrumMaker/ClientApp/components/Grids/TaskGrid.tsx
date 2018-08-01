@@ -29,6 +29,7 @@ export class TaskGrid extends Grid {
 
     constructor() {
         super();
+        this.state = { items: [] };
     }
 
     protected instantiate(item: any): IDbModel {
