@@ -12,7 +12,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ScrumMaker.Controllers
 {
-    [Route("api/[controller]")]
     public class TasksController : ODataController
     {
 
@@ -78,21 +77,6 @@ namespace ScrumMaker.Controllers
             _tasks.Delete(key);
             _tasks.Save();
             return NoContent();
-        }
-
-
-        [AcceptVerbs("POST")]
-        public IActionResult Post([FromBody] ScrumTask task)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _tasks.Create(task);
-            _tasks.Save();
-
-            return Created(task);
         }
 
     }
