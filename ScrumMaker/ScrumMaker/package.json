@@ -27,6 +27,7 @@
     "audit": "0.0.6",
     "awesome-typescript-loader": "3.2.1",
     "bootstrap": "3.3.7",
+    "bootstrap-select-dropdown": "0.13.14",
     "css-loader": "0.28.4",
     "event-source-polyfill": "0.0.9",
     "extract-text-webpack-plugin": "2.1.2",
