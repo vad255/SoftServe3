@@ -10,7 +10,6 @@ interface IRetrospectiveState {
     wentWellOutPut: string;
     improvedOutput: string;
     commitOutput: string;
-    role: string;
 }
 
 export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}>, IRetrospectiveState> {
@@ -29,7 +28,7 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
 
     constructor(props: any) {
         super(props);
-        this.state = { wentWellOutPut: "", improvedOutput: "", commitOutput: "", role: "" };
+        this.state = { wentWellOutPut: "", improvedOutput: "", commitOutput: "" };
         this.sprintId = this.props.location.state.sprintId as number;
         this.connection = new HubConnectionBuilder().withUrl(this.chatUrl + "?token=" + this.sprintId).build();
         this.connection.on("receiveMessage", this.receiveMessage.bind(this));
@@ -47,16 +46,6 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
         this.handleSendButton = this.handleSendButton.bind(this);
         this.handleSendEmailButtonClick = this.handleSendEmailButtonClick.bind(this);
         this.downloadTxtFile = this.downloadTxtFile.bind(this);
-        this.loadUserRole();
-    }
-
-    loadUserRole() {
-        fetch('/getrole', { credentials: 'include' })
-            .then(responce => responce.text() as Promise<any>)
-            .then(data => {
-                let temp = data;
-                this.setState({ role: temp });
-            });
     }
 
     public send() {
@@ -123,14 +112,14 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
         let improveInput = document.getElementById("couldBeImproved") as any;
         let commitToDoigInput = document.getElementById("commitToDoing") as any;
 
-        var obj = JSON.parse('{ "WentWell": "' +
-            wentWellInput.value +
-            '", "CouldBeImproved": "' +
-            improveInput.value +
-            '", "CommitToDoing": "' +
-            commitToDoigInput.value +
-            '" }');
-        this.message = new RetrospectiveMessage(obj);
+            var obj = JSON.parse('{ "WentWell": "' +
+                wentWellInput.value +
+                '", "CouldBeImproved": "' +
+                improveInput.value +
+                '", "CommitToDoing": "' +
+                commitToDoigInput.value +
+                '" }');
+            this.message = new RetrospectiveMessage(obj);
 
     }
 
@@ -156,18 +145,18 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
 
     private getDeleteConfirmModal() {
         return <div id="confirmDeleteModal" className="modal fade">
-            <div className="modal-dialog">
-                <div className="modal-content">
-                    <div className="modal-header  text-center" ><button className="close" type="button" data-dismiss="modal">×</button>
-                        <h4 className="modal-title">The Sprint Retrospective was sent to email</h4>
-                    </div>
-                    <div className="modal-body text-center">
-                        <button className="btn btn-default" type="button" data-dismiss="modal">
-                            Ok</button>
-                    </div>
-                </div>
-            </div>
-        </div>;
+                   <div className="modal-dialog">
+                       <div className="modal-content">
+                           <div className="modal-header  text-center" ><button className="close" type="button" data-dismiss="modal">×</button>
+                               <h4 className="modal-title">The Sprint Retrospective was sent to email</h4>
+                           </div>
+                           <div className="modal-body text-center">
+                               <button className="btn btn-default" type="button" data-dismiss="modal">
+                                   Ok</button>
+                           </div>
+                       </div>
+                   </div>
+               </div>;
     }
 
     handleSendEmailButtonClick() {
@@ -184,11 +173,6 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
     }
 
     render() {
-        let isScrumMaster: boolean = false;
-        if (this.state.role == '"ScrumMaster"') {
-            isScrumMaster = true;
-        }
-
         return <div className="chatWindow">
             <div>
                 <div className="RDiv">
@@ -196,14 +180,12 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
                         {this.table.render()}
                     </div>
                     <div style={{ width: "30%" }}>
-                        <button style={{ margin: "10px", width: "200px" }}
-                            disabled={!isScrumMaster}
-                            className="btn" onClick={this.downloadTxtFile}>Save Meeting Result as txt file</button>
-                        <button style={{ margin: "10px", width: "200px" }}
-                            className="btn"
-                            data-toggle="modal"
-                            data-target="#confirmDeleteModal"
-                            disabled={!isScrumMaster}
+                        <button style={{ margin: "10px" }}
+                            className="btn-success" onClick={this.downloadTxtFile}>Save Meeting Result</button>
+                        <button style={{ margin: "10px" }}
+                            className="btn-success"
+                                data-toggle="modal"
+                                data-target="#confirmDeleteModal"
                             onClick={this.handleSendEmailButtonClick}>Send meeting result to email</button>
                     </div>
                 </div>
@@ -229,7 +211,7 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
                             .commitOutput} />
                 </div>
             </div>
-           
+            <hr />
             <div className="chatInputBlock">
                 <br />
                 <p>What went well in the Sprint?</p>
@@ -241,7 +223,7 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
             </div>
             <div className="text-center">
                 <button style={{ marginTop: "10px" }}
-                    className="btn" onClick={this.handleSendButton}>Send</button>
+                    className="button" onClick={this.handleSendButton}>Send</button>
             </div>
             {this.getDeleteConfirmModal()}
         </div>;

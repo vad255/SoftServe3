@@ -21,7 +21,7 @@ namespace DataBaseInitializer
         static IRepository<SprintStagesHistory> _dbHisories;
         static IRepository<Sprint> _dbSprints;
         static IRepository<SprintReview> _dbSprintsReviews;
-             
+
         public static void FillDataBase(DbContext context)
         {
             _context = context;
@@ -49,7 +49,7 @@ namespace DataBaseInitializer
             FillSprintReviewsData();
             ShowStatus(100);
         }
-        
+
         public static void FillRolesData()
         {
             _dbRoles = new Repository<Role>(_context);
@@ -134,8 +134,6 @@ namespace DataBaseInitializer
                         Login = "Anastasiya.Zelenska@gmail.com",
                         Password = "vGHlhD2"
                     },
-
-
                     new User()
                     {
                         Role = _dbRoles.GetById(2),
@@ -185,153 +183,153 @@ namespace DataBaseInitializer
                         Login = "Ulyana.Nazaruk@mail.ru",
                         Password = "qwerty222"
                     },
-                new User()
-                {
-                    Role = _dbRoles.GetById(2),
-                    Activity = true,
-                    Login = "Andriy.Herula@com",
-                    Password = "xdsfhgin123"
-                },
-                new User()
-                {
-                    Role = _dbRoles.GetById(3),
-                    Activity = true,
-                    Login = "Ihor.Verbenets@ukr.net",
-                    Password = "M4ybfrh"
-                },
-                new User()
-                {
-                    Role = _dbRoles.GetById(3),
-                    Activity = true,
-                    Login = "Iryna.Revus@mail.ru",
-                    Password = "321usgm56667"
-                },
-                new User()
-                {
-                    Role = _dbRoles.GetById(3),
-                    Activity = true,
-                    Login = "Myhailo.Andruchvych@gmail.com",
-                    Password = "ffer456"
-                },
-                new User()
-                {
-                    Role = _dbRoles.GetById(3),
-                    Activity = true,
-                    Login = "Maksym.Pereima@mail.ru",
-                    Password = "user789"
-                },
-                new User()
-                {
-                    Role = _dbRoles.GetById(3),
-                    Activity = true,
-                    Login = "Oleg.Mykytyn@gmail.com",
-                    Password = "bxcdfn4564QW"
-                },
-                new User()
-                {
-                    Role = _dbRoles.GetById(3),
-                    Activity = true,
-                    Login = "Ulyana.Nazaruk@mail.ru",
-                    Password = "qwerty222"
-                },
-                new User()
-                {
-                    Role = _dbRoles.GetById(2),
-                    Activity = true,
-                    Login = "Andriy.Herula@com",
-                    Password = "xdsfhgin123"
-                },
-                new User()
-                {
-                    Role = _dbRoles.GetById(3),
-                    Activity = true,
-                    Login = "Ihor.Verbenets@ukr.net",
-                    Password = "M4ybfrh"
-                },
-                new User()
-                {
-                    Role = _dbRoles.GetById(3),
-                    Activity = true,
-                    Login = "Iryna.Revus@mail.ru",
-                    Password = "321usgm56667"
-                },
-                new User()
-                {
-                    Role = _dbRoles.GetById(3),
-                    Activity = true,
-                    Login = "Myhailo.Andruchvych@gmail.com",
-                    Password = "ffer456"
-                },
-                new User()
-                {
-                    Role = _dbRoles.GetById(3),
-                    Activity = true,
-                    Login = "Maksym.Pereima@mail.ru",
-                    Password = "user789"
-                },
-                new User()
-                {
-                    Role = _dbRoles.GetById(3),
-                    Activity = true,
-                    Login = "Oleg.Mykytyn@gmail.com",
-                    Password = "bxcdfn4564QW"
-                },
-                new User()
-                {
-                    Role = _dbRoles.GetById(3),
-                    Activity = true,
-                    Login = "Ulyana.Nazaruk@mail.ru",
-                    Password = "qwerty222"
-                },
-                new User()
-                {
-                    Role = _dbRoles.GetById(2),
-                    Activity = true,
-                    Login = "Andriy.Herula@com",
-                    Password = "xdsfhgin123"
-                },
-                new User()
-                {
-                    Role = _dbRoles.GetById(3),
-                    Activity = true,
-                    Login = "Ihor.Verbenets@ukr.net",
-                    Password = "M4ybfrh"
-                },
-                new User()
-                {
-                    Role = _dbRoles.GetById(3),
-                    Activity = true,
-                    Login = "Iryna.Revus@mail.ru",
-                    Password = "321usgm56667"
-                },
-                new User()
-                {
-                    Role = _dbRoles.GetById(3),
-                    Activity = true,
-                    Login = "Myhailo.Andruchvych@gmail.com",
-                    Password = "ffer456"
-                },
-                new User()
-                {
-                    Role = _dbRoles.GetById(3),
-                    Activity = true,
-                    Login = "Maksym.Pereima@mail.ru",
-                    Password = "user789"
-                },
-                new User()
-                {
-                    Role = _dbRoles.GetById(3),
-                    Activity = true,
-                    Login = "Oleg.Mykytyn@gmail.com",
-                    Password = "bxcdfn4564QW"
-                },
-                new User()
-                {
-                    Role = _dbRoles.GetById(3),
-                    Activity = true,
-                    Login = "Ulyana.Nazaruk@mail.ru",
-                    Password = "qwerty222"
-                }
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(2),
+                        Activity = true,
+                        Login = "Andriy.Herula@com",
+                        Password = "xdsfhgin123"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(3),
+                        Activity = true,
+                        Login = "Ihor.Verbenets@ukr.net",
+                        Password = "M4ybfrh"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(3),
+                        Activity = true,
+                        Login = "Iryna.Revus@mail.ru",
+                        Password = "321usgm56667"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(3),
+                        Activity = true,
+                        Login = "Myhailo.Andruchvych@gmail.com",
+                        Password = "ffer456"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(3),
+                        Activity = true,
+                        Login = "Maksym.P@mail.ru",
+                        Password = "user789"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(3),
+                        Activity = true,
+                        Login = "Oleg.M@gmail.com",
+                        Password = "bxcdfn4564QW"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(3),
+                        Activity = true,
+                        Login = "Ulyana.N@mail.ru",
+                        Password = "qwerty222"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(2),
+                        Activity = true,
+                        Login = "Andriy.H@com",
+                        Password = "xdsfhgin123"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(3),
+                        Activity = true,
+                        Login = "Ihor.V@ukr.net",
+                        Password = "M4ybfrh"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(3),
+                        Activity = true,
+                        Login = "Iryna.R@mail.ru",
+                        Password = "321usgm56667"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(3),
+                        Activity = true,
+                        Login = "Myhailo.A@gmail.com",
+                        Password = "ffer456"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(3),
+                        Activity = true,
+                        Login = "Maksym.Pwosadf@mail.ru",
+                        Password = "user789"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(3),
+                        Activity = true,
+                        Login = "Olsfg.sdafsf@gmail.com",
+                        Password = "bxcdfn4564QW"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(3),
+                        Activity = true,
+                        Login = "Ulyana.Nabvdgb@mail.ru",
+                        Password = "qwerty222"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(2),
+                        Activity = true,
+                        Login = "Andriy.Hdfvdf@com",
+                        Password = "xdsfhgin123"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(3),
+                        Activity = true,
+                        Login = "Ihor.Vbgfb@ukr.net",
+                        Password = "M4ybfrh"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(3),
+                        Activity = true,
+                        Login = "Iryna.Rvdsfvsd@mail.ru",
+                        Password = "321usgm56667"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(3),
+                        Activity = true,
+                        Login = "Myhailo.Aerfrg@gmail.com",
+                        Password = "ffer456"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(3),
+                        Activity = true,
+                        Login = "Maksym.Pbfdgb@mail.ru",
+                        Password = "user789"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(3),
+                        Activity = true,
+                        Login = "Oleg.Mbhtdfb@gmail.com",
+                        Password = "bxcdfn4564QW"
+                    },
+                    new User()
+                    {
+                        Role = _dbRoles.GetById(3),
+                        Activity = true,
+                        Login = "Ulyana.Nawefoijweio@mail.ru",
+                        Password = "qwerty222"
+                    }
             };
 
             AddToDatabase(users, _dbUsers);
@@ -564,13 +562,14 @@ namespace DataBaseInitializer
         public static void FillStoriesData()
         {
             _dbStories = new Repository<Story>(_context);
-            
+
             Story[] stories = new Story[]
             {
                     new Story()
                     {
                         Name = "Grids",
                         Team = _dbTeams.GetById(1),
+                        TeamId = _dbTeams.GetById(1).Id,
                         Description = "create grids for all models. Each grid should have columns described in the model. Also add bootstrap styles",
                         User = _dbUsers.GetById(2),
                         Status = StoryStatus.InProgress,
@@ -581,6 +580,7 @@ namespace DataBaseInitializer
                     {
                         Name = "Login page",
                         Team = _dbTeams.GetById(2),
+                        TeamId = _dbTeams.GetById(2).Id,
                         Description = "login page has inputs for login and password, an image on backgroud, sign in and sign up buttons",
                         User = _dbUsers.GetById(9),
                         Status = StoryStatus.ReadyToStart,
@@ -591,6 +591,7 @@ namespace DataBaseInitializer
                     {
                         Name = "DataBase",
                         Team = _dbTeams.GetById(3),
+                        TeamId = _dbTeams.GetById(3).Id,
                         Description = "Sql database with code first model.",
                         User = _dbUsers.GetById(3),
                         Status = StoryStatus.Accepted,
@@ -600,6 +601,7 @@ namespace DataBaseInitializer
                     new Story()
                     { Name = "Clients page",
                         Team = _dbTeams.GetById(4),
+                        TeamId = _dbTeams.GetById(4).Id,
                         Description = "This page should show all clients with possibilities add new client, delete some client",
                         User = _dbUsers.GetById(10),
                         Status = StoryStatus.PendingApproval,
@@ -610,6 +612,7 @@ namespace DataBaseInitializer
                 {
                     Name = "Taxes page",
                     Team = _dbTeams.GetById(5),
+                    TeamId = _dbTeams.GetById(5).Id,
                     Description = "This page has info about client's taxes.",
                     User = _dbUsers.GetById(4),
                     Status = StoryStatus.InProgress,
@@ -620,6 +623,7 @@ namespace DataBaseInitializer
                 {
                     Name = "Odata",
                     Team = _dbTeams.GetById(1),
+                    TeamId = _dbTeams.GetById(1).Id,
                     Description = "Every api controller has to use odata requests",
                     User = _dbUsers.GetById(5),
                     Status = StoryStatus.TestComplete,
@@ -630,6 +634,7 @@ namespace DataBaseInitializer
                 {
                     Name = "Main window View",
                     Team = _dbTeams.GetById(2),
+                    TeamId = _dbTeams.GetById(2).Id,
                     Description = "Cantains home page with general description of application and main links.",
                     User = _dbUsers.GetById(11),
                     Status = StoryStatus.Accepted,
@@ -640,6 +645,7 @@ namespace DataBaseInitializer
                 {
                     Name = "Navigation Menu",
                     Team = _dbTeams.GetById(3),
+                    TeamId = _dbTeams.GetById(3).Id,
                     Description = "Should be a popup menu, with main button and links inside",
                     User = _dbUsers.GetById(6),
                     Status = StoryStatus.InProgress,
@@ -650,6 +656,7 @@ namespace DataBaseInitializer
                 {
                     Name = "User Error Page",
                     Team = _dbTeams.GetById(4),
+                    TeamId = _dbTeams.GetById(4).Id,
                     Description = "contains a link to the home page",
                     User = _dbUsers.GetById(12),
                     Status = StoryStatus.PendingApproval,
@@ -660,6 +667,7 @@ namespace DataBaseInitializer
                 {
                     Name = "Exporting json file",
                     Team = _dbTeams.GetById(5),
+                    TeamId = _dbTeams.GetById(5).Id,
                     Description = "there should be a possibility to get json file in client page. It will contain info about client.",
                     User = _dbUsers.GetById(7),
                     Status = StoryStatus.DevComplete,
@@ -845,8 +853,6 @@ namespace DataBaseInitializer
         public static void FillSprintsData()
         {
             _dbSprints = new Repository<Sprint>(_context);
-            var stories = _dbStories.GetAll().ToList();
-            var counter = stories.Count() - 1;
 
             Sprint[] sprints = new Sprint[]
             {
@@ -856,7 +862,7 @@ namespace DataBaseInitializer
                     Team = _dbTeams.GetById(1),
                     Name = "Sprint 1",
                     Retrospective = " What went well in the Sprint: command work. What could be improved: Speed of development. What will we commit to improve in the next Sprint: icrease development speed",
-                    Goal = "",
+                    Review = "",
                     Stage = SprintStage.Progress,
                     History = _dbHisories.GetById(1),
                     Backlog = _dbStories.GetAll().ToList()
@@ -866,7 +872,7 @@ namespace DataBaseInitializer
                     Team =  _dbTeams.GetById(2),
                     Name = "Sprint 2",
                     Retrospective = "",
-                    Goal = "",
+                    Review = "",
                     Stage = SprintStage.Planning,
                     History = _dbHisories.GetById(1)
                 },
@@ -875,49 +881,26 @@ namespace DataBaseInitializer
                     Team =  _dbTeams.GetById(3),
                     Name = "Sprint 3",
                     Retrospective = " What went well in the Sprint: finished in time. What could be improved: the code review. What will we commit to improve in the next Sprint: give more time for code review.",
-                    Goal = " all stories and tasks has been done. We are planning to do: ",
+                    Review = " all stories and tasks has been done. We are planning to do: ",
                     Stage = SprintStage.Review,
-                    History = _dbHisories.GetById(1),
-                    Backlog = new List<Story>
-                    {
-                        stories[counter],
-                        stories[counter-1],
-                        stories[counter-2],
-                        stories[counter-3],
-                    }
+                    History = _dbHisories.GetById(1)
                 },
                 new Sprint()
                 {
                     Team = _dbTeams.GetById(4),
                     Name = "Sprint 4",
                     Retrospective = " What went well in the Sprint: finished all stories and tasks in right way. What could be improved: Sprint was not finished. What will we commit to improve in the next Sprint: monitor timely for performance of all tasks.",
-                    Goal = "",
+                    Review = "",
                     Stage = SprintStage.Retrospective,
                     History = _dbHisories.GetById(1)
-                },
-                new Sprint()
+                },new Sprint()
                 {
                     Team = _dbTeams.GetById(5),
                     Name = "Sprint 5",
                     Retrospective = " What went well in the Sprint: all tasks were done. What could be improved: communication skiils with client. What will we commit to improve in the next Sprint: improve communcation skills",
-                    Goal = "all planned tasks have been done except: database",
+                    Review = "all planned tasks have been done except: database",
                     Stage = SprintStage.Finished,
                     History =_dbHisories.GetById(1)
-                },
-                new Sprint()
-                {
-                    Team = _dbTeams.GetById(6),
-                    Name = "Sprint 6",
-                    Retrospective = "What went well in the Sprint: all tasks were done. What could be improved: communication skiils with client. What will we commit to improve in the next Sprint: improve communcation skills",
-                    Goal = "Implement login page.",
-                    Stage = SprintStage.Review,
-                    History = _dbHisories.GetById(2),
-                    Backlog = new List<Story>
-                    {
-                        stories[counter-3],
-                        stories[counter-4],
-                        stories[counter-5],
-                    }
                 }
 
             };
@@ -973,10 +956,10 @@ namespace DataBaseInitializer
 
             SprintReview[] sprintReviews = new SprintReview[]
             {
-                new SprintReview() { IsGoalAchived = false, Sprint = sprints[counter], SprintId = sprints[counter].Id},
-                new SprintReview() { IsGoalAchived = false, Sprint = sprints[counter-1], SprintId = sprints[counter-1].Id},
-                new SprintReview() { IsGoalAchived = false, Sprint = sprints[counter-2], SprintId = sprints[counter-2].Id},
-                new SprintReview() { IsGoalAchived = false, Sprint = sprints[counter-3], SprintId = sprints[counter-3].Id}
+                new SprintReview() { IsGoalAchived = false, IsStoriesCompleted = false, Sprint = sprints[counter], SprintId = sprints[counter].Id},
+                new SprintReview() { IsGoalAchived = false, IsStoriesCompleted = false, Sprint = sprints[counter-1], SprintId = sprints[counter-1].Id},
+                new SprintReview() { IsGoalAchived = false, IsStoriesCompleted = false, Sprint = sprints[counter-2], SprintId = sprints[counter-2].Id},
+                new SprintReview() { IsGoalAchived = false, IsStoriesCompleted = false, Sprint = sprints[counter-3], SprintId = sprints[counter-3].Id}
             };
 
             AddToDatabase(sprintReviews, _dbSprintsReviews);

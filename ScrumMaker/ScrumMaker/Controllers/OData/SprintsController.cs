@@ -9,7 +9,6 @@ using Microsoft.AspNet.OData;
 
 using DAL.Models;
 using DAL.Access;
-using ScrumMaker.Attributes;
 
 namespace ScrumMaker.Controllers
 {
@@ -25,8 +24,6 @@ namespace ScrumMaker.Controllers
             _history = history;
         }
 
-        [RefreshToken]
-        [CookieAuthorize]
         [EnableQuery]
         public IActionResult Get()
         {

@@ -6,8 +6,7 @@ export interface ICommitableDbModel extends IDbModel {
 }
 
 export interface IFetchState {
-    items: IDbModel[];
-    pageSize: number;
+    items: IDbModel[]
 }
 
 export interface IDbModel {

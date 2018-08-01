@@ -109,7 +109,7 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
                     className="fa-text-height"
                     name="Rewiev"
                     type="textarea"
-                    value={this.state.Sprint.goal} />
+                    value={this.state.Sprint.review} />
                 <br/>
                 <div>
                     <div className="col-xs-6">

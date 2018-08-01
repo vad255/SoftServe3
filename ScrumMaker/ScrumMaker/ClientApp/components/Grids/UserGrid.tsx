@@ -21,7 +21,7 @@ export class UserGrid extends Grid {
 
     constructor() {
         super();
-       // this.state = { items: [] };
+        this.state = { items: [] };
     }
 
 

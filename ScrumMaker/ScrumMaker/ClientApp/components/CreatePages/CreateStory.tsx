@@ -7,8 +7,6 @@ import { User } from "../Models/User";
 import { Team } from "../Models/Team";
 import { Sprint } from "../Models/Sprint";
 
-
-
 interface ICreatePageState {
     statusValue: string;
     inputValue: string;
@@ -28,11 +26,11 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
             inputValue: "",
             textAreaValue: "",
             users: [],
-            userId: 0,
+            userId: 1,
             team: Team,
             sprints: [],
-            sprintId: 0
-    }) as any);
+            sprintId: 1
+        }) as any);
 
         this.handleCreateButtonClick = this.handleCreateButtonClick.bind(this);
         this.handleStatusSelect = this.handleStatusSelect.bind(this);
@@ -42,7 +40,7 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
         this.handleOkButtonClick = this.handleOkButtonClick.bind(this);
         this.handleSprintSelect = this.handleSprintSelect.bind(this);
 
-        fetch('odata/sprints?$expand=team($Expand=members)', { credentials: 'include' }).then(response => response.json() as Promise<any>)
+        fetch('odata/sprints?$expand=team($Expand=members)').then(response => response.json() as Promise<any>)
             .then(data => {
                 let s = data["value"];
                 let sprints: Sprint[] = [];
@@ -51,11 +49,7 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
                     sprints.push(sp);
                 }
                 console.log(sprints);
-                this.setState({
-                    sprints: sprints, team: sprints[0].team,
-                    users: sprints[0].team.members, sprintId: sprints[0].id,
-                    userId: sprints[0].team.members[0].userId
-                });
+                this.setState({ sprints: sprints, team: sprints[0].team, users: sprints[0].team.members });
             });
     }
 
@@ -168,7 +162,7 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
 
             <div>
                 <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Assign to sprint:</h3>
-                <select className="form-control inline-block CreatePage" onChange={this.handleSprintSelect}>
+                <select className="form-control inline-block CreatePage" onChange={this.handleSprintSelect} defaultValue="1">
                     {this.state.sprints.map(sprint => <option key={sprint.id} value={sprint.id}>{sprint.name}</option>)}
                 </select>
             </div>
@@ -180,7 +174,7 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
 
             <div>
                 <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Assign to:</h3>
-                <select className="form-control inline-block CreatePage" data-style="btn-primary" onChange={this.handleUserSelect}>
+                <select className="form-control CreatePage" data-style="btn-primary" onChange={this.handleUserSelect}>
                     {this.state.users.map(user => <option key={user.userId} value={user.userId}>{user.login}</option>)}
                 </select>
             </div>

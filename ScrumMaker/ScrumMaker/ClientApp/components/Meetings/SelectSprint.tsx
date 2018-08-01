@@ -37,7 +37,7 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
     }
 
     private getSprints() {
-        fetch(this.sprintURL, { credentials: "include" })
+        fetch(this.sprintURL, {})
             .then(response => response.json() as any)
             .then(data => {
                 this.setSprints(data);

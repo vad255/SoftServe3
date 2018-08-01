@@ -167,6 +167,7 @@
     <TypeScriptCompile Include="ClientApp\components\Meetings\SprintReviewEdit.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Models\TaskState.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Models\TaskType.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\SprintsGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Grids\TeamGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\css\editUser.css" />
     <TypeScriptCompile Include="ClientApp\css\modalWindow.css" />

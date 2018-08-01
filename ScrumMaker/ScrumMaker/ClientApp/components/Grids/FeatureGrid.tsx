@@ -71,8 +71,4 @@ export class FeatureGrid extends Grid {
             externalConstraints={this.customUrlFilters}
         />
     }
-
-    protected onCatch(e: any) {
-        this.props.history.push('/login');
-    }
 }

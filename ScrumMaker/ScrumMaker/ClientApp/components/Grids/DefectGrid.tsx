@@ -24,7 +24,7 @@ export class DefectGrid extends Grid {
     protected URL_NEW: string = "/CreateDefect";
 
     constructor() {
-        super(); 
+        super();
     }
 
     protected instantiate(item: any): IDbModel {
@@ -67,9 +67,5 @@ export class DefectGrid extends Grid {
             display={this.filteringOn}
             externalConstraints={this.customUrlFilters}
         />
-    }
-
-    protected onCatch(e: any) {
-        this.props.history.push('/login')
     }
 }
