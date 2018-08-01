@@ -33,6 +33,8 @@ import { CreateDefect } from "./components/CreatePages/CreateDefect";
 import { GetError } from "./components/GetError";
 import { Backlog } from './components/Backlog/Backlog';
 import { CreateStory } from "./components/CreatePages/CreateStory";
+import { CreateTask } from "./components/CreatePages/CreateTask";
+
 
 
 
@@ -76,6 +78,8 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/GetError' component={GetError} />
         <LayoutRoute path='/backlog' component={Backlog} />
         <LayoutRoute path='/CreateStory' component={CreateStory} />
+        <LayoutRoute path='/CreateTask' component={CreateTask} />
+
 
 
 
