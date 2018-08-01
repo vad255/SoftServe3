@@ -32,7 +32,6 @@ export class StoriesGrid extends Grid {
         return new Story(item);
     }
 
-
     protected GetHeaderRow() {
         return <tr>
             <th className="well well-sm col-md-1" onClick={() => this.OrderBy("id")}><span className="nowrap">Database ID</span></th>

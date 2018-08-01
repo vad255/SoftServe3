@@ -6,11 +6,14 @@ import 'jqueryui';
 import 'bootstrap';
 import { User } from '../Models/User';
 import { Story } from '../Models/Story';
+import { Sprint } from "../Models/Sprint";
 
 interface IUserDataFetchingState {
     users: User[];
     stories: Story[];
     storiesName: string[];
+    sprints: Sprint[];
+    sprintNumber: string;
 }
 
 export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUserDataFetchingState> {
@@ -18,12 +21,13 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
     protected URL_BASE_Users: string = 'odata/Users';
     protected URL_BASE_Stories: string = 'odata/Stories';
     protected headerText: string = 'SprintPlaning';
-
+    private SprintNumber: string = '';
     constructor(props: any) {
         super(props);
 
-        this.state = { users: [], stories: [], storiesName:[] };
-        this.handleSaveButtonClick = this.handleSaveButtonClick.bind(this);
+        this.state = { users: [], stories: [], storiesName: [], sprints:[], sprintNumber:'1' };
+        this.handleSaveButtonClick = this.handleSaveButtonClick.bind(this); 
+        this.handleStoryNumberSelect = this.handleStoryNumberSelect.bind(this);
         this.LoadData();
     }
 
@@ -44,7 +48,7 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
                     body: JSON.stringify({
 
                         '@odata.type': 'DAL.Models.Story',
-                        'SprintId': 1
+                        'SprintId': this.state.sprintNumber
                     })
                 })
         }
@@ -74,6 +78,14 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
         return (
             <div>
                 <h1 className="text-center">{this.headerText}</h1>
+                <div>
+                    <label style={{ marginRight: "5px" }}>Select sprint number:
+                        <select style={{ marginTop: "10px" }} className="form-control-static" onChange={this.handleStoryNumberSelect}>
+                            {this.state.sprints.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+                        </select>
+                    </label>
+                </div>
+                <div>
                 <table className="well col-md-1 table-hover td-scrum table-border" style={{ marginRight: "10px"}}><caption><h4>Users</h4></caption>
                     <thead className="table-scrum td-scrum">
                         <tr className="border">
@@ -89,24 +101,26 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
                     </tbody>
                 </table>
 
-                <table className=" menu_links col-md-1 td-scrum" style={{ marginRight: "10px" }}  id="t_draggable1"><caption><h4>Product Backlog</h4></caption>
-                    <tbody className="t_sortable table-scrum td-scrum">
-                        <tr className="td-scrum border">
-                            <td className="well"><h5>ID</h5></td>
-                            <td className="well"><h5>Story_name</h5></td>
-                            <td className="well"><h5>Story_description</h5></td>
-                        </tr>
-                        {this.state.stories.map(function (name: any) {
-                            return <tr key={name.name} className="td-scrum" >
-                                <td className="well">{name.id}</td>
-                                <td className="well">{name.name}</td>
-                                <td className="well">{name.description}</td>
+                    <table className=" menu_links col-md-1 td-scrum" style={{ marginRight: "10px" }} id="t_draggable1">
+                        <caption><h4>Product Backlog</h4></caption>
+                        <tbody className="t_sortable table-scrum td-scrum">
+                            <tr className="td-scrum border">
+                                <td className="well"><h5>ID</h5></td>
+                                <td className="well"><h5>Story_name</h5></td>
+                                <td className="well"><h5>Story_description</h5></td>
                             </tr>
-                        })}
-                    </tbody>
+                            {this.state.stories.map(function (name: any) {
+                                return <tr key={name.name} className="td-scrum" >
+                                    <td className="well">{name.id}</td>
+                                    <td className="well">{name.name}</td>
+                                    <td className="well">{name.description}</td>
+                                </tr>
+                            })}
+                        </tbody>
                 </table>
 
-                <table className="well menu_links col-md-1 td-scrum" id="t_draggable2"><caption><h4>Sprint Backlog</h4></caption>
+                <table className="well menu_links col-md-1 td-scrum" id="t_draggable2">
+                        <caption><h4>Sprint #{this.state.sprintNumber} Backlog</h4></caption>
                     <tbody className="t_sortable table-scrum td-scrum">
                         <tr className="td-scrum border">
                             <td className="well"><h5>ID</h5></td>
@@ -118,17 +132,22 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
 
                 <div role='button'
                     className='btn btn-primary'
-                    style={{ marginLeft: "10px", marginTop: "-1px" }} 
+                    style={{ marginLeft: "10px", marginTop: "-5px" }} 
                     data-toggle="modal"
                     data-target="#confirmDeleteModal"                 
                     onClick={this.handleSaveButtonClick}>
                     Save sprint
                 </div>
-                {this.GetDeleteConfirmModal()}
+                    {this.GetDeleteConfirmModal()}
+                </div>
             </div>
         );
     }
-    
+
+    handleStoryNumberSelect(event: any) {
+        this.setState({ sprintNumber: event.target.value });        
+    }
+
     private GetDeleteConfirmModal() {      
         
         return <div id="confirmDeleteModal" className="modal fade">
@@ -199,6 +218,16 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
                 
                 this.setState({ stories: storiesTemp });
             });
+
+        fetch('odata/sprints').then(response => response.json() as Promise<any>)
+            .then(data => {
+                var sprintsData = [] as Sprint[];
+               
+                for (var i = 0; i < data["value"].length; i++) {
+                    sprintsData[i] = new Sprint(data["value"][i]);
+                }              
+                this.setState({ sprints: sprintsData});
+            }).catch(e => console.log(e));
     }
 
     private getUrlUsers() {
@@ -213,5 +242,6 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
         return result;
     }
 }
+
 
 
