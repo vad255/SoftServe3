@@ -31,7 +31,6 @@ export class TaskGrid extends Grid {
 
     constructor() {
         super();
-        this.state = { items: [] };
     }
 
     protected instantiate(item: any): IDbModel {
@@ -84,5 +83,9 @@ export class TaskGrid extends Grid {
             display={this.filteringOn}
             externalConstraints={this.customUrlFilters}
         />
+    }
+
+    protected onCatch(e: any) {
+        this.props.history.push('/login');
     }
 }
