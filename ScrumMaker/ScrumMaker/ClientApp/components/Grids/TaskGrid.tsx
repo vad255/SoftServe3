@@ -19,8 +19,6 @@ interface TaskDataFetchingState {
     tasks: Task[];
 }
 
-
-
 export class TaskGrid extends Grid {
 
     protected URL_BASE: string = 'odata/tasks';
