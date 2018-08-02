@@ -115,7 +115,9 @@ export class EditStory extends React.Component<RouteComponentProps<any>, IEditPa
     }
 
     handleStatusSelect(event: any) {
-        this.setState({ statusValue: event.target.value });
+        this.setState({ statusValue: event.target.id });
+        let b = document.getElementById("dropdownMenuButton") as any;
+        b.innerHTML = event.target.innerHTML;
     }
 
     handleChangeInput(event: any) {
@@ -141,14 +143,19 @@ export class EditStory extends React.Component<RouteComponentProps<any>, IEditPa
             </div>
             <div>
                 <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Status:</h3>
-                <select className="form-control-static" onChange={this.handleStatusSelect} >
-                    <option value="0">Pending approval</option>
-                    <option value="1">Ready to start</option>
-                    <option value="2">In progress</option>
-                    <option value="3">Developing сomplete</option>
-                    <option value="4">Test сomplete</option>
-                    <option value="5">Accepted</option>
-                </select>
+                <div className="btn-group">
+                    <button className="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Select status
+                    </button>
+                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a className="dropdown-item" id="0" onClick={this.handleStatusSelect}>Pending approval</a>
+                        <a className="dropdown-item" id="1" onClick={this.handleStatusSelect} >Ready to start</a>
+                        <a className="dropdown-item" id="2" onClick={this.handleStatusSelect} >In progress</a>
+                        <a className="dropdown-item" id="3" onClick={this.handleStatusSelect}>Developing сomplete</a>
+                        <a className="dropdown-item" id="4" onClick={this.handleStatusSelect} >Test сomplete</a>
+                        <a className="dropdown-item" id="5" onClick={this.handleStatusSelect}>Accepted</a>
+                    </div>
+                </div>
             </div>
 
             <div>

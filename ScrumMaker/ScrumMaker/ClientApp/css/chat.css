@@ -227,3 +227,8 @@ hr {
     top: 70%;
     left: 44%;
 }
+
+.CreatePage {
+    width: 45%;
+    resize: none;
+}

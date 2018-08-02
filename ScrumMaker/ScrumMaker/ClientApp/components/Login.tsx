@@ -90,7 +90,7 @@ export class Login extends React.Component<RouteComponentProps<any>, LoginViewMo
                                         <label className="label-checkbox100" htmlFor="ckb1">Remember me</label>
                                     </div>
                                     <div>
-                                        <a href="#" className="txt1">Forgot Password?</a>
+                                        <a href="/ForgotPassword" className="txt1">Forgot Password?</a>
                                     </div>
                                 </div>
                                 <div className="container-login100-form-btn">

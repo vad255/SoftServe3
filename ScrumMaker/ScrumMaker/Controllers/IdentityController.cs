@@ -10,6 +10,7 @@ using DAL.Access;
 using DAL.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using ScrumMaker;
@@ -34,6 +35,7 @@ namespace ScrumMaker.Controllers
         public async Task Token(LoginViewModel loginViewModel)
         {
             TokenManager tokenManager = new TokenManager(_users);
+
             ClaimsIdentity identity = tokenManager.GetIdentity(loginViewModel.Login, loginViewModel.Password);
             if (identity == null)
             {

@@ -1,23 +1,25 @@
-﻿
-using DAL;
+﻿using System;
 using DAL.Access;
 using DAL.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ScrumMaker.Attributes;
-using System;
+using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
+using BL.CryptoServiceProvider;
+using System.Security;
+using System.Net.Mime;
 
 namespace ScrumMaker.Controllers
 {
     public class UserController : Controller
     {
-        private IRepository<Photo> _repository;
-        private IRepository<User> _user;
+        private readonly IRepository<Photo> _repository;
+        private readonly IRepository<User> _user;
 
         public UserController(IRepository<Photo> repository, IRepository<User> user)
         {
@@ -36,9 +38,8 @@ namespace ScrumMaker.Controllers
                     using (var stream = new MemoryStream())
                     {
                         await i.CopyToAsync(stream);
-                        var fileBytes = stream.ToArray();
 
-                        Photo photo = _repository.GetAll().Where(p => p.UserId == GetUser().UserId).FirstOrDefault();
+                        Photo photo = _repository.GetAll().FirstOrDefault(x => x.UserId == HttpContext.User.UserId());
                         if (photo != null)
                         {
                             photo.UserPhoto = stream.ToArray();
@@ -47,10 +48,10 @@ namespace ScrumMaker.Controllers
 
                         if (photo == null)
                         {
-                            photo = new Photo() { UserPhoto = stream.ToArray(), UserId = GetUser().UserId };
+                            photo = new Photo() { UserPhoto = stream.ToArray(), UserId = HttpContext.User.UserId() };
                             _repository.Create(photo);
 
-                            User u = GetUser();
+                            User u = _user.GetById(HttpContext.User.UserId());
                             u.Photo = photo;
                             _user.Update(u);
                         }
@@ -59,18 +60,19 @@ namespace ScrumMaker.Controllers
                     }
                 }
             }
-            return View();
+            return Redirect("/");
         }
 
         [HttpGet]
         [Route("api/User/ShowPhoto")]
         public FileStreamResult ViewImage()
         {
-            MemoryStream ms = null;
+            MemoryStream ms = new MemoryStream();
             try
             {
-                Photo photo = _repository.GetAll().Where(u => u.UserId == GetUser().UserId).First();
-                ms = new MemoryStream(photo.UserPhoto);
+                Photo photo = _repository.GetAll().FirstOrDefault(x => x.UserId == HttpContext.User.UserId());
+                if (photo != null)
+                    ms = new MemoryStream(photo.UserPhoto);
             }
             catch
             {
@@ -105,8 +107,8 @@ namespace ScrumMaker.Controllers
         [Route("api/UserPhoto/{userId?}")]
         public async Task<FileStreamResult> GetAvatar(int userId)
         {
-            var photo = _repository.GetAll().Where(p => p.UserId == userId).FirstOrDefault();
-            MemoryStream ms = null;
+            var photo = _repository.GetAll().FirstOrDefault(x => x.UserId == HttpContext.User.UserId());
+            MemoryStream ms;
             if (photo != null)
                 ms = new MemoryStream(photo.UserPhoto);
             else
@@ -121,7 +123,7 @@ namespace ScrumMaker.Controllers
         {
             if (password.Equals(repeatpassword))
             {
-                User newUser = GetUser();
+                User newUser = _user.GetById(HttpContext.User.UserId());
                 newUser.Password = password;
                 _user.Update(newUser);
                 _user.Save();
@@ -130,33 +132,75 @@ namespace ScrumMaker.Controllers
             else
             {
                 return false;
-                throw new Exception();
             }
         }
 
-        public string GetLogin()
+        [HttpPost]
+        [Route("/ResetUserPassword")]
+        public bool ResetPassword(string login)
         {
-            var value = HttpContext.Request.Cookies["Authorization"];
-            string login = null;
-            if (value != null)
+            var user = _user.GetAll().FirstOrDefault(u => u.Login == login);
+
+            if (user != null)
             {
-                var handler = new JwtSecurityTokenHandler();
-                var token = handler.ReadToken(value) as JwtSecurityToken;
-                login = token.Claims.First(claim => claim.Type == "Login").Value;
+                var password = GetRandomPassword();
+
+                user.Password = PasswordStorage.CreateHash(password.ToString());
+                _user.Update(user);
+                _user.Save();
+
+                MailMessage emailMessage = new MailMessage("scrummaker325@gmail.com", login)
+                {
+                    Subject = "Reset Password",
+                };
+
+                var body = GetBody(password);
+
+                AlternateView htmlView = AlternateView.CreateAlternateViewFromString(body, null, "text/html");
+
+                LinkedResource theEmailImage = new LinkedResource("./wwwroot/img/NewLogo.png", MediaTypeNames.Image.Jpeg);
+                //theEmailImage.ContentId = Guid.NewGuid().ToString();
+                theEmailImage.ContentId = "NewLogo";
+                htmlView.LinkedResources.Add(theEmailImage);
+                emailMessage.AlternateViews.Add(htmlView);
+
+                SmtpClient smtp = new SmtpClient("smtp.gmail.com")
+                {
+                    Port = 587,
+                    EnableSsl = true,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential("scrummaker325@gmail.com", "Qwerty!123"),
+                    DeliveryMethod = SmtpDeliveryMethod.Network
+                };
+                emailMessage.IsBodyHtml = true;
+                smtp.Send(emailMessage);
+
+                return true;
             }
-            return login;
+            else
+            {
+                return false;
+            }
+
         }
 
-        private User GetUser()
+        private string GetBody(int password)
         {
-            User user = _user.GetAll().Where(u => u.Login.Equals(GetLogin())).FirstOrDefault();
+            var body = "<img src=\"cid:NewLogo\" /><h2 color=\"green\">The ScrumMaker Team</h2>\n" +
+                       string.Format("<h3>Your new password is: <b>{0}</b></h3>", password);
+            return body;
+        }
 
-            return user;
+        private int GetRandomPassword()
+        {
+            var r = new Random();
+            var p = r.Next(int.MaxValue / 2, Int32.MaxValue);
+            return p;
         }
 
         private static async Task<MemoryStream> GetDefaultAvatar()
         {
-            byte[] fs = await System.IO.File.ReadAllBytesAsync(Path.GetFullPath("wwwroot/img/unknown.jpg"));
+            var fs = await System.IO.File.ReadAllBytesAsync(Path.GetFullPath("wwwroot/img/unknown.jpg"));
             return new MemoryStream(fs);
         }
     }

@@ -6,6 +6,7 @@ import { FeatureGrid } from '../Grids/FeatureGrid';
 import { State } from '../Models/FeatureState';
 import { NavLink } from 'react-router-dom';
 import { User } from '../Models/User';
+import Switch from 'react-switch';
 
 interface IFeatureFetchingState {
     FeatureName: string;
@@ -27,6 +28,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
         this.getUsers();
         this.handleSave = this.handleSave.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleChangeBlocked = this.handleChangeBlocked.bind(this);
     }
 
     private isLoading: boolean = true;
@@ -55,7 +57,8 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
     }
 
     public LoadData() {
-        fetch(this.URL)
+        fetch(this.URL, {
+            credentials: 'include',})
             .then(response => response.json() as any)
             .then(data => {
                 this.OnDataReceived(data);
@@ -116,68 +119,74 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
         });
     }
 
+    handleChangeBlocked(checked: boolean) {
+        this.setState({Blocked: checked });
+    }
+
     public EditFeature() {
         return <form onSubmit={this.handleSave} name="oldForm" >
             <div className="text-center">
                 <h2 style={{ margin: "10px", padding: "5px", textAlign: "center" }}>"{this.state.FeatureName}" feature editing page</h2>
             </div>
-            <div className="text-left">
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Name:</h3>
+            <h3 className="hStyle">Name:&nbsp;&nbsp;
                 <input
-                    className="input-lg"
+                    className="form-control inline-block"
                     name="FeatureName"
                     type="text"
                     value={this.state.FeatureName}
                     onChange={this.handleInputChange} />
-            </div>
-            <div className="text-left">
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Description:</h3>
-                <textarea
-                    style={{ width: "400px", height: "300px", fontSize: 20, padding: "7px" }}
-                    className="fa-text-height"
-                    name="Description"
-                    type="text"
-                    value={this.state.Description}
-                    onChange={this.handleInputChange} />
-            </div>
-            <div className="text-left">
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Stories:</h3>
-                <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base ">
+            </h3>
+            <h3 className="hStyle">Stories:&nbsp;&nbsp;
+            <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base ">
                     <NavLink to={`../stories?filter=feature/id eq ${this.id}`} activeClassName='active'>
                        See stories which are in this feature...
                     </NavLink>
                 </div>
-            </div>
-            <div className="text-left">
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Blocked:</h3>
-                <input
-                    name="Blocked"
-                    type="checkbox"
+            </h3>
+            <label>
+                <span className="spanStyle">Blocked:&nbsp;&nbsp;</span>
+                <Switch onChange={this.handleChangeBlocked}
                     checked={this.state.Blocked}
-                    onChange={this.handleInputChange} />
-            </div>
-            <div className="text-left">
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Owner:</h3>
-                {this.renderUsers()}
-
-            </div>
-            <div className="text-left">
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>State:</h3>
+                    id="normal-switch" />
+            </label>
+           
+            <h3 className="hStyle">Owner:&nbsp;&nbsp;
+            {this.renderUsers()}
+            </h3>
+            <h3 className="hStyle">State:&nbsp;&nbsp;
             {this.renderStates()}
-            </div>
-            <div className="text-left">
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Program increment:</h3>
+            </h3>
+            <h3 className="hStyle">Program increment:&nbsp;&nbsp;
                 <input
-                    className="input-lg"
+                    className="form-control inline-block"
                     name="ProgramIncrement"
                     type="text"
                     value={this.state.ProgramIncrement}
                     onChange={this.handleInputChange} />
-            </div>
-            <div className="container-login100-form-btn">
-                <button className="login100-form-btn">Update</button>
+            </h3>
+            <h3 className="hStyle">Description:</h3>
+            <textarea
+                className="areaStyle"
+                name="Description"
+                type="text"
+                value={this.state.Description}
+                onChange={this.handleInputChange} />
+            <div className="text-center">
+                <button
+                    className="btn"
+                    data-toggle="modal"
+                    data-target="#ConfirmDialog"
+                    role="button">Update</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <button
+                    className="btn inline-block"
+                    onClick={this.handleCancel.bind(this)}>Discard</button>
             </div>
         </form>
+    }
+
+    private handleCancel() {
+        this.props.history.push('/feature');
     }
 
     private renderStates() {
@@ -193,6 +202,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
         }
    
         return <select
+            className="form-control inline-block"
             value={this.state.State}
             name="State"
             onChange={this.handleInputChange}>

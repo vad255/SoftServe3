@@ -32,11 +32,11 @@ import { SelectSprint } from './components/Meetings/SelectSprint';
 import { PokerUsersBox } from './components/PokerEstimation/PokerUsersBox';
 import { PokerTable } from './components/PokerEstimation/pokerTable';
 import { MainPokerPage } from './components/PokerEstimation/mainPokerPage'; 
-
+import { CreateDefect } from "./components/CreatePages/CreateDefect";
 import { GetError } from "./components/GetError";
-
 import { Backlog } from './components/Backlog/Backlog';
-
+import { CreateStory } from "./components/CreatePages/CreateStory";
+import { ForgotPasswordPage } from "./components/ForgotPasswordPage";
 
 
 const LayoutRoute = ({ ...props }) => {
@@ -76,10 +76,11 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/RetrospectiveMeeting' component={RetrospectiveMeeting} />
         <LayoutRoute path='/SelectSprintPage' component={SelectSprintPage} />
         <LayoutRoute path='/PokerEstimation' component={MainPokerPage} />
-
+        <LayoutRoute path='/CreateDefect' component={CreateDefect} />
         <LayoutRoute path='/GetError' component={GetError} />
-
         <LayoutRoute path='/backlog' component={Backlog} />
+        <LayoutRoute path='/CreateStory' component={CreateStory} />
+        <LayoutRoute path='/ForgotPassword' component={ForgotPasswordPage} />
 
 
 

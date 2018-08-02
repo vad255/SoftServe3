@@ -41,6 +41,9 @@
     <None Remove="ClientApp\components\Backlog\ProductBacklog.tsx" />
     <None Remove="ClientApp\components\Backlog\SprintBacklog.tsx" />
     <None Remove="ClientApp\components\Charts\Chart.tsx" />
+    <None Remove="ClientApp\components\CreatePages\CreateDefect.tsx" />
+    <None Remove="ClientApp\components\CreatePages\CreateStory.tsx" />
+    <None Remove="ClientApp\components\CreatePages\CreateTask.tsx" />
     <None Remove="ClientApp\components\EditPages\EditDefect.tsx" />
     <None Remove="ClientApp\components\Charts\Velocity.tsx" />
     <None Remove="ClientApp\components\Chats\RetrospectiveMeeting.tsx" />
@@ -58,6 +61,7 @@
     <None Remove="ClientApp\components\Filters\TasksFiltersRow.tsx" />
     <None Remove="ClientApp\components\Filters\TeamFiltersRow.tsx" />
     <None Remove="ClientApp\components\Filters\StoriesFiltersRow.tsx" />
+    <None Remove="ClientApp\components\ForgotPasswordPage.tsx" />
 
     <None Remove="ClientApp\components\GetError.tsx" />
 
@@ -128,7 +132,11 @@
     <TypeScriptCompile Include="ClientApp\components\Backlog\Backlog.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Backlog\ProductBacklog.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Backlog\SprintBacklog.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\CreatePages\CreateDefect.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\CreatePages\CreateStory.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\CreatePages\CreateTask.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\EditDefect.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\ForgotPasswordPage.tsx" />
 
     <TypeScriptCompile Include="ClientApp\components\GetError.tsx" />
 

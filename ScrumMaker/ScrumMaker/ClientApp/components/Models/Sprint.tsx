@@ -18,7 +18,7 @@ export class Sprint implements ICommitableDbModel {
     backlog: Story [] = [];
     defects: string = '';
     dailyScrums: string = '';
-    review: string = '';
+    goal: string = '';
     retrospective: string = '';
     teamId: number = -1;
     team: Team;
@@ -34,7 +34,7 @@ export class Sprint implements ICommitableDbModel {
         this.history = new SprintHistory(params.History);
         this.defects = params.Defects;
         this.dailyScrums = params.DailyScrums;
-        this.review = params.Review;
+        this.goal = params.Goal;
         this.retrospective = params.Retrospective;
         this.teamId = params.TeamId;
         this.team = new Team(params.Team);
@@ -58,13 +58,10 @@ export class Sprint implements ICommitableDbModel {
             this.name,
             this.team != undefined ? this.team.renderAsMenu() : "",
             this.stage,
-            <div className='align-base m-tooltip'> {this.cutStirng(this.review, 15)}
-                <span className="m-tooltiptext"> {this.review}</span>
+            <div className='align-base m-tooltip'> {this.cutStirng(this.goal, 15)}
+                <span className="m-tooltiptext"> {this.goal}</span>
             </div>,
-            this.history.renderAsMenu(),
-            <div className='align-base m-tooltip'>{this.cutStirng(this.retrospective, 15)}
-                <span className="m-tooltiptext">{this.retrospective}</span>
-            </div>
+            this.history.renderAsMenu()
         ]
 
         return elements;
@@ -78,7 +75,7 @@ export class Sprint implements ICommitableDbModel {
             TeamId: this.teamId,
             HistoryId: this.historyId,
             Stage: this.stage,
-            Review: this.review,
+            Goal: this.goal,
             Retrospective: this.retrospective,
         };
     }

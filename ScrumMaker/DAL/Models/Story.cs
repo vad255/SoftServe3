@@ -27,7 +27,9 @@ namespace DAL.Models
 
         public Feature Feature { get; set; }
 
-        public Team Team { get; set; }
+        [ForeignKey("Team")]
+        public int? TeamId { get; set; }
+        public virtual Team Team { get; set; }
 
         [ForeignKey("Sprint")]
         public int? SprintId { get; set; }

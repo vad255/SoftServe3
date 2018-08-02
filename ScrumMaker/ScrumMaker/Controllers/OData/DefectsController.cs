@@ -9,6 +9,7 @@ using DAL.Models;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ScrumMaker.Attributes;
 
 namespace ScrumMaker.Controllers
 {
@@ -26,6 +27,8 @@ namespace ScrumMaker.Controllers
             _manager = manager;
         }
 
+        [RefreshToken]
+        [CookieAuthorize]
         [EnableQuery]       
         public IActionResult Get()
         {            
@@ -71,10 +74,11 @@ namespace ScrumMaker.Controllers
         return Updated(defect);
     }
 
-    private bool DefectExists(int key)
-    {
-        return _defect.GetAll().Count(e => e.DefectId == key) > 0;
-    }
+        private bool DefectExists(int key)
+        {
+            return _defect.GetAll().Count(e => e.DefectId == key) > 0;
+        }
+
         [AcceptVerbs("DELETE")]
         public IActionResult Delete([FromODataUri] int key)
         {
@@ -82,6 +86,27 @@ namespace ScrumMaker.Controllers
             _defect.Save();
             return NoContent();
         }
+
+        [AcceptVerbs("POST")]
+        public IActionResult Post([FromBody] Defect createDefect)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _defect.Create(createDefect);
+            //if (defect == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //createDefect.Patch(defect);
+            _defect.Save();
+
+            return Created(createDefect);
+        }
     }
 }
+
 
