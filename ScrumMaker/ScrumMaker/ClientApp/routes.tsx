@@ -36,7 +36,6 @@ import { CreateStory } from "./components/CreatePages/CreateStory";
 import { ForgotPasswordPage } from "./components/ForgotPasswordPage";
 
 
-
 const LayoutRoute = ({ ...props }) => {
     return (
         <Layout>
@@ -78,6 +77,7 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/backlog' component={Backlog} />
         <LayoutRoute path='/CreateStory' component={CreateStory} />
         <LayoutRoute path='/ForgotPassword' component={ForgotPasswordPage} />
+
 
 
         <Route path='/login' component={Login} />

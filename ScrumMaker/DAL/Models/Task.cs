@@ -19,13 +19,15 @@ namespace DAL.Models
         public int? StoryId { get; set; }
         public virtual Story Story { get; set; }
 
-        public int PlannedHours { get; set; }
+        public int? PlannedHours { get; set; }
+        public int? RemainingHours { get; set; }
+        public int? ActualHours { get; set; }
+
         public DateTime? Started { get; set; }
         public DateTime? Completed { get; set; }
 
         [Required]
         public TaskType Type { get; set; }
-
         [Required]
         public TaskState State { get; set; }
 
