@@ -14,17 +14,14 @@ namespace DAL.Models
         [Required]
         [MaxLength(50)]
         public string Login { get; set; }
-   
 
         [Required]
-        [MaxLength(50)]
+        [MaxLength(100)]
         public string Password { get; set; }
-
 
         [ForeignKey("Role")]
         public int RoleId { get; set; }
         public virtual Role Role { get; set; }
-
 
         [ForeignKey("Team")]
         public int? TeamId { get; set; }
