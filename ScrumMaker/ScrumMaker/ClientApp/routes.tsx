@@ -29,6 +29,9 @@ import { EditTeam } from './components/EditPages/EditTeam';
 import { RetrospectiveMeeting } from './components/Chats/RetrospectiveMeeting';
 import { SelectSprintPage } from './components/Chats/RetrospectivePages/SelectSprintPage';
 import { SelectSprint } from './components/Meetings/SelectSprint';
+import { PokerUsersBox } from './components/PokerEstimation/PokerUsersBox';
+import { PokerTable } from './components/PokerEstimation/pokerTable';
+import { MainPokerPage } from './components/PokerEstimation/mainPokerPage'; 
 
 import { GetError } from "./components/GetError";
 
@@ -72,6 +75,7 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/EditDefect' component={EditDefect} />
         <LayoutRoute path='/RetrospectiveMeeting' component={RetrospectiveMeeting} />
         <LayoutRoute path='/SelectSprintPage' component={SelectSprintPage} />
+        <LayoutRoute path='/PokerEstimation' component={MainPokerPage} />
 
         <LayoutRoute path='/GetError' component={GetError} />
 

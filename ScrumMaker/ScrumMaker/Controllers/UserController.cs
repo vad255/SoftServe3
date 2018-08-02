@@ -80,6 +80,25 @@ namespace ScrumMaker.Controllers
             return new FileStreamResult(ms, "image/jpeg");
         }
 
+        [HttpGet]
+        [Route("api/User/ViewImageByLoign")]
+        public FileStreamResult ViewImageByLoign(string login)
+        {
+            MemoryStream ms = null;
+            try
+            {
+                User user = _user.GetAll().Where(u => u.Login.Equals(login)).First();
+                Photo photo = _repository.GetAll().Where(p => p.UserId == user.UserId).First();
+                ms = new MemoryStream(photo.UserPhoto);
+            }
+            catch
+            {
+                ms = GetDefaultAvatar().Result;
+            }
+
+            return new FileStreamResult(ms, "image/jpeg");
+        }
+
 
 
         [HttpGet]
