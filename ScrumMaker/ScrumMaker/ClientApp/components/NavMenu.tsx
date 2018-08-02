@@ -107,7 +107,11 @@ export class NavMenu extends React.Component<{}, { role: string }> {
                         <NavLink to={'/backlog'} activeClassName='active'>
                             <span></span> Backlog
                             </NavLink>
-
+                    </li>
+                    <li>
+                        <NavLink to={'/PokerEstimation'} activeClassName='active'>
+                            <span></span> Poker Estimation
+                            </NavLink>
                     </li>
                 </ul>
             </div>
