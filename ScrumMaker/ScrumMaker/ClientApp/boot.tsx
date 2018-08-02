@@ -15,6 +15,7 @@ import './css/Tooltips.css';
 import './css/modalWindow.css';
 import './css/multiselect.css';
 import './css/backlog.css';
+import './css/poker.css';
 import 'bootstrap';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';

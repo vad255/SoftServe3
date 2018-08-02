@@ -77,6 +77,7 @@
     <None Remove="ClientApp\components\Models\Feature.tsx" />
     <None Remove="ClientApp\components\Models\FeatureState.tsx" />
     <None Remove="ClientApp\components\Models\ModelForChart.tsx" />
+    <None Remove="ClientApp\components\Models\PokerUser.tsx" />
     <None Remove="ClientApp\components\Models\SprintReview.tsx" />
     <None Remove="ClientApp\components\Models\Story.tsx" />
     <None Remove="ClientApp\components\Models\Task.tsx" />
@@ -84,6 +85,9 @@
     <None Remove="ClientApp\components\MyCalendar.tsx" />
     <None Remove="ClientApp\components\Models\TaskState.tsx" />
     <None Remove="ClientApp\components\Models\TaskType.tsx" />
+    <None Remove="ClientApp\components\PokerEstimation\mainPokerPage.tsx" />
+    <None Remove="ClientApp\components\PokerEstimation\pokerTable.tsx" />
+    <None Remove="ClientApp\components\PokerEstimation\PokerUsersBox.tsx" />
     <None Remove="ClientApp\components\SprintReview.tsx" />
     <None Remove="ClientApp\components\SprintsGrid.tsx" />
     <None Remove="ClientApp\components\TeamGrid.tsx" />
@@ -147,6 +151,7 @@
     <TypeScriptCompile Include="ClientApp\components\Chats\RetrospectivePages\SelectSprintPage.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Chats\RetrospectiveTable.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Meetings\SelectSprint.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Models\PokerUser.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Models\SprintReview.tsx" />
     <TypeScriptCompile Include="ClientApp\components\MyCalendar.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Charts\Chart.tsx" />
@@ -171,6 +176,10 @@
     <TypeScriptCompile Include="ClientApp\components\Meetings\SprintReviewEdit.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Models\TaskState.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Models\TaskType.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\PokerEstimation\mainPokerPage.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\PokerEstimation\PokerUsersBox.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\PokerEstimation\pokerTable.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\SprintsGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Grids\TeamGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\css\editUser.css" />
     <TypeScriptCompile Include="ClientApp\css\modalWindow.css" />

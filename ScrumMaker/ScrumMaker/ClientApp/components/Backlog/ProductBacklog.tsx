@@ -9,7 +9,7 @@ import { Tabs, TabList, TabPanel, Tab } from 'react-tabs';
 
 export class ProductBacklog {
 
-    public URL_BASE: string = '/odata/stories?$filter=SprintId eq null&$expand=Tasks($select=TaskId,Summary,Description)&$select=Id,Name';
+    public URL_BASE: string = '/odata/stories?$filter=SprintId eq null&$expand=Tasks($select=TaskId,Summary,Description)&$select=Id,Name,PokerMark';
     public stories: Story[] = [];
 
     getList() {
