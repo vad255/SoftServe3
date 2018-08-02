@@ -223,7 +223,7 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
     }
 
     private selectExpiredStories(story: Story) {
-        if (story.status.toString() !== "DevComplete")
+        if (story.status.toString() !== "Accepted")
             return<td style={{ color: "red" }}>{story.status}</td>
         return<td>{story.status}</td>
     }
