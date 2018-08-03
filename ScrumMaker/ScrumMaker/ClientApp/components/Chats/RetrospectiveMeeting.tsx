@@ -30,7 +30,6 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
     constructor(props: any) {
         super(props);
         this.state = { wentWellOutPut: "", improvedOutput: "", commitOutput: "", role: "" };
-        this.sprintId = this.props.location.state.sprintId as number;
         this.sprintId = this.props.location.state.SprintId as number;
         this.connection = new HubConnectionBuilder().withUrl(this.chatUrl + "?token=" + this.sprintId).build();
         this.connection.on("receiveMessage", this.receiveMessage.bind(this));
