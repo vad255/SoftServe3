@@ -8,8 +8,6 @@ import { DefectState } from "../Models/DefectState";
 
 
 interface IEditPageState {
-    defect: Defect;
-    id: string;
     nameValue: string;
     statusValue: DefectStatus;    
     priorityValue: DefectPriority;    
@@ -22,9 +20,7 @@ interface IEditPageState {
 export class CreateDefect extends React.Component<RouteComponentProps<any>, IEditPageState> {
     constructor(props: any) {
         super(props);
-        this.state = (({
-            id: this.props.location.pathname.substring((this.props.location.pathname.lastIndexOf('/') + 1)),
-            defect: Defect,
+        this.state = (({           
             statusValue: "Open",
             nameValue: "",
             textAreaValue: "",
@@ -132,7 +128,7 @@ export class CreateDefect extends React.Component<RouteComponentProps<any>, IEdi
             </div>
             <div>
                 <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Status:</h3>
-                <select className="form-control-static" style={{ width: "35%"}} value={this.state.statusValue} onChange={this.handleStatusSelect} >
+                <select className="form-control" style={{ width: "35%"}} value={this.state.statusValue} onChange={this.handleStatusSelect} >
                     <option value="Open">Open</option>
                     <option value="Close">Close</option>                   
                 </select>
@@ -183,7 +179,7 @@ export class CreateDefect extends React.Component<RouteComponentProps<any>, IEdi
 
         return <select
             value={this.state.stateValue}
-            className="form-control-static"
+            className="form-control"
             name="State"
             style={{ width: "35%" }} 
             onChange={this.handleStateSelect}>
@@ -200,12 +196,12 @@ export class CreateDefect extends React.Component<RouteComponentProps<any>, IEdi
 
         let items: JSX.Element[] = [];
         for (var i = 0; i < names.length; i++) {
-            items.push(<option key={i } value={names[i]}>{names[i]}</option>);
+            items.push(<option key={i} value={names[i]}>{names[i]}</option>);
         }
 
         return <select
             value={this.state.priorityValue}
-            className="form-control-static"
+            className="form-control"
             style={{ width: "35%" }} 
             name="Priority"
             onChange={this.handlePrioritySelect}>

@@ -32,7 +32,8 @@ import { SelectSprint } from './components/Meetings/SelectSprint';
 import { CreateDefect } from "./components/CreatePages/CreateDefect";
 import { GetError } from "./components/GetError";
 import { Backlog } from './components/Backlog/Backlog';
-import { CreateStory } from "./components/CreatePages/CreateStory";
+import { CreateStory } from "./components/CreatePages/CreateStory"; 
+import { CreateSprint } from "./components/CreatePages/CreateSprint";
 
 
 
@@ -76,7 +77,7 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/GetError' component={GetError} />
         <LayoutRoute path='/backlog' component={Backlog} />
         <LayoutRoute path='/CreateStory' component={CreateStory} />
-
+        <LayoutRoute path='/CreateSprint' component={CreateSprint} />
 
 
         <Route path='/login' component={Login} />
