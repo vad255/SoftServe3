@@ -42,7 +42,6 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         this.isLoading = true;
     }
 
-
     public render() {
         let contents = this.isLoading
             ? <tr><td colSpan={14}><p><em>Loading...</em></p></td></tr>
@@ -64,14 +63,15 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
 
                 </div>
-                <label>Number elements:
-                        <select style={{ marginLeft: "5px" }} onChange={this.handleSizeSelect.bind(this)}>
+                <div className="RDiv">
+                    <label>Number of elements:</label>
+                    <select className="form-control" style={{ margin: "5px", width: "70px" }} onChange={this.handleSizeSelect.bind(this)}>
                         <option value="5">5</option>
                         <option value="10">10</option>
                         <option value="20">20</option>
                         <option value="50">50</option>
                     </select>
-                </label>
+                </div>
                 <div>
                     <table className='table table-scrum table-hover td-scrum' style={{ marginTop: "1px" }}>
 

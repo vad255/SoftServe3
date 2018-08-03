@@ -82,8 +82,6 @@ namespace ScrumMaker.Controllers
             return new FileStreamResult(ms, "image/jpeg");
         }
 
-
-
         [HttpGet]
         [Route("api/UserPhoto/{userId?}")]
         public async Task<FileStreamResult> GetAvatar(int userId)
@@ -140,7 +138,6 @@ namespace ScrumMaker.Controllers
                 AlternateView htmlView = AlternateView.CreateAlternateViewFromString(body, null, "text/html");
 
                 LinkedResource theEmailImage = new LinkedResource("./wwwroot/img/NewLogo.png", MediaTypeNames.Image.Jpeg);
-                //theEmailImage.ContentId = Guid.NewGuid().ToString();
                 theEmailImage.ContentId = "NewLogo";
                 htmlView.LinkedResources.Add(theEmailImage);
                 emailMessage.AlternateViews.Add(htmlView);
