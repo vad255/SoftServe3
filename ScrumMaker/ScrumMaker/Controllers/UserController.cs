@@ -124,7 +124,8 @@ namespace ScrumMaker.Controllers
             if (password.Equals(repeatpassword))
             {
                 User newUser = _user.GetById(HttpContext.User.UserId());
-                newUser.Password = password;
+                var hash = PasswordStorage.CreateHash(password);
+                newUser.Password = hash;
                 _user.Update(newUser);
                 _user.Save();
                 return true;
