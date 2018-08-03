@@ -29,11 +29,16 @@ import { EditTeam } from './components/EditPages/EditTeam';
 import { RetrospectiveMeeting } from './components/Chats/RetrospectiveMeeting';
 import { SelectSprintPage } from './components/Chats/RetrospectivePages/SelectSprintPage';
 import { SelectSprint } from './components/Meetings/SelectSprint';
+import { PokerUsersBox } from './components/PokerEstimation/PokerUsersBox';
+import { PokerTable } from './components/PokerEstimation/pokerTable';
+import { MainPokerPage } from './components/PokerEstimation/mainPokerPage'; 
 import { CreateDefect } from "./components/CreatePages/CreateDefect";
 import { GetError } from "./components/GetError";
 import { Backlog } from './components/Backlog/Backlog';
-import { CreateStory } from "./components/CreatePages/CreateStory"; 
 import { CreateSprint } from "./components/CreatePages/CreateSprint";
+
+import { CreateStory } from "./components/CreatePages/CreateStory";
+import { ForgotPasswordPage } from "./components/ForgotPasswordPage";
 
 
 
@@ -73,11 +78,15 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/EditDefect' component={EditDefect} />
         <LayoutRoute path='/RetrospectiveMeeting' component={RetrospectiveMeeting} />
         <LayoutRoute path='/SelectSprintPage' component={SelectSprintPage} />
+        <LayoutRoute path='/PokerEstimation' component={MainPokerPage} />
         <LayoutRoute path='/CreateDefect' component={CreateDefect} />
         <LayoutRoute path='/GetError' component={GetError} />
         <LayoutRoute path='/backlog' component={Backlog} />
         <LayoutRoute path='/CreateStory' component={CreateStory} />
         <LayoutRoute path='/CreateSprint' component={CreateSprint} />
+        <LayoutRoute path='/ForgotPassword' component={ForgotPasswordPage} />
+
+
 
 
         <Route path='/login' component={Login} />

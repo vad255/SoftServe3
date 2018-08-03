@@ -1,11 +1,18 @@
-﻿using DAL.Access;
+﻿using System;
+using DAL.Access;
 using DAL.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
+using BL.CryptoServiceProvider;
+using System.Security;
+using System.Net.Mime;
 
 namespace ScrumMaker.Controllers
 {
@@ -32,7 +39,7 @@ namespace ScrumMaker.Controllers
                     {
                         await i.CopyToAsync(stream);
 
-                        Photo photo = _repository.GetAll().FirstOrDefault(x=>x.UserId==HttpContext.User.UserId());
+                        Photo photo = _repository.GetAll().FirstOrDefault(x => x.UserId == HttpContext.User.UserId());
                         if (photo != null)
                         {
                             photo.UserPhoto = stream.ToArray();
@@ -63,8 +70,27 @@ namespace ScrumMaker.Controllers
             MemoryStream ms = new MemoryStream();
             try
             {
-                Photo photo = _repository.GetAll().FirstOrDefault(x=>x.UserId==HttpContext.User.UserId());
-                if(photo != null)
+                Photo photo = _repository.GetAll().FirstOrDefault(x => x.UserId == HttpContext.User.UserId());
+                if (photo != null)
+                    ms = new MemoryStream(photo.UserPhoto);
+            }
+            catch
+            {
+                ms = GetDefaultAvatar().Result;
+            }
+
+            return new FileStreamResult(ms, "image/jpeg");
+        }
+
+        [HttpGet]
+        [Route("api/User/ViewImageByLoign")]
+        public FileStreamResult ViewImageByLoign(string login)
+        {
+            MemoryStream ms = null;
+            try
+            {
+                User user = _user.GetAll().Where(u => u.Login.Equals(login)).First();
+                Photo photo = _repository.GetAll().Where(p => p.UserId == user.UserId).First();
                 ms = new MemoryStream(photo.UserPhoto);
             }
             catch
@@ -81,7 +107,7 @@ namespace ScrumMaker.Controllers
         [Route("api/UserPhoto/{userId?}")]
         public async Task<FileStreamResult> GetAvatar(int userId)
         {
-            var photo = _repository.GetAll().FirstOrDefault(x=>x.UserId==HttpContext.User.UserId());
+            var photo = _repository.GetAll().FirstOrDefault(x => x.UserId == HttpContext.User.UserId());
             MemoryStream ms;
             if (photo != null)
                 ms = new MemoryStream(photo.UserPhoto);
@@ -107,6 +133,69 @@ namespace ScrumMaker.Controllers
             {
                 return false;
             }
+        }
+
+        [HttpPost]
+        [Route("/ResetUserPassword")]
+        public bool ResetPassword(string login)
+        {
+            var user = _user.GetAll().FirstOrDefault(u => u.Login == login);
+
+            if (user != null)
+            {
+                var password = GetRandomPassword();
+
+                user.Password = PasswordStorage.CreateHash(password.ToString());
+                _user.Update(user);
+                _user.Save();
+
+                MailMessage emailMessage = new MailMessage("scrummaker325@gmail.com", login)
+                {
+                    Subject = "Reset Password",
+                };
+
+                var body = GetBody(password);
+
+                AlternateView htmlView = AlternateView.CreateAlternateViewFromString(body, null, "text/html");
+
+                LinkedResource theEmailImage = new LinkedResource("./wwwroot/img/NewLogo.png", MediaTypeNames.Image.Jpeg);
+                //theEmailImage.ContentId = Guid.NewGuid().ToString();
+                theEmailImage.ContentId = "NewLogo";
+                htmlView.LinkedResources.Add(theEmailImage);
+                emailMessage.AlternateViews.Add(htmlView);
+
+                SmtpClient smtp = new SmtpClient("smtp.gmail.com")
+                {
+                    Port = 587,
+                    EnableSsl = true,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential("scrummaker325@gmail.com", "Qwerty!123"),
+                    DeliveryMethod = SmtpDeliveryMethod.Network
+                };
+                emailMessage.IsBodyHtml = true;
+                smtp.Send(emailMessage);
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        private string GetBody(int password)
+        {
+            var body = "<img src=\"cid:NewLogo\" /><h2 color=\"green\">The ScrumMaker Team</h2>\n" +
+                       string.Format("<h3>Your new password is: <b>{0}</b></h3>", password);
+            return body;
+        }
+
+        private int GetRandomPassword()
+        {
+            var r = new Random();
+            var p = r.Next(int.MaxValue / 2, Int32.MaxValue);
+            return p;
         }
 
         private static async Task<MemoryStream> GetDefaultAvatar()

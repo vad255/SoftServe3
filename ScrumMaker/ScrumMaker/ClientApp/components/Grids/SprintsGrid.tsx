@@ -31,10 +31,6 @@ export class SprintsGrid extends Grid {
         return new Sprint(item);
     }
 
-    protected onCatch(e: any) {
-        this.props.history.push('/login');
-    }
-
     protected GetHeaderRow() {
         return <tr>
             <th className="well menu_links col-md-1" onClick={() => this.OrderBy("id")}>ID</th>

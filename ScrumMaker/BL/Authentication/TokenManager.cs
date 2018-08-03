@@ -9,7 +9,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using static BL.ClaimsKeys;
-
+using BL.CryptoServiceProvider;
 
 namespace BL.Authentication
 {
@@ -23,28 +23,37 @@ namespace BL.Authentication
         public ClaimsIdentity GetIdentity(string login, string password)
         {
             User user = _users.GetAll().
-                Where(u => u.Login == login && u.Password == password).
+                Where(u => u.Login == login).
                 Include(u => u.Role).
                 FirstOrDefault();
 
             if (user != null)
             {
-                var claims = new List<Claim>
+                var matchPW = PasswordStorage.VerifyPassword(password, user.Password);
+
+                if (matchPW)
                 {
-                    new Claim(LOGIN, user.Login),
-                    new Claim(ROLE,user.Role.Name),
-                    new Claim(ID,user.UserId.ToString())
-                };
+                    var claims = new List<Claim>
+                    {
+                        new Claim(LOGIN, user.Login),
+                        new Claim(ROLE, user.Role.Name),
+                        new Claim(ID, user.UserId.ToString())
+                    };
 
-                ClaimsIdentity claimsIdentity =
-                new ClaimsIdentity(
-                    claims: claims,
-                    authenticationType: "Token",
-                    nameType: ClaimsIdentity.DefaultNameClaimType,
-                    roleType: ClaimsIdentity.DefaultRoleClaimType
-                    );
+                    ClaimsIdentity claimsIdentity =
+                        new ClaimsIdentity(
+                            claims: claims,
+                            authenticationType: "Token",
+                            nameType: ClaimsIdentity.DefaultNameClaimType,
+                            roleType: ClaimsIdentity.DefaultRoleClaimType
+                        );
 
-                return claimsIdentity;
+                    return claimsIdentity;
+                }
+                else
+                {
+                    return null;
+                }
             }
             return null;
         }

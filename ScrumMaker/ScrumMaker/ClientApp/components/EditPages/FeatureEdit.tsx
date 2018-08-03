@@ -6,6 +6,7 @@ import { FeatureGrid } from '../Grids/FeatureGrid';
 import { State } from '../Models/FeatureState';
 import { NavLink } from 'react-router-dom';
 import { User } from '../Models/User';
+import Switch from 'react-switch';
 
 interface IFeatureFetchingState {
     FeatureName: string;
@@ -27,6 +28,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
         this.getUsers();
         this.handleSave = this.handleSave.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleChangeBlocked = this.handleChangeBlocked.bind(this);
     }
 
     private isLoading: boolean = true;
@@ -55,7 +57,8 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
     }
 
     public LoadData() {
-        fetch(this.URL)
+        fetch(this.URL, {
+            credentials: 'include',})
             .then(response => response.json() as any)
             .then(data => {
                 this.OnDataReceived(data);
@@ -116,6 +119,10 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
         });
     }
 
+    handleChangeBlocked(checked: boolean) {
+        this.setState({Blocked: checked });
+    }
+
     public EditFeature() {
         return <form onSubmit={this.handleSave} name="oldForm" >
             <div className="text-center">
@@ -136,13 +143,13 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
                     </NavLink>
                 </div>
             </h3>
-            <h3 className="hStyle">Blocked:&nbsp;&nbsp;
-                <input
-                    name="Blocked"
-                    type="checkbox"
+            <label>
+                <span className="spanStyle">Blocked:&nbsp;&nbsp;</span>
+                <Switch onChange={this.handleChangeBlocked}
                     checked={this.state.Blocked}
-                    onChange={this.handleInputChange} />
-            </h3>
+                    id="normal-switch" />
+            </label>
+           
             <h3 className="hStyle">Owner:&nbsp;&nbsp;
             {this.renderUsers()}
             </h3>
