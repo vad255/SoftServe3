@@ -33,7 +33,6 @@ namespace ScrumMaker.Controllers
             return Ok(_sprints.GetAll());
         }
 
-
         [AcceptVerbs("PATCH", "MERGE")]
         public IActionResult Patch([FromODataUri] int key, [FromBody] Delta<Sprint> patch)
         {
@@ -70,7 +69,6 @@ namespace ScrumMaker.Controllers
             return Updated(sprint);
         }
 
-
         [AcceptVerbs("DELETE")]
         public IActionResult Delete([FromODataUri] int key)
         {
@@ -82,6 +80,21 @@ namespace ScrumMaker.Controllers
             _sprints.Delete(key);
             _sprints.Save();
             return NoContent();
+        }
+
+        [AcceptVerbs("POST")]
+        public IActionResult Post([FromBody] Sprint createSprint)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _sprints.Create(createSprint);
+
+            _sprints.Save();
+
+            return Created(createSprint);
         }
     }
 }

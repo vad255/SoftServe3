@@ -50,28 +50,30 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
         return (
             <div>
-
                 <div className="RDiv">
+
                     <h1 style={{ width: "90%" }}>{this.headerText}</h1>
 
                     <div style={{ marginBottom: "10px" }}>
+
                         <NavLink to={this.URL_NEW}
                             activeClassName='active'>
                             <button className="btn btn-default" type="button">
                                 Create</button>
                         </NavLink>
-                    </div>
-
-
+                    </div>				
                 </div>
-                <label>Number elements:
-                        <select style={{ marginLeft: "5px" }} onChange={this.handleSizeSelect.bind(this)}>
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="20">20</option>
-                        <option value="50">50</option>
-                    </select>
-                </label>
+                <div>	
+                    <label>Number elements:
+                            <select style={{ marginLeft: "5px", height: "25px" }} onChange={this.handleSizeSelect.bind(this)}>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                            </select>
+                    </label>
+                </div>	
+
                 <div>
                     <table className='table table-scrum table-hover td-scrum' style={{ marginTop: "1px" }}>
 
@@ -177,6 +179,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         if (this.totalCount <= this.state.pageSize) {
             return <tr></tr>;
         }
+
 
         return <tr>
             <td colSpan={14}>

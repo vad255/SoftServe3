@@ -46,7 +46,9 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
         this.handleChangeInputFixResult = this.handleChangeInputFixResult.bind(this);
         this.handleOK = this.handleOK.bind(this);
          
-        fetch("odata/Defects?expand=()&$filter=DefectId eq " + this.state.id)
+        fetch("odata/Defects?expand=()&$filter=DefectId eq " + this.state.id, {
+            credentials: 'include'
+        })
             .then(response => response.json() as Promise<any>)
             .then(data => {
                 let defect1 = new Defect(data["value"][0]);
@@ -144,11 +146,11 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
             </div>
             <div>
                 <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Description:</h3>
-                <textarea style={{ width: "35%", height: "300px", fontSize: 25, padding: "7px" }} className="fa-text-height" onChange={this.handleChangeTextArea} value={this.state.textAreaValue} />
+                <textarea style={{ width: "35%", height: "200px", fontSize: 20, padding: "7px" }} className="fa-text-height" onChange={this.handleChangeTextArea} value={this.state.textAreaValue} />
             </div>
             <div>
                 <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Status:</h3>
-                <select className="form-control-static" style={{ width: "35%"}} value={this.state.statusValue} onChange={this.handleStatusSelect} >
+                <select className="form-control" style={{ width: "35%", fontSize:17 }} value={this.state.statusValue} onChange={this.handleStatusSelect} >
                     <option value="Open">Open</option>
                     <option value="Close">Close</option>                   
                 </select>
@@ -201,9 +203,9 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
 
         return <select
             value={this.state.stateValue}
-            className="form-control-static"
+            className="form-control"
             name="State"
-            style={{ width: "35%" }} 
+            style={{ width: "35%", fontSize: 17 }} 
             onChange={this.handleStateSelect}>
             {items}
         </select>
@@ -222,8 +224,8 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
 
         return <select
             value={this.state.priorityValue}
-            className="form-control-static"
-            style={{ width: "35%" }} 
+            className="form-control"
+            style={{ width: "35%", fontSize: 17 }} 
             name="Priority"
             onChange={this.handlePrioritySelect}>
             {items}
