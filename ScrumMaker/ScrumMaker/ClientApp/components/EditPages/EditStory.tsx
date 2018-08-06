@@ -151,23 +151,23 @@ export class EditStory extends React.Component<RouteComponentProps<any>, IEditPa
     public render() {
         return <div className="text-left">
             <div className="text-center">
-                <h2 style={{ margin: "10px", padding: "5px" }}>Editing story by Id = {this.state.id}</h2>
+                <h2 className="h2EditCreatePage">Editing story by Id = {this.state.id}</h2>
             </div>
             <div>
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Name:</h3>
+                <h3 className="hStyle">Name:</h3>
                 <input className="input-lg" onChange={this.handleChangeInput} type="text" value={this.state.inputValue} />
             </div>
             <div>
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Description:</h3>
+                <h3 className="hStyle">Description:</h3>
                 <textarea style={{ width: "400px", height: "300px", fontSize: 25, padding: "7px" }} className="fa-text-height" onChange={this.handleChangeTextArea} value={this.state.textAreaValue} />
             </div>
             <div>
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Status:</h3>
+                <h3 className="hStyle">Status:</h3>
                 {this.renderStatus()}
             </div>
 
             <div>
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Assign to:</h3>
+                <h3 className="hStyle">Assign to:</h3>
                 <select className="form-control inline-block" onChange={this.handleUserSelect}>
                     {this.state.users.map(user => <option key={user.userId} value={user.userId}>{user.login}</option>)}
                 </select>

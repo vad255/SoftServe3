@@ -64,11 +64,10 @@ export class ForgotPasswordPage extends React.Component<RouteComponentProps<any>
             <div onSubmit={this.handleSave}>
                 <Modal isOpen={this.state.ConfirmModal}
                     onRequestClose={this.openCloseModel}
-                    className="LoginModal">
+                    className="ChangeModal">
                     <h3>{this.state.title}</h3>
                     <button className="modalBtn" onClick={this.RedirectToLoginPage}>Ok</button>
                 </Modal>
-
                 <div className="limiter">
                     <div className="container-login100">
                         <div className="wrap-login100">
