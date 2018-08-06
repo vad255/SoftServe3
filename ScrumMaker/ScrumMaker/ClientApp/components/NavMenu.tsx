@@ -90,6 +90,11 @@ export class NavMenu extends React.Component<{}, { role: string }> {
                                     <span className='glyphicon glyphicon-th-list columnGrid'></span> Retrospective meeting
                                  </NavLink>
                             </li>
+                            <li>
+                                <NavLink to={'/SelectTeam'} activeClassName='active'>
+                                    <span className='glyphicon glyphicon-th-list columnGrid'></span> Daily Stand-Up
+                            </NavLink>
+                            </li>
                         </ul>
                     </li>
                     <li>

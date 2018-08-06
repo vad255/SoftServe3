@@ -34,6 +34,10 @@ import { GetError } from "./components/GetError";
 import { Backlog } from './components/Backlog/Backlog';
 import { CreateStory } from "./components/CreatePages/CreateStory";
 import { CreateTask } from "./components/CreatePages/CreateTask";
+import { SelectTeam } from './components/Meetings/SelectTeam';
+
+import { DailyStandUpEdit } from './components/Meetings/DailySatandUpEdit'
+
 
 
 
@@ -79,6 +83,10 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/backlog' component={Backlog} />
         <LayoutRoute path='/CreateStory' component={CreateStory} />
         <LayoutRoute path='/CreateTask' component={CreateTask} />
+        <LayoutRoute path='/DailyStandUp' component={DailyStandUpEdit} />
+        <LayoutRoute path='/SelectTeam' component={SelectTeam} />
+
+
 
 
 

@@ -219,7 +219,8 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
                 this.setState({ stories: storiesTemp });
             });
 
-        fetch('odata/sprints').then(response => response.json() as Promise<any>)
+        fetch(('odata/sprints'), { credentials: 'include' })
+        .then(response => response.json() as Promise<any>)
             .then(data => {
                 var sprintsData = [] as Sprint[];
                

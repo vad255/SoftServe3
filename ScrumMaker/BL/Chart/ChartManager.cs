@@ -31,19 +31,23 @@ namespace BL.Chart
         {
             List<DateTime> result = new List<DateTime>();
             Sprint sprint = GetSprintByDate();
-            DateTime start = sprint.History.Begined.Value;
-            int days = (sprint.History.Ended.Value - start).Days + 1;
-            while (start<=sprint.History.Ended.Value) {
-                if (start.DayOfWeek==DayOfWeek.Sunday||
-                    start.DayOfWeek==DayOfWeek.Saturday)
+            if (sprint != null)
+            {
+                DateTime start = sprint.History.Begined.Value;
+                int days = (sprint.History.Ended.Value - start).Days + 1;
+                while (start <= sprint.History.Ended.Value)
                 {
-                    --days;
+                    if (start.DayOfWeek == DayOfWeek.Sunday ||
+                        start.DayOfWeek == DayOfWeek.Saturday)
+                    {
+                        --days;
+                    }
+                    else
+                    {
+                        result.Add(start);
+                    }
+                    start = start.Date.AddDays(1);
                 }
-                else
-                {
-                    result.Add(start);
-                }
-                start = start.Date.AddDays(1);
             }
             return result;
         }
@@ -51,9 +55,12 @@ namespace BL.Chart
         {
             ICollection<Story> result = new List<Story>();
             ICollection<Story> stories = _stories.GetAll().Include(x => x.Tasks).ToList();
-            foreach(Story story in sprint.Backlog)
+            if (sprint != null)
             {
-                result.Add(stories.SingleOrDefault(x => x.Id == story.Id));
+                foreach (Story story in sprint.Backlog)
+                {
+                    result.Add(stories.SingleOrDefault(x => x.Id == story.Id));
+                }
             }
             return result;
         }
