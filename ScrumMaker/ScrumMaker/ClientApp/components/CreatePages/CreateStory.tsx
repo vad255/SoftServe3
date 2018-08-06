@@ -7,8 +7,6 @@ import { User } from "../Models/User";
 import { Team } from "../Models/Team";
 import { Sprint } from "../Models/Sprint";
 
-
-
 interface ICreatePageState {
     statusValue: string;
     inputValue: string;
@@ -122,7 +120,6 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
         this.setState({ sprintId: event.target.value });
 
         let sprint = this.state.sprints.filter(s => event.target.value == s.id)[0] as Sprint;
-        console.log(sprint);
         this.setState({ team: sprint.team, users: sprint.team.members });
     }
     private renderStatus() {
@@ -180,7 +177,7 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
 
             <div>
                 <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Assign to:</h3>
-                <select className="form-control inline-block CreatePage" data-style="btn-primary" onChange={this.handleUserSelect}>
+                <select className="form-control inline-block CreatePage" onChange={this.handleUserSelect}>
                     {this.state.users.map(user => <option key={user.userId} value={user.userId}>{user.login}</option>)}
                 </select>
             </div>

@@ -5,7 +5,7 @@ import { Team } from './Team'
 
 export enum SprintStage {
     Planning = 1,
-    Progress = 2,
+    InProgress = 2,
     Review = 3,
     Retrospective = 4,
     Finished = 5

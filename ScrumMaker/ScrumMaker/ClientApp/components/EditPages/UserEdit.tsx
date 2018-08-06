@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { User } from "../Models/User";
 import { Team } from '../Models/Team';
 import { Role } from '../Models/Role';
-
+import Switch from 'react-switch';
 
 interface IEditPageState {
     user: User;
@@ -23,7 +23,7 @@ export class UserEdit extends React.Component<RouteComponentProps<any>, IEditPag
         super(props);
         this.state = (({
             id: this.props.location.pathname.substring((this.props.location.pathname.lastIndexOf('/') + 1)), user: User, loginValue: "",
-            passwordValue: "", teamValue: -1, activityValue: true, roleValue: -1, roles: [],teams: []
+            passwordValue: "", teamValue: -1, activityValue: true, roleValue: -1, roles: [], teams: []
         }) as any);
 
         this.handleSaveButtonClick = this.handleSaveButtonClick.bind(this);
@@ -31,13 +31,14 @@ export class UserEdit extends React.Component<RouteComponentProps<any>, IEditPag
         this.handlePasswordValue = this.handlePasswordValue.bind(this);
         this.handleTeamValue = this.handleTeamValue.bind(this);
         this.handleActivityValue = this.handleActivityValue.bind(this);
-        this.handleRoleValue = this.handleRoleValue.bind(this); 
+        this.handleRoleValue = this.handleRoleValue.bind(this);
+        this.handleOkButtonClick = this.handleOkButtonClick.bind(this);
 
         fetch("odata/roles", { credentials: 'include' })
             .then(response => response.json() as Promise<any>)
             .then(data => {
                 let rolesTemp = [];
-                for (var i = 0; i < data['value'].length; i++) 
+                for (var i = 0; i < data['value'].length; i++)
                     rolesTemp[i] = new Role(data["value"][i]);
                 this.setState({ roles: rolesTemp });
             })
@@ -60,7 +61,7 @@ export class UserEdit extends React.Component<RouteComponentProps<any>, IEditPag
                     teamValue: temp.teamId, activityValue: temp.activity, roleValue: temp.roleId
                 });
             });
-    
+
     }
     handleSaveButtonClick() {
         fetch('odata/Users(' + this.state.id + ')',
@@ -81,9 +82,26 @@ export class UserEdit extends React.Component<RouteComponentProps<any>, IEditPag
                     'Activity': this.state.activityValue
                 })
             });
+    }
 
-        alert("Data was updated!");
-        <Redirect to="/usergrid"/>
+    private GetCreateConfirmModal() {
+        return <div id="confirmDeleteModal" className="modal fade">
+            <div className="modal-dialog">
+                <div className="modal-content">
+                    <div className="modal-header  text-center" ><button className="close" type="button" data-dismiss="modal">×</button>
+                        <h4 className="modal-title">The user "{this.state.user.login}" was updated.</h4>
+                    </div>
+                    <div className="modal-body text-center">
+                        <button className="btn btn-default" type="button" data-dismiss="modal" onClick={this.handleOkButtonClick} >
+                            Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>;
+    }
+
+    handleOkButtonClick() {
+        this.props.history.push("/usergrid");
     }
 
     handleLoginValue(event: any) {
@@ -97,8 +115,8 @@ export class UserEdit extends React.Component<RouteComponentProps<any>, IEditPag
     handleTeamValue(event: any) {
         this.setState({ teamValue: event.target.value });
     }
-    handleActivityValue(event: any) {
-        this.setState({ activityValue: event.target.checked });
+    handleActivityValue(event: boolean) {
+        this.setState({ activityValue: event });
     }
     handleRoleValue(event: any) {
         this.setState({ roleValue: event.target.value });
@@ -106,42 +124,41 @@ export class UserEdit extends React.Component<RouteComponentProps<any>, IEditPag
 
 
     render() {
-         return <div className="text-left">
+        return <div className="text-left">
             <div className="text-center">
                 <h2 style={{ margin: "10px", padding: "5px" }}>Editing user by Id = {this.state.id}</h2>
             </div>
             <div>
-                 <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Login:</h3>
-                 <input className="input-lg" onChange={this.handleLoginValue} type="text" value={this.state.loginValue} />
+                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Login:</h3>
+                <input className="input-lg" onChange={this.handleLoginValue} type="text" value={this.state.loginValue} />
             </div>
             <div>
-                 <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Password:</h3>
-                 <input className="input-lg" onChange={this.handlePasswordValue} type="text" value={this.state.passwordValue} />
+                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Password:</h3>
+                <input className="input-lg" onChange={this.handlePasswordValue} type="text" value={this.state.passwordValue} />
             </div>
             <div>
-                 <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Team:</h3>
-                 <select className="form-control-static" onChange={this.handleTeamValue} value={this.state.teamValue}>
-                     {this.state.teams.map(x => <option value={x.id}>{x.name}</option>)}
-                 </select>
-             </div>
-            <div>
-                 <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Activity:</h3>
-                 <input
-                     name="activityValue"
-                     type="checkbox"
-                     checked={this.state.activityValue}
-                     onChange={this.handleActivityValue} />
+                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Team:</h3>
+                <select className="form-control" onChange={this.handleTeamValue} value={this.state.teamValue}>
+                    {this.state.teams.map(x => <option value={x.id}>{x.name}</option>)}
+                </select>
             </div>
             <div>
-                 <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Role:</h3>
-                 <select className="form-control-static" onChange={this.handleRoleValue} value={this.state.roleValue} >
-                     {this.state.roles.map(x => <option value={x.roleId}>{x.name}</option>)}
-                 </select>
-             </div>
-            <div className="container-login100-form-btn text-center">
-                 <Link to="/usergrid" style={{ margin: "20px" }} className="login100-form-btn" onClick={this.handleSaveButtonClick}>Update</Link>
+                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Activity:</h3>
+                <Switch onChange={this.handleActivityValue}
+                    checked={this.state.activityValue}
+                    id="normal-switch" />
             </div>
-
+            <div>
+                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Role:</h3>
+                <select className="form-control" onChange={this.handleRoleValue} value={this.state.roleValue} >
+                    {this.state.roles.map(x => <option value={x.roleId}>{x.name}</option>)}
+                </select>
+            </div>
+            <div className="text-center">
+                <button style={{ margin: "20px" }} className="btn" data-toggle="modal"
+                    data-target="#confirmDeleteModal" onClick={this.handleSaveButtonClick}>Update</button>
+            </div>
+            {this.GetCreateConfirmModal()}
         </div>;
     }
 

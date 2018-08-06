@@ -90,6 +90,9 @@ namespace ScrumMaker
 
             services.AddSignalR();
 
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+
             services.AddSingleton<IFileProvider>(
                 new PhysicalFileProvider(
                     Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
@@ -115,6 +118,7 @@ namespace ScrumMaker
             services.AddScoped(typeof(IDailyStandUpManager), typeof(DailyStandUpManager));
             services.AddScoped(typeof(BL.Chatting.IGlobalChatManager), typeof(BL.Chatting.GlobalChatManager));
             services.AddScoped(typeof(BL.Chatting.IRetrospectiveChatMananger), typeof(BL.Chatting.RetrospectiveChatManager));
+            services.AddScoped(typeof(BL.Chatting.IPokerManager), typeof(BL.Chatting.PokerManager));
 
         }
 
@@ -136,6 +140,7 @@ namespace ScrumMaker
             }
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            app.UseSession();
 
 
             app.LoadTokenDataToContext();
@@ -146,6 +151,7 @@ namespace ScrumMaker
             {
                 routes.MapHub<GlobalChat>("/chat");
                 routes.MapHub<RetrospectiveHub>("/retrospective/chat");
+                routes.MapHub<PokerHub>("/pokerRoom");
 
             });
 
@@ -154,7 +160,8 @@ namespace ScrumMaker
                 routes.Select().Expand().Filter().OrderBy().MaxTop(100).Count();
 
                 routes.MapODataServiceRoute("odata", "odata", EdmModelBuilder.GetEdmModel());
-
+                
+                ///!!!!
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

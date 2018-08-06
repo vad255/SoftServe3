@@ -96,12 +96,7 @@ namespace ScrumMaker.Controllers
             }
 
             _defect.Create(createDefect);
-            //if (defect == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //createDefect.Patch(defect);
+           
             _defect.Save();
 
             return Created(createDefect);

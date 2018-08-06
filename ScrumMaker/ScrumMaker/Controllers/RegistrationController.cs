@@ -12,6 +12,7 @@ using DAL.Models;
 using System.Reflection.Metadata;
 using DAL;
 using ScrumMaker.Logger;
+using BL.CryptoServiceProvider;
 
 namespace ReactCrudDemo.Controllers
 {
@@ -29,6 +30,8 @@ namespace ReactCrudDemo.Controllers
         {
             try
             {
+                var hash = PasswordStorage.CreateHash(user.Password);
+                user.Password = hash;
                 _db.Users.Add(user);
                 _db.SaveChanges();
                 Logger.LogInfo("RegistartionController:Create():Registration was successful!");

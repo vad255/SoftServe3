@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using DAL.Stubs;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace DAL.Models
 {
@@ -37,5 +38,7 @@ namespace DAL.Models
         public ICollection<Defect> Defects { get; set; }
 
         public virtual ICollection<ScrumTask> Tasks { get; set; }
+
+        public int? PokerMark { get; set; }
     }
 }

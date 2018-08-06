@@ -28,6 +28,7 @@ export class Story implements IDbModel {
     sprint: Sprint;
     tasks: Task[];
     sprintId: number = 0;
+    pokerMark: number = -1;
 
 
     public constructor(params: any) {
@@ -53,7 +54,8 @@ export class Story implements IDbModel {
             for (var i = 0; i < params.Tasks.length; i++)
                 tasks[i] = new Task(params.Tasks[i]);
             this.tasks = tasks;
-        } 
+        }
+        this.pokerMark = params.PokerMark;
     }
 
     public toString(): string {

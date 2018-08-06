@@ -33,7 +33,7 @@ export class Layout extends React.Component<LayoutProps, User> {
         let { Photo } = this.state;
         let $imagePreview = null;
         if (Photo) {
-            $imagePreview = (<img width="35px" height="35px" alt="lorem" className="userAvatar" src={Photo} />);
+            $imagePreview = (<img width="35px" height="35px" alt="lorem" className="userAvatar" src={"/api/userphoto/" + this.state.Login} />);
         }
 
         return <div className='container-fluid'>
