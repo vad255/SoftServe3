@@ -126,7 +126,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
     public EditFeature() {
         return <form onSubmit={this.handleSave} name="oldForm" >
             <div className="text-center">
-                <h2 style={{ margin: "10px", padding: "5px", textAlign: "center" }}>"{this.state.FeatureName}" feature editing page</h2>
+                <h2 className="h2EditCreatePage text-center">"{this.state.FeatureName}" feature editing page</h2>
             </div>
             <h3 className="hStyle">Name:&nbsp;&nbsp;
                 <input
