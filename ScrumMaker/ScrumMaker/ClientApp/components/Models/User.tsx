@@ -17,7 +17,7 @@ export class User implements IDbModel {
     team: Team;
 
 
-    public constructor(params: any) {        
+    public constructor(params: any) {
         if (!params)
             return;
 
@@ -29,7 +29,7 @@ export class User implements IDbModel {
         this.roleId = params.RoleId;
         this.role = new Role(params.Role);
         this.team = new Team(params.Team);
-        this.empty = false;        
+        this.empty = false;
     }
 
 
@@ -49,7 +49,6 @@ export class User implements IDbModel {
         </li>
     }
 
-
     getId(): number {
         return this.userId;
     }
@@ -57,7 +56,9 @@ export class User implements IDbModel {
         let elements: any[] = [
             this.userId,
             this.login,
-            this.password,
+            <div className='align-base m-tooltip'> {this.password.substring(0, 15) + " .."}
+                <span className="m-tooltiptext"> {this.password}</span>
+            </div>,
             this.team.renderAsMenu(),
             this.activity ? "true" : "false",
             this.role.name
