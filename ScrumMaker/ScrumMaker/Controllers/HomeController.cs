@@ -11,6 +11,7 @@ using DAL.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ScrumMaker.Attributes;
 
 namespace ScrumMaker.Controllers
 {
@@ -35,13 +36,15 @@ namespace ScrumMaker.Controllers
             return View();
         }
 
+        [Route("/getUser")]
         [HttpGet]
-        [Route("api/Home/GetLogin")]
-        public string GetLogin()
+        public User Myself()
         {
-            ClaimsIdentity identity = HttpContext.User?.Identity as ClaimsIdentity;
-            string idFromClaims = identity.Claims.Where(c => c.Type == ClaimsKeys.ID).FirstOrDefault()?.Value;
-            return _users.GetById(int.Parse(idFromClaims)).Login;
+            int id = this.HttpContext.User.UserId();
+            User user = _users.GetById(id) ?? new User() { Login = "Anonym", UserId = -1 };
+            Response.ContentType = "application/json";
+
+            return user;
         }
     }
 }

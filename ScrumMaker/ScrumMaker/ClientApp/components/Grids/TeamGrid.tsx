@@ -25,6 +25,7 @@ export class TeamGrid extends Grid {
     protected URL_EXPANDS: string = '?$expand=members';
     protected URL_ORDERING: string = '&$orderby=id';
     protected URL_EDIT: string = "EditTeam/";
+    protected URL_NEW: string = "/CreateTeam";
 
 
     protected instantiate(item: any): IDbModel {
