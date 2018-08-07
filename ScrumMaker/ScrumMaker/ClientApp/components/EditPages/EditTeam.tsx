@@ -168,6 +168,7 @@ export class EditTeam extends React.Component<RouteComponentProps<{}>, ITeamFetc
             closeOnSelect={!true}
             name="colors"
             onChange={this.onMultiChange}
+            onValueClick={value => alert(value)}
             options={this.state.UsersWithoutTeam.map(u => { return { value: u.userId, label: u.login } })}
         />
     }
@@ -191,7 +192,7 @@ export class EditTeam extends React.Component<RouteComponentProps<{}>, ITeamFetc
                 'Content-Type': 'application/json;odata.metadata=minimal',
                 'Accept': 'application/json'
             }
-        }).then(response => { this.props.history.push('/teamgrid') });
+        })
 
         var teamsUpdate = {
             Users: this.state.Users,
