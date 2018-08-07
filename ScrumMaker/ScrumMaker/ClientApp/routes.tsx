@@ -42,7 +42,6 @@ import { ForgotPasswordPage } from "./components/ForgotPasswordPage";
 import { CreateTeam } from './components/CreatePages/CreateTeam';
 
 
-
 const LayoutRoute = ({ ...props }) => {
     return (
         <Layout>
@@ -86,7 +85,7 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/CreateStory' component={CreateStory} />
         <LayoutRoute path='/CreateSprint' component={CreateSprint} />
         <LayoutRoute path='/ForgotPassword' component={ForgotPasswordPage} />
-
+        <LayoutRoute path='/CreateTeam' component={CreateTeam} />
 
         <Route path='/login' component={Login} />
         <Route path='/Error' component={Error} />

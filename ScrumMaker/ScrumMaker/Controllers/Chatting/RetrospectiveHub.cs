@@ -6,7 +6,8 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.CSharp;
-    
+using ScrumMaker.Attributes;
+
 namespace ScrumMaker.Controllers.Chatting
 {
     public class RetrospectiveHub : Hub
@@ -38,6 +39,8 @@ namespace ScrumMaker.Controllers.Chatting
             await Clients.Caller.SendAsync("receiveHistory", history);
         }
 
+        [RefreshToken]
+        [CookieAuthorize]
         public async Task GetUsers()
         {
             var httpContext1 = Context.GetHttpContext();
