@@ -3,12 +3,8 @@
     margin-right: 30%;
     float: right;
 }
-
-#addEventButton {
-    margin-top: 4%;
-}
-
 .selectEventButton {
+    margin-top: 4%;
     margin-right: 35%;
     float: right;
 }
@@ -42,7 +38,7 @@
 .rigth-text-calendar-box {
     margin-top: 2%;
     width: 49%;
-    height: 256px;
+    height: 217px;
     background: #232526;
     background: -webkit-linear-gradient(to right, #232526, #414345);
     background: linear-gradient(to right, #232526, #414345);

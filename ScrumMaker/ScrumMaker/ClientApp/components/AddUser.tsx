@@ -91,13 +91,13 @@ export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDa
                 <div className="form-group row" >
                     <label className=" control-label col-md-12" htmlFor="Login">Login</label>
                     <div className="col-md-4">
-                            <input className="form-control" type="email" name="login" defaultValue={this.state.login} required />
+                        <input className="form-control" type="text" name="login" defaultValue={this.state.login} required />
                     </div>
                 </div >
                 <div className="form-group row">
                     <label className="control-label col-md-12" htmlFor="password" >Password</label>
                     <div className="col-md-4">
-                            <input className="form-control" type="password" name="password" defaultValue={this.state.password} required />
+                        <input className="form-control" type="password" name="password" defaultValue={this.state.password} required />
                     </div>
                 </div>
                 <div className="form-group row">
