@@ -179,6 +179,7 @@
     <TypeScriptCompile Include="ClientApp\components\PokerEstimation\mainPokerPage.tsx" />
     <TypeScriptCompile Include="ClientApp\components\PokerEstimation\PokerUsersBox.tsx" />
     <TypeScriptCompile Include="ClientApp\components\PokerEstimation\pokerTable.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\SprintsGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Grids\TeamGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\css\editUser.css" />
     <TypeScriptCompile Include="ClientApp\css\modalWindow.css" />

@@ -8,7 +8,7 @@ namespace DAL.Models
     public enum SprintStage
     {
         Planning = 1,
-        InProgress = 2,
+        Progress = 2,
         Review = 3,
         Retrospective = 4,
         Finished = 5

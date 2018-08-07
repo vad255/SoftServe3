@@ -19,8 +19,6 @@ export class SprintsGrid extends Grid {
     protected URL_ORDERING: string = '&$orderby=id'
     protected URL_EDIT: string = "SprintEdit/"
     protected headerText: string = 'Sprints'
-    protected URL_NEW: string = "/CreateSprint";
-
 
     constructor() {
         super();

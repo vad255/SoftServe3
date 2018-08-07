@@ -124,8 +124,7 @@ namespace ScrumMaker.Controllers
             if (password.Equals(repeatpassword))
             {
                 User newUser = _user.GetById(HttpContext.User.UserId());
-                var hash = PasswordStorage.CreateHash(password);
-                newUser.Password = hash;
+                newUser.Password = password;
                 _user.Update(newUser);
                 _user.Save();
                 return true;
@@ -160,6 +159,7 @@ namespace ScrumMaker.Controllers
                 AlternateView htmlView = AlternateView.CreateAlternateViewFromString(body, null, "text/html");
 
                 LinkedResource theEmailImage = new LinkedResource("./wwwroot/img/NewLogo.png", MediaTypeNames.Image.Jpeg);
+                //theEmailImage.ContentId = Guid.NewGuid().ToString();
                 theEmailImage.ContentId = "NewLogo";
                 htmlView.LinkedResources.Add(theEmailImage);
                 emailMessage.AlternateViews.Add(htmlView);
