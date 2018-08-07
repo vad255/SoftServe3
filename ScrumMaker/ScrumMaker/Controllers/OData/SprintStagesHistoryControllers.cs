@@ -30,13 +30,27 @@ namespace ScrumMaker.Controllers
             return Ok(_history.GetAll());
         }
 
-        public IActionResult Post([FromBody]SprintStagesHistory item)
-        {
-            _history.Create(item);
-            _history.Save();
-            return Created(item);
-        }
+        //public IActionResult Post([FromBody]SprintStagesHistory item)
+        //{
+        //    _history.Create(item);
+        //    _history.Save();
+        //    return Created(item);
+        //}
 
+        [AcceptVerbs("POST")]
+        public IActionResult Post([FromBody] SprintStagesHistory createSprint)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _history.Create(createSprint);
+
+            _history.Save();
+
+            return Created(createSprint);
+        }
 
         [AcceptVerbs("PATCH", "MERGE")]
         public IActionResult Patch([FromODataUri] int key, [FromBody] Delta<SprintStagesHistory> patch)
@@ -73,8 +87,7 @@ namespace ScrumMaker.Controllers
 
             return Updated(history);
         }
-
-
+        
         [AcceptVerbs("DELETE")]
         public IActionResult Delete([FromODataUri] int key)
         {
@@ -82,5 +95,7 @@ namespace ScrumMaker.Controllers
             _history.Save();
             return NoContent();
         }
+
+        
     }
 }

@@ -7,7 +7,6 @@ import { User } from "../Models/User";
 import { Team } from "../Models/Team";
 import { Sprint } from "../Models/Sprint";
 
-
 interface ICreatePageState {
     statusValue: string;
     inputValue: string;
@@ -31,7 +30,7 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
             team: Team,
             sprints: [],
             sprintId: 0
-    }) as any);
+        }) as any);
 
         this.handleCreateButtonClick = this.handleCreateButtonClick.bind(this);
         this.handleStatusSelect = this.handleStatusSelect.bind(this);
@@ -121,7 +120,6 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
         this.setState({ sprintId: event.target.value });
 
         let sprint = this.state.sprints.filter(s => event.target.value == s.id)[0] as Sprint;
-        console.log(sprint);
         this.setState({ team: sprint.team, users: sprint.team.members });
     }
     private renderStatus() {
@@ -139,7 +137,7 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
 
         return <select
             value={this.state.statusValue}
-            className="form-control CreatePage" 
+            className="form-control CreatePage"
             name="State"
             onChange={this.handleStatusSelect}>
             {items}
@@ -149,36 +147,36 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
     public render() {
         return <div className="text-left">
             <div className="text-center">
-                <h2 style={{ margin: "10px", padding: "5px" }}>Creating a Story</h2>
+                <h2 className="h2EditCreatePage">Creating a Story</h2>
             </div>
             <div>
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Name:</h3>
+                <h3 className="hStyle">Name:</h3>
                 <input className="input-lg CreatePage" onChange={this.handleChangeInput} type="text" value={this.state.inputValue} />
             </div>
             <div>
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Description:</h3>
+                <h3 className="hStyle">Description:</h3>
                 <textarea style={{ height: "300px", fontSize: 25, padding: "7px" }}
                     className="fa-text-height CreatePage" onChange={this.handleChangeTextArea} value={this.state.textAreaValue} />
             </div>
             <div>
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Status:</h3>
+                <h3 className="hStyle">Status:</h3>
                 {this.renderStatus()}
             </div>
 
             <div>
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Assign to sprint:</h3>
+                <h3 className="hStyle">Assign to sprint:</h3>
                 <select className="form-control inline-block CreatePage" onChange={this.handleSprintSelect}>
                     {this.state.sprints.map(sprint => <option key={sprint.id} value={sprint.id}>{sprint.name}</option>)}
                 </select>
             </div>
 
             <div>
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Assign to team:</h3>
+                <h3 className="hStyle">Assign to team:</h3>
                 <input className="input-lg" type="text" value={this.state.team.name}></input>
             </div>
 
             <div>
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Assign to:</h3>
+                <h3 className="hStyle">Assign to:</h3>
                 <select className="form-control inline-block CreatePage" onChange={this.handleUserSelect}>
                     {this.state.users.map(user => <option key={user.userId} value={user.userId}>{user.login}</option>)}
                 </select>

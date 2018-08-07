@@ -117,7 +117,7 @@ export class EditTeam extends React.Component<RouteComponentProps<{}>, ITeamFetc
 
     handleInputChange(event: any) {
         const target = event.target;
-        const value =  target.value;
+        const value = target.value;
         const name = target.name;
 
         this.setState({
@@ -128,10 +128,10 @@ export class EditTeam extends React.Component<RouteComponentProps<{}>, ITeamFetc
     public EditName() {
         return <form onSubmit={this.handleSave} name="oldForm" >
             <div className="text-center">
-                <h2 style={{ margin: "10px", padding: "5px", textAlign: "center" }}>"{this.state.TeamName}"-Team</h2>
+                <h2 className="h2EditCreatePage text-center">"{this.state.TeamName}"-Team</h2>
             </div>
             <div className="text-left">
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Name:</h3>
+                <h3 className="hStyle">Name:</h3>
                 <input
                     className="input-lg"
                     name="TeamName"
@@ -140,7 +140,7 @@ export class EditTeam extends React.Component<RouteComponentProps<{}>, ITeamFetc
                     onChange={this.handleInputChange} />
             </div>
             <div className="text-left">
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Members:</h3>
+                <h3 className="hStyle">Members:</h3>
                 {this.renderUsers()}
             </div>
             <div className="container-login100-form-btn">
@@ -154,10 +154,10 @@ export class EditTeam extends React.Component<RouteComponentProps<{}>, ITeamFetc
         let user: User;
         for (var i = 0; i < value.length; i++) {
             user = this.state.AllUsers.filter(u => u.login === value[i].label)[0];
-                users.push(user);
-                this.setState({
-                    Users: users,
-                })
+            users.push(user);
+            this.setState({
+                Users: users,
+            })
         }
     }
 
@@ -169,7 +169,7 @@ export class EditTeam extends React.Component<RouteComponentProps<{}>, ITeamFetc
             name="colors"
             onChange={this.onMultiChange}
             options={this.state.UsersWithoutTeam.map(u => { return { value: u.userId, label: u.login } })}
-            />
+        />
     }
 
     private handleSave(event: any) {
@@ -205,6 +205,6 @@ export class EditTeam extends React.Component<RouteComponentProps<{}>, ITeamFetc
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-        }).then(response => { this.props.history.push('/teamgrid') });        
+        }).then(response => { this.props.history.push('/teamgrid') });
     }
 }

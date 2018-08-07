@@ -869,7 +869,7 @@ namespace DataBaseInitializer
                     Name = "Sprint 1",
                     Retrospective = " What went well in the Sprint: command work. What could be improved: Speed of development. What will we commit to improve in the next Sprint: icrease development speed",
                     Goal = "",
-                    Stage = SprintStage.Progress,
+                    Stage = SprintStage.InProgress,
                     History = _dbHisories.GetById(1),
                     Backlog = _dbStories.GetAll().ToList()
                 },
