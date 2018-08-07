@@ -4,6 +4,8 @@ import Calendar, { YearView } from 'react-calendar/dist/entry.nostyle';
 import { render } from 'react-dom';
 import { RouteComponentProps } from 'react-router';
 import { Button } from 'react-bootstrap/lib/InputGroup';
+import { User } from './Models/User';
+import { Role } from './Models/Role';
 
 interface Meetings {
     MeetingId: number,
@@ -19,6 +21,8 @@ interface DataCalendar {
 }
 
 interface CalendarDataExampleState {
+    ForAllTeam: boolean
+    Role: string
     Calendar: DataCalendar[],
     Meetings: Meetings[],
     CurentDate: Date,
@@ -30,17 +34,24 @@ interface CalendarDataExampleState {
 export class MyCalendar extends React.Component<RouteComponentProps<any>, CalendarDataExampleState> {
     constructor(props: any) {
         super(props)
-        this.state = { Calendar: [], Meetings: [], CurentDate: new Date(), DisplayLeft: false, DisplayRigth: false, ConfirmModal: false };
+        this.state = { ForAllTeam: false, Role: '', Calendar: [], Meetings: [], CurentDate: new Date(), DisplayLeft: false, DisplayRigth: false, ConfirmModal: false };
         this.onChange = this.onChange.bind(this);
         this.forceUpdate = this.forceUpdate.bind(this);
         this.handleSave = this.handleSave.bind(this);
 
 
-        fetch('api/Calendar/GetMeetings')
+        fetch('api/Calendar/GetMeetings', { credentials: 'include' })
             .then(response => response.json() as Promise<Meetings[]>)
             .then(data => {
                 this.setState({ Meetings: data, DisplayLeft: false, DisplayRigth: false });
             });
+
+        fetch('/getrole', { credentials: 'include' })
+            .then(responce => responce.text() as Promise<any>)
+            .then(data => {
+                let temp = data;
+                this.setState({ Role: temp });
+            })
     }
 
     protected onChange(date: any) {
@@ -66,23 +77,42 @@ export class MyCalendar extends React.Component<RouteComponentProps<any>, Calend
     }
 
     private handleSave(event: any) {
-        event.preventDefault();
-        const data = new FormData(event.target);
-        data.append("date", this.state.CurentDate.toLocaleDateString());
+        if (this.state.ForAllTeam == false) {
+            event.preventDefault();
+            const data = new FormData(event.target);
+            data.append("date", this.state.CurentDate.toLocaleDateString());
 
-        fetch('api/Calendar/CreateNewEvent', {
-            credentials: 'include',
-            method: 'POST',
-            body: data,
+            fetch('api/Calendar/CreateNewEvent', {
+                credentials: 'include',
+                method: 'POST',
+                body: data,
 
-        })
-            .then(response => response.json() as Promise<DataCalendar[]>)
-            .then(data => {
-                if (data.length != 0)
-                    this.setState({ Calendar: data, DisplayLeft: true, DisplayRigth: true, CurentDate: this.state.CurentDate });
-                else
-                    this.setState({ ConfirmModal: true });
-            });
+            })
+                .then(response => response.json() as Promise<DataCalendar[]>)
+                .then(data => {
+                    if (data.length != 0)
+                        this.setState({ Calendar: data, DisplayLeft: true, DisplayRigth: true, CurentDate: this.state.CurentDate });
+                    else
+                        this.setState({ ConfirmModal: true });
+                });
+        }
+        else {
+            event.preventDefault();
+            const data = new FormData(event.target);
+            data.append("date", this.state.CurentDate.toLocaleDateString());
+
+            fetch('api/Calendar/CreateNewEventFotAllTeam', {
+                credentials: 'include',
+                method: 'POST',
+                body: data,
+
+            })
+                .then(response => response.json() as Promise<DataCalendar[]>)
+                .then(data => {
+                    if (data.length != 0)
+                        this.setState({ Calendar: data, DisplayLeft: true, DisplayRigth: true, CurentDate: this.state.CurentDate });
+                });
+        }
     }
 
     componentWillMount() {
@@ -96,6 +126,12 @@ export class MyCalendar extends React.Component<RouteComponentProps<any>, Calend
     }
 
     render() {
+
+        var buttonForScrumMaster;
+        if (this.state.Role === "\"ScrumMaster\"") {
+            buttonForScrumMaster = <button type="submit" onClick={() => this.setState({ ForAllTeam: true })} className="btn save siteColor selectEventButton">Add event for all team</button>;
+        }
+
         return (
             <div>
                 <div width="500px;" height="200px;">
@@ -155,9 +191,10 @@ export class MyCalendar extends React.Component<RouteComponentProps<any>, Calend
                                 <option value={m.MeetingId}>{m.MeetingName}</option>
                             )}
                         </select>
-                        <button type="submit" className="btn save siteColor selectEventButton">
+                        <button type="submit" id="addEventButton" className="btn save siteColor selectEventButton">
                             Add Event
                         </button>
+                        {buttonForScrumMaster}
                     </form>
                 </div>
             </div>
