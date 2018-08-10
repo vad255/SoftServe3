@@ -102,8 +102,6 @@ namespace ScrumMaker.Controllers
             return new FileStreamResult(ms, "image/jpeg");
         }
 
-
-
         [HttpGet]
         [Route("api/UserPhoto/{userId?}")]
         public async Task<FileStreamResult> GetAvatar(int userId)

@@ -191,147 +191,147 @@ namespace DataBaseInitializer
                 {
                     Role = _dbRoles.GetById(2),
                     Activity = true,
-                    Login = "Andriy.Herula@com",
+                    Login = "Andriy.H@com",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Ihor.Verbenets@ukr.net",
+                    Login = "Ihor.V@ukr.net",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Iryna.Revus@mail.ru",
+                    Login = "Iryna.Re.ru",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Myhailo.Andruchvych@gmail.com",
+                    Login = "Myhailo.An@gmail.com",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Maksym.Pereima@mail.ru",
+                    Login = "Maksym.Pe@mail.ru",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Oleg.Mykytyn@gmail.com",
+                    Login = "Oleg.Myk@gmail.com",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Ulyana.Nazaruk@mail.ru",
+                    Login = "Ulyana.Na@mail.ru",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(2),
                     Activity = true,
-                    Login = "Andriy.Herula@com",
+                    Login = "Andriy.Herula123@com",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Ihor.Verbenets@ukr.net",
+                    Login = "Ihor.Verbenets1423@ukr.net",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Iryna.Revus@mail.ru",
+                    Login = "Iryna.Revus123@mail.ru",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Myhailo.Andruchvych@gmail.com",
+                    Login = "Myhailo.Andrucychwwrf@gmail.com",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Maksym.Pereima@mail.ru",
+                    Login = "Maksym.reima@mail.ru",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Oleg.Mykytyn@gmail.com",
+                    Login = "Oleg.Mytyn@gmail.com",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Ulyana.Nazaruk@mail.ru",
+                    Login = "Ulyana.aruk@mail.ru",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(2),
                     Activity = true,
-                    Login = "Andriy.Herula@com",
+                    Login = "Andriy.rula@com",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Ihor.Verbenets@ukr.net",
+                    Login = "Ihor.Venets@ukr.net",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Iryna.Revus@mail.ru",
+                    Login = "Iryna.Rs@mail.ru",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Myhailo.Andruchvych@gmail.com",
+                    Login = "Myhailo.Aruchv574ych@gmail.com",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Maksym.Pereima@mail.ru",
+                    Login = "Maksym.Pe67ima@mail.ru",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Oleg.Mykytyn@gmail.com",
+                    Login = "Oleg.Myky325n@gmail.com",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Ulyana.Nazaruk@mail.ru",
+                    Login = "Ulyana.564aruk@mail.ru",
                     Password = HASH_ADMIN
                 }
             };
