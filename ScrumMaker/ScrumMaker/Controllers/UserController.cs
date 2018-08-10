@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using BL.CryptoServiceProvider;
 using System.Security;
 using System.Net.Mime;
+using System.Security.Cryptography;
 
 namespace ScrumMaker.Controllers
 {
@@ -146,7 +147,7 @@ namespace ScrumMaker.Controllers
             {
                 var password = GetRandomPassword();
 
-                user.Password = PasswordStorage.CreateHash(password.ToString());
+                user.Password = PasswordStorage.CreateHash(password);
                 _user.Update(user);
                 _user.Save();
 
@@ -184,18 +185,19 @@ namespace ScrumMaker.Controllers
 
         }
 
-        private string GetBody(int password)
+        private string GetBody(string password)
         {
             var body = "<img src=\"cid:NewLogo\" /><h2 color=\"green\">The ScrumMaker Team</h2>\n" +
                        string.Format("<h3>Your new password is: <b>{0}</b></h3>", password);
             return body;
         }
 
-        private int GetRandomPassword()
+        private string GetRandomPassword()
         {
-            var r = new Random();
-            var p = r.Next(int.MaxValue / 2, Int32.MaxValue);
-            return p;
+            RNGCryptoServiceProvider cryptRNG = new RNGCryptoServiceProvider();
+            byte[] tokenBuffer = new byte[8];
+            cryptRNG.GetBytes(tokenBuffer);
+            return Convert.ToBase64String(tokenBuffer);
         }
 
         private static async Task<MemoryStream> GetDefaultAvatar()
