@@ -50,7 +50,7 @@ namespace DataBaseInitializer
             FillSprintReviewsData();
             ShowStatus(100);
         }
-        
+
         public static void FillRolesData()
         {
             _dbRoles = new Repository<Role>(_context);
@@ -566,7 +566,7 @@ namespace DataBaseInitializer
         public static void FillStoriesData()
         {
             _dbStories = new Repository<Story>(_context);
-            
+
             Story[] stories = new Story[]
             {
                     new Story()
@@ -689,8 +689,8 @@ namespace DataBaseInitializer
                         PlannedHours = 72,
                         RemainingHours = 72,
                         ActualHours = 0,
-                        Started = null,
-                        Completed = null,
+                        Started = new DateTime(2018,7,6,12,45,30),
+                        Completed = new DateTime(2018,8,8,20,45,30),
                         Type = TaskType.Analyses, State = TaskState.ToDo,
                         WorkNotes = "This task should be done in 72 hours"
                     },
@@ -705,7 +705,7 @@ namespace DataBaseInitializer
                         RemainingHours = 48,
                         ActualHours = 24,
                         Started = new DateTime(2018,7,6,12,45,30),
-                        Completed = null,
+                        Completed = new DateTime(2018,7,3,20,45,30),
                         Type = TaskType.Coding, State = TaskState.InProgress,
                         WorkNotes = "This task should be done in 72 hours"
                     },
@@ -720,7 +720,7 @@ namespace DataBaseInitializer
                         RemainingHours = 0,
                         ActualHours = 24,
                         Started = new DateTime(2018,7,6,12,45,30),
-                        Completed =new DateTime(2018,7,7,12,45,30),
+                        Completed =new DateTime(2018,8,7,12,45,30),
                         Type =TaskType.Documentation, State = TaskState.Done,
                         WorkNotes = "This task should be done in 26 hours"
                     },
@@ -735,7 +735,7 @@ namespace DataBaseInitializer
                         RemainingHours = 8,
                         ActualHours = 48,
                         Started = new DateTime(2018,7,6,12,45,30),
-                        Completed = null,
+                        Completed = new DateTime(2018,7,8,20,45,30),
                         Type = TaskType.Documentation, State = TaskState.InProgress,
                         WorkNotes = "This task should be done in 56 hours"
                       },
@@ -847,7 +847,7 @@ namespace DataBaseInitializer
                     new SprintStagesHistory()
                     {
                         Begined = new DateTime(2018,06,28),
-                        Ended =  new DateTime(2018,07,24)
+                        Ended =  new DateTime(2018,09,24)
                     }
             };
 
