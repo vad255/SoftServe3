@@ -9,6 +9,7 @@ interface AddUserDataState {
     password: string;
     roles: Role[];
     ConfirmModal: boolean;
+    modalMessage: string;
 }
 interface Role {
     RoleId: number;
@@ -19,11 +20,11 @@ export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDa
     constructor(props: any) {
         super(props);
 
-        this.state = { id: 0, login: "", password: "", roles: [], ConfirmModal: false };
+        this.state = { id: 0, login: "", password: "", roles: [], ConfirmModal: false, modalMessage: "" };
         fetch('odata/roles')
             .then(response => response.json() as any)
-            .then(data => {                
-                this.setState({ roles: data['value']});
+            .then(data => {
+                this.setState({ roles: data['value'] });
             });
         this.handleSave = this.handleSave.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
@@ -31,12 +32,12 @@ export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDa
 
     public SendItem() {
         fetch('api/sprints/create',
-        {
-            method:'POST',
-            headers: {'Content-Type': 'application/json; charset=utf-8'},
-            body: JSON.stringify(this.props) 
-         });
-    }  
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json; charset=utf-8' },
+                body: JSON.stringify(this.props)
+            });
+    }
 
     public render() {
         let contents = this.state.login
@@ -58,7 +59,7 @@ export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDa
 
         }).then(response => response.json() as Promise<boolean>)
             .then(data => {
-                data != false ? this.setState({ ConfirmModal: true }) : null;
+                data != false ? this.setState({ modalMessage: "User successfully created", ConfirmModal: true }) : this.setState({ modalMessage: "The current user's login already exists", ConfirmModal: true });
             });
     }
 
@@ -77,43 +78,43 @@ export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDa
     private renderCreateForm(cityList: Array<any>) {
         return (
             <div>
-            <Modal isOpen={this.state.ConfirmModal}
-                onRequestClose={this.openCloseModel}
-                className="Modal">
-                <h3>User successfully created</h3>
-                <button className="modalBtn" onClick={this.openCloseModel}>Ok</button>
-            </Modal>
+                <Modal isOpen={this.state.ConfirmModal}
+                    onRequestClose={this.openCloseModel}
+                    className="Modal">
+                    <h3>{this.state.modalMessage}</h3>
+                    <button className="modalBtn" onClick={this.openCloseModel}>Ok</button>
+                </Modal>
 
                 <form onSubmit={this.handleSave} method="post">
-                <div className="form-group row" >
-                    <input type="hidden" name="employeeId" value={this.state.id} />
-                </div>
-                <div className="form-group row" >
-                    <label className=" control-label col-md-12" htmlFor="Login">Login</label>
-                    <div className="col-md-4">
+                    <div className="form-group row" >
+                        <input type="hidden" name="employeeId" value={this.state.id} />
+                    </div>
+                    <div className="form-group row" >
+                        <label className=" control-label col-md-12" htmlFor="Login">Login</label>
+                        <div className="col-md-4">
                             <input className="form-control" type="email" name="login" defaultValue={this.state.login} required />
-                    </div>
-                </div >
-                <div className="form-group row">
-                    <label className="control-label col-md-12" htmlFor="password" >Password</label>
-                    <div className="col-md-4">
+                        </div>
+                    </div >
+                    <div className="form-group row">
+                        <label className="control-label col-md-12" htmlFor="password" >Password</label>
+                        <div className="col-md-4">
                             <input className="form-control" type="password" name="password" defaultValue={this.state.password} required />
+                        </div>
                     </div>
-                </div>
-                <div className="form-group row">
-                    <label className="control-label col-md-12" htmlFor="roleid">Role</label>
-                    <div className="col-md-4">
-                        <select className="form-control" data-val="true" name="roleid" required>
-                            <option value="">-- Select Role --</option>
-                            {this.state.roles.map(x => <option value={x.RoleId}>{x.Name}</option>)}
-                        </select>
-                    </div>
-                </div >
+                    <div className="form-group row">
+                        <label className="control-label col-md-12" htmlFor="roleid">Role</label>
+                        <div className="col-md-4">
+                            <select className="form-control" data-val="true" name="roleid" required>
+                                <option value="">-- Select Role --</option>
+                                {this.state.roles.map(x => <option value={x.RoleId}>{x.Name}</option>)}
+                            </select>
+                        </div>
+                    </div >
 
-                <div className="form-group">
-                    <button type="submit" className="btn">Register</button>
-                    <button className="btn" onClick={this.handleCancel}>Cancel</button>
-                </div >
+                    <div className="form-group">
+                        <button type="submit" className="btn">Register</button>
+                        <button className="btn" onClick={this.handleCancel}>Cancel</button>
+                    </div >
                 </form >
             </div>
         )

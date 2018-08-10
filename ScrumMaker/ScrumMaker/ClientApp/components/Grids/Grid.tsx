@@ -7,7 +7,7 @@ import { Content } from 'react-bootstrap/lib/Tab';
 import { Filter } from '../Filters/Filter';
 import { ConfirmMadal } from '../ConfirmModal'
 import { FiltersManager } from '../Filters/FiltersManager';
-
+import { CreateBtn } from "../ForAdmin/CreateButton";
 
 export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFetchState> {
 
@@ -43,6 +43,11 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
     }
 
     public render() {
+        let createBtnState: boolean = true;
+        if (window.location.pathname === "/usergrid") {
+            createBtnState = false;
+        }
+
         let contents = this.isLoading
             ? <tr><td colSpan={14}><p><em>Loading...</em></p></td></tr>
             : this.GetBodyRows();
@@ -54,22 +59,18 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
                     <h1 style={{ width: "90%" }}>{this.headerText}</h1>
 
                     <div style={{ marginBottom: "10px" }}>
-
-                        <NavLink to={this.URL_NEW}
-                            activeClassName='active'>
-                            <button className="btn btn-default" type="button">
-                                Create</button>
-                        </NavLink>
+                        {createBtnState ? <CreateBtn URL={this.URL_NEW} /> : null}
                     </div>
                 </div>
                 <div>
                     <label>Number elements:
-                            <select style={{ marginLeft: "5px", height: "25px" }} onChange={this.handleSizeSelect.bind(this)}>
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="20">20</option>
-                                <option value="50">50</option>
-                            </select>
+                        <select style={{ marginLeft: "5px", height: "25px" }} onChange={this.handleSizeSelect.bind(
+                            this)}>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                        </select>
                     </label>
                 </div>
 
@@ -90,7 +91,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
                     {this.GetDeleteConfirmModal()}
                 </div>
             </div>
-        )
+        );
     }
 
     protected LoadData() {
