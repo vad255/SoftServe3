@@ -10,7 +10,7 @@ import { ConfirmMadal } from '../ConfirmModal';
 import DatePicker from 'react-datepicker'
 import * as moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
-import '../../css/editPage.css';
+import '../../../wwwroot/assets/css/editPage.css';
 
 
 interface ICreatePageState {
