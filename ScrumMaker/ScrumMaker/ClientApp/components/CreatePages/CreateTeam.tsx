@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import Select from 'react-select';
 import { RouteComponentProps } from 'react-router';
 import { Feature } from '../Models/Feature';
@@ -9,6 +9,7 @@ import { State } from '../Models/FeatureState';
 import { User } from '../Models/User';
 import { Team } from '../Models/Team';
 import { Label } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 interface ITeamFetchingState {
     TeamName: string;
@@ -22,15 +23,16 @@ interface IValue {
     label: string
 }
 
-export class EditTeam extends React.Component<RouteComponentProps<{}>, ITeamFetchingState> {
+export class CreateTeam extends React.Component<RouteComponentProps<any>, ITeamFetchingState> {
 
     constructor() {
         super();
         this.LoadData();
         this.getUsers();
-        this.handleSave = this.handleSave.bind(this);
+        this.handleCreateButtonClick = this.handleCreateButtonClick.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.onMultiChange = this.onMultiChange.bind(this);
+        this.handleOkButtonClick = this.handleOkButtonClick.bind(this);
 
         this.state = {
             TeamName: "",
@@ -125,13 +127,33 @@ export class EditTeam extends React.Component<RouteComponentProps<{}>, ITeamFetc
         });
     }
 
+    private GetDeleteConfirmModal() {
+        return <div id="confirmDeleteModal" className="modal fade">
+            <div className="modal-dialog">
+                <div className="modal-content">
+                    <div className="modal-header  text-center" ><button className="close" type="button" data-dismiss="modal">×</button>
+                        <h4 className="modal-title">The new team "{this.state.TeamName}" was added.</h4>
+                    </div>
+                    <div className="modal-body text-center">
+                        <button className="btn btn-default" type="button" data-dismiss="modal" onClick={this.handleOkButtonClick} >
+                            Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>;
+    }
+
+    handleOkButtonClick() {
+        this.props.history.push("/teamgrid");
+    }
+
     public EditName() {
-        return <form onSubmit={this.handleSave} name="oldForm" >
+        return <div>
             <div className="text-center">
-                <h2 className="h2EditCreatePage text-center">"{this.state.TeamName}"-Team</h2>
+                <h2 style={{ margin: "10px", padding: "5px", textAlign: "center" }}>Create New Team</h2>
             </div>
             <div className="text-left">
-                <h3 className="hStyle">Name:</h3>
+                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Name:</h3>
                 <input
                     className="input-lg"
                     name="TeamName"
@@ -140,13 +162,15 @@ export class EditTeam extends React.Component<RouteComponentProps<{}>, ITeamFetc
                     onChange={this.handleInputChange} />
             </div>
             <div className="text-left">
-                <h3 className="hStyle">Members:</h3>
+                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Members:</h3>
                 {this.renderUsers()}
             </div>
             <div className="container-login100-form-btn">
-                <button style={{ margin: "20px 0 0 0" }} className="login100-form-btn">Update</button>
-            </div>
-        </form>
+                    <button style={{ margin: "20px 0 0 0" }} data-toggle="modal"
+                        data-target="#confirmDeleteModal" onClick={() => this.handleCreateButtonClick()} className="login100-form-btn">Add</button>
+                </div>
+                {this.GetDeleteConfirmModal()}
+        </div>
     }
 
     private onMultiChange(value: any) {
@@ -172,39 +196,22 @@ export class EditTeam extends React.Component<RouteComponentProps<{}>, ITeamFetc
         />
     }
 
-    private handleSave(event: any) {
-        event.preventDefault();
-        var members = { value: this.state.Users }
-        var teamsUpdateModel = {
-            Name: this.state.TeamName,
-        };
-
-        fetch(this.updateURL + this.id, {
-            method: 'Patch',
-            body: JSON.stringify({
-                '@odata.type': 'DAL.Models.Team',
-                ...teamsUpdateModel
-            }
-            ),
-            headers: {
-                'OData-Version': '4.0',
-                'Content-Type': 'application/json;odata.metadata=minimal',
-                'Accept': 'application/json'
-            }
-        }).then(response => { this.props.history.push('/teamgrid') });
-
-        var teamsUpdate = {
-            Users: this.state.Users,
-            TeamName: this.state.TeamName
+    handleCreateButtonClick() {
+        if (this.state.TeamName != "" && this.state.Users != null) {
+            fetch('odata/Teams',
+                {
+                    method: 'Post',
+                    headers: {
+                        'OData-Version': '4.0',
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json;odata.metadata=minimal',
+                    },
+                    body: JSON.stringify({
+                        '@odata.type': 'DAL.Models.Team',
+                        'TeamName': this.state.TeamName,
+                        'Users': this.state.Users
+                    })
+                });
         }
-
-        fetch('api/sers/SetUsers', {
-            method: 'POST',
-            body: JSON.stringify(teamsUpdate),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-        }).then(response => { this.props.history.push('/teamgrid') });
     }
 }

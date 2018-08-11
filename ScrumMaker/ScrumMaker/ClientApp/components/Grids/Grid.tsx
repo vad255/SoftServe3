@@ -7,7 +7,7 @@ import { Content } from 'react-bootstrap/lib/Tab';
 import { Filter } from '../Filters/Filter';
 import { ConfirmMadal } from '../ConfirmModal'
 import { FiltersManager } from '../Filters/FiltersManager';
-
+import { CreateBtn } from "../ForAdmin/CreateButton";
 
 export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFetchState> {
 
@@ -42,36 +42,38 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         this.isLoading = true;
     }
 
-
     public render() {
+        let createBtnState: boolean = true;
+        if (window.location.pathname === "/usergrid") {
+            createBtnState = false;
+        }
+
         let contents = this.isLoading
             ? <tr><td colSpan={14}><p><em>Loading...</em></p></td></tr>
             : this.GetBodyRows();
 
         return (
             <div>
-
                 <div className="RDiv">
+
                     <h1 style={{ width: "90%" }}>{this.headerText}</h1>
 
                     <div style={{ marginBottom: "10px" }}>
-                        <NavLink to={this.URL_NEW}
-                            activeClassName='active'>
-                            <button className="btn btn-default" type="button">
-                                Create</button>
-                        </NavLink>
+                        {createBtnState ? <CreateBtn URL={this.URL_NEW} /> : null}
                     </div>
-
-
                 </div>
-                <label>Number elements:
-                        <select style={{ marginLeft: "5px" }} onChange={this.handleSizeSelect.bind(this)}>
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="20">20</option>
-                        <option value="50">50</option>
-                    </select>
-                </label>
+                <div>
+                    <label>Number elements:
+                        <select style={{ marginLeft: "5px", height: "25px" }} onChange={this.handleSizeSelect.bind(
+                            this)}>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                        </select>
+                    </label>
+                </div>
+
                 <div>
                     <table className='table table-scrum table-hover td-scrum' style={{ marginTop: "1px" }}>
 
@@ -89,14 +91,14 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
                     {this.GetDeleteConfirmModal()}
                 </div>
             </div>
-        )
+        );
     }
 
     protected LoadData() {
         fetch(this.getURL(this.state.pageSize), { credentials: 'include' })
             .then(response => {
                 if (response.url.indexOf('login') !== -1) {
-                    this.props.history.push('/login');      // Go to loginPage; 
+                    this.props.history.push('/login');      // Go to loginPage;
                 } else {
                     let data = response.json();             // parse data
                     data.then(data => {
@@ -177,6 +179,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         if (this.totalCount <= this.state.pageSize) {
             return <tr></tr>;
         }
+
 
         return <tr>
             <td colSpan={14}>

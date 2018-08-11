@@ -21,6 +21,9 @@ export class BurnDown extends React.Component<DataFetchingState, DataFetchingSta
                 for (var i = 0; i < data.length; i++) {
                     temp[i] = new ModelForChart(data[i]);
                 }
+
+                console.log(temp);
+
                 this.setState({ data: temp });
             });
     }
@@ -31,7 +34,7 @@ export class BurnDown extends React.Component<DataFetchingState, DataFetchingSta
                 <CartesianGrid strokeDasharray="5 5" />
                 <XAxis dataKey="Name" tickLine={false} />
                 <YAxis dataKey="RemainingTask" yAxisId="left" orientation='left' />
-                <YAxis yAxisId="right" orientation='right'/>
+                <YAxis yAxisId="right" orientation='right' />
                 <Tooltip />
                 <Legend />
                 <CartesianGrid stroke='#f5f5f5' vertical={false} />

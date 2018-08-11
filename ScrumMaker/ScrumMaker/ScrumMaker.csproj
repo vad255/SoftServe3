@@ -62,6 +62,7 @@
     <None Remove="ClientApp\components\Filters\TasksFiltersRow.tsx" />
     <None Remove="ClientApp\components\Filters\TeamFiltersRow.tsx" />
     <None Remove="ClientApp\components\Filters\StoriesFiltersRow.tsx" />
+    <None Remove="ClientApp\components\ForAdmin\CreateButton.tsx" />
     <None Remove="ClientApp\components\ForgotPasswordPage.tsx" />
 
     <None Remove="ClientApp\components\GetError.tsx" />
@@ -138,6 +139,7 @@
     <TypeScriptCompile Include="ClientApp\components\CreatePages\CreateStory.tsx" />
     <TypeScriptCompile Include="ClientApp\components\CreatePages\CreateTask.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\EditDefect.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\ForAdmin\CreateButton.tsx" />
     <TypeScriptCompile Include="ClientApp\components\ForgotPasswordPage.tsx" />
 
     <TypeScriptCompile Include="ClientApp\components\GetError.tsx" />
@@ -181,7 +183,6 @@
     <TypeScriptCompile Include="ClientApp\components\PokerEstimation\mainPokerPage.tsx" />
     <TypeScriptCompile Include="ClientApp\components\PokerEstimation\PokerUsersBox.tsx" />
     <TypeScriptCompile Include="ClientApp\components\PokerEstimation\pokerTable.tsx" />
-    <TypeScriptCompile Include="ClientApp\components\SprintsGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Grids\TeamGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\css\editUser.css" />
     <TypeScriptCompile Include="ClientApp\css\modalWindow.css" />

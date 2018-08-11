@@ -105,6 +105,28 @@ export class EditStory extends React.Component<RouteComponentProps<any>, IEditPa
         </div>;
     }
 
+    private renderStatus() {
+
+        let names: string[] = [];
+        for (let iterator in StoryStatus) {
+            if (!parseInt(iterator))
+                names.push(iterator.toString());
+        }
+
+        let items: JSX.Element[] = [];
+        for (var i = 0; i < names.length; i++) {
+            items.push(<option key={i} value={names[i]}>{names[i]}</option>);
+        }
+
+        return <select
+            value={this.state.statusValue}
+            className="form-control CreatePage"
+            name="State"
+            onChange={this.handleStatusSelect}>
+            {items}
+        </select>;
+    }
+
     handleOkButtonClick() {
         this.props.history.push("/Stories");
     }
@@ -115,9 +137,7 @@ export class EditStory extends React.Component<RouteComponentProps<any>, IEditPa
     }
 
     handleStatusSelect(event: any) {
-        this.setState({ statusValue: event.target.id });
-        let b = document.getElementById("dropdownMenuButton") as any;
-        b.innerHTML = event.target.innerHTML;
+        this.setState({ statusValue: event.target.value });
     }
 
     handleChangeInput(event: any) {
@@ -131,43 +151,31 @@ export class EditStory extends React.Component<RouteComponentProps<any>, IEditPa
     public render() {
         return <div className="text-left">
             <div className="text-center">
-                <h2 style={{ margin: "10px", padding: "5px" }}>Editing story by Id = {this.state.id}</h2>
+                <h2 className="h2EditCreatePage">Editing story by Id = {this.state.id}</h2>
             </div>
             <div>
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Name:</h3>
+                <h3 className="hStyle">Name:</h3>
                 <input className="input-lg" onChange={this.handleChangeInput} type="text" value={this.state.inputValue} />
             </div>
             <div>
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Description:</h3>
+                <h3 className="hStyle">Description:</h3>
                 <textarea style={{ width: "400px", height: "300px", fontSize: 25, padding: "7px" }} className="fa-text-height" onChange={this.handleChangeTextArea} value={this.state.textAreaValue} />
             </div>
             <div>
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Status:</h3>
-                <div className="btn-group">
-                    <button className="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Select status
-                    </button>
-                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a className="dropdown-item" id="0" onClick={this.handleStatusSelect}>Pending approval</a>
-                        <a className="dropdown-item" id="1" onClick={this.handleStatusSelect} >Ready to start</a>
-                        <a className="dropdown-item" id="2" onClick={this.handleStatusSelect} >In progress</a>
-                        <a className="dropdown-item" id="3" onClick={this.handleStatusSelect}>Developing сomplete</a>
-                        <a className="dropdown-item" id="4" onClick={this.handleStatusSelect} >Test сomplete</a>
-                        <a className="dropdown-item" id="5" onClick={this.handleStatusSelect}>Accepted</a>
-                    </div>
-                </div>
+                <h3 className="hStyle">Status:</h3>
+                {this.renderStatus()}
             </div>
 
             <div>
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Assign to:</h3>
-                <select className="form-control-static" onChange={this.handleUserSelect}>
+                <h3 className="hStyle">Assign to:</h3>
+                <select className="form-control inline-block" onChange={this.handleUserSelect}>
                     {this.state.users.map(user => <option key={user.userId} value={user.userId}>{user.login}</option>)}
                 </select>
             </div>
 
             <div className="text-center">
                 <button style={{ margin: "10px" }} data-toggle="modal"
-                    data-target="#confirmDeleteModal" className="btn-success"
+                    data-target="#confirmDeleteModal" className="btn"
                     onClick={this.handleSaveButtonClick}>Update</button>
             </div>
             {this.GetDeleteConfirmModal()}

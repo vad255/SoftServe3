@@ -30,7 +30,7 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
     constructor(props: any) {
         super(props);
         this.state = { wentWellOutPut: "", improvedOutput: "", commitOutput: "", role: "" };
-        this.sprintId = this.props.location.state.sprintId as number;
+        this.sprintId = this.props.location.state.SprintId as number;
         this.connection = new HubConnectionBuilder().withUrl(this.chatUrl + "?token=" + this.sprintId).build();
         this.connection.on("receiveMessage", this.receiveMessage.bind(this));
         this.connection.on("receiveHistory", this.receiveHistory.bind(this));
@@ -151,7 +151,27 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
     }
 
     downloadTxtFile() {
-        fetch('/SaveTxtFile');
+        const data = new FormData();
+        data.append("sprintId", this.sprintId.toString());
+
+        fetch('api/SaveTxtFile', {
+            method: 'POST',
+            body: data
+        }).then(res => res.text() as Promise<any>)
+            .then(data => { this.downloadFile("file.txt",data); });
+    }
+
+    private downloadFile(filename: string, text: string) {
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+
+        element.style.display = 'none';
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
     }
 
     private getDeleteConfirmModal() {
@@ -229,7 +249,7 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
                             .commitOutput} />
                 </div>
             </div>
-           
+
             <div className="chatInputBlock">
                 <br />
                 <p>What went well in the Sprint?</p>
