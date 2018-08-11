@@ -36,6 +36,7 @@ import { CreateDefect } from "./components/CreatePages/CreateDefect";
 import { GetError } from "./components/GetError";
 import { Backlog } from './components/Backlog/Backlog';
 import { CreateStory } from "./components/CreatePages/CreateStory";
+import { FeatureCreate } from "./components/CreatePages/FeatureCreate";
 import { ForgotPasswordPage } from "./components/ForgotPasswordPage";
 
 
@@ -80,6 +81,7 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/GetError' component={GetError} />
         <LayoutRoute path='/backlog' component={Backlog} />
         <LayoutRoute path='/CreateStory' component={CreateStory} />
+        <LayoutRoute path='/FeatureCreate' component={FeatureCreate} />
         <LayoutRoute path='/ForgotPassword' component={ForgotPasswordPage} />
 
 

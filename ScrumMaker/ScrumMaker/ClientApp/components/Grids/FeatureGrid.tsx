@@ -20,7 +20,8 @@ export class FeatureGrid extends Grid {
     protected URL_EXPANDS: string = '?$expand=stories($expand=team)';
     protected URL_ORDERING: string = '&$orderby=id';
     protected headerText: string = 'Feature';
-    protected URL_EDIT: string = "featureEdit/"
+    protected URL_EDIT: string = "featureEdit/";
+    protected URL_NEW: string = "/FeatureCreate";
 
     constructor() {
         super();

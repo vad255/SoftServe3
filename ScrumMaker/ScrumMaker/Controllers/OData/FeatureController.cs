@@ -75,5 +75,19 @@ namespace ScrumMaker.Controllers
                 return BadRequest();
             }
         }
+
+        [AcceptVerbs("POST")]
+        public IActionResult Post([FromBody] Feature feature)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            featureRepository.Create(feature);
+            featureRepository.Save();
+
+            return Created(feature);
+        }
     }
 }
