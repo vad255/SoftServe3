@@ -221,7 +221,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
         return <select
             className="selectStyle fontStyle form-control"
             value={this.state.OwnerUserId}
-            name="OwnerUserId" className="form-control inline-block"
+            name="OwnerUserId"
             onChange={this.handleInputChange}>
             {items}
         </select>

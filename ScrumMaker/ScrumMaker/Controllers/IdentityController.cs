@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using BL;
 using BL.Authentication;
+using BL.CryptoServiceProvider;
 using DAL;
 using DAL.Access;
 using DAL.Models;
