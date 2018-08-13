@@ -30,6 +30,6 @@ namespace DAL.Models
         [Required]
         public bool Blocked { get; set; }
 
-        public ICollection<Story> Stories { get; set; }
+        public virtual ICollection<Story> Stories { get; set; }
     }
 }

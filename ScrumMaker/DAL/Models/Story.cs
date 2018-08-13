@@ -25,7 +25,9 @@ namespace DAL.Models
         public int? UserId { get; set; }
         public virtual User User { get; set; }
 
-        public Feature Feature { get; set; }
+        [ForeignKey("Feature")]
+        public int? FeatureId { get; set; }
+        public virtual Feature Feature { get; set; }
 
         [ForeignKey("Team")]
         public int? TeamId { get; set; }
