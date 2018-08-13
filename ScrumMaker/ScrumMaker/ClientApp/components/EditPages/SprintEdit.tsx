@@ -235,7 +235,7 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
 
         return (
             <div>
-                <h3 className="hStyle">History</h3>
+                <h3 className="hStyle" style={{marginLeft: "100px"}}>History</h3>
 
                 <h4 className="hStyle">Begin:&nbsp;&nbsp;
                 <div className="inline-block">
@@ -302,7 +302,7 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
         return (
             <div className="text-center">
                 <button
-                    className="btn"
+                    className="btn-dark scrum-btn"
                     data-toggle="modal"
                     data-target="#ConfirmDialog"
                     role="button">Update</button>
@@ -310,7 +310,7 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
                 &nbsp;&nbsp;&nbsp;&nbsp;
 
                 <button
-                    className="btn inline-block"
+                    className="btn-dark scrum-btn inline-block"
                     onClick={this.handleCancel.bind(this)}>Discard</button>
             </div>
         );

@@ -17,6 +17,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.OData" Version="7.0.0-beta4" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0" />
+    <PackageReference Include="Sendgrid" Version="9.9.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -120,7 +121,7 @@
     <None Include="wwwroot\assets\css\poker.css" />
     <None Include="wwwroot\assets\css\SelectStyle.css" />
     <None Include="wwwroot\assets\css\site.css" />
-    <None Include="wwwroot\assets\css\siteStyle.css" />
+    <None Include="wwwroot\assets\css\layoutStyle.css" />
     <None Include="wwwroot\assets\css\switchImg.css" />
     <None Include="wwwroot\assets\css\Tooltips.css" />
     <None Include="wwwroot\assets\css\TreeSubMenu.css" />

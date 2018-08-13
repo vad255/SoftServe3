@@ -92,7 +92,7 @@ export class UserEdit extends React.Component<RouteComponentProps<any>, IEditPag
                         <h4 className="modal-title">The user "{this.state.user.login}" was updated.</h4>
                     </div>
                     <div className="modal-body text-center">
-                        <button className="btn btn-default" type="button" data-dismiss="modal" onClick={this.handleOkButtonClick} >
+                        <button className="btn-dark scrum-btn" type="button" data-dismiss="modal" onClick={this.handleOkButtonClick} >
                             Ok</button>
                     </div>
                 </div>
@@ -128,34 +128,34 @@ export class UserEdit extends React.Component<RouteComponentProps<any>, IEditPag
             <div className="text-center">
                 <h2 className="h2EditCreatePage">Editing user by Id = {this.state.id}</h2>
             </div>
-            <div>
+            <div style={{width: "45%"}}>
                 <h3 className="hStyle">Login:</h3>
                 <input className="input-lg" onChange={this.handleLoginValue} type="text" value={this.state.loginValue} />
             </div>
-            <div>
+            <div style={{ width: "45%" }}>
                 <h3 className="hStyle">Password:</h3>
                 <input className="input-lg" onChange={this.handlePasswordValue} type="text" value={this.state.passwordValue} />
             </div>
-            <div>
+            <div style={{ width: "45%" }}>
                 <h3 className="hStyle">Team:</h3>
                 <select className="form-control" onChange={this.handleTeamValue} value={this.state.teamValue}>
                     {this.state.teams.map(x => <option value={x.id}>{x.name}</option>)}
                 </select>
             </div>
-            <div>
+            <div style={{ width: "45%" }}>
                 <h3 className="hStyle">Activity:</h3>
                 <Switch onChange={this.handleActivityValue}
                     checked={this.state.activityValue}
                     id="normal-switch" />
             </div>
-            <div>
+            <div style={{ width: "45%" }}>
                 <h3 className="hStyle">Role:</h3>
                 <select className="form-control" onChange={this.handleRoleValue} value={this.state.roleValue} >
                     {this.state.roles.map(x => <option value={x.roleId}>{x.name}</option>)}
                 </select>
             </div>
             <div className="text-center">
-                <button style={{ margin: "20px" }} className="btn" data-toggle="modal"
+                <button style={{ margin: "20px" }} className="btn-dark scrum-btn" data-toggle="modal"
                     data-target="#confirmDeleteModal" onClick={this.handleSaveButtonClick}>Update</button>
             </div>
             {this.GetCreateConfirmModal()}

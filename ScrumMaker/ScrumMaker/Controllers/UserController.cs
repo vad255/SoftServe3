@@ -143,13 +143,14 @@ namespace ScrumMaker.Controllers
 
             if (user != null)
             {
+
                 var password = GetRandomPassword();
 
                 user.Password = PasswordStorage.CreateHash(password);
                 _user.Update(user);
                 _user.Save();
 
-                MailMessage emailMessage = new MailMessage("scrummaker325@gmail.com", login)
+                MailMessage emailMessage = new MailMessage("ScrumMaker@support.com", login)
                 {
                     Subject = "Reset Password",
                 };
@@ -163,16 +164,18 @@ namespace ScrumMaker.Controllers
                 htmlView.LinkedResources.Add(theEmailImage);
                 emailMessage.AlternateViews.Add(htmlView);
 
-                SmtpClient smtp = new SmtpClient("smtp.gmail.com")
+                SmtpClient smtp = new SmtpClient("smtp.sendgrid.net")
                 {
-                    Port = 587,
+                    Port = Convert.ToInt32(587),
                     EnableSsl = true,
                     UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential("scrummaker325@gmail.com", "Qwerty!123"),
+                    Credentials = new NetworkCredential("azure_0155d864f6f31073768f8d1d204f5397@azure.com", "1q3e5t7u"),
                     DeliveryMethod = SmtpDeliveryMethod.Network
                 };
                 emailMessage.IsBodyHtml = true;
+
                 smtp.Send(emailMessage);
+
 
                 return true;
             }

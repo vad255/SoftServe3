@@ -188,7 +188,7 @@ export class CreateSprint extends React.Component<RouteComponentProps<any>, IEdi
 
         return (
             <div>
-                <h3 className="hStyle">History</h3>
+                <h3 className="hStyle" style={{ marginLeft: "100px" }}>History</h3>
 
                 <h4 className="hStyle">Begin:&nbsp;&nbsp;
                 <div className="inline-block">
@@ -241,7 +241,7 @@ export class CreateSprint extends React.Component<RouteComponentProps<any>, IEdi
         return (
             <div className="text-center">
                 <button
-                    className="btn"
+                    className="btn-dark scrum-btn"
                     data-toggle="modal"
                     data-target="#ConfirmDialog"
                     role="button">Add element</button>
@@ -249,7 +249,7 @@ export class CreateSprint extends React.Component<RouteComponentProps<any>, IEdi
                 &nbsp;&nbsp;&nbsp;&nbsp;
 
                 <button
-                    className="btn inline-block"
+                    className="btn-dark scrum-btn inline-block"
                     onClick={this.handleCancel.bind(this)}>Discard</button>
             </div>
         );

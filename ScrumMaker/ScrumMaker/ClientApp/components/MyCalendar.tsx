@@ -17,7 +17,7 @@ interface DataCalendar {
     MeetingId: number,
     CalendarId: number,
     Date: Date,
-    Hours: number, 
+    Hours: number,
 }
 
 interface CalendarDataExampleState {
@@ -129,7 +129,8 @@ export class MyCalendar extends React.Component<RouteComponentProps<any>, Calend
 
         var buttonForScrumMaster;
         if (this.state.Role === "\"ScrumMaster\"") {
-            buttonForScrumMaster = <button type="submit" onClick={() => this.setState({ ForAllTeam: true })} className="btn save siteColor selectEventButton">Add event for all team</button>;
+            buttonForScrumMaster = <button type="submit" onClick={() => this.setState({ ForAllTeam: true })}
+                className="btn-primary selectEvent selectEventButton">Add event for all team</button>;
         }
 
         return (
@@ -140,7 +141,7 @@ export class MyCalendar extends React.Component<RouteComponentProps<any>, Calend
                         onRequestClose={this.openCloseModel}
                         className="Modal">
                         <h3>This time is booked</h3>
-                        <button className="modalBtn" onClick={this.openCloseModel}>Ok</button>     
+                        <button className="modalBtn" onClick={this.openCloseModel}>Ok</button>
                     </Modal>
 
                 </div>
@@ -163,7 +164,7 @@ export class MyCalendar extends React.Component<RouteComponentProps<any>, Calend
                         {this.state.Calendar.map(c =>
                             <tbody>
                                 <td>{c.CalendarId}</td>
-                                <td>{c.Date.toString().substr(0,10)}</td>
+                                <td>{c.Date.toString().substr(0, 10)}</td>
                                 <td>{this.state.Meetings.map(m => m.MeetingId == c.MeetingId ? m.MeetingName : null)}</td>
                                 <td>{c.Hours}:00</td>
                             </tbody>
@@ -172,29 +173,31 @@ export class MyCalendar extends React.Component<RouteComponentProps<any>, Calend
                 </div>
                 <div className={this.state.DisplayRigth ? 'rigth-text-calendar-box' : "nodisplay"}>
                     <form onSubmit={this.handleSave} method="post">
-                        <label className="selectLabel">Select hours</label>
-                        <select htmlFor="hours" name="hours" id="hours" className="form-control selectEvent">
-                            <option value={10}>10:00</option>
-                            <option value={11}>11:00</option>
-                            <option value={12}>12:00</option>
-                            <option value={13}>13:00</option>
-                            <option value={14}>14:00</option>
-                            <option value={15}>15:00</option>
-                            <option value={16}>16:00</option>
-                            <option value={17}>17:00</option>
-                            <option value={18}>18:00</option>
-                            <option value={19}>19:00</option>
-                        </select>
-                        <label className="selectLabel">Select meetings</label>
-                        <select htmlFor="meeting" name="meeting" id="meeting" className="form-control selectEvent">
-                            {this.state.Meetings.map(m =>
-                                <option value={m.MeetingId}>{m.MeetingName}</option>
-                            )}
-                        </select>
-                        <button type="submit" id="addEventButton" className="btn save siteColor selectEventButton">
-                            Add Event
+                        <div>
+                            <label className="selectLabel">Select hours</label>
+                            <select htmlFor="hours" name="hours" id="hours" className="form-control selectEvent">
+                                <option value={10}>10:00</option>
+                                <option value={11}>11:00</option>
+                                <option value={12}>12:00</option>
+                                <option value={13}>13:00</option>
+                                <option value={14}>14:00</option>
+                                <option value={15}>15:00</option>
+                                <option value={16}>16:00</option>
+                                <option value={17}>17:00</option>
+                                <option value={18}>18:00</option>
+                                <option value={19}>19:00</option>
+                            </select>
+                            <label className="selectLabel">Select meetings</label>
+                            <select htmlFor="meeting" name="meeting" id="meeting" className="form-control selectEvent">
+                                {this.state.Meetings.map(m =>
+                                    <option value={m.MeetingId}>{m.MeetingName}</option>
+                                )}
+                            </select>
+                            <button type="submit" id="addEventButton" className="btn-primary selectEvent selectEventButton" >
+                                Add Event
                         </button>
-                        {buttonForScrumMaster}
+                            {buttonForScrumMaster}
+                        </div>
                     </form>
                 </div>
             </div>

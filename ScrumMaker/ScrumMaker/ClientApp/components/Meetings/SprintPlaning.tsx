@@ -25,18 +25,18 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
     constructor(props: any) {
         super(props);
 
-        this.state = { users: [], stories: [], storiesName: [], sprints:[], sprintNumber:'1' };
-        this.handleSaveButtonClick = this.handleSaveButtonClick.bind(this); 
+        this.state = { users: [], stories: [], storiesName: [], sprints: [], sprintNumber: '1' };
+        this.handleSaveButtonClick = this.handleSaveButtonClick.bind(this);
         this.handleStoryNumberSelect = this.handleStoryNumberSelect.bind(this);
         this.LoadData();
     }
 
     handleSaveButtonClick() {
-        
+
         let idStorys = this.GetStoryId();
 
-        for (var i = 0; i < idStorys.length; i++) {           
-            fetch('odata/Stories(' + idStorys[i] + ')'  ,
+        for (var i = 0; i < idStorys.length; i++) {
+            fetch('odata/Stories(' + idStorys[i] + ')',
                 {
                     method: 'PATCH',
                     headers: {
@@ -52,7 +52,7 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
                     })
                 })
         }
-    }    
+    }
 
     componentDidMount() {
 
@@ -86,20 +86,20 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
                     </label>
                 </div>
                 <div>
-                <table className="well col-md-1 table-hover td-scrum table-border" style={{ marginRight: "10px"}}><caption><h4>Users</h4></caption>
-                    <thead className="table-scrum td-scrum">
-                        <tr className="border">
-                            <td><h5>User_name</h5></td>
-                        </tr>
-                    </thead>
-                    <tbody className="table-scrum">
-                        {
-                            this.state.users.map(function (item: any) {
-                                return <tr key={item} className="td-scrum"><td className="align-base">{item}</td></tr>
-                            })
-                        }
-                    </tbody>
-                </table>
+                    <table className="well col-md-1 table-hover td-scrum table-border" style={{ marginRight: "10px" }}><caption><h4>Users</h4></caption>
+                        <thead className="table-scrum td-scrum">
+                            <tr className="border">
+                                <td><h5>User_name</h5></td>
+                            </tr>
+                        </thead>
+                        <tbody className="table-scrum">
+                            {
+                                this.state.users.map(function (item: any) {
+                                    return <tr key={item} className="td-scrum"><td className="align-base">{item}</td></tr>
+                                })
+                            }
+                        </tbody>
+                    </table>
 
                     <table className=" menu_links col-md-1 td-scrum" style={{ marginRight: "10px" }} id="t_draggable1">
                         <caption><h4>Product Backlog</h4></caption>
@@ -117,27 +117,27 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
                                 </tr>
                             })}
                         </tbody>
-                </table>
+                    </table>
 
-                <table className="well menu_links col-md-1 td-scrum" id="t_draggable2">
+                    <table className="well menu_links col-md-1 td-scrum" id="t_draggable2">
                         <caption><h4>Sprint #{this.state.sprintNumber} Backlog</h4></caption>
-                    <tbody className="t_sortable table-scrum td-scrum">
-                        <tr className="td-scrum border">
-                            <td className="well"><h5>ID</h5></td>
-                            <td className="well"><h5>Story_name</h5></td>
-                            <td className="well"><h5>Story_description</h5></td>
-                        </tr>
-                    </tbody>
-                </table>
+                        <tbody className="t_sortable table-scrum td-scrum">
+                            <tr className="td-scrum border">
+                                <td className="well"><h5>ID</h5></td>
+                                <td className="well"><h5>Story_name</h5></td>
+                                <td className="well"><h5>Story_description</h5></td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-                <div role='button'
-                    className='btn btn-primary'
-                    style={{ marginLeft: "10px", marginTop: "-5px" }} 
-                    data-toggle="modal"
-                    data-target="#confirmDeleteModal"                 
-                    onClick={this.handleSaveButtonClick}>
-                    Save sprint
-                </div>
+                    <button
+                        className='btn-dark scrum-btn'
+                        style={{ marginLeft: "10px", marginTop: "-5px" }}
+                        data-toggle="modal"
+                        data-target="#confirmDeleteModal"
+                        onClick={this.handleSaveButtonClick}>
+                        Save sprint
+                </button>
                     {this.GetDeleteConfirmModal()}
                 </div>
             </div>
@@ -145,11 +145,11 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
     }
 
     handleStoryNumberSelect(event: any) {
-        this.setState({ sprintNumber: event.target.value });        
+        this.setState({ sprintNumber: event.target.value });
     }
 
-    private GetDeleteConfirmModal() {      
-        
+    private GetDeleteConfirmModal() {
+
         return <div id="confirmDeleteModal" className="modal fade">
             <div className="modal-dialog">
                 <div className="modal-content">
@@ -157,13 +157,13 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
                         <h4 className="modal-title">The next story(ies) was updated:
                         <ul>{
                                 this.GetStoryName().map(function (name: any) {
-                                return <li>{name}</li>
+                                    return <li>{name}</li>
                                 })
                             }
-                        </ul> </h4>
+                            </ul> </h4>
                     </div>
                     <div className="modal-body text-center">
-                        <button className="btn btn-default" type="button" data-dismiss="modal">
+                        <button className="btn-dark scrum-btn" type="button" data-dismiss="modal">
                             Ok</button>
                     </div>
                 </div>
@@ -177,8 +177,8 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
         let list = document.getElementById("t_draggable2") as any;
 
         for (var n = 3; n < list.getElementsByTagName("td").length; n += 3)
-            storyId.push(list.getElementsByTagName("td")[n].textContent);                
-        return storyId;       
+            storyId.push(list.getElementsByTagName("td")[n].textContent);
+        return storyId;
     }
 
     GetStoryName() {
@@ -202,7 +202,7 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
                 var usersTemp = [];
                 for (var i = 0; i < data['value'].length; i++)
                     usersTemp[i] = data["value"][i]["Login"];
-                
+
                 this.setState({ users: usersTemp });
             });
 
@@ -213,9 +213,9 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
                 var storiesTemp = [];
                 for (var i = 0; i < data['value'].length; i++)
                     storiesTemp[i] = new Story(data['value'][i]);
-                
+
                 storiesTemp = storiesTemp.filter((n) => (n.sprintId === null));
-                
+
                 this.setState({ stories: storiesTemp });
             });
 
@@ -225,11 +225,11 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
             .then(response => response.json() as Promise<any>)
             .then(data => {
                 var sprintsData = [] as Sprint[];
-               
+
                 for (var i = 0; i < data["value"].length; i++) {
                     sprintsData[i] = new Sprint(data["value"][i]);
-                }              
-                this.setState({ sprints: sprintsData});
+                }
+                this.setState({ sprints: sprintsData });
             }).catch(e => console.log(e));
     }
 

@@ -241,7 +241,7 @@ export class TaskEdit extends React.Component<RouteComponentProps<any>, IEditPag
             </div>
             <div className="text-center">
                 <button
-                    className="btn"
+                    className="btn-dark scrum-btn"
                     data-toggle="modal"
                     data-target="#confirmDeleteModal"
                     onClick={this.handleSaveButtonClick}>Update</button>
@@ -249,7 +249,7 @@ export class TaskEdit extends React.Component<RouteComponentProps<any>, IEditPag
                 &nbsp;&nbsp;&nbsp;&nbsp;
 
                 <button
-                    className="btn inline-block"
+                    className="btn-dark scrum-btn inline-block"
                     onClick={this.handleCancelValue}>Discard</button>
             </div>
             {this.GetDeleteConfirmModal()}
@@ -359,7 +359,7 @@ export class TaskEdit extends React.Component<RouteComponentProps<any>, IEditPag
                         <h4 className="modal-title">This task was updated.</h4>
                     </div>
                     <div className="modal-body text-center">
-                        <button className="btn btn-default" type="button" data-dismiss="modal" onClick={this.handleCancelValue} >
+                        <button className="btn-dark scrum-btn" type="button" data-dismiss="modal" onClick={this.handleCancelValue} >
                             Ok</button>
                     </div>
                 </div>

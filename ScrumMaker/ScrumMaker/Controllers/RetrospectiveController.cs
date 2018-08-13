@@ -24,22 +24,23 @@ namespace ScrumMaker.Controllers
 
         [HttpPost]
         [Route("/SendEmail")]
-        public void SendEmail(int sprintId, string toEmail)
+        public void SendEmail(int sprintId)
         {
             string body = GetRetrospectiveInfo(sprintId);
+            var toEmail = HttpContext.User.UserLogin();
 
-            MailMessage emailMessage = new MailMessage("scrummaker325@gmail.com", "prystaiko.roman@gmail.com")
+            MailMessage emailMessage = new MailMessage("scrumMaker@supprt.com", toEmail)
             {
                 Subject = "Retrospective Meeting Result",
                 Body = body
             };
 
-            SmtpClient smtp = new SmtpClient("smtp.gmail.com")
+            SmtpClient smtp = new SmtpClient("smtp.sendgrid.net")
             {
                 Port = 587,
                 EnableSsl = true,
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential("scrummaker325@gmail.com", "Qwerty!123"),
+                Credentials = new NetworkCredential("azure_0155d864f6f31073768f8d1d204f5397@azure.com", "1q3e5t7u"),
                 DeliveryMethod = SmtpDeliveryMethod.Network
             };
 

@@ -128,7 +128,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
             <div className="text-center">
                 <h2 className="h2EditCreatePage text-center">"{this.state.FeatureName}" feature editing page</h2>
             </div>
-            <h3 className="hStyle">Name:&nbsp;&nbsp;
+            <h3 className="hStyle" style={{width: "45%"}}>Name:&nbsp;&nbsp;
                 <input
                     className="form-control inline-block"
                     name="FeatureName"
@@ -136,8 +136,8 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
                     value={this.state.FeatureName}
                     onChange={this.handleInputChange} />
             </h3>
-            <h3 className="hStyle">Stories:&nbsp;&nbsp;
-            <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base ">
+            <h3 className="hStyle" style={{ width: "45%" }}>Stories:&nbsp;&nbsp;
+            <div id={this.id.toString()} role="button" className="btn-dark scrum-btn btn-sq-xs align-base ">
                     <NavLink to={`../stories?filter=feature/id eq ${this.id}`} activeClassName='active'>
                        See stories which are in this feature...
                     </NavLink>
@@ -150,13 +150,13 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
                     id="normal-switch" />
             </label>
            
-            <h3 className="hStyle">Owner:&nbsp;&nbsp;
+            <h3 className="hStyle" style={{ width: "45%" }}>Owner:&nbsp;&nbsp;
             {this.renderUsers()}
             </h3>
-            <h3 className="hStyle">State:&nbsp;&nbsp;
+            <h3 className="hStyle" style={{ width: "45%" }}>State:&nbsp;&nbsp;
             {this.renderStates()}
             </h3>
-            <h3 className="hStyle">Program increment:&nbsp;&nbsp;
+            <h3 className="hStyle" style={{ width: "45%" }}>Program increment:&nbsp;&nbsp;
                 <input
                     className="form-control inline-block"
                     name="ProgramIncrement"
@@ -164,7 +164,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
                     value={this.state.ProgramIncrement}
                     onChange={this.handleInputChange} />
             </h3>
-            <h3 className="hStyle">Description:</h3>
+            <h3 className="hStyle" style={{ width: "45%" }}>Description:</h3>
             <textarea
                 className="areaStyle"
                 name="Description"
@@ -173,13 +173,13 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
                 onChange={this.handleInputChange} />
             <div className="text-center">
                 <button
-                    className="btn"
+                    className="btn-dark scrum-btn"
                     data-toggle="modal"
                     data-target="#ConfirmDialog"
                     role="button">Update</button>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <button
-                    className="btn inline-block"
+                    className="btn-dark scrum-btn inline-block"
                     onClick={this.handleCancel.bind(this)}>Discard</button>
             </div>
         </form>
@@ -219,7 +219,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
 
         return <select
             value={this.state.OwnerUserId}
-            name="OwnerUserId"
+            name="OwnerUserId" className="form-control inline-block"
             onChange={this.handleInputChange}>
             {items}
         </select>

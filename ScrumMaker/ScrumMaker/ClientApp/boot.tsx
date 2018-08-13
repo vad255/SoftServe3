@@ -7,7 +7,7 @@ import '../wwwroot/assets/css/GridTable.css';
 import '../wwwroot/assets/css/Site.css';
 import '../wwwroot/assets/css/NavMenu.css';
 import '../wwwroot/assets/css/TreeSubMenu.css';
-import '../wwwroot/assets/css/SiteStyle.css';
+import '../wwwroot/assets/css/layoutStyle.css';
 import '../wwwroot/assets/css/SwitchImg.css';
 import '../wwwroot/assets/css/SelectStyle.css';
 import '../wwwroot/assets/css/Login.css';
@@ -16,6 +16,7 @@ import '../wwwroot/assets/css/modalWindow.css';
 import '../wwwroot/assets/css/multiselect.css';
 import '../wwwroot/assets/css/backlog.css';
 import '../wwwroot/assets/css/poker.css';
+
 
 import 'bootstrap';
 import * as React from 'react';

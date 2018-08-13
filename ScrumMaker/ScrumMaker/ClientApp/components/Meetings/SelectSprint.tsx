@@ -85,7 +85,7 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
         return <div className="text-center">
             <h2>Select sprint for meeting:</h2>
             <select className="form-control inline-block"
-                style={{ margin: "20px 0px 20px 0px"}}
+                style={{ margin: "20px 0px 20px 0px", width: "20%"}}
                 onChange={this.handleSelectChange}>
                 {this.state.Sprints.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
             </select>
@@ -102,18 +102,18 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
 
     renderSprintPlaningButton() {
         return <button onClick={() => this.props.history.push('/SprintPlaning/' + this.state.SprintId)}
-            className="btn">Sprint planning</button>
+            className="btn-dark scrum-btn">Sprint planning</button>
     }
 
     private renderSprintReviewButtons(sprintId: number) {
         var sprintReviewId = this.findSprintReview();
         if (sprintReviewId) {
-            return <button className="btn"
+            return <button className="btn-dark scrum-btn"
                 onClick={() => this.props.history.push('/SprintReviewEdit/' + sprintReviewId)}>
                 Review
             </button >
         }
-        return <button className="btn "
+        return <button className="btn-dark scrum-btn"
                 disabled={!this.userIsScrumMaster()}
                 onClick={() => this.createSprintReview(this.state.SprintId)}>
             Create review
@@ -122,7 +122,7 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
 
     renderRetrospectiveButton() {
         return <button onClick={this.handleButtonClick}
-            className="btn">Retrospective</button>
+            className="btn-dark scrum-btn">Retrospective</button>
     }
 
     handleButtonClick() {

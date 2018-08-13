@@ -48,7 +48,7 @@ export class SprintHistory implements ICommitableDbModel {
             return <div id="nodata" role="button" data-toggle="dropdown" className="btn btn-sm btn-default"> No Data </div>
         else
             return <div className="dropdown">
-                <div id={this.id.toString()} role="button" data-toggle="dropdown" className="btn btn-sm btn-primary" >
+                <div id={this.id.toString()} role="button" data-toggle="dropdown" className="btn-dark scrum-btn" >
                     History <span className="caret"></span>
                 </div>
                 <ul className="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">

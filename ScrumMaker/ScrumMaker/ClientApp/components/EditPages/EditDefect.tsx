@@ -100,7 +100,7 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
                         <h4 className="modal-title">The defect "{this.state.defect.name}" was updated.</h4>
                     </div>
                     <div className="modal-body text-center">
-                        <button className="btn btn-default" type="button" onClick={this.handleOK} data-dismiss="modal">
+                        <button className="btn-dark scrum-btn" type="button" onClick={this.handleOK} data-dismiss="modal">
                             Ok</button>
                     </div>
                 </div>
@@ -175,13 +175,12 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
 
             <div className="text-center">               
 
-                <div role='button'
-                    className='btn btn-primary'                    
+                <button className='btn-dark scrum-btn'                    
                     data-toggle="modal"
                     data-target="#confirmDeleteModal"
                     onClick={this.handleSaveButtonClick}>
                     Update
-                </div>
+                </button>
             </div>
 
            

@@ -158,7 +158,7 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
             method: 'POST',
             body: data
         }).then(res => res.text() as Promise<any>)
-            .then(data => { this.downloadFile("file.txt",data); });
+            .then(data => { this.downloadFile("file.txt", data); });
     }
 
     private downloadFile(filename: string, text: string) {
@@ -182,7 +182,7 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
                         <h4 className="modal-title">The Sprint Retrospective was sent to email</h4>
                     </div>
                     <div className="modal-body text-center">
-                        <button className="btn btn-default" type="button" data-dismiss="modal">
+                        <button className="btn-dark scrum-btn" type="button" data-dismiss="modal">
                             Ok</button>
                     </div>
                 </div>
@@ -194,7 +194,6 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
 
         const data = new FormData();
         data.append("sprintId", this.sprintId.toString());
-        data.append("toEmail", this.user.login);
 
         fetch('/SendEmail',
             {
@@ -216,11 +215,11 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
                         {this.table.render()}
                     </div>
                     <div style={{ width: "30%" }}>
-                        <button style={{ margin: "10px", width: "200px" }}
+                        <button style={{ margin: "10px", width: "250px" }}
                             disabled={!isScrumMaster}
-                            className="btn" onClick={this.downloadTxtFile}>Save Meeting Result as txt file</button>
-                        <button style={{ margin: "10px", width: "200px" }}
-                            className="btn"
+                            className="btn-dark scrum-btn" onClick={this.downloadTxtFile}>Save Meeting Result as txt file</button>
+                        <button style={{ margin: "10px", width: "250px" }}
+                            className="btn-dark scrum-btn"
                             data-toggle="modal"
                             data-target="#confirmDeleteModal"
                             disabled={!isScrumMaster}
@@ -261,7 +260,7 @@ export class RetrospectiveMeeting extends React.Component<RouteComponentProps<{}
             </div>
             <div className="text-center">
                 <button style={{ marginTop: "10px" }}
-                    className="btn" onClick={this.handleSendButton}>Send</button>
+                    className="btn-dark scrum-btn" onClick={this.handleSendButton}>Send</button>
             </div>
             {this.getDeleteConfirmModal()}
         </div>;

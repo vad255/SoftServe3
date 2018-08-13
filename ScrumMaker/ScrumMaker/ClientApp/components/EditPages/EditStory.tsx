@@ -97,7 +97,7 @@ export class EditStory extends React.Component<RouteComponentProps<any>, IEditPa
                         <h4 className="modal-title">The story "{this.state.story.name}" was updated.</h4>
                     </div>
                     <div className="modal-body text-center">
-                        <button className="btn btn-default" type="button" data-dismiss="modal" onClick={this.handleOkButtonClick} >
+                        <button className="btn-dark scrum-btn" type="button" data-dismiss="modal" onClick={this.handleOkButtonClick} >
                             Ok</button>
                     </div>
                 </div>
@@ -121,7 +121,7 @@ export class EditStory extends React.Component<RouteComponentProps<any>, IEditPa
         return <select
             value={this.state.statusValue}
             className="form-control CreatePage"
-            name="State"
+            name="State" style={{ width: "45%" }}
             onChange={this.handleStatusSelect}>
             {items}
         </select>;
@@ -155,11 +155,11 @@ export class EditStory extends React.Component<RouteComponentProps<any>, IEditPa
             </div>
             <div>
                 <h3 className="hStyle">Name:</h3>
-                <input className="input-lg" onChange={this.handleChangeInput} type="text" value={this.state.inputValue} />
+                <input className="input-lg" style={{ width: "45%" }} onChange={this.handleChangeInput} type="text" value={this.state.inputValue} />
             </div>
             <div>
                 <h3 className="hStyle">Description:</h3>
-                <textarea style={{ width: "400px", height: "300px", fontSize: 25, padding: "7px" }} className="fa-text-height" onChange={this.handleChangeTextArea} value={this.state.textAreaValue} />
+                <textarea style={{ width: "45%", height: "300px", fontSize: 25, padding: "7px" }} className="fa-text-height" onChange={this.handleChangeTextArea} value={this.state.textAreaValue} />
             </div>
             <div>
                 <h3 className="hStyle">Status:</h3>
@@ -168,14 +168,14 @@ export class EditStory extends React.Component<RouteComponentProps<any>, IEditPa
 
             <div>
                 <h3 className="hStyle">Assign to:</h3>
-                <select className="form-control inline-block" onChange={this.handleUserSelect}>
+                <select className="CreatePage form-control inline-block" style={{ width: "45%" }} onChange={this.handleUserSelect}>
                     {this.state.users.map(user => <option key={user.userId} value={user.userId}>{user.login}</option>)}
                 </select>
             </div>
 
             <div className="text-center">
                 <button style={{ margin: "10px" }} data-toggle="modal"
-                    data-target="#confirmDeleteModal" className="btn"
+                    data-target="#confirmDeleteModal" className="btn-dark scrum-btn"
                     onClick={this.handleSaveButtonClick}>Update</button>
             </div>
             {this.GetDeleteConfirmModal()}

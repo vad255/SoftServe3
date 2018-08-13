@@ -2,8 +2,8 @@
     font-family: 'Times New Roman';
 }
 
-body{
-    background-color:rgb(235, 235, 235);
+body {
+    background-color: rgb(235, 235, 235);
 }
 
 .siteColor {
@@ -18,4 +18,11 @@ body{
     background: -webkit-linear-gradient(to right, #232526, #414345);
     background: linear-gradient(to right, #232526, #414345);
     font-family: 'Times New Roman';
+}
+
+.scrum-btn {
+    background: #232526;
+    width: 150px;
+    margin: 3px;
+    color: white;
 }

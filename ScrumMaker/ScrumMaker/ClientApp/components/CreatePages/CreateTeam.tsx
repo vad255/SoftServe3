@@ -135,7 +135,7 @@ export class CreateTeam extends React.Component<RouteComponentProps<any>, ITeamF
                         <h4 className="modal-title">The new team "{this.state.TeamName}" was added.</h4>
                     </div>
                     <div className="modal-body text-center">
-                        <button className="btn btn-default" type="button" data-dismiss="modal" onClick={this.handleOkButtonClick} >
+                        <button className="btn-dark scrum-btn" type="button" data-dismiss="modal" onClick={this.handleOkButtonClick} >
                             Ok</button>
                     </div>
                 </div>
@@ -165,11 +165,11 @@ export class CreateTeam extends React.Component<RouteComponentProps<any>, ITeamF
                 <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Members:</h3>
                 {this.renderUsers()}
             </div>
-            <div className="container-login100-form-btn">
-                    <button style={{ margin: "20px 0 0 0" }} data-toggle="modal"
-                        data-target="#confirmDeleteModal" onClick={() => this.handleCreateButtonClick()} className="login100-form-btn">Add</button>
-                </div>
-                {this.GetDeleteConfirmModal()}
+            <div>
+                <button style={{ margin: "20px 0 0 0" }} data-toggle="modal"
+                    data-target="#confirmDeleteModal" onClick={() => this.handleCreateButtonClick()} className="btn-dark scrum-btn">Add</button>
+            </div>
+            {this.GetDeleteConfirmModal()}
         </div>
     }
 

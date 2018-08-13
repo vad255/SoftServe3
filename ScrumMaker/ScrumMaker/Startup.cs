@@ -67,7 +67,7 @@ namespace ScrumMaker
                 };
             });
 
-            string connectionStr = Configuration.GetConnectionString("Viktor");
+            string connectionStr = Configuration.GetConnectionString("ScrumMakerDB2");
 
 
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
@@ -159,7 +159,7 @@ namespace ScrumMaker
                 routes.Select().Expand().Filter().OrderBy().MaxTop(100).Count();
 
                 routes.MapODataServiceRoute("odata", "odata", EdmModelBuilder.GetEdmModel());
-                
+
                 ///!!!!
                 routes.MapRoute(
                     name: "default",
