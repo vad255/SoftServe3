@@ -19,13 +19,11 @@ namespace ScrumMaker.Controllers
 {
     public class FeatureController : ODataController 
     {
-        private IRepository<Feature> featureRepository;
-        private IRepository<Story> storyRepository;
-        
-        public FeatureController(IRepository<Feature> featureRepository, IRepository<Story> storyRepository)
+        private readonly IFeaturesManager _featuresManager;
+
+        public FeatureController(IFeaturesManager featuresManager)
         {
-            this.featureRepository = featureRepository;
-            this.storyRepository = storyRepository;
+            _featuresManager = featuresManager;
         }
 
         [RefreshToken]
@@ -33,13 +31,13 @@ namespace ScrumMaker.Controllers
         [EnableQuery]
         public IActionResult Get()
         {
-            return Ok(featureRepository.GetAll());
+            return Ok(_featuresManager.GetAll());
         }
 
         [EnableQuery]
         public IActionResult GetById(int id)
         {
-            return Ok(featureRepository.GetById(id));
+            return Ok(_featuresManager.Get(id));
         }
 
         [AcceptVerbs("PATCH", "MERGE")]
@@ -49,13 +47,13 @@ namespace ScrumMaker.Controllers
             {
                 return BadRequest(ModelState);
             }
-            Feature feature =  featureRepository.GetById(key);
+            Feature feature = _featuresManager.Get(key);
             if (feature == null)
             {
                 return NotFound();
             }
             updateFeatureRequestModel.Patch(feature);
-            featureRepository.Save();
+            _featuresManager.Update(feature);
             
             return Updated(feature);
         }
@@ -65,8 +63,7 @@ namespace ScrumMaker.Controllers
         {
             try
             {
-                featureRepository.Delete(key);
-                featureRepository.Save();
+                _featuresManager.Delete(key);
                 return NoContent();
             }
             catch (Exception e)
@@ -84,8 +81,7 @@ namespace ScrumMaker.Controllers
                 return BadRequest(ModelState);
             }
 
-            featureRepository.Create(feature);
-            featureRepository.Save();
+            _featuresManager.Create(feature);
 
             return Created(feature);
         }

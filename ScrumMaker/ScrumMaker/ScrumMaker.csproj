@@ -55,7 +55,6 @@
     <None Remove="ClientApp\components\EditPages\TaskEdit.tsx" />
     <None Remove="ClientApp\components\EditPages\EditTeam.tsx" />
     <None Remove="ClientApp\components\EditPages\UserEdit.tsx" />
-    <None Remove="ClientApp\components\EditUser.tsx" />
     <None Remove="ClientApp\components\Error.tsx" />
     <None Remove="ClientApp\components\Filters\DefectsFiltersRow.tsx" />
     <None Remove="ClientApp\components\Filters\FeaturesFiltersRow.tsx" />
@@ -64,6 +63,7 @@
     <None Remove="ClientApp\components\Filters\StoriesFiltersRow.tsx" />
     <None Remove="ClientApp\components\ForAdmin\CreateButton.tsx" />
     <None Remove="ClientApp\components\ForgotPasswordPage.tsx" />
+    <None Remove="ClientApp\components\FormErrors.tsx" />
 
     <None Remove="ClientApp\components\GetError.tsx" />
 
@@ -141,6 +141,7 @@
     <TypeScriptCompile Include="ClientApp\components\EditPages\EditDefect.tsx" />
     <TypeScriptCompile Include="ClientApp\components\ForAdmin\CreateButton.tsx" />
     <TypeScriptCompile Include="ClientApp\components\ForgotPasswordPage.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\FormErrors.tsx" />
 
     <TypeScriptCompile Include="ClientApp\components\GetError.tsx" />
 

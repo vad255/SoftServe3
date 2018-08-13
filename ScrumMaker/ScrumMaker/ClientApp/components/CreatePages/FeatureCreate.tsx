@@ -10,6 +10,15 @@ import { Team } from "../Models/Team";
 import { Sprint } from "../Models/Sprint";
 import { State } from "../Models/FeatureState";
 
+
+
+const required = (value: any, props: any) => {
+    if (!value || (props.isCheckable && !props.checked)) {
+        return <span className="form-error is-visible">Required</span>;
+    }
+};
+
+
 interface ICreatePageState {
     FeatureName: string;
     State: State;
@@ -28,7 +37,7 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
         super();
         this.state = (({
             FeatureName: '',
-            State: State,
+            State: State.ReadyToStart.toString(),
             Description: '',
             Blocked: false,
             ProgramIncrement: '',
@@ -43,6 +52,7 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
         this.handleCreateButtonClick = this.handleCreateButtonClick.bind(this);
         this.handleChangeBlocked = this.handleChangeBlocked.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.renderStates = this.renderStates.bind(this);
         this.handleSelectionStories = this.handleSelectionStories.bind(this);
     }
 
@@ -56,6 +66,7 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
             : this.createFeature();
         return <div className="text-left">
             {contents}
+            {this.GetCreateConfirmModal()}
         </div>
     }
 
@@ -102,15 +113,23 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
                 value={this.state.Description}
                 onChange={this.handleInputChange} />
             <div className="text-center">
-                <div role='button'
+                <button
+                    disabled={this.isAllFieldsFilled()}
                     className='btn btn-primary'
                     data-toggle="modal"
-                    data-target="#confirmDeleteModal"
+                    data-target="#confirmCreateModal"
                     onClick={this.handleCreateButtonClick}>
                     Add element
-                </div>
+                </button>
             </div>
         </form>
+    }
+
+    isAllFieldsFilled() {
+        if (this.state.FeatureName == "" || this.state.OwnerUserId == -1 || this.state.Description == ""){
+            return true;
+        }
+        return false
     }
 
     handleChangeBlocked(checked: boolean) {
@@ -144,8 +163,10 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
     private renderStates() {
         let names: string[] = [];
         for (let iterator in State) {
-            if (!parseInt(iterator))
+            if (!parseInt(iterator)) {
+               
                 names.push(iterator.toString());
+            }
         }
 
         let items: JSX.Element[] = [];
@@ -155,7 +176,7 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
 
         return <select
             className="form-control fontStyle selectStyle"
-            value={this.state.State}
+            value={names[this.state.State - 1]}
             name="State"
             onChange={this.handleInputChange}>
             {items}
@@ -229,7 +250,10 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
     }
 
     handleCreateButtonClick() {
-        if (this.state.FeatureName !== "" && this.state.Description!== "") {
+        if (this.state.FeatureName == "" || this.state.OwnerUserId == -1 || this.state.Description == "") {
+
+        }
+        else {
             fetch('odata/feature',
                 {
                     method: 'POST',
@@ -245,43 +269,59 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
                         'Description': this.state.Description,
                         'Blocked': this.state.Blocked,
                         'ProgramIncrement': this.state.ProgramIncrement,
-                        'OwnerUserId': this.state.OwnerUserId,
-                        'Stories': this.state.SelectedStories.map(story => {
-                            return {
-                                Id: story.id,
-                                Name: story.name,
-                                Status: story.status,
-                                Description: story.description,
-                                Team: story.team,
-                                UserId: story.userId,
-                                Sprint: story.sprint,
-                                Tasks: story.tasks,
-                                SprintId: story.sprintId,
-                                PokerMark: story.pokerMark
+                        'OwnerUserId': this.state.OwnerUserId
+                    })
+                }).then(response => response.json() as any)
+                .then(data => {
+                    this.state.SelectedStories.map(story => {
+                        fetch('odata/Stories(' + story.id + ')',
+                            {
+                                method: 'PATCH',
+                                headers: {
+                                    'OData-Version': '4.0',
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json;odata.metadata=minimal',
+                                },
+                                body: JSON.stringify(
+                                    {
+                                        '@odata.type': 'DAL.Models.Story',
+                                        'Name': story.name,
+                                        'Status': story.status,
+                                        'Description': story.description,
+                                        'Team': story.team,
+                                        'UserId': story.userId,
+                                        'Sprint': story.sprint,
+                                        'Tasks': story.tasks,
+                                        'SprintId': story.sprintId,
+                                        'PokerMark': story.pokerMark,
+                                        'FeatureId': data.Id
+                                    }
+                                )
                             }
-                        })
+                        )
                     })
                 });
         }
     }
 
     private GetCreateConfirmModal() {
-        return <div id="confirmDeleteModal" className="modal fade">
-            <div className="modal-dialog">
-                <div className="modal-content">
-                    <div className="modal-header  text-center" ><button className="close" type="button" data-dismiss="modal">×</button>
-                        <h4 className="modal-title">The feature "{this.state.FeatureName}" was created.</h4>
-                    </div>
-                    <div className="modal-body text-center">
-                        <button className="btn btn-default" type="button" data-dismiss="modal" onClick={this.handleOkButtonClick} >
-                            Ok</button>
+        return <div id="confirmCreateModal" className="modal fade">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header  text-center" ><button className="close" type="button" data-dismiss="modal">×</button>
+                            <h4 className="modal-title">The feature "{this.state.FeatureName}" was created.</h4>
+                        </div>
+                        <div className="modal-body text-center">
+                            <button className="btn btn-default" type="button" data-dismiss="modal" onClick={this.handleOkButtonClick} >
+                                Ok</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>;
     }
-
+    
     handleOkButtonClick() {
         this.props.history.push("/feature");
     }
+
 }
