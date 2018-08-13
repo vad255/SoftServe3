@@ -13,9 +13,12 @@ using ScrumMaker.Logger;
 using BL.Chatting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using ScrumMaker.Attributes;
 
 namespace ScrumMaker.Controllers.Chatting
 {
+    [CookieAuthorize]
+    [RefreshToken]
     public class PokerHub : Hub
     {
         private IPokerManager _manager;

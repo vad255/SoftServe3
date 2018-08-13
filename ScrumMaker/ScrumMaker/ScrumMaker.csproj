@@ -45,6 +45,7 @@
     <None Remove="ClientApp\components\CreatePages\CreateDefect.tsx" />
     <None Remove="ClientApp\components\CreatePages\CreateStory.tsx" />
     <None Remove="ClientApp\components\CreatePages\CreateTask.tsx" />
+    <None Remove="ClientApp\components\CreatePages\FeatureCreate.tsx" />
     <None Remove="ClientApp\components\EditPages\EditDefect.tsx" />
     <None Remove="ClientApp\components\Charts\Velocity.tsx" />
     <None Remove="ClientApp\components\Chats\RetrospectiveMeeting.tsx" />
@@ -55,7 +56,6 @@
     <None Remove="ClientApp\components\EditPages\TaskEdit.tsx" />
     <None Remove="ClientApp\components\EditPages\EditTeam.tsx" />
     <None Remove="ClientApp\components\EditPages\UserEdit.tsx" />
-    <None Remove="ClientApp\components\EditUser.tsx" />
     <None Remove="ClientApp\components\Error.tsx" />
     <None Remove="ClientApp\components\Filters\DefectsFiltersRow.tsx" />
     <None Remove="ClientApp\components\Filters\FeaturesFiltersRow.tsx" />
@@ -64,6 +64,7 @@
     <None Remove="ClientApp\components\Filters\StoriesFiltersRow.tsx" />
     <None Remove="ClientApp\components\ForAdmin\CreateButton.tsx" />
     <None Remove="ClientApp\components\ForgotPasswordPage.tsx" />
+    <None Remove="ClientApp\components\FormErrors.tsx" />
 
     <None Remove="ClientApp\components\GetError.tsx" />
 
@@ -94,6 +95,7 @@
     <None Remove="ClientApp\components\SprintsGrid.tsx" />
     <None Remove="ClientApp\components\TeamGrid.tsx" />
     <None Remove="ClientApp\css\editUser.css" />
+    <Content Remove="Views\Identity\Index.cshtml" />
     <Content Remove="wwwroot\images\ScrumMakerLogo.png" />
     <Content Remove="wwwroot\images\Thumbs.db" />
     <Content Remove="wwwroot\img\ScrumMakerLogo.jpg" />
@@ -108,12 +110,16 @@
   </ItemGroup>
 
   <ItemGroup>
+
     <None Include="wwwroot\assets\css\backlog.css" />
     <None Include="wwwroot\assets\css\Buttons.css" />
     <None Include="wwwroot\assets\css\calendar.css" />
     <None Include="wwwroot\assets\css\chat.css" />
     <None Include="wwwroot\assets\css\editPage.css" />
     <None Include="wwwroot\assets\css\GridTable.css" />
+
+    <None Include="Views\Identity\Index.cshtml" />
+
     <None Include="wwwroot\assets\css\images\arrow.svg" />
     <None Include="wwwroot\assets\css\login.css" />
     <None Include="wwwroot\assets\css\multiselect.css" />
@@ -151,11 +157,13 @@
     <TypeScriptCompile Include="ClientApp\components\Backlog\ProductBacklog.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Backlog\SprintBacklog.tsx" />
     <TypeScriptCompile Include="ClientApp\components\CreatePages\CreateDefect.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\CreatePages\FeatureCreate.tsx" />
     <TypeScriptCompile Include="ClientApp\components\CreatePages\CreateStory.tsx" />
     <TypeScriptCompile Include="ClientApp\components\CreatePages\CreateTask.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\EditDefect.tsx" />
     <TypeScriptCompile Include="ClientApp\components\ForAdmin\CreateButton.tsx" />
     <TypeScriptCompile Include="ClientApp\components\ForgotPasswordPage.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\FormErrors.tsx" />
 
     <TypeScriptCompile Include="ClientApp\components\GetError.tsx" />
 

@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using BL;
 using BL.Authentication;
 using DAL;
 using DAL.Access;
@@ -14,6 +15,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using ScrumMaker;
+using ScrumMaker.Attributes;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -28,6 +30,13 @@ namespace ScrumMaker.Controllers
         {
             _users = users;
             _roles = roles;
+        }
+
+        [UserAuthorize]
+        public IActionResult Index()
+        {
+            UserAnotation.OneRequest = false;
+            return View();
         }
 
         [Route("/token")]
