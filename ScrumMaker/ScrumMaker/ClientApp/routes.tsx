@@ -31,12 +31,12 @@ import { SelectSprintPage } from './components/Chats/RetrospectivePages/SelectSp
 import { SelectSprint } from './components/Meetings/SelectSprint';
 import { PokerUsersBox } from './components/PokerEstimation/PokerUsersBox';
 import { PokerTable } from './components/PokerEstimation/pokerTable';
-import { MainPokerPage } from './components/PokerEstimation/mainPokerPage'; 
+import { MainPokerPage } from './components/PokerEstimation/mainPokerPage';
 import { CreateDefect } from "./components/CreatePages/CreateDefect";
 import { GetError } from "./components/GetError";
 import { Backlog } from './components/Backlog/Backlog';
 import { CreateSprint } from "./components/CreatePages/CreateSprint";
-
+import { CreateTask } from "./components/CreatePages/CreateTask";
 import { CreateStory } from "./components/CreatePages/CreateStory";
 import { ForgotPasswordPage } from "./components/ForgotPasswordPage";
 import { CreateTeam } from './components/CreatePages/CreateTeam';
@@ -85,6 +85,7 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/CreateStory' component={CreateStory} />
         <LayoutRoute path='/CreateSprint' component={CreateSprint} />
         <LayoutRoute path='/CreateTeam' component={CreateTeam} />
+        <LayoutRoute path='/CreateTask' component={CreateTask} />
 
         <Route path='/login' component={Login} />
         <Route path='/Error' component={Error} />
