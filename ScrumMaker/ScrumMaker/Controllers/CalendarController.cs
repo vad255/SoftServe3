@@ -29,6 +29,11 @@ namespace ScrumMaker.Controllers
             _user = user;
         }
 
+        public IActionResult Index()
+        {
+            return View();
+        }
+
         [HttpPost("[action]")]
         public IEnumerable<Calendar> CreateNewEvent(int hours, int meeting, string date)
         {

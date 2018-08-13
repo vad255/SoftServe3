@@ -86,11 +86,11 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/CreateStory' component={CreateStory} />
         <LayoutRoute path='/FeatureCreate' component={FeatureCreate} />
         <LayoutRoute path='/CreateSprint' component={CreateSprint} />
-        <LayoutRoute path='/ForgotPassword' component={ForgotPasswordPage} />
         <LayoutRoute path='/CreateTeam' component={CreateTeam} />
         <LayoutRoute path='/CreateTask' component={CreateTask} />
 
         <Route path='/login' component={Login} />
         <Route path='/Error' component={Error} />
+        <Route path='/ForgotPassword' component={ForgotPasswordPage} />
     </Switch>
 </BrowserRouter  >;

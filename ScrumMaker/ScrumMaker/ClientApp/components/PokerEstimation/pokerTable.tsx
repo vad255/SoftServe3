@@ -4,7 +4,7 @@ import 'isomorphic-fetch';
 import { User } from '../Models/User';
 
 interface Photo {
-    imagePreviewUrl: 'api/User/ShowPhoto',
+    Login: string,
 }
 
 export class PokerTable extends React.Component<RouteComponentProps<any>, Photo> {
@@ -12,8 +12,16 @@ export class PokerTable extends React.Component<RouteComponentProps<any>, Photo>
     constructor() {
         super();
         this.state = {
-            imagePreviewUrl: 'api/User/ShowPhoto',
+            Login: '',
         };
+
+        fetch('/getUser', {
+            credentials: 'include',
+            method: 'GET',
+        }).then(response => response.json() as Promise<any>)
+            .then(data => {
+                this.setState({ Login: data.Login });
+            });
     }
 
     public users: User[] = [];
@@ -26,7 +34,7 @@ export class PokerTable extends React.Component<RouteComponentProps<any>, Photo>
                 <div>
                     <img src={"/api/userphoto/" + u.userId} className="PokerUserImage" />
                     <br/>
-                    {u.login}
+                    {u.login.split('@')[0]}
                 </div>
             </li>)}
         </ul>;
