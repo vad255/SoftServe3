@@ -8,6 +8,7 @@ using BL;
 using DAL;
 using DAL.Access;
 using DAL.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,8 @@ namespace ScrumMaker.Controllers
             _users = users;
         }
 
+        [CookieAuthorize]
+        [RefreshToken]
         public IActionResult Index()
         {
             return View();

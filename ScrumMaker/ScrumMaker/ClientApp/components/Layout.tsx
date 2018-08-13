@@ -27,7 +27,6 @@ export class Layout extends React.Component<LayoutProps, MyUser> {
             method: 'GET',
         }).then(response => response.json() as Promise<any>)
             .then(data => {
-                console.log(data);
                 this.setState({ Login: data.Login });
             });
     }

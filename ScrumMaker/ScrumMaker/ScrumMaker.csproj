@@ -92,6 +92,7 @@
     <None Remove="ClientApp\components\SprintsGrid.tsx" />
     <None Remove="ClientApp\components\TeamGrid.tsx" />
     <None Remove="ClientApp\css\editUser.css" />
+    <Content Remove="Views\Identity\Index.cshtml" />
     <Content Remove="wwwroot\images\ScrumMakerLogo.png" />
     <Content Remove="wwwroot\images\Thumbs.db" />
     <Content Remove="wwwroot\img\ScrumMakerLogo.jpg" />
@@ -106,6 +107,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Identity\Index.cshtml" />
     <None Include="wwwroot\assets\css\images\arrow.svg" />
     <None Include="wwwroot\assets\fonts\fontawesome-webfont.svg" />
     <None Include="wwwroot\assets\fonts\fontawesome-webfont.woff2" />

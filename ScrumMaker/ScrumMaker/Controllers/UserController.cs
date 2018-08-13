@@ -13,9 +13,12 @@ using System.Threading.Tasks;
 using BL.CryptoServiceProvider;
 using System.Security;
 using System.Net.Mime;
+using ScrumMaker.Attributes;
 
 namespace ScrumMaker.Controllers
 {
+    [CookieAuthorize]
+    [RefreshToken]
     public class UserController : Controller
     {
         private readonly IRepository<Photo> _repository;
@@ -107,7 +110,7 @@ namespace ScrumMaker.Controllers
         [Route("api/UserPhoto/{userId?}")]
         public async Task<FileStreamResult> GetAvatar(int userId)
         {
-            var photo = _repository.GetAll().FirstOrDefault(x => x.UserId == HttpContext.User.UserId());
+            var photo = _repository.GetAll().FirstOrDefault(x => userId == 0 ? x.UserId == HttpContext.User.UserId() : x.UserId == userId);
             MemoryStream ms;
             if (photo != null)
                 ms = new MemoryStream(photo.UserPhoto);

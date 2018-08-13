@@ -84,10 +84,10 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/backlog' component={Backlog} />
         <LayoutRoute path='/CreateStory' component={CreateStory} />
         <LayoutRoute path='/CreateSprint' component={CreateSprint} />
-        <LayoutRoute path='/ForgotPassword' component={ForgotPasswordPage} />
         <LayoutRoute path='/CreateTeam' component={CreateTeam} />
 
         <Route path='/login' component={Login} />
         <Route path='/Error' component={Error} />
+        <Route path='/ForgotPassword' component={ForgotPasswordPage} />
     </Switch>
 </BrowserRouter  >;
