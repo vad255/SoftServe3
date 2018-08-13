@@ -144,7 +144,7 @@ export class EditTeam extends React.Component<RouteComponentProps<{}>, ITeamFetc
                 {this.renderUsers()}
             </div>
             <div className="container-login100-form-btn">
-                <button style={{ margin: "20px 0 0 0" }} className="login100-form-btn">Update</button>
+                <button style={{ margin: "20px 0 0 0" }} className="btn">Update</button>
             </div>
         </form>
     }
