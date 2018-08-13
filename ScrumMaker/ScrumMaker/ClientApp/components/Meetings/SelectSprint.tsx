@@ -113,7 +113,7 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
                 Review
             </button >
         }
-        return <button className="btn "
+        return <button className="btn btn-disabled"
                 disabled={!this.userIsScrumMaster()}
                 onClick={() => this.createSprintReview(this.state.SprintId)}>
             Create review
