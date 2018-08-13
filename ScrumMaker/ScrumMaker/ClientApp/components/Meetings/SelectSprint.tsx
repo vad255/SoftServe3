@@ -131,7 +131,7 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
             state: { SprintId: this.state.SprintId }
         });
     }
-    
+
     private findSprintReview() {
         for (var i = 0; i < this.state.SprintReviews.length; i++) {
             if (this.state.SprintReviews[i].sprintId == this.state.SprintId) {
@@ -163,7 +163,7 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
                 SprintReviews: sprintReviews
             });
     }
-    
+
     createSprintReview(sprintId: number) {
         console.log(sprintId)
         let newSprintReview = new SprintReview({ SprintId: sprintId, IsGoalAchived: false, IsStoriesCompleted: false });

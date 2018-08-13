@@ -6,6 +6,7 @@ import { Sprint } from '../Models/Sprint';
 import { Story, StoryStatus } from '../Models/Story';
 import { SprintReview } from '../Models/SprintReview';
 import { Role } from '../Models/Role';
+import Switch from 'react-switch';
 
 interface ISprintReviewFetchingState {
     IsGoalAchived: boolean;
@@ -19,10 +20,15 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
 
     constructor() {
         super();
+        this.state = (({
+            IsStoriesCompleted: true
+        }) as any);
         this.getSprintReview();
         this.getMyself();
         this.handleSave = this.handleSave.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleChangeGoal = this.handleChangeGoal.bind(this);
+        this.handleChangeStories = this.handleChangeStories.bind(this);
     }
 
     private link: string = (window.location.href);
@@ -30,7 +36,7 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
     private getSprintReviewURL: string = "odata/SprintReview?$expand=sprint($expand=backlog,team($expand=members($expand=role)))&$filter=id eq ";
     private isLoading: boolean = true;
     private updateURL: string = "odata/SprintReview/";
-    
+
     public render() {
         let contents = this.isLoading
             ? <p><em>Loading...</em></p>
@@ -49,7 +55,7 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
 
     public EditSprintReview() {
         return <div>
-            <h1 className="text-center">Sprint "<i>{this.state.Sprint.name}</i>" review</h1>
+            <h2 className="h2EditCreatePage text-center">Sprint "<i>{this.state.Sprint.name}</i>" review</h2>
             <div className="row">
                 <div className="col-md-3">
                     {this.GetTeamTable()}
@@ -66,12 +72,12 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
 
     public GetTeamTable() {
         return <table className='table table-scrum table-hover td-scrum'>
-            <thead> 
+            <thead>
                 <tr>
                     <th className="well col-md-1"><b>{this.state.Sprint.team.name}</b>
                     </th>
                 </tr>
-            </thead> 
+            </thead>
             <tbody>
                 {this.state.Sprint.team.members.map(user => this.renderMember(user))}
             </tbody>
@@ -85,7 +91,7 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
                     <th colSpan={2}
                         className="well col-md-2"><b>Sprint backlog</b>
                     </th>
-                    
+
                 </tr>
                 <tr>
                     <th className="well col-md-1"><b>Story's name</b>
@@ -103,32 +109,26 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
     public GetDone() {
         return <div>
             <form onSubmit={this.handleSave} name="oldForm">
-                <p>Sprint goal:</p>
+                <h3 className="hStyle">Sprint goal:</h3>
                 <input
-                    style={{ width: "100%", height: "100px", fontSize: 20, padding: "7px" }}
-                    className="fa-text-height"
+                    className="areaStyle fontStyle"
                     name="Rewiev"
                     type="textarea"
                     value={this.state.Sprint.goal} />
                 <br/>
                 <div>
-                    <div className="col-xs-6">
-                        <p>Goal achived: 
-                        <input
-                            name="IsGoalAchived"
-                            type="checkbox"
-                            checked={this.state.IsGoalAchived}
-                                onChange={this.handleInputChange} />
-                        </p>
+                    <div className="col-xs-6 switchSection">
+                        <span className="spanStyle">Goal achived:</span>
+                            <Switch checked={this.state.IsGoalAchived}
+                                onChange={this.handleChangeGoal}
+                                id="normal-switch" />
                     </div>
-                    <div className="col-xs-6">
-                        <p>Stories completed: 
-                        <input
-                            name="IsStoriesCompleted"
-                            type="checkbox"
-                            checked={this.state.IsStoriesCompleted}
-                                onChange={this.handleInputChange} />
-                        </p>
+                    <div className="col-xs-6 switchSection">
+                        <span className="spanStyle">Stories completed:</span>
+                        <Switch disabled
+                                checked={this.state.IsStoriesCompleted}
+                                onChange={this.handleChangeStories}
+                                id="normal-switch" />
                     </div>
                 </div>
                 <div>
@@ -166,7 +166,7 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
     }
 
     handleInputChange(event: any) {
-        
+
         const target = event.target;
         const value = target.checked;
         const name = target.name;
@@ -176,12 +176,18 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
         });
     }
 
+    handleChangeGoal(checked: boolean) {
+        this.setState({ IsGoalAchived: checked });
+    }
+
+    handleChangeStories(checked: boolean) {
+    }
+
     private handleSave(event: any) {
         event.preventDefault();
         var form = new FormData(event.target);
         var doneUpdate = {
-            IsGoalAchived: this.state.IsGoalAchived,
-            IsStoriesCompleted: this.state.IsStoriesCompleted
+            IsGoalAchived: this.state.IsGoalAchived
         };
 
         fetch(this.updateURL + this.id, {
@@ -212,20 +218,40 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
                 {user.login} (<b>{user.role.name}</b>)
             </td>
         </tr>
-            
+
     }
 
     private renderStory(story: Story) {
         return <tr key={story.id}>
             <td>{story.name}</td>
             {this.selectExpiredStories(story)}
+
         </tr>
+    }
+
+    private checkStories() {
+        if (this.state.Sprint.backlog) {
+            let storiesNotAccepted = this.state.Sprint.backlog.filter(story => {
+                return story.status.toString() != "Accepted";
+            })
+
+            if (storiesNotAccepted.length > 0) {
+                this.setState({
+                    IsStoriesCompleted: false
+                })
+            }
+            else {
+                this.setState({
+                    IsStoriesCompleted: true
+                })
+            }
+        }
     }
 
     private selectExpiredStories(story: Story) {
         if (story.status.toString() !== "Accepted")
-            return<td style={{ color: "red" }}>{story.status}</td>
-        return<td>{story.status}</td>
+            return <td style={{ color: "red" }}>{story.status}</td>
+        return <td>{story.status}</td>
     }
 
     getMyself(): Promise<any> {
@@ -259,8 +285,8 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
             {
                 IsGoalAchived: sprintReview.isGoalAchived,
                 Sprint: sprintReview.sprint,
-                SprintId: sprintReview.sprintId,
-                IsStoriesCompleted: sprintReview.isStoriesCompleted
+                SprintId: sprintReview.sprintId
             });
+        this.checkStories();
     }
 }
