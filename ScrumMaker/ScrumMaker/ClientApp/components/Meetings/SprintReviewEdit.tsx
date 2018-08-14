@@ -26,7 +26,6 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
         this.getSprintReview();
         this.getMyself();
         this.handleSave = this.handleSave.bind(this);
-        this.handleInputChange = this.handleInputChange.bind(this);
         this.handleChangeGoal = this.handleChangeGoal.bind(this);
         this.handleChangeStories = this.handleChangeStories.bind(this);
     }
@@ -159,21 +158,10 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
     }
 
     userIsScrumMaster() {
-        if (this.state.Myself.role.name == "ScrumMaster") {
+        if (this.state.Myself&&this.state.Myself.role.name == "ScrumMaster") {
             return true;
         }
         return false;
-    }
-
-    handleInputChange(event: any) {
-
-        const target = event.target;
-        const value = target.checked;
-        const name = target.name;
-
-        this.setState({
-            [name]: value
-        });
     }
 
     handleChangeGoal(checked: boolean) {

@@ -124,7 +124,7 @@ export class CreateDefect extends React.Component<RouteComponentProps<any>, IEdi
             </div>
             <div>
                 <h3 className="hStyle">Description:</h3>
-                <textarea style={{ width: "35%", height: "300px", fontSize: 25, padding: "7px" }} className="fa-text-height" onChange={this.handleChangeTextArea} value={this.state.textAreaValue} />
+                <textarea style={{ width: "35%", height: "300px", fontSize: 18, padding: "7px" }} className="areaStyle fa-text-height" onChange={this.handleChangeTextArea} value={this.state.textAreaValue} />
             </div>
             <div>
                 <h3 className="hStyle">Status:</h3>

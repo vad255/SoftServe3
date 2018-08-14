@@ -10,15 +10,6 @@ import { Team } from "../Models/Team";
 import { Sprint } from "../Models/Sprint";
 import { State } from "../Models/FeatureState";
 
-
-
-const required = (value: any, props: any) => {
-    if (!value || (props.isCheckable && !props.checked)) {
-        return <span className="form-error is-visible">Required</span>;
-    }
-};
-
-
 interface ICreatePageState {
     FeatureName: string;
     State: State;
@@ -33,8 +24,8 @@ interface ICreatePageState {
 }
 
 export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICreatePageState> {
-    constructor() {
-        super();
+    constructor(props: any) {
+        super(props);
         this.state = (({
             FeatureName: '',
             State: State.ReadyToStart.toString(),
@@ -54,6 +45,8 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
         this.handleInputChange = this.handleInputChange.bind(this);
         this.renderStates = this.renderStates.bind(this);
         this.handleSelectionStories = this.handleSelectionStories.bind(this);
+        this.handleOkButtonClick = this.handleOkButtonClick.bind(this);
+        this.handleCancel = this.handleCancel.bind(this)
     }
 
     private isLoading: boolean = true;
@@ -71,7 +64,7 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
     }
 
     createFeature() {
-        return <form>
+        return <form method="post" onSubmit={this.handleCreateButtonClick}>
             <div className="text-center">
                 <h2 className="h2EditCreatePage">Create feature</h2>
             </div>
@@ -81,6 +74,7 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
                 type="text"
                 value={this.state.FeatureName}
                 onChange={this.handleInputChange} />
+
             <h3 className="hStyle"> Owner:</h3>
             {this.renderUsers()}
             <h3 className="hStyle">State:</h3>
@@ -117,12 +111,19 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
                     disabled={this.isAllFieldsFilled()}
                     className='btn-primary scrum-btn'
                     data-toggle="modal"
-                    data-target="#confirmCreateModal"
-                    onClick={this.handleCreateButtonClick}>
+                    data-target="#confirmCreateModal">
                     Add element
                 </button>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <button
+                    className="btn inline-block"
+                    onClick={this.handleCancel}>Discard</button>
             </div>
         </form>
+    }
+
+    private handleCancel() {
+        this.props.history.push('/feature');
     }
 
     isAllFieldsFilled() {
@@ -146,7 +147,7 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
 
             selectedStories.push(storyToPush);
         }
-        
+
         this.setState({ SelectedStories: selectedStories });
     }
 
@@ -164,7 +165,7 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
         let names: string[] = [];
         for (let iterator in State) {
             if (!parseInt(iterator)) {
-               
+
                 names.push(iterator.toString());
             }
         }
@@ -249,7 +250,8 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
             });
     }
 
-    handleCreateButtonClick() {
+    handleCreateButtonClick(e: any) {
+        e.preventDefault();
         if (this.state.FeatureName == "" || this.state.OwnerUserId == -1 || this.state.Description == "") {
 
         }
@@ -319,7 +321,7 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
                 </div>
             </div>
     }
-    
+
     handleOkButtonClick() {
         this.props.history.push("/feature");
     }
