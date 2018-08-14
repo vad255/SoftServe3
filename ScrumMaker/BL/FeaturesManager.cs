@@ -44,18 +44,6 @@ namespace BL
         {
             _unit.Features.Update(feature);
             _unit.Commit();
-            UpdateFeatureStories(feature);
-        }
-
-        private void UpdateFeatureStories(Feature featureWithStories)
-        {
-            foreach (var story in featureWithStories.Stories)
-            {
-                story.Feature = featureWithStories;
-                _unit.Stories.Update(story);
-            }
-
-            _unit.Commit();
         }
     }
 }

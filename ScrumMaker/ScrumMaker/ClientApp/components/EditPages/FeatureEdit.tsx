@@ -163,7 +163,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
                 onChange={this.handleInputChange} />
             <div className="text-center">
                 <button
-                    className="btn"
+                    className="btn btn-disabled"
                     data-toggle="modal"
                     data-target="#ConfirmDialog"
                     role="button">Update</button>
