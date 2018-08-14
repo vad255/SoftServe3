@@ -107,12 +107,11 @@ export class SimpleChat extends React.Component<RouteComponentProps<{}>, IGlobal
     }
 
     public receiveMessage(response: any) {
-
-        var messge = new MessageProps(JSON.parse(response));
-        if (messge.author.login === this.state.myself.login) {
-            messge.myMessage = true;
+        let message = new MessageProps(JSON.parse(response))
+        if (message.author.login === this.state.myself.login) {
+            message.myMessage = true;
         }
-        this.state.messages.push(messge);
+        this.state.messages.push(message);
         this.setState(this.state);
     }
 
@@ -144,7 +143,3 @@ export class SimpleChat extends React.Component<RouteComponentProps<{}>, IGlobal
 
 
 }
-
-
-
-

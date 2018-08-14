@@ -14,7 +14,7 @@ export class RetrospectiveTable {
             {this.users.map(u => <li key={u.userId} className="list-item">
                 <div>
                     <img src={"/api/userphoto/" + u.userId} className="RetrospectiveUserImage" />
-                    <p style={{ wordWrap: "break-word" }}>{u.login}</p>
+                    <p style={{wordWrap: "break-word"}}>{u.login}</p>
                 </div>
             </li>)}
         </ul>;
