@@ -71,8 +71,7 @@
     <None Remove="ClientApp\components\Grids\StoriesGrid.tsx" />
     <None Remove="ClientApp\components\Grids\TaskGrid.tsx" />
     <None Remove="ClientApp\components\MailSender.tsx" />
-    <None Remove="ClientApp\components\Meetings\DailySatandUpEdit.tsx" />
-    <None Remove="ClientApp\components\Meetings\SelectTeam.tsx" />
+    <None Remove="ClientApp\components\Meetings\DailySatandUpMeeting.tsx" />
     <None Remove="ClientApp\components\Meetings\SprintPlaning.tsx" />
     <None Remove="ClientApp\components\Meetings\SelectSprint.tsx" />
     <None Remove="ClientApp\components\Models\DailyStandUp.tsx" />
@@ -145,9 +144,7 @@
 
     <TypeScriptCompile Include="ClientApp\components\ForAdmin\RegistrationButton.tsx" />
 
-    <TypeScriptCompile Include="ClientApp\components\Meetings\DailySatandUpEdit.tsx" />
-
-    <TypeScriptCompile Include="ClientApp\components\Meetings\SelectTeam.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Meetings\DailySatandUpMeeting.tsx" />
 
     <TypeScriptCompile Include="ClientApp\components\Meetings\SprintPlaning.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\TaskEdit.tsx" />

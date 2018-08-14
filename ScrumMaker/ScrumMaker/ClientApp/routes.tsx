@@ -35,17 +35,9 @@ import { MainPokerPage } from './components/PokerEstimation/mainPokerPage';
 import { CreateDefect } from "./components/CreatePages/CreateDefect";
 import { GetError } from "./components/GetError";
 import { Backlog } from './components/Backlog/Backlog';
-
-import { CreateStory } from "./components/CreatePages/CreateStory";
 import { CreateTask } from "./components/CreatePages/CreateTask";
-import { SelectTeam } from './components/Meetings/SelectTeam';
-
-import { DailyStandUpEdit } from './components/Meetings/DailySatandUpEdit'
-
-
+import { DailyStandUpMeeting } from './components/Meetings/DailySatandUpMeeting';
 import { CreateSprint } from "./components/CreatePages/CreateSprint";
-
-
 import { CreateStory } from "./components/CreatePages/CreateStory";
 import { ForgotPasswordPage } from "./components/ForgotPasswordPage";
 
@@ -94,9 +86,7 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/CreateStory' component={CreateStory} />
 
         <LayoutRoute path='/CreateTask' component={CreateTask} />
-        <LayoutRoute path='/DailyStandUp' component={DailyStandUpEdit} />
-        <LayoutRoute path='/SelectTeam' component={SelectTeam} />
-
+        <LayoutRoute path='/DailyStandUpMeeting' component={DailyStandUpMeeting} />
 
 
         <LayoutRoute path='/CreateSprint' component={CreateSprint} />

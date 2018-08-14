@@ -5,13 +5,21 @@ import { NavLink } from 'react-router-dom';
 import { SprintReview } from '../Models/SprintReview';
 import { User } from '../Models/User';
 import { RetrospectiveMeeting } from '../Chats/RetrospectiveMeeting';
+import { DailyStandUp } from '../Models/DailyStandUp';
+import { now, isDate } from 'moment';
+import * as moment from '../../../node_modules/moment';
+
 
 interface ISprintsFetchingState {
+    Sprint: Sprint;
     Sprints: Sprint[];
     SprintId: number;
     SprintReviews: SprintReview[];
     SprintReview: SprintReview;
+    DailyStandUps: DailyStandUp[];
+    DailyStandUp: DailyStandUp;
     Myself: User;
+    currentSprint: number;
 }
 
 export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISprintsFetchingState> {
@@ -20,14 +28,19 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
         this.getMyself()
         this.getSprints();
         this.getSprintReviews();
+        this.getDailyStandUps();
         this.handleSelectChange = this.handleSelectChange.bind(this);
         this.renderSprintReviewButtons = this.renderSprintReviewButtons.bind(this);
         this.handleButtonClick = this.handleButtonClick.bind(this);
+        this.renderDailyStandUpButton = this.renderDailyStandUpButton.bind(this);
+        //this.currentSprint = this.currentSprint.bind(this);
     }
 
     private isLoading: boolean = true;
     private sprintURL: string = "odata/sprints?$expand=history";
     private sprintReviewURL: string = "odata/SprintReview?$expand=sprint";
+    private dailyStandUpURL: string = "odata/DailyStandUp?$expand=sprint";
+
 
     public render() {
         let contents = this.isLoading
@@ -48,6 +61,9 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
             </div>
                     <div className="col-md-3">
                 {this.renderRetrospectiveButton()}
+            </div>
+            <div className="col-md-3">
+                {this.renderDailyStandUpButton(this.state.SprintId)}
             </div>
         </div>
     }
@@ -113,11 +129,19 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
                 Review
             </button >
         }
-        return <button className="btn "
+        return <button className="btn"
                 disabled={!this.userIsScrumMaster()}
                 onClick={() => this.createSprintReview(this.state.SprintId)}>
             Create review
         </button >
+    }
+
+    private renderDailyStandUpButton(sprintId: number) {
+        return <button className="btn"
+            disabled={!this.userIsScrumMaster()}
+                onClick={() => this.createDailyStandUp(this.state.SprintId)}>
+                Create Stand-Up
+            </button >      
     }
 
     renderRetrospectiveButton() {
@@ -138,6 +162,52 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
                 return this.state.SprintReviews[i].id
             }
         }
+    }
+
+    private getDailyStandUps() {
+        fetch(this.dailyStandUpURL, {
+            credentials: 'include'
+        })
+            .then(response => response.json() as any)
+            .then(data => {
+                this.setDailyStandUps(data);
+            })
+    }
+
+    private setDailyStandUps(data: any) {
+        this.isLoading = false;
+        var dailyStandUpsData = data['value'];
+        let dailyStandUps: DailyStandUp[] = [];
+        for (var i = 0; i < dailyStandUpsData.length; i++) {
+            var dailyStandUp = new DailyStandUp(dailyStandUpsData[i])
+            dailyStandUps.push(dailyStandUp);
+        }
+        this.setState(
+            {
+                DailyStandUps: dailyStandUps
+            });
+    }
+
+    createDailyStandUp(sprintId: number) {
+        let newDailyStandUp = new DailyStandUp({ SprintId: sprintId, Description: "" });
+            console.log(newDailyStandUp);
+            fetch("DailyStandUp/CreateStandUp/", {
+                credentials: 'include',
+                method: 'POST',
+                body: JSON.stringify({
+                    '@odata.type': 'DAL.Models.DailyStandUp',
+                    ...newDailyStandUp
+                }),
+                headers: {
+                    'OData-Version': '4.0',
+                    'Content-Type': 'application/json;odata.metadata=minimal',
+                    'Accept': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    this.props.history.push('/DailyStandUpMeeting/' + data.Id) /*this.state.SprintId*/
+                });
     }
 
     private getSprintReviews() {
@@ -163,9 +233,10 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
                 SprintReviews: sprintReviews
             });
     }
+
+
     
     createSprintReview(sprintId: number) {
-        console.log(sprintId)
         let newSprintReview = new SprintReview({ SprintId: sprintId, IsGoalAchived: false, IsStoriesCompleted: false });
         fetch("SprintReview/CreateReview/", {
             credentials: 'include',
@@ -182,7 +253,6 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data)
                 this.props.history.push('/SprintReviewEdit/' + data.Id)
             });
     }
@@ -198,8 +268,15 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
                     user.userId = -1;
 
                 this.setState({ Myself: user })
-            });
+            }); 
     }
+
+    //currentSprint() {
+    //    if (this.state.DailyStandUp.sprint.history.begined >= this.state.DailyStandUp.conducted /*&& this.state.Sprint.history.ended >= this.state.DailyStandUp.conducted*/) {
+    //        return true;
+    //    }
+    //    return false;
+    //}
 
     userIsScrumMaster() {
         if (this.state.Myself.role.name == "ScrumMaster") {
@@ -207,4 +284,6 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
         }
         return false;
     }
+
+    
 }

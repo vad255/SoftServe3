@@ -2,13 +2,16 @@
 import { RouteComponentProps, Redirect } from 'react-router';
 import 'isomorphic-fetch';
 import { Sprint } from './Sprint';
+import { now, isDate } from 'moment';
+import * as moment from '../../../node_modules/moment';
+
 
 export class DailyStandUp {
 
     id: number = 0;
     sprintId: number = 0;
     description: string = "";
-    conducted: Date;
+    conducted: moment.Moment = moment.min();
     sprint: Sprint;
 
     public constructor(params: any) {
@@ -22,6 +25,6 @@ export class DailyStandUp {
         }
         this.sprintId = params.SprintId;
         this.description = params.Description;
-        this.conducted = params.Conducted;
+        this.conducted = params.Conducted !== null ? moment(params.Conducted) : moment.min();
     }
 }

@@ -34,32 +34,34 @@ namespace ScrumMaker.Controllers
         [AcceptVerbs("PATCH", "MERGE")]
         public IActionResult Patch([FromODataUri] int key, Delta<DailyStandUp> updateDailyStandUpRequestModel)
         {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-                DailyStandUp dailyStandUp = dailyStandUpManager.GetById(key);
-                if (dailyStandUp == null)
-                {
-                    return NotFound();
-                }
+            DailyStandUp dailyStandUp = dailyStandUpManager.GetById(key);
+            if (dailyStandUp == null)
+            {
+                return NotFound();
+            }
 
-                updateDailyStandUpRequestModel.Patch(dailyStandUp);
-                dailyStandUpManager.Update(dailyStandUp);
+            updateDailyStandUpRequestModel.Patch(dailyStandUp);
+            dailyStandUpManager.Update(dailyStandUp);
 
-                return Updated(dailyStandUp);
-            
+            return Updated(dailyStandUp);
+
         }
 
         [HttpPost]
         [AcceptVerbs("POST")]
-        public IActionResult CreateReview([FromBody] DailyStandUp dailyStandUp)
+        public IActionResult CreateStandUp([FromBody] DailyStandUp dailyStandUp)
         {
             try
             {
+                dailyStandUp.Сonducted = DateTime.Now;
                 dailyStandUpManager.Create(dailyStandUp);
                 return Ok(dailyStandUp);
+               
             }
             catch (Exception e)
             {

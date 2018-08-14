@@ -44,8 +44,8 @@ export class Task implements IDbModel{
     plannedHours: number = -1;
     remainingHours: number = -1;
     actualHours: number = -1;
-    started: null | moment.Moment = moment.min();
-    completed: null | moment.Moment = moment.min();
+    started:  moment.Moment = moment.min();
+    completed: moment.Moment = moment.min();
     type: TaskType = 0;
     state: TaskState = 0;
     userId: number = -1;
