@@ -38,6 +38,7 @@ namespace ScrumMaker.Controllers
         {
             UserAnotation.OneRequest = false;
             return View();
+
         }
 
         [Route("/token")]

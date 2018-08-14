@@ -175,7 +175,7 @@ export class MyCalendar extends React.Component<RouteComponentProps<any>, Calend
                     <form onSubmit={this.handleSave} method="post">
                         <div>
                             <label className="selectLabel">Select hours</label>
-                            <select htmlFor="hours" name="hours" id="hours" className="form-control selectEvent">
+                            <select htmlFor="hours" name="hours" id="hours" className="form-control selectEvent" style={{width: "200px"}}>
                                 <option value={10}>10:00</option>
                                 <option value={11}>11:00</option>
                                 <option value={12}>12:00</option>
@@ -188,7 +188,7 @@ export class MyCalendar extends React.Component<RouteComponentProps<any>, Calend
                                 <option value={19}>19:00</option>
                             </select>
                             <label className="selectLabel">Select meetings</label>
-                            <select htmlFor="meeting" name="meeting" id="meeting" className="form-control selectEvent">
+                            <select htmlFor="meeting" name="meeting" id="meeting" className="form-control selectEvent" style={{width: "200px"}}>
                                 {this.state.Meetings.map(m =>
                                     <option value={m.MeetingId}>{m.MeetingName}</option>
                                 )}

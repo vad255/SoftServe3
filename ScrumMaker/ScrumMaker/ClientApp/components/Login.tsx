@@ -19,6 +19,9 @@ export class Login extends React.Component<RouteComponentProps<any>, LoginViewMo
         this.state = { Login: "", Password: "", Grant_type: "password", ConfirmModal: false };
         this.handleSave = this.handleSave.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
+        if (document.cookie.indexOf("Authorization") !== -1) {
+            this.props.history.push("/");
+        }
     }
 
     public render() {
@@ -46,7 +49,7 @@ export class Login extends React.Component<RouteComponentProps<any>, LoginViewMo
     // This will handle Cancel button click event.
     private handleCancel(e: any) {
         e.preventDefault();
-        this.props.history.push("/");
+        this.props.history.push('/');
     }
 
     openCloseModel = () => {
@@ -59,12 +62,12 @@ export class Login extends React.Component<RouteComponentProps<any>, LoginViewMo
         return (
             <div onSubmit={this.handleSave}>
 
-                    <Modal isOpen={this.state.ConfirmModal}
+                <Modal isOpen={this.state.ConfirmModal}
                     onRequestClose={this.openCloseModel}
                     className="LoginModal">
                     <h3> Your entered incorrect login or password</h3>
-                        <button className="modalBtn" onClick={this.openCloseModel}>Ok</button>
-                    </Modal>
+                    <button className="modalBtn" onClick={this.openCloseModel}>Ok</button>
+                </Modal>
 
                 <div className="limiter">
                     <div className="container-login100">

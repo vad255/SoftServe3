@@ -115,7 +115,7 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
             <div className="text-center">
                 <button
                     disabled={this.isAllFieldsFilled()}
-                    className='btn btn-primary'
+                    className='btn-primary scrum-btn'
                     data-toggle="modal"
                     data-target="#confirmCreateModal"
                     onClick={this.handleCreateButtonClick}>
@@ -312,7 +312,7 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
                             <h4 className="modal-title">The feature "{this.state.FeatureName}" was created.</h4>
                         </div>
                         <div className="modal-body text-center">
-                            <button className="btn btn-default" type="button" data-dismiss="modal" onClick={this.handleOkButtonClick} >
+                            <button className="btn-primary scrum-btn" type="button" data-dismiss="modal" onClick={this.handleOkButtonClick} >
                                 Ok</button>
                         </div>
                     </div>

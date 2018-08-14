@@ -166,7 +166,7 @@ namespace ScrumMaker
 
                 routes.MapSpaFallbackRoute(
                     name: "spa-fallback",
-                    defaults: new { controller = "Identity", action = "Index" });
+                    defaults: new { controller = "Home", action = "Login" });
             });
 
         }

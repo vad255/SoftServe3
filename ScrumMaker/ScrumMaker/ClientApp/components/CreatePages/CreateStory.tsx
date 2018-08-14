@@ -128,7 +128,6 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
         this.setState({ team: sprint.team, users: sprint.team.members });
     }
     private renderStatus() {
-
         let names: string[] = [];
         for (let iterator in StoryStatus) {
             if (!parseInt(iterator))

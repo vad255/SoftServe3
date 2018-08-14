@@ -13,8 +13,8 @@ export class RetrospectiveTable {
         return <ul id="list" className="text-center">
             {this.users.map(u => <li key={u.userId} className="list-item">
                 <div>
-                    <img src="./img/unknown.jpg" className="RetrospectiveUserImage" />
-                    <p style={{wordWrap: "break-word"}}>{u.login}</p>
+                    <img src={"/api/userphoto/" + u.userId} className="RetrospectiveUserImage" />
+                    <p style={{ wordWrap: "break-word" }}>{u.login}</p>
                 </div>
             </li>)}
         </ul>;

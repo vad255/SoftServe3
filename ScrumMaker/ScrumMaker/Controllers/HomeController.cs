@@ -18,19 +18,23 @@ namespace ScrumMaker.Controllers
 {
     public class HomeController : Controller
     {
-
         private IRepository<User> _users;
 
         public HomeController(IRepository<User> users)
         {
             _users = users;
         }
-
+        
         [CookieAuthorize]
         [RefreshToken]
         public IActionResult Index()
         {
             return View();
+        }
+
+        public IActionResult Login()
+        {
+            return View("Index");
         }
 
         public IActionResult Error()
