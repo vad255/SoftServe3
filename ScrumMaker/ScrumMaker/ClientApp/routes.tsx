@@ -38,7 +38,6 @@ import { Backlog } from './components/Backlog/Backlog';
 import { CreateTask } from "./components/CreatePages/CreateTask";
 import { DailyStandUpMeeting } from './components/Meetings/DailySatandUpMeeting';
 import { CreateSprint } from "./components/CreatePages/CreateSprint";
-import { CreateTask } from "./components/CreatePages/CreateTask";
 import { CreateStory } from "./components/CreatePages/CreateStory";
 import { FeatureCreate } from "./components/CreatePages/FeatureCreate";
 import { ForgotPasswordPage } from "./components/ForgotPasswordPage";
