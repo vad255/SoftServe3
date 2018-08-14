@@ -59,9 +59,9 @@ namespace DataBaseInitializer
 
             Meetings[] meetings = new Meetings[]
             {
-                new Meetings() { MeetingName = "Poker Planning" },
-                new Meetings() { MeetingName = "Retrospective" },
-                new Meetings() { MeetingName = "Daily Stand Up" }
+                new Meetings() { MeetingName = "Poker Planning", Description = "wqer" },
+                new Meetings() { MeetingName = "Retrospective", Description = "wqer" },
+                new Meetings() { MeetingName = "Daily Stand Up", Description = "wqer" }
             };
 
             AddToDatabase(meetings, _meetings);
