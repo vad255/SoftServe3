@@ -34,12 +34,12 @@ namespace ScrumMaker.Controllers
                 Body = body
             };
 
-            SmtpClient smtp = new SmtpClient("smtp.gmail.com")
+            SmtpClient smtp = new SmtpClient("smtp.sendgrid.net")
             {
                 Port = 587,
                 EnableSsl = true,
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential("scrummaker325@gmail.com", "Qwerty!123"),
+                Credentials = new NetworkCredential("azure_89e7c8ba6ee58b8f6bc781d3b71fbf50@azure.com", "1q3e5t7u"),
                 DeliveryMethod = SmtpDeliveryMethod.Network
             };
 
