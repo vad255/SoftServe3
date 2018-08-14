@@ -77,14 +77,13 @@ namespace ScrumMaker.Controllers
                     const string subject = "Few Meetings";
                     const string body = "You have a few meetings in one day.";
 
-                    var smtp = new SmtpClient
+                    SmtpClient smtp = new SmtpClient("smtp.sendgrid.net")
                     {
-                        Host = "smtp.gmail.com",
-                        Port = 587,
+                        Port = Convert.ToInt32(587),
                         EnableSsl = true,
-                        DeliveryMethod = SmtpDeliveryMethod.Network,
                         UseDefaultCredentials = false,
-                        Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+                        Credentials = new NetworkCredential("azure_0155d864f6f31073768f8d1d204f5397@azure.com", "1q3e5t7u"),
+                        DeliveryMethod = SmtpDeliveryMethod.Network
                     };
                     using (var message = new MailMessage(fromAddress, toAddress)
                     {
