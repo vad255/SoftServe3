@@ -209,8 +209,8 @@ export class MainPokerPage extends React.Component<RouteComponentProps<{}>, IGlo
     userConnected(user: PokerUser) {
 
         if (user) {
-            var newUser = this.state.members.filter(u => u.userId == user.userId);
-            if (newUser.length == 0) {
+            var newUser = this.state.members.filter(u => u.userId === user.userId);
+            if (newUser.length === 0) {
                 this.state.members.push(user);
             }
             this.setState(this.state);
