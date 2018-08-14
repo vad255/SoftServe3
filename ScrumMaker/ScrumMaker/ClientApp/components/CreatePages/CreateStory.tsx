@@ -16,7 +16,6 @@ interface ICreatePageState {
     team: Team;
     sprints: Sprint[];
     sprintId: number;
-    madalMessage: string;
     modalMessage: string;
 }
 
