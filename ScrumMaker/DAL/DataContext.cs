@@ -17,11 +17,11 @@ namespace DAL
         //}
 
         public DbSet<User> Users { get; set; }
-        
-        public DbSet<Role> Roles { get; set; } 
-        
+
+        public DbSet<Role> Roles { get; set; }
+
         public DbSet<Team> Teams { get; set; }
-        
+
         public DbSet<Story> Stories { get; set; }
 
         public DbSet<Defect> Defects { get; set; }
@@ -37,7 +37,7 @@ namespace DAL
         public DbSet<ChatRoom> ChatingRooms { get; set; }
 
         public DbSet<Photo> Photos { get; set; }
-        
+
         public DbSet<SprintReview> SprintReviews { get; set; }
 
         public DbSet<Meetings> Meetings { get; set; }
@@ -53,6 +53,9 @@ namespace DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Role>().HasIndex(x => x.Name).IsUnique();
+            modelBuilder.Entity<User>().HasIndex(u => u.Login).IsUnique();
+            modelBuilder.Entity<Story>().HasOne(story => story.Feature).WithMany(feature => feature.Stories);
+            modelBuilder.Entity<Feature>().HasMany(feature => feature.Stories).WithOne(story => story.Feature).OnDelete(DeleteBehavior.SetNull);
             //I will add Team in future
             //modelBuilder.Entity<User>().HasOne(u => u.Team);
             //modelBuilder.Entity<Team>().HasMany(t => t.Members).WithOne(u => u.Team);

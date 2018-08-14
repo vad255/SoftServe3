@@ -40,7 +40,7 @@ namespace ReactCrudDemo.Controllers
 
             catch (Exception e)
             {
-                Logger.LogError("RegistartionController:Create():Registration was not successful. Something went wrong!", e);
+                Logger.LogError("RegistartionController:Create():Registration was not successful. Something went wrong!: {0}", e);
                 return false;
             }
         }

@@ -2,17 +2,18 @@ import * as React from 'react';
 import {Link} from 'react-router-dom'
 import { NavMenu } from './NavMenu';
 import { stack } from 'd3-shape';
+import { User } from './Models/User';
 
 export interface LayoutProps {
     children?: React.ReactNode;
 }
 
-interface User {
+interface MyUser {
     Login: string,
     Photo: 'api/User/ShowPhoto'
 }
 
-export class Layout extends React.Component<LayoutProps, User> {
+export class Layout extends React.Component<LayoutProps, MyUser> {
 
     constructor(props: any) {
         super(props);
@@ -21,11 +22,12 @@ export class Layout extends React.Component<LayoutProps, User> {
             Photo: 'api/User/ShowPhoto'
         }
 
-        fetch('api/Home/GetLogin', {
-            method: 'POST',
-        })  .then(response => response.json())
+        fetch('/getUser', {
+            credentials: 'include',
+            method: 'GET',
+        }).then(response => response.json() as Promise<any>)
             .then(data => {
-                this.setState({ Login: data });
+                this.setState({ Login: data.Login });
             });
     }
 
@@ -50,7 +52,7 @@ export class Layout extends React.Component<LayoutProps, User> {
                                     <li><Link to="/sprints">Sprints</Link></li>
                                 </ul>
                             </li>
-                            <li><a className=""> <div>{$imagePreview}</div>{this.state.Login}</a>
+                            <li><a className=""> <div>{$imagePreview} {this.state.Login}</div></a>
                                 <ul className="dropdown">
                                     <li><a href="/edituser">Edit user</a></li>
                                     <li><Link to="/#">About</Link></li>

@@ -4,6 +4,11 @@
     color: green;
 }
 
+.switchSection {
+    display: flex;
+    align-items: center;
+}
+
 .spanStyle {
     font-family: 'Times New Roman';
     font-size: 24px;
@@ -14,7 +19,19 @@
     padding: 5px;
     color: green;
 }
-
+.fontStyle {
+    font-family: 'Times New Roman';
+    font-size: 20px;
+    color: #555;
+}
+.inputField {
+    width: 35%;
+    height: 40px;
+}
+.selectStyle {
+    width: 35%;
+    height: 40px;
+}
 .editHead {
     text-align: center;
     margin-bottom: 20px;
@@ -29,10 +46,10 @@
 .areaStyle {
     width: 100%;
     padding: 7px;
-    font-size: 18px;
     resize: none;
     overflow: auto;
     height: 12em;
+    border-radius: 6px;
 }
 
 .sprintMainBlock {
@@ -53,4 +70,9 @@
 .taskTimeBlock {
     vertical-align: top;
     width: 60%;
+}
+
+.h2EditCreatePage {
+    margin: 10px;
+    padding: 5px;
 }

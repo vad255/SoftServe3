@@ -126,30 +126,30 @@ export class UserEdit extends React.Component<RouteComponentProps<any>, IEditPag
     render() {
         return <div className="text-left">
             <div className="text-center">
-                <h2 style={{ margin: "10px", padding: "5px" }}>Editing user by Id = {this.state.id}</h2>
+                <h2 className="h2EditCreatePage">Editing user by Id = {this.state.id}</h2>
             </div>
             <div>
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Login:</h3>
+                <h3 className="hStyle">Login:</h3>
                 <input className="input-lg" onChange={this.handleLoginValue} type="text" value={this.state.loginValue} />
             </div>
             <div>
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Password:</h3>
+                <h3 className="hStyle">Password:</h3>
                 <input className="input-lg" onChange={this.handlePasswordValue} type="text" value={this.state.passwordValue} />
             </div>
             <div>
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Team:</h3>
+                <h3 className="hStyle">Team:</h3>
                 <select className="form-control" onChange={this.handleTeamValue} value={this.state.teamValue}>
                     {this.state.teams.map(x => <option value={x.id}>{x.name}</option>)}
                 </select>
             </div>
             <div>
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Activity:</h3>
+                <h3 className="hStyle">Activity:</h3>
                 <Switch onChange={this.handleActivityValue}
                     checked={this.state.activityValue}
                     id="normal-switch" />
             </div>
             <div>
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Role:</h3>
+                <h3 className="hStyle">Role:</h3>
                 <select className="form-control" onChange={this.handleRoleValue} value={this.state.roleValue} >
                     {this.state.roles.map(x => <option value={x.roleId}>{x.name}</option>)}
                 </select>

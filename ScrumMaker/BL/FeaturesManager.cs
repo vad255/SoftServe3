@@ -17,5 +17,33 @@ namespace BL
         {
             _unit = uof;
         }
+
+        public void Create(Feature feature)
+        {
+            _unit.Features.Create(feature);
+            _unit.Commit();
+        }
+
+        public void Delete(int id)
+        {
+            _unit.Features.Delete(id);
+            _unit.Commit();
+        }
+
+        public Feature Get(int id)
+        {
+            return _unit.Features.GetById(id);
+        }
+
+        public IQueryable<Feature> GetAll()
+        {
+            return _unit.Features.GetAll();
+        }
+
+        public void Update(Feature feature)
+        {
+            _unit.Features.Update(feature);
+            _unit.Commit();
+        }
     }
 }

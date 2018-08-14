@@ -67,11 +67,10 @@ namespace ScrumMaker
                 };
             });
 
-            string connectionStr = Configuration.GetConnectionString("Viktor");
+            string connectionStr = Configuration.GetConnectionString("ScrumMakerDB2");
 
 
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
-
 
             ConfigureDI(services);
 
@@ -168,7 +167,7 @@ namespace ScrumMaker
 
                 routes.MapSpaFallbackRoute(
                     name: "spa-fallback",
-                    defaults: new { controller = "Home", action = "Index" });
+                    defaults: new { controller = "Identity", action = "Index" });
             });
 
         }
