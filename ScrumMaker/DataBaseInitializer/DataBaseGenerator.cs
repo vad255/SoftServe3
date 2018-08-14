@@ -13,7 +13,7 @@ namespace DataBaseInitializer
         static IRepository<Role> _dbRoles;
         static IRepository<User> _dbUsers;
         static IRepository<Team> _dbTeams;
-        static IRepository<DailyScrumInfo> _dbDailyInfo;
+        static IRepository<DailyStandUp> _dbDailyInfo;
         static IRepository<Defect> _dbDefects;
         static IRepository<Story> _dbStories;
         static IRepository<ScrumTask> _dbTasks;
@@ -59,9 +59,9 @@ namespace DataBaseInitializer
 
             Meetings[] meetings = new Meetings[]
             {
-                new Meetings() { MeetingName = "Poker Planning" },
-                new Meetings() { MeetingName = "Retrospective" },
-                new Meetings() { MeetingName = "Daily Stand Up" }
+                new Meetings() { MeetingName = "Poker Planning", Description = "wqer" },
+                new Meetings() { MeetingName = "Retrospective", Description = "wqer" },
+                new Meetings() { MeetingName = "Daily Stand Up", Description = "wqer" }
             };
 
             AddToDatabase(meetings, _meetings);
@@ -892,9 +892,39 @@ namespace DataBaseInitializer
 
                     new SprintStagesHistory()
                     {
-                        Begined = new DateTime(2018,06,28),
-                        Ended =  new DateTime(2018,09,24)
-                    }
+                        Begined = new DateTime(2018,06,01),
+                        Ended =  new DateTime(2018,06,15)
+                    },
+
+                     new SprintStagesHistory()
+                    {
+                        Begined = new DateTime(2018,06,16),
+                        Ended =  new DateTime(2018,06,30)
+                    },
+
+                      new SprintStagesHistory()
+                    {
+                        Begined = new DateTime(2018,07,01),
+                        Ended =  new DateTime(2018,07,13)
+                    },
+
+                       new SprintStagesHistory()
+                    {
+                        Begined = new DateTime(2018,07,14),
+                        Ended =  new DateTime(2018,07,28)
+                    },
+
+                        new SprintStagesHistory()
+                    {
+                        Begined = new DateTime(2018,07,29),
+                        Ended =  new DateTime(2018,08,17)
+                    },
+
+                         new SprintStagesHistory()
+                    {
+                        Begined = new DateTime(2018,08,18),
+                        Ended =  new DateTime(2018,08,30)
+                    },
             };
 
             AddToDatabase(sprintStagesHistories, _dbHisories);
@@ -931,17 +961,17 @@ namespace DataBaseInitializer
                     Retrospective = "",
                     Goal = "Develop the checkout process: pay for an order, pick shipping, order gift wrapping.",
                     Stage = SprintStage.Planning,
-                    History = _dbHisories.GetById(1),
+                    History = _dbHisories.GetById(2),
                     Backlog = _dbStories.GetAll().Where(s => s.Id <= 4).ToList()
                 },
-                new Sprint()
+                                new Sprint()
                 {
                     Team =  _dbTeams.GetById(3),
                     Name = "Sprint 3",
                     Retrospective = " What went well in the Sprint: finished in time. What could be improved: the code review. What will we commit to improve in the next Sprint: give more time for code review.",
                     Goal = "Implement basic shopping cart functionality including add, remove, and update quantities.",
                     Stage = SprintStage.Review,
-                    History = _dbHisories.GetById(1),
+                    History = _dbHisories.GetById(3),
                     Backlog = new List<Story>
                     {
                         stories[counter],
@@ -957,7 +987,7 @@ namespace DataBaseInitializer
                     Retrospective = " What went well in the Sprint: finished all stories and tasks in right way. What could be improved: Sprint was not finished. What will we commit to improve in the next Sprint: monitor timely for performance of all tasks.",
                     Goal = " All stories and tasks need to be done.",
                     Stage = SprintStage.Retrospective,
-                    History = _dbHisories.GetById(1),
+                    History = _dbHisories.GetById(4),
                     Backlog = new List<Story>
                     {
                         stories[counter-4],
@@ -972,7 +1002,7 @@ namespace DataBaseInitializer
                     Retrospective = " What went well in the Sprint: all tasks were done. What could be improved: communication skiils with client. What will we commit to improve in the next Sprint: improve communcation skills",
                     Goal = "All planned tasks need to be done except: database",
                     Stage = SprintStage.Finished,
-                    History =_dbHisories.GetById(1),
+                    History =_dbHisories.GetById(5),
                     Backlog = new List<Story>
                     {
                         stories[counter],
@@ -988,7 +1018,7 @@ namespace DataBaseInitializer
                     Retrospective = "What went well in the Sprint: all tasks were done. What could be improved: communication skiils with client. What will we commit to improve in the next Sprint: improve communcation skills",
                     Goal = "Implement login page.",
                     Stage = SprintStage.Review,
-                    History = _dbHisories.GetById(2),
+                    History = _dbHisories.GetById(6),
                     Backlog = new List<Story>
                     {
                         stories[counter-3],
@@ -1005,7 +1035,7 @@ namespace DataBaseInitializer
 
         public static void FillDailyScrumData()
         {
-            _dbDailyInfo = new Repository<DailyScrumInfo>(_context);
+            _dbDailyInfo = new Repository<DailyStandUp>(_context);
             _dbSprints = new Repository<Sprint>(_context);
 
             if (_dbDailyInfo.GetAll().Count() != 0)
@@ -1014,19 +1044,19 @@ namespace DataBaseInitializer
 
             foreach (var item in _dbSprints.GetAll())
             {
-                List<DailyScrumInfo> infos = new List<DailyScrumInfo>()
+                List<DailyStandUp> infos = new List<DailyStandUp>()
                 {
-                    new DailyScrumInfo()
+                    new DailyStandUp()
                     {
                         Description = "DailyDescription1",
                         Сonducted = DateTime.Now - new TimeSpan(48,0,0)
                     },
-                    new DailyScrumInfo()
+                    new DailyStandUp()
                     {
                         Description = "DailyDescription2",
                         Сonducted = DateTime.Now - new TimeSpan(24,0,0)
                     },
-                    new DailyScrumInfo()
+                    new DailyStandUp()
                     {
                         Description = "DailyDescription3",
                         Сonducted = DateTime.Now

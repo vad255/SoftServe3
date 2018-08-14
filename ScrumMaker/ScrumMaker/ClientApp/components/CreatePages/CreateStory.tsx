@@ -17,6 +17,7 @@ interface ICreatePageState {
     sprints: Sprint[];
     sprintId: number;
     madalMessage: string;
+    modalMessage: string;
 }
 
 export class CreateStory extends React.Component<RouteComponentProps<any>, ICreatePageState> {
@@ -31,7 +32,7 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
             team: Team,
             sprints: [],
             sprintId: 0,
-            madalMessage: ""
+            modalMessage: ""
         }) as any);
 
         this.handleCreateButtonClick = this.handleCreateButtonClick.bind(this);
@@ -60,7 +61,7 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
 
     handleCreateButtonClick() {
         if (this.state.inputValue !== "" && this.state.textAreaValue !== "") {
-            this.setState({ madalMessage: "The story " + this.state.inputValue + " was created" });
+            this.setState({ modalMessage: "The story " + this.state.inputValue + " was created." });
             fetch('odata/Stories',
                 {
                     method: 'Post',
@@ -82,6 +83,9 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
         } else {
             this.setState({ madalMessage: "Enter please name and description!" });
         }
+        else {
+            this.setState({ modalMessage: "Enter the name and description please!" });
+        }
     }
 
     private GetCreateConfirmModal() {
@@ -89,7 +93,7 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header  text-center" ><button className="close" type="button" data-dismiss="modal">×</button>
-                        <h4 className="modal-title">{this.state.madalMessage}</h4>
+                        <h4 className="modal-title">{this.state.modalMessage}</h4>
                     </div>
                     <div className="modal-body text-center">
                         <button className="btn-dark scrum-btn" type="button" data-dismiss="modal" onClick={this.handleOkButtonClick} >
@@ -101,7 +105,8 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
     }
 
     handleOkButtonClick() {
-        this.props.history.push("/Stories");
+        if (this.state.modalMessage !== "Enter the name and description please!")
+            this.props.history.push("/Stories");
     }
 
     handleUserSelect(event: any) {
@@ -141,7 +146,7 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
         return <select
             value={this.state.statusValue}
             className="form-control CreatePage"
-            name="State" style={{ width: "45%" }}
+            name="State" style={{ width: "35%" }}
             onChange={this.handleStatusSelect}>
             {items}
         </select>;
@@ -154,11 +159,11 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
             </div>
             <div>
                 <h3 className="hStyle">Name:</h3>
-                <input className="input-lg CreatePage" style={{width: "45%"}} onChange={this.handleChangeInput} type="text" value={this.state.inputValue} />
+                <input className="input-lg CreatePage" style={{ width: "35%" }} onChange={this.handleChangeInput} type="text" value={this.state.inputValue} />
             </div>
             <div>
                 <h3 className="hStyle">Description:</h3>
-                <textarea style={{ height: "300px", fontSize: 25, padding: "7px", width: "45%" }}
+                <textarea style={{ height: "300px", fontSize: 25, padding: "7px", width: "35%" }}
                     className="fa-text-height CreatePage" onChange={this.handleChangeTextArea} value={this.state.textAreaValue} />
             </div>
             <div>
@@ -168,19 +173,19 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
 
             <div>
                 <h3 className="hStyle">Assign to sprint:</h3>
-                <select className="CreatePage form-control inline-block" style={{ width: "45%" }} onChange={this.handleSprintSelect}>
+                <select className="form-control inline-block CreatePage" style={{ width: "35%" }} onChange={this.handleSprintSelect}>
                     {this.state.sprints.map(sprint => <option key={sprint.id} value={sprint.id}>{sprint.name}</option>)}
                 </select>
             </div>
 
             <div>
                 <h3 className="hStyle">Assign to team:</h3>
-                <input className="input-lg" type="text" style={{ width: "45%" }} value={this.state.team.name}></input>
+                <input className="input-lg" type="text" style={{ width: "35%" }} value={this.state.team.name}></input>
             </div>
 
             <div>
                 <h3 className="hStyle">Assign to:</h3>
-                <select className="CreatePage form-control inline-block" style={{ width: "45%" }} onChange={this.handleUserSelect}>
+                <select className="form-control inline-block CreatePage" style={{ width: "35%" }} onChange={this.handleUserSelect}>
                     {this.state.users.map(user => <option key={user.userId} value={user.userId}>{user.login}</option>)}
                 </select>
             </div>

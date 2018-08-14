@@ -1,0 +1,75 @@
+﻿.userbtn {
+    display: inline-block;
+    border: none;
+    padding: 2rem 2rem;
+    margin: 8px;
+    margin-right: auto;
+    background: #696969;
+    color: #ffffff;
+    font-family: 'Times New Roman';
+    padding: 14px 22px !important;
+    font-size: 11px !important;
+    cursor: pointer;
+    text-align: center;
+    transition: background 750ms ease-in-out, transform 150ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 90%;
+}
+
+    .userbtn:hover,
+    .userbtn:focus {
+        background: black;
+    }
+
+    .userbtn:focus {
+        outline: 1px solid #fff;
+        outline-offset: -4px;
+    }
+
+    .userbtn:active {
+        transform: scale(1.99);
+    }
+
+
+
+
+
+
+/*.userbtn {
+    display: inline-block;
+    border: none;
+    padding: 2rem 5rem;
+    margin: 7px;
+    margin-right: auto;
+    background: #696969;
+    color: #ffffff;
+    font-family: 'Times New Roman';
+    padding: 14px 32px !important;
+    font-size: 13px !important;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background 750ms ease-in-out, transform 150ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 90%;
+}
+
+    .userbtn:hover,
+    .userbtn:focus {
+        background: black;
+    }
+
+    .userbtn:focus {
+        outline: 1px solid #fff;
+        outline-offset: -4px;
+    }
+
+    .userbtn:active {
+        transform: scale(1.99);
+    }
+
+td{
+    color:red;
+}*/

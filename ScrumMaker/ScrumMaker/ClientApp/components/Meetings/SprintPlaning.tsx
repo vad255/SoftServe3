@@ -38,7 +38,7 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
         let idStorys = this.GetStoryId();
 
         for (var i = 0; i < idStorys.length; i++) {
-            fetch('odata/Stories(' + idStorys[i] + ')',
+            fetch('odata/Stories(' + idStorys[i] + ')'  ,
                 {
                     method: 'PATCH',
                     headers: {
@@ -123,23 +123,23 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
 
                     <table className="well menu_links col-md-1 td-scrum" id="t_draggable2">
                         <caption><h4>Sprint #{this.state.sprintNumber} Backlog</h4></caption>
-                        <tbody className="t_sortable table-scrum td-scrum">
-                            <tr className="td-scrum border">
-                                <td className="well"><h5>ID</h5></td>
-                                <td className="well"><h5>Story_name</h5></td>
-                                <td className="well"><h5>Story_description</h5></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <tbody className="t_sortable table-scrum td-scrum">
+                        <tr className="td-scrum border">
+                            <td className="well"><h5>ID</h5></td>
+                            <td className="well"><h5>Story_name</h5></td>
+                            <td className="well"><h5>Story_description</h5></td>
+                        </tr>
+                    </tbody>
+                </table>
 
-                    <button
-                        className='btn-dark scrum-btn'
-                        style={{ marginLeft: "10px", marginTop: "-5px" }}
-                        data-toggle="modal"
-                        data-target="#confirmDeleteModal"
-                        onClick={this.handleSaveButtonClick}>
-                        Save sprint
-                </button>
+                <div role='button'
+                    className='btn btn-primary'
+                    style={{ marginLeft: "10px", marginTop: "-5px" }}
+                    data-toggle="modal"
+                    data-target="#confirmDeleteModal"
+                    onClick={this.handleSaveButtonClick}>
+                    Save sprint
+                </div>
                     {this.GetDeleteConfirmModal()}
                 </div>
             </div>
@@ -221,17 +221,15 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
                 this.setState({ stories: storiesTemp });
             });
 
-        fetch('odata/sprints', {
-            credentials: 'include'
-        })
-            .then(response => response.json() as Promise<any>)
+        fetch(('odata/sprints'), { credentials: 'include' })
+        .then(response => response.json() as Promise<any>)
             .then(data => {
                 var sprintsData = [] as Sprint[];
 
                 for (var i = 0; i < data["value"].length; i++) {
                     sprintsData[i] = new Sprint(data["value"][i]);
                 }
-                this.setState({ sprints: sprintsData });
+                this.setState({ sprints: sprintsData});
             }).catch(e => console.log(e));
     }
 

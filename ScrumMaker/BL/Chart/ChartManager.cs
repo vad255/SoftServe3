@@ -31,19 +31,23 @@ namespace BL.Chart
         {
             List<DateTime> result = new List<DateTime>();
             Sprint sprint = GetSprintByDate();
-            DateTime start = sprint.History.Begined.Value;
-            int days = (sprint.History.Ended.Value - start).Days + 1;
-            while (start<=sprint.History.Ended.Value) {
-                if (start.DayOfWeek==DayOfWeek.Sunday||
-                    start.DayOfWeek==DayOfWeek.Saturday)
+            if (sprint != null)
+            {
+                DateTime start = sprint.History.Begined.Value;
+                int days = (sprint.History.Ended.Value - start).Days + 1;
+                while (start <= sprint.History.Ended.Value)
                 {
-                    --days;
+                    if (start.DayOfWeek == DayOfWeek.Sunday ||
+                        start.DayOfWeek == DayOfWeek.Saturday)
+                    {
+                        --days;
+                    }
+                    else
+                    {
+                        result.Add(start);
+                    }
+                    start = start.Date.AddDays(1);
                 }
-                else
-                {
-                    result.Add(start);
-                }
-                start = start.Date.AddDays(1);
             }
             return result;
         }
@@ -51,9 +55,12 @@ namespace BL.Chart
         {
             ICollection<Story> result = new List<Story>();
             ICollection<Story> stories = _stories.GetAll().Include(x => x.Tasks).ToList();
-            foreach(Story story in sprint.Backlog)
+            if (sprint != null)
             {
-                result.Add(stories.SingleOrDefault(x => x.Id == story.Id));
+                foreach (Story story in sprint.Backlog)
+                {
+                    result.Add(stories.SingleOrDefault(x => x.Id == story.Id));
+                }
             }
             return result;
         }
@@ -78,7 +85,7 @@ namespace BL.Chart
             {
                 int completedTask = tasks.Where(x => x.Completed != null && x.Completed.Value.DayOfYear == listOfDate[i - 1].DayOfYear).Count();
                 remainingTasks -= completedTask;
-                result.Add(new ModelForCharts { Name = "Day "+ i, RemainingTask = remainingTasks, CompletedTask = completedTask});
+                result.Add(new ModelForCharts { Name = listOfDate[i - 1].ToString("dd:MM"), RemainingTask = remainingTasks, CompletedTask = completedTask});
             }
             return result;
         }
@@ -86,16 +93,19 @@ namespace BL.Chart
         public ICollection<ModelForCharts> GetDataVelocity()
         {
             ICollection<ModelForCharts> result = new List<ModelForCharts>();
-            foreach(Sprint sprint in GetSprintForVelocity())
-            {
-                int remainingTasks = 0;
-                int completedTasks = 0;
-                foreach(Story story in GetStoriesOfSprint(sprint))
+            var sprints = GetSprintForVelocity();
+            if (sprints != null) {
+                foreach (Sprint sprint in sprints)
                 {
-                    remainingTasks += story.Tasks.Count();
-                    completedTasks += story.Tasks.Where(x => x.Completed != null && x.Completed.Value.DayOfYear <= sprint.History.Ended.Value.DayOfYear).Count();
+                    int remainingTasks = 0;
+                    int completedTasks = 0;
+                    foreach (Story story in GetStoriesOfSprint(sprint))
+                    {
+                        remainingTasks += story.Tasks.Count();
+                        completedTasks += story.Tasks.Where(x => x.Completed != null && x.Completed.Value.DayOfYear <= sprint.History.Ended.Value.DayOfYear).Count();
+                    }
+                    result.Add(new ModelForCharts() { Name = sprint.Name, CompletedTask = completedTasks, RemainingTask = remainingTasks });
                 }
-                result.Add(new ModelForCharts() { Name = sprint.Name, CompletedTask = completedTasks, RemainingTask = remainingTasks });
             }
             return result;
         }

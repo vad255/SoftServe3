@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models
 {
-    public class DailyScrumInfo
+    public class DailyStandUp
     {
         [Key]
         public string Id { get; private set; }
