@@ -205,7 +205,7 @@ namespace DataBaseInitializer
                     },
                 new User()
                 {
-                    Role = _dbRoles.GetById(2),
+                    Role = _dbRoles.GetById(3),
                     Activity = true,
                     Login = "Andriy.H@com",
                     Password = HASH_ADMIN
@@ -682,7 +682,37 @@ namespace DataBaseInitializer
                     User = _dbUsers.GetById(7),
                     Status = StoryStatus.DevComplete,
                     Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList(),
-                    Sprint = _dbSprints.GetById(1),
+                    Sprint = null,
+                },
+                 new Story()
+                {
+                    Name = "Adding of goods",
+                    Team = _dbTeams.GetById(6),
+                    Description = "Implement adding of goods to shopping cart.",
+                    User = _dbUsers.GetById(7),
+                    Status = StoryStatus.Accepted,
+                    Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList(),
+                    Sprint = _dbSprints.GetById(4),
+                },
+                 new Story()
+                {
+                    Name = "Deleting of goods",
+                    Team = _dbTeams.GetById(6),
+                    Description = "Implement deleting of goods from shopping cart.",
+                    User = _dbUsers.GetById(8),
+                    Status = StoryStatus.Accepted,
+                    Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList(),
+                    Sprint = _dbSprints.GetById(4),
+                },
+                 new Story()
+                {
+                    Name = "Changing price",
+                    Team = _dbTeams.GetById(6),
+                    Description = "Implement checking of price when new goods are recieved. Add changing of the price if it's need.",
+                    User = _dbUsers.GetById(9),
+                    Status = StoryStatus.Accepted,
+                    Defects = _dbDefects.GetAll().Where(d => d.DefectId > 7).ToList(),
+                    Sprint = _dbSprints.GetById(4),
                 }
             };
 
@@ -884,26 +914,32 @@ namespace DataBaseInitializer
                     Team = _dbTeams.GetById(1),
                     Name = "Sprint 1",
                     Retrospective = " What went well in the Sprint: command work. What could be improved: Speed of development. What will we commit to improve in the next Sprint: icrease development speed",
-                    Goal = "",
+                    Goal = "Create mockud for grids. Add grids which will be responsive in different types of screens.",
                     Stage = SprintStage.InProgress,
                     History = _dbHisories.GetById(1),
-                    Backlog = _dbStories.GetAll().ToList()
+                    Backlog = new List<Story>
+                    {
+                        stories[counter-10],
+                        stories[counter-11],
+                        stories[counter-12],
+                    }
                 },
                 new Sprint()
                 {
                     Team =  _dbTeams.GetById(2),
                     Name = "Sprint 2",
                     Retrospective = "",
-                    Goal = "",
+                    Goal = "Develop the checkout process: pay for an order, pick shipping, order gift wrapping.",
                     Stage = SprintStage.Planning,
-                    History = _dbHisories.GetById(1)
+                    History = _dbHisories.GetById(1),
+                    Backlog = _dbStories.GetAll().Where(s => s.Id <= 4).ToList()
                 },
                 new Sprint()
                 {
                     Team =  _dbTeams.GetById(3),
                     Name = "Sprint 3",
                     Retrospective = " What went well in the Sprint: finished in time. What could be improved: the code review. What will we commit to improve in the next Sprint: give more time for code review.",
-                    Goal = " all stories and tasks has been done. We are planning to do: ",
+                    Goal = "Implement basic shopping cart functionality including add, remove, and update quantities.",
                     Stage = SprintStage.Review,
                     History = _dbHisories.GetById(1),
                     Backlog = new List<Story>
@@ -919,22 +955,35 @@ namespace DataBaseInitializer
                     Team = _dbTeams.GetById(4),
                     Name = "Sprint 4",
                     Retrospective = " What went well in the Sprint: finished all stories and tasks in right way. What could be improved: Sprint was not finished. What will we commit to improve in the next Sprint: monitor timely for performance of all tasks.",
-                    Goal = "",
+                    Goal = " All stories and tasks need to be done.",
                     Stage = SprintStage.Retrospective,
-                    History = _dbHisories.GetById(1)
+                    History = _dbHisories.GetById(1),
+                    Backlog = new List<Story>
+                    {
+                        stories[counter-4],
+                        stories[counter-5],
+                        stories[counter-6],
+                    }
                 },
                 new Sprint()
                 {
                     Team = _dbTeams.GetById(5),
                     Name = "Sprint 5",
                     Retrospective = " What went well in the Sprint: all tasks were done. What could be improved: communication skiils with client. What will we commit to improve in the next Sprint: improve communcation skills",
-                    Goal = "all planned tasks have been done except: database",
+                    Goal = "All planned tasks need to be done except: database",
                     Stage = SprintStage.Finished,
-                    History =_dbHisories.GetById(1)
+                    History =_dbHisories.GetById(1),
+                    Backlog = new List<Story>
+                    {
+                        stories[counter],
+                        stories[counter-8],
+                        stories[counter-7],
+                        stories[counter-8],
+                    }
                 },
                 new Sprint()
                 {
-                    Team = _dbTeams.GetById(6),
+                    Team = _dbTeams.GetById(5),
                     Name = "Sprint 6",
                     Retrospective = "What went well in the Sprint: all tasks were done. What could be improved: communication skiils with client. What will we commit to improve in the next Sprint: improve communcation skills",
                     Goal = "Implement login page.",
@@ -1001,7 +1050,6 @@ namespace DataBaseInitializer
 
             SprintReview[] sprintReviews = new SprintReview[]
             {
-                new SprintReview() { IsGoalAchived = false, Sprint = sprints[counter], SprintId = sprints[counter].Id},
                 new SprintReview() { IsGoalAchived = false, Sprint = sprints[counter-1], SprintId = sprints[counter-1].Id},
                 new SprintReview() { IsGoalAchived = false, Sprint = sprints[counter-2], SprintId = sprints[counter-2].Id},
                 new SprintReview() { IsGoalAchived = false, Sprint = sprints[counter-3], SprintId = sprints[counter-3].Id}
