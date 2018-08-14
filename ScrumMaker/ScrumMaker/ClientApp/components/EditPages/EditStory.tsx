@@ -121,7 +121,7 @@ export class EditStory extends React.Component<RouteComponentProps<any>, IEditPa
         return <select
             value={this.state.statusValue}
             className="form-control CreatePage"
-            name="State"
+            name="State" style={{width: "35%"}}
             onChange={this.handleStatusSelect}>
             {items}
         </select>;
@@ -155,11 +155,11 @@ export class EditStory extends React.Component<RouteComponentProps<any>, IEditPa
             </div>
             <div>
                 <h3 className="hStyle">Name:</h3>
-                <input className="input-lg" onChange={this.handleChangeInput} type="text" value={this.state.inputValue} />
+                <input className="input-lg" style={{ width: "35%" }} onChange={this.handleChangeInput} type="text" value={this.state.inputValue} />
             </div>
             <div>
                 <h3 className="hStyle">Description:</h3>
-                <textarea style={{ width: "400px", height: "300px", fontSize: 25, padding: "7px" }} className="fa-text-height" onChange={this.handleChangeTextArea} value={this.state.textAreaValue} />
+                <textarea style={{ width: "35%", height: "300px", fontSize: 25, padding: "7px" }} className="fa-text-height" onChange={this.handleChangeTextArea} value={this.state.textAreaValue} />
             </div>
             <div>
                 <h3 className="hStyle">Status:</h3>
@@ -168,7 +168,7 @@ export class EditStory extends React.Component<RouteComponentProps<any>, IEditPa
 
             <div>
                 <h3 className="hStyle">Assign to:</h3>
-                <select className="form-control inline-block" onChange={this.handleUserSelect}>
+                <select className="form-control inline-block" style={{ width: "35%" }} onChange={this.handleUserSelect}>
                     {this.state.users.map(user => <option key={user.userId} value={user.userId}>{user.login}</option>)}
                 </select>
             </div>
