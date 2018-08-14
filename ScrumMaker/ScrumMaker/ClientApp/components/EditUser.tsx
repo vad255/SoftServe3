@@ -11,6 +11,7 @@ interface FileLoad {
     repeatPassword: ""
     ConfirmModalPhoto: boolean,
     ConfirmModalPassword: boolean,
+    PasswordUserMessage: string
 }
 
 export class EditUser extends Component<RouteComponentProps<any>, FileLoad> {
@@ -23,6 +24,7 @@ export class EditUser extends Component<RouteComponentProps<any>, FileLoad> {
             repeatPassword: "",
             ConfirmModalPhoto: false,
             ConfirmModalPassword: false,
+            PasswordUserMessage: ""
         };
 
         this._handleImageChange = this._handleImageChange.bind(this);
@@ -86,7 +88,7 @@ export class EditUser extends Component<RouteComponentProps<any>, FileLoad> {
                 body: data,
             }).then(response => response.json() as Promise<boolean>)
                 .then(data => {
-                    data != false ? null : this.setState({ ConfirmModalPassword: true });;
+                    data != false ? this.setState({ ConfirmModalPassword: true, PasswordUserMessage: "Password successfully changed" }) : this.setState({ ConfirmModalPassword: true, PasswordUserMessage: "Password not same" });;
                 });
     }
 
@@ -111,7 +113,7 @@ export class EditUser extends Component<RouteComponentProps<any>, FileLoad> {
                 <Modal isOpen={this.state.ConfirmModalPassword}
                     onRequestClose={this.openCloseModelPassword}
                     className="Modal">
-                    <h3>Password not same</h3>
+                    <h3>{this.state.PasswordUserMessage}</h3>
                         <button className="modalBtn" onClick={this.openCloseModelPassword}>Ok</button>
                 </Modal>
 

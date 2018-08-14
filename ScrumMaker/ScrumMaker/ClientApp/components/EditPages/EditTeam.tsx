@@ -64,7 +64,9 @@ export class EditTeam extends React.Component<RouteComponentProps<{}>, ITeamFetc
     }
 
     public LoadData() {
-        fetch(this.URL)
+        fetch(this.URL, {
+            credentials: 'include',
+        })
             .then(response => response.json() as any)
             .then(data => {
                 this.OnDataReceived(data);
