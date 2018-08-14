@@ -38,6 +38,7 @@ import { Backlog } from './components/Backlog/Backlog';
 import { CreateSprint } from "./components/CreatePages/CreateSprint";
 import { CreateTask } from "./components/CreatePages/CreateTask";
 import { CreateStory } from "./components/CreatePages/CreateStory";
+import { FeatureCreate } from "./components/CreatePages/FeatureCreate";
 import { ForgotPasswordPage } from "./components/ForgotPasswordPage";
 import { CreateTeam } from './components/CreatePages/CreateTeam';
 
@@ -83,6 +84,7 @@ export const routes = <BrowserRouter >
         <LayoutRoute path='/GetError' component={GetError} />
         <LayoutRoute path='/backlog' component={Backlog} />
         <LayoutRoute path='/CreateStory' component={CreateStory} />
+        <LayoutRoute path='/FeatureCreate' component={FeatureCreate} />
         <LayoutRoute path='/CreateSprint' component={CreateSprint} />
         <LayoutRoute path='/CreateTeam' component={CreateTeam} />
         <LayoutRoute path='/CreateTask' component={CreateTask} />

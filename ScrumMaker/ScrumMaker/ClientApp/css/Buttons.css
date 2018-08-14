@@ -8,6 +8,10 @@
   cursor: pointer;
 }
 
+.btn-disabled:disabled {
+    color: white !important;
+}
+
 .inline-block{
   display: inline-block;
 }

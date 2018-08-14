@@ -38,7 +38,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         super();
         this.state = { pageSize: 5, items: [] };
         this.recalcPagingUrl(this.state.pageSize);
-        this.readQueryParams();
+        this.readQueryParams();  
         this.isLoading = true;
     }
 
