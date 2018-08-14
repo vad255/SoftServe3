@@ -48,7 +48,6 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
                     let sp = new Sprint(s[i]);
                     sprints.push(sp);
                 }
-                console.log(sprints);
                 this.setState({
                     sprints: sprints, team: sprints[0].team,
                     users: sprints[0].team.members, sprintId: sprints[0].id,

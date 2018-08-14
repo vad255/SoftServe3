@@ -82,16 +82,19 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
     }
 
     public showSprints() {
-        return <div className="text-center">
-            <h2>Select sprint for meeting:</h2>
-            <select className="form-control inline-block"
-                style={{ margin: "20px 0px 20px 0px"}}
-                onChange={this.handleSelectChange}>
-                {this.state.Sprints.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
-            </select>
-        </div>
+        if (this.state.Sprints) {
+            let spr: Sprint[] = this.state.Sprints;
+            return <div className="text-center">
+                <h2>Select sprint for meeting:</h2>
+                <select className="form-control inline-block"
+                    style={{ margin: "20px 0px 20px 0px" }}
+                    onChange={this.handleSelectChange}>
+                    {spr.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+                </select>
+            </div>
+        }
     }
-
+       
     handleSelectChange(event: any) {
         var id = event.target.value as number;
         this.setState(
@@ -133,9 +136,11 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
     }
     
     private findSprintReview() {
-        for (var i = 0; i < this.state.SprintReviews.length; i++) {
-            if (this.state.SprintReviews[i].sprintId == this.state.SprintId) {
-                return this.state.SprintReviews[i].id
+        if (this.state.SprintReviews) {
+            for (var i = 0; i < this.state.SprintReviews.length; i++) {
+                if (this.state.SprintReviews[i].sprintId == this.state.SprintId) {
+                    return this.state.SprintReviews[i].id
+                }
             }
         }
     }
@@ -165,7 +170,6 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
     }
     
     createSprintReview(sprintId: number) {
-        console.log(sprintId)
         let newSprintReview = new SprintReview({ SprintId: sprintId, IsGoalAchived: false, IsStoriesCompleted: false });
         fetch("SprintReview/CreateReview/", {
             credentials: 'include',
@@ -192,7 +196,6 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
             { credentials: "include" }).
             then(response => response.json() as Promise<any>).
             then(data => {
-                console.log(data)
                 let user = new User(data);
                 if (user.userId === 0)
                     user.userId = -1;
@@ -202,7 +205,7 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
     }
 
     userIsScrumMaster() {
-        if (this.state.Myself.role.name == "ScrumMaster") {
+        if (this.state.Myself&&this.state.Myself.role.name == "ScrumMaster") {
             return true;
         }
         return false;
