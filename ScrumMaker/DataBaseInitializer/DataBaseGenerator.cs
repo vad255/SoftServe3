@@ -21,6 +21,7 @@ namespace DataBaseInitializer
         static IRepository<SprintStagesHistory> _dbHisories;
         static IRepository<Sprint> _dbSprints;
         static IRepository<SprintReview> _dbSprintsReviews;
+        static IRepository<Meetings> _meetings;
         private const string HASH_ADMIN = "sha1:64000:18:IKGrJDSsv5EkBegDsKvNI6fS7DyN44MP:NxzGLNDkRwyUTXoQ0gDpOsy7";
 
         public static void FillDataBase(DbContext context)
@@ -48,7 +49,22 @@ namespace DataBaseInitializer
             FillSprintsData();
             ShowStatus(95);
             FillSprintReviewsData();
+            FillMeetingsData();
             ShowStatus(100);
+        }
+
+        public static void FillMeetingsData()
+        {
+            _meetings = new Repository<Meetings>(_context);
+
+            Meetings[] meetings = new Meetings[]
+            {
+                new Meetings() { MeetingName = "Poker Planning" },
+                new Meetings() { MeetingName = "Retrospective" },
+                new Meetings() { MeetingName = "Daily Stand Up" }
+            };
+
+            AddToDatabase(meetings, _meetings);
         }
 
         public static void FillRolesData()
