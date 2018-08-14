@@ -49,6 +49,7 @@ namespace DataBaseInitializer
             FillSprintsData();
             ShowStatus(95);
             FillSprintReviewsData();
+            FillMeetingsData();
             ShowStatus(100);
         }
 
