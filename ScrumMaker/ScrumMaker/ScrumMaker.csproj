@@ -73,8 +73,10 @@
     <None Remove="ClientApp\components\Grids\StoriesGrid.tsx" />
     <None Remove="ClientApp\components\Grids\TaskGrid.tsx" />
     <None Remove="ClientApp\components\MailSender.tsx" />
+    <None Remove="ClientApp\components\Meetings\DailySatandUpMeeting.tsx" />
     <None Remove="ClientApp\components\Meetings\SprintPlaning.tsx" />
     <None Remove="ClientApp\components\Meetings\SelectSprint.tsx" />
+    <None Remove="ClientApp\components\Models\DailyStandUp.tsx" />
     <None Remove="ClientApp\components\Models\Defect.tsx" />
     <None Remove="ClientApp\components\Models\Feature.tsx" />
     <None Remove="ClientApp\components\Models\FeatureState.tsx" />
@@ -149,6 +151,8 @@
 
     <TypeScriptCompile Include="ClientApp\components\ForAdmin\RegistrationButton.tsx" />
 
+    <TypeScriptCompile Include="ClientApp\components\Meetings\DailySatandUpMeeting.tsx" />
+
     <TypeScriptCompile Include="ClientApp\components\Meetings\SprintPlaning.tsx" />
     <TypeScriptCompile Include="ClientApp\components\EditPages\TaskEdit.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Charts\Velocity.tsx" />
@@ -158,7 +162,11 @@
     <TypeScriptCompile Include="ClientApp\components\Chats\RetrospectivePages\SelectSprintPage.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Chats\RetrospectiveTable.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Meetings\SelectSprint.tsx" />
+
+    <TypeScriptCompile Include="ClientApp\components\Models\DailyStandUp.tsx" />
+
     <TypeScriptCompile Include="ClientApp\components\Models\PokerUser.tsx" />
+
     <TypeScriptCompile Include="ClientApp\components\Models\SprintReview.tsx" />
     <TypeScriptCompile Include="ClientApp\components\MyCalendar.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Charts\Chart.tsx" />

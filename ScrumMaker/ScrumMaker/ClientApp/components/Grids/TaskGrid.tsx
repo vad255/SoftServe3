@@ -15,9 +15,6 @@ import { EmptyFilter } from '../Filters/EmptyFilter';
 import { TaskType } from '../Models/TaskType';
 import { TaskState } from '../Models/TaskState';
 
-interface TaskDataFetchingState {
-    tasks: Task[];
-}
 
 export class TaskGrid extends Grid {
 
@@ -83,9 +80,5 @@ export class TaskGrid extends Grid {
             display={this.filteringOn}
             externalConstraints={this.customUrlFilters}
         />
-    }
-
-    protected onCatch(e: any) {
-        this.props.history.push('/login')
     }
 }

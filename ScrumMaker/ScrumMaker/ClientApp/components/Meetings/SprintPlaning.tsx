@@ -20,24 +20,24 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
 
     protected URL_BASE_Users: string = 'odata/Users';
     protected URL_BASE_Stories: string = 'odata/Stories';
-    protected headerText: string = 'SprintPlaning';  
+    protected headerText: string = 'SprintPlaning';
     private link: string = (window.location.href);
     readonly id: string;
 
     constructor(props: any) {
         super(props);
         this.id = this.link.substr(this.link.lastIndexOf('/') + 1);
-        this.state = { users: [], stories: [], storiesName: [], sprints: [], sprintNumber: this.id };        
-        this.handleSaveButtonClick = this.handleSaveButtonClick.bind(this); 
+        this.state = { users: [], stories: [], storiesName: [], sprints: [], sprintNumber: this.id };
+        this.handleSaveButtonClick = this.handleSaveButtonClick.bind(this);
         this.handleStoryNumberSelect = this.handleStoryNumberSelect.bind(this);
         this.LoadData();
     }
 
     handleSaveButtonClick() {
-        
+
         let idStorys = this.GetStoryId();
 
-        for (var i = 0; i < idStorys.length; i++) {           
+        for (var i = 0; i < idStorys.length; i++) {
             fetch('odata/Stories(' + idStorys[i] + ')'  ,
                 {
                     method: 'PATCH',
@@ -54,7 +54,7 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
                     })
                 })
         }
-    }    
+    }
 
     componentDidMount() {
 
@@ -134,9 +134,9 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
 
                 <div role='button'
                     className='btn btn-primary'
-                    style={{ marginLeft: "10px", marginTop: "-5px" }} 
+                    style={{ marginLeft: "10px", marginTop: "-5px" }}
                     data-toggle="modal"
-                    data-target="#confirmDeleteModal"                 
+                    data-target="#confirmDeleteModal"
                     onClick={this.handleSaveButtonClick}>
                     Save sprint
                 </div>
@@ -147,11 +147,11 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
     }
 
     handleStoryNumberSelect(event: any) {
-        this.setState({ sprintNumber: event.target.value });        
+        this.setState({ sprintNumber: event.target.value });
     }
 
-    private GetDeleteConfirmModal() {      
-        
+    private GetDeleteConfirmModal() {
+
         return <div id="confirmDeleteModal" className="modal fade">
             <div className="modal-dialog">
                 <div className="modal-content">
@@ -179,8 +179,8 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
         let list = document.getElementById("t_draggable2") as any;
 
         for (var n = 3; n < list.getElementsByTagName("td").length; n += 3)
-            storyId.push(list.getElementsByTagName("td")[n].textContent);                
-        return storyId;       
+            storyId.push(list.getElementsByTagName("td")[n].textContent);
+        return storyId;
     }
 
     GetStoryName() {
@@ -204,7 +204,7 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
                 var usersTemp = [];
                 for (var i = 0; i < data['value'].length; i++)
                     usersTemp[i] = data["value"][i]["Login"];
-                
+
                 this.setState({ users: usersTemp });
             });
 
@@ -215,22 +215,20 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
                 var storiesTemp = [];
                 for (var i = 0; i < data['value'].length; i++)
                     storiesTemp[i] = new Story(data['value'][i]);
-                
+
                 storiesTemp = storiesTemp.filter((n) => (n.sprintId === null));
-                
+
                 this.setState({ stories: storiesTemp });
             });
 
-        fetch('odata/sprints', {
-            credentials: 'include'
-        })
-            .then(response => response.json() as Promise<any>)
+        fetch(('odata/sprints'), { credentials: 'include' })
+        .then(response => response.json() as Promise<any>)
             .then(data => {
                 var sprintsData = [] as Sprint[];
-               
+
                 for (var i = 0; i < data["value"].length; i++) {
                     sprintsData[i] = new Sprint(data["value"][i]);
-                }              
+                }
                 this.setState({ sprints: sprintsData});
             }).catch(e => console.log(e));
     }
@@ -247,6 +245,3 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
         return result;
     }
 }
-
-
-
