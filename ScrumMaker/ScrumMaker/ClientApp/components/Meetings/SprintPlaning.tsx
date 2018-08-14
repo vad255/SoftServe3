@@ -20,12 +20,14 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
 
     protected URL_BASE_Users: string = 'odata/Users';
     protected URL_BASE_Stories: string = 'odata/Stories';
-    protected headerText: string = 'SprintPlaning';
-    private SprintNumber: string = '';
+    protected headerText: string = 'SprintPlaning';  
+    private link: string = (window.location.href);
+    readonly id: string;
+
     constructor(props: any) {
         super(props);
-
-        this.state = { users: [], stories: [], storiesName: [], sprints:[], sprintNumber:'1' };
+        this.id = this.link.substr(this.link.lastIndexOf('/') + 1);
+        this.state = { users: [], stories: [], storiesName: [], sprints: [], sprintNumber: this.id };        
         this.handleSaveButtonClick = this.handleSaveButtonClick.bind(this); 
         this.handleStoryNumberSelect = this.handleStoryNumberSelect.bind(this);
         this.LoadData();
@@ -80,8 +82,8 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
                 <h1 className="text-center">{this.headerText}</h1>
                 <div>
                     <label style={{ marginRight: "5px" }}>Select sprint number:
-                        <select style={{ marginTop: "10px" }} className="form-control-static" onChange={this.handleStoryNumberSelect}>
-                            {this.state.sprints.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+                        <select style={{ marginTop: "10px" }} className="form-control-static" value={this.state.sprintNumber} onChange={this.handleStoryNumberSelect}>
+                            {this.state.sprints.map(s => <option  key={s.id} value={s.id}>{s.name}</option>)}
                         </select>
                     </label>
                 </div>
