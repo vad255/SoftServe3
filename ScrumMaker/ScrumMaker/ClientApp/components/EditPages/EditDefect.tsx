@@ -69,7 +69,7 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
     }
       
     handleSaveButtonClick() {
-        console.log(this.state.stateValue)
+      
         fetch('odata/Defects(' + this.state.id + ')',
             {
                 method: 'PATCH',
@@ -107,6 +107,7 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
             </div>
         </div>;
     }
+
     handleOK(event: any) {
         this.props.history.push('/defects');
     }
@@ -114,19 +115,22 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
     handleStatusSelect(event: any) {
         this.setState({ statusValue: event.target.value });
     }
+
     handlePrioritySelect(event: any) {
         this.setState({ priorityValue: event.target.value });
     }
+
     handleStateSelect(event: any) {
-        this.setState({ stateValue: event.target.value });
-      //  console.log(event.target.value);
+        this.setState({ stateValue: event.target.value });      
     }
+
     handleChangeInputActualResult(event: any) {
         this.setState({ actualResultValue: event.target.value });
     }
     handleChangeInputFixResult(event: any) {
         this.setState({ fixResultValue: event.target.value });
     }
+
     handleChangeInput(event: any) {
         this.setState({ nameValue: event.target.value });
     }
@@ -146,7 +150,7 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
             </div>
             <div>
                 <h3 className="hStyle">Description:</h3>
-                <textarea style={{ width: "35%", height: "200px", fontSize: 20, padding: "7px" }} className="fa-text-height" onChange={this.handleChangeTextArea} value={this.state.textAreaValue} />
+                <textarea style={{ width: "35%", height: "200px", fontSize: 20, padding: "7px" }} className="input-lg fa-text-height" onChange={this.handleChangeTextArea} value={this.state.textAreaValue} />
             </div>
             <div>
                 <h3 className="hStyle">Status:</h3>
