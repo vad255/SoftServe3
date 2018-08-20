@@ -142,7 +142,7 @@ namespace ScrumMaker.Controllers
         [Route("/ResetUserPassword")]
         public bool ResetPassword(string login)
         {
-            var user = _user.GetAll().FirstOrDefault(u => u.Login == login);
+            var user = _user.GetAll().FirstOrDefault(u => u.Email == login);
 
             if (user != null)
             {

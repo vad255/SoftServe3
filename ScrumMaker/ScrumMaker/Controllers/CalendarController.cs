@@ -71,8 +71,8 @@ namespace ScrumMaker.Controllers
                 else
                 {
 
-                    var fromAddress = new MailAddress("scrummaker325@gmail.com", "From Name");
-                    var toAddress = new MailAddress("pavlo.krukh@gmail.com", "To Name");
+                    var fromAddress = new MailAddress("scrummaker325@gmail.com", "Administration");
+                    var toAddress = new MailAddress(user.Email, user.Login);
                     const string fromPassword = "Qwerty!123";
                     const string subject = "Few Meetings";
                     const string body = "You have a few meetings in one day.";
