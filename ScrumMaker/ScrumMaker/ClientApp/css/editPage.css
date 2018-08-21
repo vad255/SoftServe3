@@ -3,6 +3,16 @@
     padding: 5px;
     color: green;
 }
+input:focus {
+    border: 1px solid blue;
+}
+textarea:focus {
+    border: 1px solid blue;
+}
+
+input:invalid {    
+    border: 1px solid red;
+}
 
 .switchSection {
     display: flex;
