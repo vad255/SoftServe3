@@ -44,8 +44,14 @@ namespace ScrumMaker.Controllers
         public async Task Token(LoginViewModel loginViewModel)
         {
             TokenManager tokenManager = new TokenManager(_users);
+            ClaimsIdentity identity = null;
 
-            ClaimsIdentity identity = tokenManager.GetIdentity(loginViewModel.Login, loginViewModel.Password);
+            User user = _users.GetAll().Where(u => u.Login.Equals(loginViewModel.Login) || u.Email.Equals(loginViewModel.Login)).FirstOrDefault();
+            if(user != null)
+            {
+                identity = tokenManager.GetIdentity(user.Login, loginViewModel.Password);
+            }
+
             if (identity == null)
             {
                 Logger.Logger.LogError("IdentityController:Token():Invalid username or password.");
