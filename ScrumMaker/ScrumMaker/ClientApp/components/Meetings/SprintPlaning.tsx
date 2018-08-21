@@ -38,7 +38,7 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
         let idStorys = this.GetStoryId();
 
         for (var i = 0; i < idStorys.length; i++) {
-            fetch('odata/Stories(' + idStorys[i] + ')'  ,
+            fetch('odata/Stories(' + idStorys[i] + ')',
                 {
                     method: 'PATCH',
                     headers: {
@@ -80,12 +80,19 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
         return (
             <div>
                 <h1 className="text-center">{this.headerText}</h1>
-                <div>
-                    <label style={{ marginRight: "5px" }}>Select sprint number:
+                <div className="RDiv">
+                    <label style={{ marginRight: "5px", width: "85%" }}>Select sprint number:
                         <select style={{ marginTop: "10px" }} className="form-control-static" value={this.state.sprintNumber} onChange={this.handleStoryNumberSelect}>
-                            {this.state.sprints.map(s => <option  key={s.id} value={s.id}>{s.name}</option>)}
+                            {this.state.sprints.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
                         </select>
                     </label>
+                    <button className='btn-dark scrum-btn'
+                        style={{ marginLeft: "10px", marginTop: "-5px" }}
+                        data-toggle="modal"
+                        data-target="#confirmDeleteModal"
+                        onClick={this.handleSaveButtonClick}>
+                        Save sprint
+                    </button>
                 </div>
                 <div>
                     <table className="well col-md-1 table-hover td-scrum table-border" style={{ marginRight: "10px" }}><caption><h4>Users</h4></caption>
@@ -123,23 +130,16 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
 
                     <table className="well menu_links col-md-1 td-scrum" id="t_draggable2">
                         <caption><h4>Sprint #{this.state.sprintNumber} Backlog</h4></caption>
-                    <tbody className="t_sortable table-scrum td-scrum">
-                        <tr className="td-scrum border">
-                            <td className="well"><h5>ID</h5></td>
-                            <td className="well"><h5>Story_name</h5></td>
-                            <td className="well"><h5>Story_description</h5></td>
-                        </tr>
-                    </tbody>
-                </table>
+                        <tbody className="t_sortable table-scrum td-scrum">
+                            <tr className="td-scrum border">
+                                <td className="well"><h5>ID</h5></td>
+                                <td className="well"><h5>Story_name</h5></td>
+                                <td className="well"><h5>Story_description</h5></td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-                <div role='button'
-                    className='btn btn-primary'
-                    style={{ marginLeft: "10px", marginTop: "-5px" }}
-                    data-toggle="modal"
-                    data-target="#confirmDeleteModal"
-                    onClick={this.handleSaveButtonClick}>
-                    Save sprint
-                </div>
+
                     {this.GetDeleteConfirmModal()}
                 </div>
             </div>
@@ -222,14 +222,14 @@ export class SprintPlaning extends React.Component<RouteComponentProps<{}>, IUse
             });
 
         fetch(('odata/sprints'), { credentials: 'include' })
-        .then(response => response.json() as Promise<any>)
+            .then(response => response.json() as Promise<any>)
             .then(data => {
                 var sprintsData = [] as Sprint[];
 
                 for (var i = 0; i < data["value"].length; i++) {
                     sprintsData[i] = new Sprint(data["value"][i]);
                 }
-                this.setState({ sprints: sprintsData});
+                this.setState({ sprints: sprintsData });
             }).catch(e => console.log(e));
     }
 

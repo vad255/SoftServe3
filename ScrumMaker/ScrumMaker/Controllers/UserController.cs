@@ -18,8 +18,8 @@ using System.Security.Cryptography;
 
 namespace ScrumMaker.Controllers
 {
-    [CookieAuthorize]
-    [RefreshToken]
+    //[CookieAuthorize]
+    //[RefreshToken]
     public class UserController : Controller
     {
         private readonly IRepository<Photo> _repository;
@@ -146,7 +146,6 @@ namespace ScrumMaker.Controllers
 
             if (user != null)
             {
-
                 var password = GetRandomPassword();
 
                 user.Password = PasswordStorage.CreateHash(password);
@@ -172,7 +171,7 @@ namespace ScrumMaker.Controllers
                     Port = Convert.ToInt32(587),
                     EnableSsl = true,
                     UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential("azure_89e7c8ba6ee58b8f6bc781d3b71fbf50@azure.com", "1q3e5t7u"),
+                    Credentials = new NetworkCredential("prystaiko.roman", "1q3e5t7u9o"),
                     DeliveryMethod = SmtpDeliveryMethod.Network
                 };
                 emailMessage.IsBodyHtml = true;

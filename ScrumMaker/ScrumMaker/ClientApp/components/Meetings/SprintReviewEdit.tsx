@@ -131,7 +131,7 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
                     </div>
                 </div>
                 <div>
-                    <button className="btn-dark scrum-btn"
+                    <button className="scrum-btn btn-dark"
                         disabled={!this.userIsScrumMaster()}
                         data-toggle="modal"
                         data-target="#confirmDeleteModal">Save</button>

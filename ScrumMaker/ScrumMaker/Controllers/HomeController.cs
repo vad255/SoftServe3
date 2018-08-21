@@ -24,7 +24,7 @@ namespace ScrumMaker.Controllers
         {
             _users = users;
         }
-        
+
         [CookieAuthorize]
         [RefreshToken]
         public IActionResult Index()

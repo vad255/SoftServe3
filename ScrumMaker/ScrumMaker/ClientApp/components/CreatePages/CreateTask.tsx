@@ -225,7 +225,7 @@ export class CreateTask extends React.Component<RouteComponentProps<any>, ICreat
             </div>
             <div className="text-center">
                 <button
-                    className="btn-default scrum-btn"
+                    className="btn-dark scrum-btn"
                     data-toggle="modal"
                     data-target="#confirmDeleteModal"
                     onClick={this.handleCreateButtonClick}>Create</button>
@@ -233,7 +233,7 @@ export class CreateTask extends React.Component<RouteComponentProps<any>, ICreat
                 &nbsp;&nbsp;&nbsp;&nbsp;
 
                 <button
-                    className="btn-danger scrum-btn inline-block"
+                    className="btn-dark scrum-btn inline-block"
                     onClick={this.handleCancelValue}>Discard</button>
             </div>
             {this.GetDeleteConfirmModal()}

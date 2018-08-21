@@ -80,9 +80,6 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
                     })
                 });
         } else {
-            this.setState({ madalMessage: "Enter please name and description!" });
-        }
-        else {
             this.setState({ modalMessage: "Enter the name and description please!" });
         }
     }
@@ -158,12 +155,13 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
             </div>
             <div>
                 <h3 className="hStyle">Name:</h3>
-                <input className="input-lg CreatePage" style={{ width: "35%" }} onChange={this.handleChangeInput} type="text" value={this.state.inputValue} />
+                <input className="input-lg CreatePage" style={{ width: "35%" }}
+                    onChange={this.handleChangeInput} type="text" value={this.state.inputValue} required />
             </div>
             <div>
                 <h3 className="hStyle">Description:</h3>
                 <textarea style={{ height: "300px", fontSize: 25, padding: "7px", width: "35%" }}
-                    className="fa-text-height CreatePage" onChange={this.handleChangeTextArea} value={this.state.textAreaValue} />
+                    className="fa-text-height CreatePage" onChange={this.handleChangeTextArea} value={this.state.textAreaValue} required />
             </div>
             <div>
                 <h3 className="hStyle">Status:</h3>
@@ -179,7 +177,7 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
 
             <div>
                 <h3 className="hStyle">Assign to team:</h3>
-                <input className="input-lg" type="text" style={{ width: "35%" }} value={this.state.team.name}></input>
+                <input className="input-lg" type="text" style={{ width: "35%" }} value={this.state.team.name} required></input>
             </div>
 
             <div>

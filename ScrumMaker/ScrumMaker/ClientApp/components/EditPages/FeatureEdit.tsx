@@ -131,7 +131,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
             <h3 className="hStyle">Name:</h3>
             <input
                 className="input-lg inputField fontStyle"
-                name="FeatureName"
+                name="FeatureName" style={{ width: "35%" }}
                 type="text"
                 value={this.state.FeatureName}
                 onChange={this.handleInputChange} />
@@ -140,7 +140,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
             <h3 className="hStyle">State:</h3>
             {this.renderStates()}
             <h3 className="hStyle">Program increment:</h3>
-            <input
+            <input style={{ width: "35%" }}
                 className="input-lg inputField fontStyle"
                 name="ProgramIncrement"
                 type="text"
@@ -155,7 +155,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
                     </NavLink>
                 </div>
             <h3 className="hStyle">Description:</h3>
-            <textarea
+            <textarea style={{ width: "35%" }}
                 className="areaStyle fontStyle"
                 name="Description"
                 type="text"
@@ -205,7 +205,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
         return <select
             className="selectStyle fontStyle form-control"
             value={this.state.State}
-            name="State"
+            name="State" style={{ width: "35%" }}
             onChange={this.handleInputChange}>
             {items}
         </select>
@@ -218,7 +218,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
             items.push(<option key={i + 1} value={users[i].userId}>{users[i].login}</option>);
         }
 
-        return <select
+        return <select style={{ width: "35%" }}
             className="selectStyle fontStyle form-control"
             value={this.state.OwnerUserId}
             name="OwnerUserId"

@@ -165,7 +165,6 @@
     <TypeScriptCompile Include="ClientApp\components\EditPages\EditDefect.tsx" />
     <TypeScriptCompile Include="ClientApp\components\ForAdmin\CreateButton.tsx" />
     <TypeScriptCompile Include="ClientApp\components\ForgotPasswordPage.tsx" />
-    <TypeScriptCompile Include="ClientApp\components\FormErrors.tsx" />
 
     <TypeScriptCompile Include="ClientApp\components\GetError.tsx" />
 

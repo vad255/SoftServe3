@@ -154,7 +154,7 @@ export class CreateTeam extends React.Component<RouteComponentProps<any>, ITeamF
             </div>
             <div className="text-left">
                 <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Name:</h3>
-                <input
+                <input style={{ width: "35%" }}
                     className="input-lg"
                     name="TeamName"
                     type="text"

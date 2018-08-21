@@ -40,7 +40,7 @@ namespace ScrumMaker.Controllers
                 Port = 587,
                 EnableSsl = true,
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential("azure_89e7c8ba6ee58b8f6bc781d3b71fbf50@azure.com", "1q3e5t7u"),
+                Credentials = new NetworkCredential("prystaiko.roman", "1q3e5t7u9o"),
                 DeliveryMethod = SmtpDeliveryMethod.Network
             };
 

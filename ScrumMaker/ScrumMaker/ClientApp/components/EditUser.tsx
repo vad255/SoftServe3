@@ -82,14 +82,14 @@ export class EditUser extends Component<RouteComponentProps<any>, FileLoad> {
     private handleSave(event: any) {
         event.preventDefault();
         const data = new FormData(event.target);
-            fetch('api/User/EditPassword', {
-                credentials: 'include',
-                method: 'POST',
-                body: data,
-            }).then(response => response.json() as Promise<boolean>)
-                .then(data => {
-                    data != false ? this.setState({ ConfirmModalPassword: true, PasswordUserMessage: "Password successfully changed" }) : this.setState({ ConfirmModalPassword: true, PasswordUserMessage: "Password not same" });;
-                });
+        fetch('api/User/EditPassword', {
+            credentials: 'include',
+            method: 'POST',
+            body: data,
+        }).then(response => response.json() as Promise<boolean>)
+            .then(data => {
+                data != false ? this.setState({ ConfirmModalPassword: true, PasswordUserMessage: "Password successfully changed" }) : this.setState({ ConfirmModalPassword: true, PasswordUserMessage: "Password not same" });;
+            });
     }
 
 
@@ -107,51 +107,50 @@ export class EditUser extends Component<RouteComponentProps<any>, FileLoad> {
                     onRequestClose={this.openCloseModelPhoto}
                     className="Modal">
                     <h3>Incorrect size or type</h3>
-                        <button className="modalBtn" onClick={this.openCloseModelPhoto}>Ok</button>
+                    <button className="btn-primary scrum-btn" onClick={this.openCloseModelPhoto}>Ok</button>
                 </Modal>
 
                 <Modal isOpen={this.state.ConfirmModalPassword}
                     onRequestClose={this.openCloseModelPassword}
                     className="Modal">
                     <h3>{this.state.PasswordUserMessage}</h3>
-                        <button className="modalBtn" onClick={this.openCloseModelPassword}>Ok</button>
+                    <button className="scrum-btn btn-dark" onClick={this.openCloseModelPassword}>Ok</button>
                 </Modal>
 
                 <div className='myDiv'>{$imagePreview}</div>
                 <form onSubmit={this._handleSubmit} asp-controller="UserEdit" asp-action="UploadFile" method="post">
                     <div className="file-upload siteColor">
                         <label className="chooseLabel">
-                            <input type="file" className="fileInput" name="file" multiple accept="image/*" onChange={this._handleImageChange} />
+                            <input type="file" className="fileInput" style={{ width: "35%" }} name="file" multiple accept="image/*" onChange={this._handleImageChange} />
                             <span>Choose</span>
                         </label>
                     </div>
-                    <button type="submit" className="btn save siteColor">Upload Image</button>
+                    <button type="submit" className="scrum-btn btn-dark">Upload Image</button>
                 </form>
 
                 <p>____________________________________________________________________________________________</p>
 
                 <form onSubmit={this.handleSave} method="post">
-                    <div className='fildsDiv'>
+                    <div className='fildsDiv' style={{ width: "35%" }}>
                         <div className="form-group row" >
-                            <input type="hidden" name="employeeId" />
+                            <input type="hidden" name="employeeId" style={{ width: "35%" }} />
                         </div>
-                        <div className="form-group row">
-                            <label className="control-label col-md-12" htmlFor="password" >New password</label>
-                            <div className="col-md-4">
+                        <div>
+                            <label htmlFor="password" >New password</label>
+                            <div >
                                 <input className="form-control" type="password" name="password" id="password" defaultValue={this.state.password} required />
                             </div>
                         </div>
-                        <div className="form-group row">
-                            <label className="control-label col-md-12" htmlFor="repeatpassword" >Repeat password</label>
-                            <div className="col-md-4">
-                                <input className="form-control" type="password" name="repeatpassword" id="repeatpassword" defaultValue={this.state.repeatPassword} required />
+                        <div >
+                            <label htmlFor="repeatpassword" >Repeat password</label>
+                            <div>
+                                <input className="form-control"  type="password" name="repeatpassword" id="repeatpassword" defaultValue={this.state.repeatPassword} required />
                             </div>
                         </div>
-                        <button type="submit" className="btn save siteColor">Change password</button>
+                        <button type="submit" className="scrum-btn btn-dark">Change password</button>
                     </div>
                 </form>
             </main>
         )
     }
 }
-   

@@ -16,7 +16,7 @@ interface IEditPageState {
     teamID: number;
     stageValue: SprintStage;
     goalValue: string;
-    history: SprintHistory;   
+    history: SprintHistory;
     ended: moment.Moment;
     begined: moment.Moment;
 }
@@ -30,17 +30,17 @@ export class CreateSprint extends React.Component<RouteComponentProps<any>, IEdi
         this.state = (({
             nameValue: "",
             teams: [],
-            teamID:1,
+            teamID: 1,
             stageValue: "Planning",
             goal: "",
             begined: moment.min(),
             ended: moment.min(),
             history: new SprintHistory({})
-            
+
         }) as any);
 
         this.handleSaveButtonClick = this.handleSaveButtonClick.bind(this);
-        
+
     }
 
     handleSaveButtonClick() {
@@ -79,17 +79,17 @@ export class CreateSprint extends React.Component<RouteComponentProps<any>, IEdi
 
                 for (var i = 0; i < data['value'].length; i++)
                     teamsTemp[i] = new Team(data["value"][i]);
-                
+
                 this.setState({ teams: teamsTemp });
             }).
             catch(e => console.error(e));
     }
 
-    
-    
+
+
     public render() {
         let contents: JSX.Element;
-                
+
         contents =
             <div className="editWindow">
                 {this.getHeader()}
@@ -104,12 +104,29 @@ export class CreateSprint extends React.Component<RouteComponentProps<any>, IEdi
                 </div>
 
                 {this.getReviewInput()}
-               
+
                 {this.getButtons()}
                 {this.GetDeleteConfirmModal()}
+                {this.GetVaildateModal()}
             </div>
-        
+
         return contents;
+    }
+
+    private GetVaildateModal() {
+        return <div id="ValidateModal" className="modal fade">
+            <div className="modal-dialog">
+                <div className="modal-content">
+                    <div className="modal-header  text-center" ><button className="close" type="button" data-dismiss="modal">×</button>
+                        <h4 className="modal-title">Enter name and review, please!</h4>
+                    </div>
+                    <div className="modal-body text-center">
+                        <button className="btn-dark scrum-btn" type="button" data-dismiss="modal">
+                            Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>;
     }
 
     getHeader() {
@@ -139,7 +156,7 @@ export class CreateSprint extends React.Component<RouteComponentProps<any>, IEdi
         let index = 0;
 
         if (this.state.teams) {
-           
+
             for (var i = 0; i < this.state.teams.length; i++) {
                 options.push(<option key={i} value={this.state.teams[i].id}>{this.state.teams[i].name}</option>);
             }
@@ -194,7 +211,7 @@ export class CreateSprint extends React.Component<RouteComponentProps<any>, IEdi
                 <div className="inline-block">
                         <DatePicker
                             locale="uk-ua"
-                            className="form-control"                            
+                            className="form-control"
                             selected={this.state.begined}
                             dateFormat={"DD.MM.YYYY HH:mm"}
                             onChange={this.handleBeginChange.bind(this)}
@@ -230,7 +247,7 @@ export class CreateSprint extends React.Component<RouteComponentProps<any>, IEdi
                 <textarea
                     className="areaStyle"
                     name="Description"
-                    type="text"                    
+                    type="text"
                     onChange={this.handleReviewChange.bind(this)}
                 />
             </div>
@@ -238,12 +255,21 @@ export class CreateSprint extends React.Component<RouteComponentProps<any>, IEdi
     }
 
     getButtons() {
+
+        let dataTarget;
+
+        if (this.state.nameValue !== "" && this.state.goalValue !== "") {
+            dataTarget = "#ConfirmDialog";
+        }
+        else {
+            dataTarget = "#ValidateModal";
+        }
         return (
             <div className="text-center">
                 <button
                     className="btn-dark scrum-btn"
                     data-toggle="modal"
-                    data-target="#ConfirmDialog"
+                    data-target={dataTarget}
                     role="button">Add element</button>
 
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -270,15 +296,15 @@ export class CreateSprint extends React.Component<RouteComponentProps<any>, IEdi
             then(() => this.handleSaveButtonClick());
     }
 
-    PostHistoryAndConnectToSprint(): Promise<any> {       
+    PostHistoryAndConnectToSprint(): Promise<any> {
 
         return fetch(this.HISTORY_UPDATE_URL,
             {
                 method: 'POST',
                 body: JSON.stringify({
-                    '@odata.type': 'DAL.Models.SprintStagesHistory',                    
+                    '@odata.type': 'DAL.Models.SprintStagesHistory',
                     'Begined': this.state.begined ? this.state.begined.toISOString() : "",
-                    'Ended': this.state.ended ? this.state.ended.toISOString() : "",                                       
+                    'Ended': this.state.ended ? this.state.ended.toISOString() : "",
                 }
                 ),
                 headers: {
@@ -290,30 +316,30 @@ export class CreateSprint extends React.Component<RouteComponentProps<any>, IEdi
             then(data => {
                 let historyTemp: SprintHistory = new SprintHistory(data);
                 console.log(historyTemp.id);
-                this.historyId = historyTemp.id;              
+                this.historyId = historyTemp.id;
 
                 this.setState({ history: historyTemp });
 
             });
     }
-   
+
     private handleCancel() {
         this.props.history.push('/sprints');
-    }       
+    }
 
     handleNameChange(event: any) {
         this.setState({ nameValue: event.target.value });
     }
-    
+
     handleReviewChange(event: any) {
         this.setState({ goalValue: event.target.value });
     }
-   
-    handleStageChange(event: any) {       
+
+    handleStageChange(event: any) {
         this.setState({ stageValue: event.target.value });
     }
 
-    handleTeamChange(event: any) {        
+    handleTeamChange(event: any) {
         this.setState({ teamID: event.target.value });
     }
 
@@ -323,5 +349,5 @@ export class CreateSprint extends React.Component<RouteComponentProps<any>, IEdi
 
     handleEndChange(date: moment.Moment) {
         this.setState({ ended: date });
-    }   
+    }
 }

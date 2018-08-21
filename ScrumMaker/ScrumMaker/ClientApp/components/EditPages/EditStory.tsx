@@ -15,6 +15,7 @@ interface IEditPageState {
     users: User[];
     teamId: number;
     userId: number;
+    modalMessage: string;
 }
 
 export class EditStory extends React.Component<RouteComponentProps<any>, IEditPageState> {
@@ -47,7 +48,8 @@ export class EditStory extends React.Component<RouteComponentProps<any>, IEditPa
                     inputValue: story1.name,
                     textAreaValue: story1.description,
                     teamId: story1.team.id,
-                    userId: story1.userId
+                    userId: story1.userId,
+                    modalMessage: ""
                 });
             }).then(() => this.getUsers());
     }
@@ -67,25 +69,28 @@ export class EditStory extends React.Component<RouteComponentProps<any>, IEditPa
     }
 
     handleSaveButtonClick() {
-        fetch('odata/Stories(' + this.state.id + ')',
-            {
-                method: 'PATCH',
-                headers: {
-                    'OData-Version': '4.0',
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json;odata.metadata=minimal',
-                },
-                body: JSON.stringify({
+        if (this.state.inputValue !== "" && this.state.textAreaValue !== "") {
+            this.setState({ modalMessage: "The story " + this.state.inputValue + " was updated." });
+            fetch('odata/Stories(' + this.state.id + ')',
+                {
+                    method: 'PATCH',
+                    headers: {
+                        'OData-Version': '4.0',
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json;odata.metadata=minimal',
+                    },
+                    body: JSON.stringify({
 
-                    '@odata.type': 'DAL.Models.Story',
-                    'Name': this.state.inputValue,
-                    'Description': this.state.textAreaValue,
-                    'Status': this.state.statusValue,
-                    'UserId': this.state.userId,
-                })
-            });
-
-
+                        '@odata.type': 'DAL.Models.Story',
+                        'Name': this.state.inputValue,
+                        'Description': this.state.textAreaValue,
+                        'Status': this.state.statusValue,
+                        'UserId': this.state.userId,
+                    })
+                });
+        } else {
+            this.setState({ modalMessage: "Enter the name and description please!" });
+        }
     }
 
 
@@ -94,7 +99,7 @@ export class EditStory extends React.Component<RouteComponentProps<any>, IEditPa
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header  text-center" ><button className="close" type="button" data-dismiss="modal">×</button>
-                        <h4 className="modal-title">The story "{this.state.story.name}" was updated.</h4>
+                        <h4 className="modal-title">{this.state.modalMessage}</h4>
                     </div>
                     <div className="modal-body text-center">
                         <button className="btn-dark scrum-btn" type="button" data-dismiss="modal" onClick={this.handleOkButtonClick} >
@@ -121,14 +126,15 @@ export class EditStory extends React.Component<RouteComponentProps<any>, IEditPa
         return <select
             value={this.state.statusValue}
             className="form-control CreatePage"
-            name="State" style={{width: "35%"}}
+            name="State" style={{ width: "35%" }}
             onChange={this.handleStatusSelect}>
             {items}
         </select>;
     }
 
     handleOkButtonClick() {
-        this.props.history.push("/Stories");
+        if (this.state.modalMessage !== "Enter the name and description please!")
+            this.props.history.push("/Stories");
     }
 
     handleUserSelect(event: any) {
@@ -153,32 +159,36 @@ export class EditStory extends React.Component<RouteComponentProps<any>, IEditPa
             <div className="text-center">
                 <h2 className="h2EditCreatePage">Editing story by Id = {this.state.id}</h2>
             </div>
-            <div>
-                <h3 className="hStyle">Name:</h3>
-                <input className="input-lg" style={{ width: "35%" }} onChange={this.handleChangeInput} type="text" value={this.state.inputValue} />
-            </div>
-            <div>
-                <h3 className="hStyle">Description:</h3>
-                <textarea style={{ width: "35%", height: "300px", fontSize: 25, padding: "7px" }} className="fa-text-height" onChange={this.handleChangeTextArea} value={this.state.textAreaValue} />
-            </div>
-            <div>
-                <h3 className="hStyle">Status:</h3>
-                {this.renderStatus()}
-            </div>
+            <form onSubmit={this.handleSaveButtonClick} >
+                <div>
+                    <h3 className="hStyle">Name:</h3>
+                    <input className="input-lg" style={{ width: "35%" }}
+                        onChange={this.handleChangeInput} type="text" value={this.state.inputValue} required />
+                </div>
+                <div>
+                    <h3 className="hStyle">Description:</h3>
+                    <textarea style={{ width: "35%", height: "300px", fontSize: 25, padding: "7px" }}
+                        className="fa-text-height" onChange={this.handleChangeTextArea} value={this.state.textAreaValue} required />
+                </div>
+                <div>
+                    <h3 className="hStyle">Status:</h3>
+                    {this.renderStatus()}
+                </div>
 
-            <div>
-                <h3 className="hStyle">Assign to:</h3>
-                <select className="form-control inline-block" style={{ width: "35%" }} onChange={this.handleUserSelect}>
-                    {this.state.users.map(user => <option key={user.userId} value={user.userId}>{user.login}</option>)}
-                </select>
-            </div>
+                <div>
+                    <h3 className="hStyle">Assign to:</h3>
+                    <select className="form-control inline-block" style={{ width: "35%" }} onChange={this.handleUserSelect}>
+                        {this.state.users.map(user => <option key={user.userId} value={user.userId}>{user.login}</option>)}
+                    </select>
+                </div>
 
-            <div className="text-center">
-                <button style={{ margin: "10px" }} data-toggle="modal"
-                    data-target="#confirmDeleteModal" className="btn-dark scrum-btn"
-                    onClick={this.handleSaveButtonClick}>Update</button>
-            </div>
-            {this.GetDeleteConfirmModal()}
+                <div className="text-center">
+                    <button style={{ margin: "10px" }} data-toggle="modal"
+                        data-target="#confirmDeleteModal" className="btn-dark scrum-btn"
+                       type="submit">Update</button>
+                </div>
+                {this.GetDeleteConfirmModal()}
+            </form>
         </div>;
     }
 }

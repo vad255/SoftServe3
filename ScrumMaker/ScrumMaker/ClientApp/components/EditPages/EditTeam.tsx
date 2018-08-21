@@ -134,7 +134,7 @@ export class EditTeam extends React.Component<RouteComponentProps<{}>, ITeamFetc
             </div>
             <div className="text-left">
                 <h3 className="hStyle">Name:</h3>
-                <input
+                <input style={{ width: "35%" }}
                     className="input-lg"
                     name="TeamName"
                     type="text"
