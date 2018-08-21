@@ -6,6 +6,7 @@ import { Link, Redirect } from 'react-router-dom';
 interface AddUserDataState {
     id: number;
     login: string;
+    email: string;
     password: string;
     roles: Role[];
     ConfirmModal: boolean;
@@ -20,7 +21,7 @@ export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDa
     constructor(props: any) {
         super(props);
 
-        this.state = { id: 0, login: "", password: "", roles: [], ConfirmModal: false, modalMessage: "" };
+        this.state = { id: 0, login: "", email: "", password: "", roles: [], ConfirmModal: false, modalMessage: "" };
         fetch('odata/roles')
             .then(response => response.json() as any)
             .then(data => {
@@ -92,7 +93,13 @@ export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDa
                     <div className="form-group row" >
                         <label className=" control-label col-md-12" htmlFor="Login">Login</label>
                         <div className="col-md-4">
-                            <input className="form-control" type="email" name="login" defaultValue={this.state.login} required />
+                            <input className="form-control" type="login" name="login" defaultValue={this.state.login} required />
+                        </div>
+                    </div >
+                    <div className="form-group row" >
+                        <label className=" control-label col-md-12" htmlFor="Email">Email</label>
+                        <div className="col-md-4">
+                            <input className="form-control" type="email" name="email" defaultValue={this.state.email} required />
                         </div>
                     </div >
                     <div className="form-group row">
