@@ -8,6 +8,8 @@ export interface ICommitableDbModel extends IDbModel {
 export interface IFetchState {
     items: IDbModel[];
     pageSize: number;
+    ConfirmModal: boolean;
+    modalMessage: string;
 }
 
 export interface IDbModel {

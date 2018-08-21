@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as Modal from 'react-modal';
 import { RouteComponentProps } from 'react-router';
 import 'isomorphic-fetch';
 import { IDbModel, IFetchState } from '../Models/Abstraction';
@@ -25,8 +26,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
     protected customUrlFilters: string = '';
     protected filteringOn: boolean = false;
     private urlFilters: string = '';
-    private urlPaging: string = "";
-
+    private urlPaging: string = ""; 
     private CurrentPage = 0;
     private totalCount = 0;
 
@@ -36,7 +36,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
     constructor() {
         super();
-        this.state = { pageSize: 5, items: [] };
+        this.state = { pageSize: 5, items: [], ConfirmModal: false, modalMessage: "" };
         this.recalcPagingUrl(this.state.pageSize);
         this.readQueryParams();  
         this.isLoading = true;
@@ -54,6 +54,7 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
 
         return (
             <div>
+                
                 <div className="RDiv">
 
                     <h1 style={{ width: "90%" }}>{this.headerText}</h1>
@@ -89,9 +90,22 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
                         </tfoot>
                     </table>
                     {this.GetDeleteConfirmModal()}
+
+                    <Modal isOpen={this.state.ConfirmModal}
+                        onRequestClose={this.openCloseModel}
+                        className="Modal">
+                        <h3>{this.state.modalMessage}</h3>
+                        <button className="modalBtn" onClick={this.openCloseModel}>Ok</button>
+                    </Modal>
                 </div>
             </div>
         );
+    }
+
+    openCloseModel = () => {
+        this.setState({
+            ConfirmModal: !this.state.ConfirmModal
+        })
     }
 
     protected LoadData() {
@@ -108,8 +122,6 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
                 }
             }).catch(e => this.onCatch(e));
     }
-
-
 
     componentDidMount() {
         this.LoadData();
@@ -179,7 +191,6 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
         if (this.totalCount <= this.state.pageSize) {
             return <tr></tr>;
         }
-
 
         return <tr>
             <td colSpan={14}>
@@ -272,8 +283,16 @@ export abstract class Grid extends React.Component<RouteComponentProps<{}>, IFet
             {
                 method: 'DELETE',
                 credentials: 'include',
-            }).then(() => this.LoadData());
-    }
+            
+            }).then(response => response.json() as any)
+            .then(data => {
+
+                data.value == false ? this.setState({ modalMessage: "The Item successfully deleted", ConfirmModal: true })
+                                    : this.setState({ modalMessage: "Current Item doesn't exist", ConfirmModal: true });
+                
+                this.LoadData();
+            });
+    }    
 
     protected onDeleteCancel() {
         this.itemToDelete = -1;

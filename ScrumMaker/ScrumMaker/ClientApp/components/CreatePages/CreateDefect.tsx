@@ -66,6 +66,7 @@ export class CreateDefect extends React.Component<RouteComponentProps<any>, IEdi
     }
 
     private GetDeleteConfirmModal() {
+        if (this.state.nameValue.length != 0 && this.state.fixResultValue.length != 0 && this.state.actualResultValue.length != 0)
         return <div id="confirmDeleteModal" className="modal fade">
             <div className="modal-dialog">
                 <div className="modal-content">
@@ -119,8 +120,8 @@ export class CreateDefect extends React.Component<RouteComponentProps<any>, IEdi
                 <h2 className="h2EditCreatePage">Create defect</h2>
             </div>
             <div>
-                <h3 className="hStyle">Defect name:</h3>
-                <input className="input-lg" style={{ width: "35%" }}  onChange={this.handleChangeInput} type="text" value={this.state.nameValue} />
+                <h3 className="hStyle">Defect name<span style={{ color: "red" }}>*</span>:</h3>
+                <input className="input-lg" style={{ width: "35%" }} onChange={this.handleChangeInput} type="text" value={this.state.nameValue} required/>
             </div>
             <div>
                 <h3 className="hStyle">Description:</h3>
@@ -142,14 +143,16 @@ export class CreateDefect extends React.Component<RouteComponentProps<any>, IEdi
                 {this.renderPriority()}
             </div>
             <div>
-                <h3 className="hStyle">ActualResult:</h3>
-                <input className="input-lg" style={{ width: "35%" }} onChange={this.handleChangeInputActualResult} type="text" value={this.state.actualResultValue} />
+                <h3 className="hStyle">ActualResult<span style={{ color: "red" }}>*</span>:</h3>
+                <input className="input-lg" style={{ width: "35%" }} onChange={this.handleChangeInputActualResult} type="text" value={this.state.actualResultValue} required />
             </div>
             <div>
-                <h3 className="hStyle">FixResult:</h3>
-                <input className="input-lg" style={{ width: "35%" }}  onChange={this.handleChangeInputFixResult} type="text" value={this.state.fixResultValue} />
+                <h3 className="hStyle">FixResult<span style={{ color: "red" }}>*</span>:</h3>
+                <input className="input-lg" style={{ width: "35%" }} onChange={this.handleChangeInputFixResult} type="text" value={this.state.fixResultValue} required/>
             </div>           
-
+            <p>
+                <span style={{ color: "red" }}>*</span>this field is required
+            </p>
             <div className="text-center">               
 
                 <div role='button'
