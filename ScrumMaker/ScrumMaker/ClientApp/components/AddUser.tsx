@@ -91,21 +91,21 @@ export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDa
                         <input type="hidden" name="employeeId" value={this.state.id} />
                     </div>
                     <div className="form-group row" >
-                        <label className=" control-label col-md-12" htmlFor="Login">Login</label>
+                        <label className=" control-label col-md-12" htmlFor="Login">Login<span style={{ color: "red" }}>*</span></label>
                         <div className="col-md-4">
-                            <input className="form-control" type="login" name="login" defaultValue={this.state.login} required />
+                            <input className="form-control" type="login" name="login" defaultValue={this.state.login} required maxLength={50}/>
                         </div>
                     </div >
                     <div className="form-group row" >
-                        <label className=" control-label col-md-12" htmlFor="Email">Email</label>
+                        <label className=" control-label col-md-12" htmlFor="Email">Email<span style={{ color: "red" }}>*</span></label>
                         <div className="col-md-4">
-                            <input className="form-control" type="email" name="email" defaultValue={this.state.email} required />
+                            <input className="form-control" type="email" name="email" defaultValue={this.state.email} required maxLength={100} />
                         </div>
                     </div >
                     <div className="form-group row">
-                        <label className="control-label col-md-12" htmlFor="password" >Password</label>
+                        <label className="control-label col-md-12" htmlFor="password" >Password<span style={{ color: "red" }}>*</span></label>
                         <div className="col-md-4">
-                            <input className="form-control" type="password" name="password" defaultValue={this.state.password} required />
+                            <input className="form-control" type="password" name="password" defaultValue={this.state.password} required maxLength={100}/>
                         </div>
                     </div>
                     <div className="form-group row">

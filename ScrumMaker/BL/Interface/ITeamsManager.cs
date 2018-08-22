@@ -9,5 +9,6 @@ namespace BL
     public interface ITeamsManager
     {
         IQueryable<Team> GetUnemployedTeams();
+        void Delete(int key);
     }
 }

@@ -128,19 +128,21 @@ export class CreateTeam extends React.Component<RouteComponentProps<any>, ITeamF
     }
 
     private GetDeleteConfirmModal() {
-        return <div id="confirmDeleteModal" className="modal fade">
-            <div className="modal-dialog">
-                <div className="modal-content">
-                    <div className="modal-header  text-center" ><button className="close" type="button" data-dismiss="modal">×</button>
-                        <h4 className="modal-title">The new team "{this.state.TeamName}" was added.</h4>
-                    </div>
-                    <div className="modal-body text-center">
-                        <button className="btn-dark scrum-btn" type="button" data-dismiss="modal" onClick={this.handleOkButtonClick} >
-                            Ok</button>
+        if (this.state.TeamName.length != 0) {
+            return <div id="confirmDeleteModal" className="modal fade">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header  text-center" ><button className="close" type="button" data-dismiss="modal">×</button>
+                            <h4 className="modal-title">The new team "{this.state.TeamName}" was added.</h4>
+                        </div>
+                        <div className="modal-body text-center">
+                            <button className="btn btn-default" type="button" data-dismiss="modal" onClick={this.handleOkButtonClick} >
+                                Ok</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>;
+            </div>;
+        }
     }
 
     handleOkButtonClick() {
@@ -153,13 +155,16 @@ export class CreateTeam extends React.Component<RouteComponentProps<any>, ITeamF
                 <h2 style={{ margin: "10px", padding: "5px", textAlign: "center" }}>Create New Team</h2>
             </div>
             <div className="text-left">
-                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Name:</h3>
-                <input style={{ width: "35%" }}
+                <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Name:<span style={{ color: "red" }}>*</span></h3>
+                <input
+                    required
                     className="input-lg"
                     name="TeamName"
                     type="text"
                     value={this.state.TeamName}
-                    onChange={this.handleInputChange} />
+                    onChange={this.handleInputChange}
+                    maxLength={10}
+                />
             </div>
             <div className="text-left">
                 <h3 style={{ margin: "10px", padding: "5px", color: "green" }}>Members:</h3>
