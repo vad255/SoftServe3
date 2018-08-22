@@ -79,13 +79,57 @@ namespace ScrumMaker.Controllers
             return _defect.GetAll().Count(e => e.DefectId == key) > 0;
         }
 
+        //[AcceptVerbs("DELETE")]
+        //public IActionResult Delete([FromODataUri] int key)
+        //{
+        //    if (!DefectExists(key))
+        //    {                
+        //        return NotFound();
+        //    }
+        //    else
+        //    {
+        //        _defect.Delete(key);
+        //        _defect.Save();
+        //        return NoContent();
+        //    }
+        //}
+
         [AcceptVerbs("DELETE")]
-        public IActionResult Delete([FromODataUri] int key)
+        public bool Delete([FromODataUri] int key)
         {
-            _defect.Delete(key);
-            _defect.Save();
-            return NoContent();
+            if (DefectExists(key))
+            {
+                _defect.Delete(key);
+                _defect.Save();
+                return false;
+            }
+            else
+            {
+               
+                return true;
+            }
         }
+
+        //[HttpPost]
+        //[Route("api/User/Create")]
+        //public bool Delete(User user)
+        //{
+        //    try
+        //    {
+        //        var hash = PasswordStorage.CreateHash(user.Password);
+        //        user.Password = hash;
+        //        _db.Users.Add(user);
+        //        _db.SaveChanges();
+        //        Logger.LogInfo("RegistartionController:Create():Registration was successful!");
+        //        return true;
+        //    }
+
+        //    catch (Exception e)
+        //    {
+        //        Logger.LogError("RegistartionController:Create():Registration was not successful. Something went wrong!: {0}", e);
+        //        return false;
+        //    }
+        //}
 
         [AcceptVerbs("POST")]
         public IActionResult Post([FromBody] Defect createDefect)
