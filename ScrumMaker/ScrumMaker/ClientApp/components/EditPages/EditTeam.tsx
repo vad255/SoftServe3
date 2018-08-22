@@ -9,6 +9,7 @@ import { State } from '../Models/FeatureState';
 import { User } from '../Models/User';
 import { Team } from '../Models/Team';
 import { Label } from 'react-bootstrap';
+import { max } from 'moment';
 
 interface ITeamFetchingState {
     TeamName: string;
@@ -133,13 +134,16 @@ export class EditTeam extends React.Component<RouteComponentProps<{}>, ITeamFetc
                 <h2 className="h2EditCreatePage text-center">"{this.state.TeamName}"-Team</h2>
             </div>
             <div className="text-left">
-                <h3 className="hStyle">Name:</h3>
+                <h3 className="hStyle">Name:<span style={{ color: "red" }}>*</span></h3>
                 <input
+                    required
                     className="input-lg"
                     name="TeamName"
                     type="text"
                     value={this.state.TeamName}
-                    onChange={this.handleInputChange} />
+                    onChange={this.handleInputChange}
+                    maxLength={100}
+                />
             </div>
             <div className="text-left">
                 <h3 className="hStyle">Members:</h3>
