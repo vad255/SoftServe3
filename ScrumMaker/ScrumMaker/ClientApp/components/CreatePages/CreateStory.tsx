@@ -6,6 +6,7 @@ import { StoryStatus } from "../Models/Story";
 import { User } from "../Models/User";
 import { Team } from "../Models/Team";
 import { Sprint } from "../Models/Sprint";
+import { Modal } from "react-bootstrap";
 
 interface ICreatePageState {
     statusValue: string;
@@ -127,6 +128,7 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
         let sprint = this.state.sprints.filter(s => event.target.value == s.id)[0] as Sprint;
         this.setState({ team: sprint.team, users: sprint.team.members });
     }
+
     private renderStatus() {
         let names: string[] = [];
         for (let iterator in StoryStatus) {
@@ -150,17 +152,18 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
 
     public render() {
         return <div className="text-left">
+
             <div className="text-center">
                 <h2 className="h2EditCreatePage">Creating a Story</h2>
             </div>
             <div>
                 <h3 className="hStyle">Name:</h3>
-                <input className="input-lg CreatePage" style={{ width: "35%" }}
+                <input className="input-lg CreatePage" style={{ width: "35%" }} maxLength={20}
                     onChange={this.handleChangeInput} type="text" value={this.state.inputValue} required />
             </div>
             <div>
                 <h3 className="hStyle">Description:</h3>
-                <textarea style={{ height: "300px", fontSize: 25, padding: "7px", width: "35%" }}
+                <textarea style={{ height: "300px", fontSize: 25, padding: "7px", width: "35%" }} maxLength={300}
                     className="fa-text-height CreatePage" onChange={this.handleChangeTextArea} value={this.state.textAreaValue} required />
             </div>
             <div>
@@ -170,7 +173,7 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
 
             <div>
                 <h3 className="hStyle">Assign to sprint:</h3>
-                <select className="form-control inline-block CreatePage" style={{ width: "35%" }} onChange={this.handleSprintSelect}>
+                <select className="form-control inline-block CreatePage" style={{ width: "35%" }} onChange={this.handleSprintSelect} required>
                     {this.state.sprints.map(sprint => <option key={sprint.id} value={sprint.id}>{sprint.name}</option>)}
                 </select>
             </div>
@@ -182,15 +185,16 @@ export class CreateStory extends React.Component<RouteComponentProps<any>, ICrea
 
             <div>
                 <h3 className="hStyle">Assign to:</h3>
-                <select className="form-control inline-block CreatePage" style={{ width: "35%" }} onChange={this.handleUserSelect}>
+                <select className="form-control inline-block CreatePage" style={{ width: "35%" }} onChange={this.handleUserSelect} required>
                     {this.state.users.map(user => <option key={user.userId} value={user.userId}>{user.login}</option>)}
                 </select>
             </div>
-
+            
             <div className="text-center">
-                <button style={{ margin: "10px" }} data-toggle="modal"
-                    data-target="#confirmDeleteModal" className="btn-dark scrum-btn"
-                        onClick={this.handleCreateButtonClick}>Create a Story</button>
+                <button style={{ margin: "10px" }} data-toggle="modal" type="submit" id="CrtBtn"
+                    className="btn-dark scrum-btn" data-target="#confirmDeleteModal"
+                    onClick={this.handleCreateButtonClick}>Create a Story</button>
+                <button />
             </div>
             {this.GetCreateConfirmModal()}
         </div>;

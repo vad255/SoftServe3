@@ -28,7 +28,8 @@ export class EditStory extends React.Component<RouteComponentProps<any>, IEditPa
             inputValue: "",
             textAreaValue: "",
             users: [], teamId: 0,
-            userId: 0
+            userId: 1,
+            modalMessage: ""
         }) as any);
 
         this.handleSaveButtonClick = this.handleSaveButtonClick.bind(this);
@@ -125,7 +126,7 @@ export class EditStory extends React.Component<RouteComponentProps<any>, IEditPa
 
         return <select
             value={this.state.statusValue}
-            className="form-control CreatePage"
+            className="form-control CreatePage" required
             name="State" style={{ width: "35%" }}
             onChange={this.handleStatusSelect}>
             {items}
@@ -159,36 +160,34 @@ export class EditStory extends React.Component<RouteComponentProps<any>, IEditPa
             <div className="text-center">
                 <h2 className="h2EditCreatePage">Editing story by Id = {this.state.id}</h2>
             </div>
-            <form onSubmit={this.handleSaveButtonClick} >
-                <div>
-                    <h3 className="hStyle">Name:</h3>
-                    <input className="input-lg" style={{ width: "35%" }}
-                        onChange={this.handleChangeInput} type="text" value={this.state.inputValue} required />
-                </div>
-                <div>
-                    <h3 className="hStyle">Description:</h3>
-                    <textarea style={{ width: "35%", height: "300px", fontSize: 25, padding: "7px" }}
-                        className="fa-text-height" onChange={this.handleChangeTextArea} value={this.state.textAreaValue} required />
-                </div>
-                <div>
-                    <h3 className="hStyle">Status:</h3>
-                    {this.renderStatus()}
-                </div>
+            <div>
+                <h3 className="hStyle">Name:</h3>
+                <input className="input-lg" style={{ width: "35%" }} maxLength={20}
+                    onChange={this.handleChangeInput} type="text" value={this.state.inputValue} required />
+            </div>
+            <div>
+                <h3 className="hStyle">Description:</h3>
+                <textarea style={{ width: "35%", height: "300px", fontSize: 25, padding: "7px" }} maxLength={300}
+                    className="fa-text-height" onChange={this.handleChangeTextArea} value={this.state.textAreaValue} required />
+            </div>
+            <div>
+                <h3 className="hStyle">Status:</h3>
+                {this.renderStatus()}
+            </div>
 
-                <div>
-                    <h3 className="hStyle">Assign to:</h3>
-                    <select className="form-control inline-block" style={{ width: "35%" }} onChange={this.handleUserSelect}>
-                        {this.state.users.map(user => <option key={user.userId} value={user.userId}>{user.login}</option>)}
-                    </select>
-                </div>
+            <div>
+                <h3 className="hStyle">Assign to:</h3>
+                <select className="form-control inline-block" style={{ width: "35%" }} onChange={this.handleUserSelect} required>
+                    {this.state.users.map(user => <option key={user.userId} value={user.userId}>{user.login}</option>)}
+                </select>
+            </div>
 
-                <div className="text-center">
-                    <button style={{ margin: "10px" }} data-toggle="modal"
-                        data-target="#confirmDeleteModal" className="btn-dark scrum-btn"
-                       type="submit">Update</button>
-                </div>
-                {this.GetDeleteConfirmModal()}
-            </form>
+            <div className="text-center">
+                <button style={{ margin: "10px" }} data-toggle="modal"
+                    data-target="#confirmDeleteModal" className="btn-dark scrum-btn"
+                    type="submit">Update</button>
+            </div>
+            {this.GetDeleteConfirmModal()}
         </div>;
     }
 }

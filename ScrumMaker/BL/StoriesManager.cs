@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace BL
 {
-    public class StoriesManager: IStoriesManager
+    public class StoriesManager : IStoriesManager
     {
         public IUnitOfWork _unit;
 

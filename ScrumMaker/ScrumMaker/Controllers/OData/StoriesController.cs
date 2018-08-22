@@ -36,17 +36,18 @@ namespace ScrumMaker.Controllers
         }
 
         [AcceptVerbs("DELETE")]
-        public IActionResult Delete([FromODataUri] int key)
+        public bool Delete([FromODataUri] int key)
         {
             if (StoryExists(key))
             {
                 _stories.Delete(key);
                 _stories.Save();
-                return NoContent();
+                return false;
             }
             else
             {
-                return NoContent();
+
+                return true;
             }
         }
 
