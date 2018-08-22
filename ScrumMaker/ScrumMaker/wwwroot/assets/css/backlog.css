@@ -5,6 +5,7 @@
 
 .task-name {
     width: 200px;
+    min-height: 40px;
     height: auto;
 }
 
@@ -17,10 +18,12 @@
 }
 
 .tab-story {
-    width: 200px;
+    width: 180px;
+    min-height: 40px;
     height: auto;
     font-family: 'Times New Roman';
     font: 20px;
+    border-radius: 7px;
 }
 
 .tab-menu {
@@ -103,7 +106,7 @@
 }
 
 .tabs-left > li {
-    margin-right: -1px;
+    margin-right: 5px;
 }
 
 .tabs-right > li {

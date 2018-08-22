@@ -14,7 +14,6 @@ namespace UnitTests
             _itemToTesting = new TestClass();
         }
 
-
         [Test]
         public void TestMethod()
         {

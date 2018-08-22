@@ -21,7 +21,7 @@ interface IFeatureFetchingState {
 }
 
 export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatureFetchingState> {
-    
+
     constructor() {
         super();
         this.LoadData();
@@ -37,7 +37,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
     private URL: string = "odata/feature?$expand=owner,stories($expand=team)&$filter=id eq " + this.id;
     private updateURL: string = "/odata/feature/";
     private getUserURL: string = "odata/users/";
-    
+
     public render() {
         let contents = this.isLoading
             ? <p><em>Loading...</em></p>
@@ -108,12 +108,12 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
         let curentFeature = new Feature(data['value'][0]);
         this.setFeatureData(curentFeature);
     }
-    
+
     handleInputChange(event: any) {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-        
+
         this.setState({
             [name]: value
         });
@@ -131,7 +131,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
             <h3 className="hStyle">Name:</h3>
             <input
                 className="input-lg inputField fontStyle"
-                name="FeatureName"
+                name="FeatureName" style={{ width: "35%" }}
                 type="text"
                 value={this.state.FeatureName}
                 onChange={this.handleInputChange} />
@@ -140,22 +140,22 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
             <h3 className="hStyle">State:</h3>
             {this.renderStates()}
             <h3 className="hStyle">Program increment:</h3>
-            <input
+            <input style={{ width: "35%" }}
                 className="input-lg inputField fontStyle"
                 name="ProgramIncrement"
                 type="text"
                 value={this.state.ProgramIncrement}
                 onChange={this.handleInputChange} />
             {this.renderBlocked()}
-            
+
             <h3 className="hStyle">Stories:</h3>
-            <div id={this.id.toString()} role="button" className="btn btn-sq-xs align-base ">
+            <div id={this.id.toString()} role="button" className="btn-dark scrum-btn btn-sq-xs align-base ">
                     <NavLink to={`../stories?filter=feature/id eq ${this.id}`} activeClassName='active'>
                        See stories which are in this feature...
                     </NavLink>
                 </div>
             <h3 className="hStyle">Description:</h3>
-            <textarea
+            <textarea style={{ width: "35%" }}
                 className="areaStyle fontStyle"
                 name="Description"
                 type="text"
@@ -163,13 +163,13 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
                 onChange={this.handleInputChange} />
             <div className="text-center">
                 <button
-                    className="btn btn-disabled"
+                    className="btn-dark scrum-btn"
                     data-toggle="modal"
                     data-target="#ConfirmDialog"
                     role="button">Update</button>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <button
-                    className="btn inline-block"
+                    className="btn-dark scrum-btn inline-block"
                     onClick={this.handleCancel.bind(this)}>Discard</button>
             </div>
         </form>
@@ -189,7 +189,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
             </div>
         }
     }
-    
+
     private renderStates() {
         let names: string[] = [];
         for (let iterator in State) {
@@ -201,11 +201,11 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
         for (var i = 0; i < names.length; i++) {
             items.push(<option key={i + 1} value={names[i]}>{names[i]}</option>);
         }
-   
+
         return <select
             className="selectStyle fontStyle form-control"
             value={this.state.State}
-            name="State"
+            name="State" style={{ width: "35%" }}
             onChange={this.handleInputChange}>
             {items}
         </select>
@@ -218,7 +218,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
             items.push(<option key={i + 1} value={users[i].userId}>{users[i].login}</option>);
         }
 
-        return <select
+        return <select style={{ width: "35%" }}
             className="selectStyle fontStyle form-control"
             value={this.state.OwnerUserId}
             name="OwnerUserId"

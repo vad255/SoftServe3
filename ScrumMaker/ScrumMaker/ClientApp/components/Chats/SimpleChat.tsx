@@ -116,10 +116,8 @@ export class SimpleChat extends React.Component<RouteComponentProps<{}>, IGlobal
     }
 
     private handleInput(e: any) {
-
         if (e.key !== 'Enter' || e.shiftKey)
             return;
-
         let input = undefined;
         input = document.getElementById("messageInput") as any;
         let message = input.value;
@@ -145,7 +143,3 @@ export class SimpleChat extends React.Component<RouteComponentProps<{}>, IGlobal
 
 
 }
-
-
-
-

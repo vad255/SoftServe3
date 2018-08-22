@@ -10,7 +10,7 @@ import { ConfirmMadal } from '../ConfirmModal';
 import DatePicker from 'react-datepicker'
 import * as moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
-import '../../css/editPage.css';
+import '../../../wwwroot/assets/css/editPage.css';
 
 
 interface ICreatePageState {
@@ -225,7 +225,7 @@ export class CreateTask extends React.Component<RouteComponentProps<any>, ICreat
             </div>
             <div className="text-center">
                 <button
-                    className="btn"
+                    className="btn-dark scrum-btn"
                     data-toggle="modal"
                     data-target="#confirmDeleteModal"
                     onClick={this.handleCreateButtonClick}>Create</button>
@@ -233,7 +233,7 @@ export class CreateTask extends React.Component<RouteComponentProps<any>, ICreat
                 &nbsp;&nbsp;&nbsp;&nbsp;
 
                 <button
-                    className="btn inline-block"
+                    className="btn-dark scrum-btn inline-block"
                     onClick={this.handleCancelValue}>Discard</button>
             </div>
             {this.GetDeleteConfirmModal()}
@@ -343,7 +343,7 @@ export class CreateTask extends React.Component<RouteComponentProps<any>, ICreat
                         <h4 className="modal-title">The task was created.</h4>
                     </div>
                     <div className="modal-body text-center">
-                        <button className="btn btn-default" type="button" data-dismiss="modal" onClick={this.handleCancelValue} >
+                        <button className="btn-dark scrum-btn" type="button" data-dismiss="modal" onClick={this.handleCancelValue} >
                             Ok</button>
                     </div>
                 </div>

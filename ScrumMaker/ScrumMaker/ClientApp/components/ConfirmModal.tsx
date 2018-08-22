@@ -26,11 +26,11 @@ export abstract class ConfirmMadal extends React.Component<IModalState, IModalSt
                             <h4 className="modal-title">{this.state.title}</h4>
                         </div>
                         <div className="modal-body text-center">
-                            <button className="btn btn-default"
+                            <button className="btn-dark scrum-btn"
                                 type="button" data-dismiss="modal"
                                 onClick={(() => this.state.onConfirmed()).bind(this)}>
                                 Yes</button>
-                            <button className="btn btn-default"
+                            <button className="btn-dark scrum-btn"
                                 type="button" data-dismiss="modal"
                                 onClick={(() => this.state.onCanceled()).bind(this)}>
                                 No</button>

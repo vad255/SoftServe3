@@ -172,7 +172,7 @@ export class CreateTeam extends React.Component<RouteComponentProps<any>, ITeamF
             </div>
             <div className="container-login100-form-btn">
                     <button style={{ margin: "20px 0 0 0" }} data-toggle="modal"
-                    data-target="#confirmDeleteModal" onClick={() => this.handleCreateButtonClick()} className="btn">Add</button>
+                    data-target="#confirmDeleteModal" onClick={() => this.handleCreateButtonClick()} className="btn-dark scrum-btn">Add</button>
                 </div>
                 {this.GetDeleteConfirmModal()}
         </div>

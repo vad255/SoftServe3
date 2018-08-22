@@ -11,7 +11,6 @@ namespace DAL.Access
         private DbContext _context;
         private DbSet<T> _dbSet;
 
-
         public Repository(DbContext context)
         {
             _context = context;

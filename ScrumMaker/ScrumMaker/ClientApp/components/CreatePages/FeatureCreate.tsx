@@ -71,7 +71,7 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
             <h3 className="hStyle">Name:</h3>
             <input className="input-lg inputField fontStyle"
                 name="FeatureName"
-                type="text"
+                type="text" style={{ width: "35%" }}
                 value={this.state.FeatureName}
                 onChange={this.handleInputChange} />
 
@@ -82,7 +82,7 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
             <h3 className="hStyle">Program increment:</h3>
             <input className="input-lg inputField fontStyle"
                 name="ProgramIncrement"
-                type="text"
+                type="text" style={{ width: "35%" }}
                 value={this.state.ProgramIncrement}
                 onChange={this.handleInputChange} />
             <div className="switchSection">
@@ -96,27 +96,27 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
                 className="fontStyle"
                 value={this.state.SelectedStories.map(st => { return { value: st.id != undefined ? st.id : null, label: st.name != undefined ? st.name : null } })}
                 multi
-                name="Stories"
+                name="Stories" style={{ width: "35%" }}
                 closeOnSelect={!true}
                 onChange={this.handleSelectionStories}
                 options={this.state.Stories.map(st => { return { value: st.id, label: st.name } })}/>
             <h3 className="hStyle">Description:</h3>
             <textarea className="areaStyle fontStyle"
                 name="Description"
-                type="text"
+                type="text" style={{ width: "35%" }}
                 value={this.state.Description}
                 onChange={this.handleInputChange} />
             <div className="text-center">
                 <button
                     disabled={this.isAllFieldsFilled()}
-                    className='btn btn-disabled'
+                    className='scrum-btn btn-dark'
                     data-toggle="modal"
                     data-target="#confirmCreateModal">
                     Add element
                 </button>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <button
-                    className="btn inline-block"
+                    className="scrum-btn btn-dark"
                     onClick={this.handleCancel}>Discard</button>
             </div>
         </form>
@@ -147,7 +147,7 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
 
             selectedStories.push(storyToPush);
         }
-        
+
         this.setState({ SelectedStories: selectedStories });
     }
 
@@ -165,7 +165,7 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
         let names: string[] = [];
         for (let iterator in State) {
             if (!parseInt(iterator)) {
-               
+
                 names.push(iterator.toString());
             }
         }
@@ -178,7 +178,7 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
         return <select
             className="form-control fontStyle selectStyle"
             value={names[this.state.State - 1]}
-            name="State"
+            name="State" style={{ width: "35%" }}
             onChange={this.handleInputChange}>
             {items}
         </select>
@@ -194,7 +194,7 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
         return <select
             className="form-control fontStyle selectStyle"
             value={this.state.OwnerUserId}
-            name="OwnerUserId"
+            name="OwnerUserId" style={{ width: "35%" }}
             onChange={this.handleInputChange}>
             {items}
         </select>
@@ -314,14 +314,14 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
                             <h4 className="modal-title">The feature "{this.state.FeatureName}" was created.</h4>
                         </div>
                         <div className="modal-body text-center">
-                            <button className="btn btn-default" type="button" data-dismiss="modal" onClick={this.handleOkButtonClick} >
+                            <button className="btn-primary scrum-btn" type="button" data-dismiss="modal" onClick={this.handleOkButtonClick} >
                                 Ok</button>
                         </div>
                     </div>
                 </div>
             </div>
     }
-    
+
     handleOkButtonClick() {
         this.props.history.push("/feature");
     }

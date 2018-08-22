@@ -81,7 +81,7 @@ export class Feature implements IDbModel {
         if (this.stories === null || this.stories === undefined || this.stories.length < 1)
             return <p>No stories</p>
         return <div className="dropdown">
-            <div id={this.id.toString()} role="button" data-toggle="dropdown" className="btn btn-sm btn-primary" >
+            <div id={this.id.toString()} role="button" data-toggle="dropdown" className="btn-dark scrum-btn btn-sm" >
                 Stories<span className="caret"></span>
             </div>
             <ul className="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">

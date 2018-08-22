@@ -13,7 +13,7 @@ export class CreateBtn extends React.Component<ICreateBtnPros, {}> {
     public render() {
         return <NavLink to={this.props.URL}
             activeClassName='active'>
-            <button className="btn btn-default" type="button">
+            <button className="btn-dark scrum-btn" type="button">
                 Create</button>
         </NavLink>;
     }
