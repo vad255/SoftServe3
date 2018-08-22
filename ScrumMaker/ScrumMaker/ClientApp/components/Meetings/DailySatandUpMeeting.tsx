@@ -80,7 +80,6 @@ export class DailyStandUpMeeting extends React.Component<{}, IUserDataFetchingSt
 
 
     public GetTeamTable() {
-        console.log(this.state.dailyStandUp.conducted);
         return <table className='table table-scrum table-hover td-scrum'>
             <thead>
                 <tr>
@@ -124,7 +123,6 @@ export class DailyStandUpMeeting extends React.Component<{}, IUserDataFetchingSt
     }
 
     private renderMember(user: User) {
-        if (user.role.name != "ScrumMaster")
             return <tr key={user.userId}>
                 <td className="well" >
                     <button className="userbtn" onClick={() => this.GetTasksTable(user.userId)}>
@@ -132,14 +130,6 @@ export class DailyStandUpMeeting extends React.Component<{}, IUserDataFetchingSt
                     </button>
                 </td>
             </tr >
-        return <tr key={user.userId}>
-            <td>
-                <button className="userbtn" onClick={() => this.GetTasksTable(user.userId)}>
-                    {user.login} (<b>{user.role.name}</b>)
-     </button>
-            </td>
-        </tr>
-
     }
 
     GetTasksTable(userId: number) {
@@ -166,9 +156,10 @@ export class DailyStandUpMeeting extends React.Component<{}, IUserDataFetchingSt
                 </tr>
             </thead>
             <tbody>
-                {this.state.tasks.map((t) => {
-                    if (t.userId === userId && t.started <= this.state.Conducted && t.state.toString() == "InProgress"   /*t.completed.toDate().setHours(t.completed.toDate().getHours() - 24) <= this.state.Conducted*/) {
-                        return <tr key={t.userId}>
+                    {this.state.tasks.map((t) => {
+                        if (t.userId === userId && t.started <= this.state.Conducted && t.state.toString() == "InProgress" /*|| t.userId === userId && moment().subtract('days', 1) <= t.completed && t.state.toString() == "Done"*/) {
+
+                            return <tr key={t.userId}>
                             <td className="well col-md-1">{t.description}
                             </td>
                             <td className="well col-md-1">{t.actualHours}
@@ -180,8 +171,8 @@ export class DailyStandUpMeeting extends React.Component<{}, IUserDataFetchingSt
                             {this.startedValue(t)}
                             {this.completedValue(t)}
                         </tr>
-                    } else {
-                        return null;
+                        } else {
+                            return null;
                     }
                 }
                 )}
@@ -206,12 +197,12 @@ export class DailyStandUpMeeting extends React.Component<{}, IUserDataFetchingSt
     
     startedValue(task: Task) {
 
-        return <td className="well col-md-1"> {task.started === null ? "Not started yet" : task.started.toDate().toLocaleString()}</td>
+        return <td className="well col-md-1"> {task.started === null ? "In Progress" : task.started.toDate().toLocaleString()}</td>
     }
 
     completedValue(task: Task) {
 
-        return <td className="well col-md-1">{task.completed === null ? "Not completed yet" : task.completed.toDate().toLocaleString()}</td>
+        return <td className="well col-md-1">{task.completed === null ? "In Progress" : task.completed.toDate().toLocaleString()}</td>
     }
 
     getMyself(): Promise<any> {

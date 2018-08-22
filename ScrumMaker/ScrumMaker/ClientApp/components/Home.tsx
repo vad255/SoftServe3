@@ -16,17 +16,15 @@ export class Home extends React.Component<RouteComponentProps<{}>, {}> {
                     <a href="#main" className="more">Learn More</a>
                 </div>
             </section>
-            {/* Main */}
             <div id="main">
                 <div className="inner">
-                    {/* Boxes */}
                     <div className="thumbnails">
                         <div className="box">
                             <a href="https://www.youtube.com/watch?v=D8vT7G0WATM&list=PLF6BFA8BAEDF6CE70&index=1" className="image fit"><img src="./img/pic01.jpg" alt="" /></a>
                             <div className="inner">
                                 <h3>Introduction to Scrum</h3>
-                                <p>A quick, animated overview of Scrum.</p>
-                                <a href="https://www.youtube.com/watch?v=D8vT7G0WATM&list=PLF6BFA8BAEDF6CE70&index=1" className="button fit" data-poptrox="youtube,800x400">Watch</a>
+                                <p>A quick, animated overview of Scrum. This video covers the rationale and essentials of Scrum and Agile, and includes an overview of the roles, meetings.</p>
+                                <a href="https://www.youtube.com/watch?v=D8vT7G0WATM&list=PLF6BFA8BAEDF6CE70&index=1"  className="button fit" data-poptrox="youtube,800x400">Watch</a>
                             </div>
                         </div>
                         <div className="box">
@@ -41,7 +39,7 @@ export class Home extends React.Component<RouteComponentProps<{}>, {}> {
                             <a href="https://www.youtube.com/watch?v=wPvG9NZNUa4&list=PLF6BFA8BAEDF6CE70&index=3" className="image fit"><img src="./img/pic03.jpg" alt="" /></a>
                             <div className="inner">
                                 <h3>Sprint Planning Meeting</h3>
-                                <p>This module covers the first official meeting in the Scrum cycle. </p>
+                                <p>This module covers the first official meeting in the Scrum cycle. Subtopics include the difference between the Product Backlog vs. the Sprint Backlog. </p>
                                 <a href="https://www.youtube.com/watch?v=wPvG9NZNUa4&list=PLF6BFA8BAEDF6CE70&index=3" className="button style3 fit" data-poptrox="youtube,800x400">Watch</a>
                             </div>
                         </div>
@@ -49,7 +47,7 @@ export class Home extends React.Component<RouteComponentProps<{}>, {}> {
                             <a href="https://www.youtube.com/watch?v=G4_oHZbURgU&list=PLF6BFA8BAEDF6CE70&index=4" className="image fit"><img src="./img/pic04.jpg" alt="" /></a>
                             <div className="inner">
                                 <h3>Daily Scrum Meeting</h3>
-                                <p>This module covers the second and most frequent meeting in the Scrum cycle. </p>
+                                <p>The module briefly touches on the Agile engineering practices of Test Driven Development (TDD), pair programming, refactoring, and continuous integration. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </p>
                                 <a href="https://www.youtube.com/watch?v=G4_oHZbURgU&list=PLF6BFA8BAEDF6CE70&index=4" className="button style2 fit" data-poptrox="youtube,800x400">Watch</a>
                             </div>
                         </div>
@@ -57,7 +55,7 @@ export class Home extends React.Component<RouteComponentProps<{}>, {}> {
                             <a href="https://www.youtube.com/watch?v=cbJinz6TieI&index=5&list=PLF6BFA8BAEDF6CE70" className="image fit"><img src="./img/pic05.jpg" alt="" /></a>
                             <div className="inner">
                                 <h3>Sprint Review Meeting </h3>
-                                <p>This module covers the meeting held after the execution of each Sprint in which the team conducts a live demonstration of the working product increment for the Product Owner.</p>
+                                <p>This module covers the meeting held after the execution of each Sprint in which the team conducts a live demonstration of the working product increment for the Product Owner. </p>
                                 <a href="https://www.youtube.com/watch?v=cbJinz6TieI&index=5&list=PLF6BFA8BAEDF6CE70" className="button style3 fit" data-poptrox="youtube,800x400">Watch</a>
                             </div>
                         </div>
@@ -65,14 +63,13 @@ export class Home extends React.Component<RouteComponentProps<{}>, {}> {
                             <a href="https://www.youtube.com/watch?v=rZ8I0ATrauM&list=PLF6BFA8BAEDF6CE70&index=6" className="image fit"><img src="./img/pic06.jpg" alt="" /></a>
                             <div className="inner">
                                 <h3>Sprint Retrospective Meeting</h3>
-                                <p>This module covers the final meeting associated with each Sprint.</p>
+                                <p>This module covers the final meeting associated with each Sprint. In this meeting, the team reflects on the Sprint to raise its own awareness.</p>
                                 <a href="https://www.youtube.com/watch?v=rZ8I0ATrauM&list=PLF6BFA8BAEDF6CE70&index=6" className="button fit" data-poptrox="youtube,800x400">Watch</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            {/* Footer */}
             <footer id="footer">
 
                 <ul className="icons">

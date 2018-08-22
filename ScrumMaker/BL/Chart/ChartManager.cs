@@ -12,7 +12,7 @@ namespace BL.Chart
     public class ChartManager:IChartManager
     {
         private IRepository<Sprint> _sprints;
-        private IRepository<Story> _stories;
+        private IRepository<Story> _stories;    
         private Sprint _currentSprint;
         public ChartManager(IRepository<Sprint> repository, IRepository<Story> stories)
         {
@@ -85,7 +85,7 @@ namespace BL.Chart
             {
                 int completedTask = tasks.Where(x => x.Completed != null && x.Completed.Value.DayOfYear == listOfDate[i - 1].DayOfYear).Count();
                 remainingTasks -= completedTask;
-                result.Add(new ModelForCharts { Name = listOfDate[i - 1].ToString("dd:MM"), RemainingTask = remainingTasks, CompletedTask = completedTask});
+                result.Add(new ModelForCharts { Name = "Day " + i, RemainingTask = remainingTasks, CompletedTask = completedTask });
             }
             return result;
         }
