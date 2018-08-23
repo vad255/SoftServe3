@@ -18,8 +18,8 @@ using System.Security.Cryptography;
 
 namespace ScrumMaker.Controllers
 {
-    [CookieAuthorize]
-    [RefreshToken]
+    //[CookieAuthorize]
+    //[RefreshToken]
     public class UserController : Controller
     {
         private readonly IRepository<Photo> _repository;
@@ -142,7 +142,7 @@ namespace ScrumMaker.Controllers
         [Route("/ResetUserPassword")]
         public bool ResetPassword(string login)
         {
-            var user = _user.GetAll().FirstOrDefault(u => u.Login == login);
+            var user = _user.GetAll().FirstOrDefault(u => u.Email == login);
 
             if (user != null)
             {
@@ -152,7 +152,7 @@ namespace ScrumMaker.Controllers
                 _user.Update(user);
                 _user.Save();
 
-                MailMessage emailMessage = new MailMessage("scrummaker325@gmail.com", login)
+                MailMessage emailMessage = new MailMessage("ScrumMaker@support.com", login)
                 {
                     Subject = "Reset Password",
                 };
@@ -166,16 +166,18 @@ namespace ScrumMaker.Controllers
                 htmlView.LinkedResources.Add(theEmailImage);
                 emailMessage.AlternateViews.Add(htmlView);
 
-                SmtpClient smtp = new SmtpClient("smtp.gmail.com")
+                SmtpClient smtp = new SmtpClient("smtp.sendgrid.net")
                 {
-                    Port = 587,
+                    Port = Convert.ToInt32(587),
                     EnableSsl = true,
                     UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential("scrummaker325@gmail.com", "Qwerty!123"),
+                    Credentials = new NetworkCredential("prystaiko.roman", "1q3e5t7u9o"),
                     DeliveryMethod = SmtpDeliveryMethod.Network
                 };
                 emailMessage.IsBodyHtml = true;
+
                 smtp.Send(emailMessage);
+
 
                 return true;
             }

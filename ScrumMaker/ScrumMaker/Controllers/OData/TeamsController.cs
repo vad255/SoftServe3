@@ -57,12 +57,37 @@ namespace ScrumMaker.Controllers
             return Updated(team);
         }
 
-        [AcceptVerbs("DELETE")]
-        public IActionResult Delete([FromODataUri] int key)
+        private bool TeamExists(int key)
         {
-            _teams.Delete(key);
-            _teams.Save();
-            return NoContent();
+            return _teams.GetAll().Count(e => e.Id == key) > 0;
+        }
+
+        [AcceptVerbs("DELETE")]
+        public bool Delete([FromODataUri] int key)
+        {
+
+            if (TeamExists(key))
+            {
+                _teams.Delete(key);
+                _teams.Save();
+                return false;
+            }
+            else
+            {
+
+                return true;
+            }
+
+            //try
+            //{
+            //    _manager.Delete(key);
+            //    return NoContent();
+            //}
+            //catch (Exception e)
+            //{
+            //    Logger.Logger.LogError("Deleting failed.", e);
+            //    return BadRequest();
+            //}
         }
 
         [AcceptVerbs("POST")]

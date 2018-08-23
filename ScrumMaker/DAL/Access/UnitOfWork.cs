@@ -25,6 +25,8 @@ namespace DAL.Access
         IRepository<ChatRoom> _chats;
         IRepository<Message> _messages;
         IRepository<SprintReview> _sprintReviews;
+        IRepository<DailyStandUp> _dailyStandUps;
+
 
         public UnitOfWork(DbContext context)
         {
@@ -99,6 +101,16 @@ namespace DAL.Access
                 if (_sprintReviews == null)
                     _sprintReviews = new Repository<SprintReview>(_context);
                 return _sprintReviews;
+            }
+        }
+
+        public IRepositoryUoW<DailyStandUp> DailyStandUps
+        {
+            get
+            {
+                if (_dailyStandUps == null)
+                    _dailyStandUps = new Repository<DailyStandUp>(_context);
+                return _dailyStandUps;
             }
         }
 

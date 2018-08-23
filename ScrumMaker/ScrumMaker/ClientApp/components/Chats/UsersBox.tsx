@@ -11,7 +11,7 @@ export class UserBox extends React.Component<{ users: User[] }, User[]> {
     }
 
     render() {
-        let content = this.props.users.map(u => <li key={u.userId}>{u.login}</li>)
+        let content = this.props.users.map(u => <li style={{width: "135px", wordWrap: "break-word"}} key={u.userId}>{u.login}</li>)
 
         return <div className="chatUsersBlock">
             <ul id="usersDisplay" className="chatUsersList">

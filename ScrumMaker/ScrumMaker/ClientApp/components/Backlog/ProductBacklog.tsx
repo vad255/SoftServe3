@@ -17,7 +17,7 @@ export class ProductBacklog {
             <Tabs forceRenderTabPanel>
                 <div className="col-xs-3">
                     <TabList className="nav nav-tabs tabs-left sideways">
-                        {this.stories.map(x => <Tab key={x.id} className="btn tab-story">{x.name}</Tab>)}
+                        {this.stories.map(x => <Tab key={x.id} className="btn-dark scrum-btn tab-story">{x.name}</Tab>)}
                     </TabList>
                 </div>
                 <div className="col-xs-3 tab-context">
@@ -25,7 +25,7 @@ export class ProductBacklog {
                         <Tabs forceRenderTabPanel>
                             <div className="col-xs-9">
                                 <TabList className="nav nav-tabs tabs-left sideways">
-                                    {x.tasks.map(t => <Tab key={t.taskId} className="btn tab-sub-task">{t.summary}</Tab>)}
+                                    {x.tasks.map(t => <Tab key={t.taskId} className="btn-dark scrum-btn tab-sub-task">{t.summary}</Tab>)}
                                 </TabList>
                             </div>
                             <div className="tab-task-descrip">

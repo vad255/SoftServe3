@@ -9,25 +9,25 @@ import { DefectState } from "../Models/DefectState";
 
 interface IEditPageState {
     nameValue: string;
-    statusValue: DefectStatus;    
-    priorityValue: DefectPriority;    
-    stateValue: DefectState;    
-    actualResultValue: string; 
+    statusValue: DefectStatus;
+    priorityValue: DefectPriority;
+    stateValue: DefectState;
+    actualResultValue: string;
     fixResultValue: string;
-    textAreaValue: string;   
+    textAreaValue: string;
 }
 
 export class CreateDefect extends React.Component<RouteComponentProps<any>, IEditPageState> {
     constructor(props: any) {
         super(props);
-        this.state = (({           
+        this.state = (({
             statusValue: "Open",
             nameValue: "",
             textAreaValue: "",
             priorityValue: "ResolveImmediately",
             stateValue: "Active",
             actualResultValue: "",
-            fixResultValue:  ""    
+            fixResultValue: ""
         }) as any);
 
         this.handleSaveButtonClick = this.handleSaveButtonClick.bind(this);
@@ -38,11 +38,11 @@ export class CreateDefect extends React.Component<RouteComponentProps<any>, IEdi
         this.handleStateSelect = this.handleStateSelect.bind(this);
         this.handleChangeInputActualResult = this.handleChangeInputActualResult.bind(this);
         this.handleChangeInputFixResult = this.handleChangeInputFixResult.bind(this);
-        this.handleOK = this.handleOK.bind(this);             
+        this.handleOK = this.handleOK.bind(this);
     }
-      
+
     handleSaveButtonClick() {
-       
+
         fetch('odata/Defects',
             {
                 method: 'POST',
@@ -60,12 +60,13 @@ export class CreateDefect extends React.Component<RouteComponentProps<any>, IEdi
                     'State': this.state.stateValue,
                     'Status': this.state.statusValue,
                     'ActualResults': this.state.actualResultValue,
-                    'FixResults': this.state.fixResultValue                  
+                    'FixResults': this.state.fixResultValue
                 })
             });
     }
 
     private GetDeleteConfirmModal() {
+        if (this.state.nameValue.length != 0 && this.state.fixResultValue.length != 0 && this.state.actualResultValue.length != 0)
         return <div id="confirmDeleteModal" className="modal fade">
             <div className="modal-dialog">
                 <div className="modal-content">
@@ -73,7 +74,7 @@ export class CreateDefect extends React.Component<RouteComponentProps<any>, IEdi
                         <h4 className="modal-title">The new defect "{this.state.nameValue}" was added.</h4>
                     </div>
                     <div className="modal-body text-center">
-                        <button className="btn btn-default" type="button" onClick={this.handleOK} data-dismiss="modal">
+                        <button className="btn-dark scrum-btn" type="button" onClick={this.handleOK} data-dismiss="modal">
                             Ok</button>
                     </div>
                 </div>
@@ -84,7 +85,7 @@ export class CreateDefect extends React.Component<RouteComponentProps<any>, IEdi
     handleOK(event: any) {
         this.props.history.push('/defects');
     }
-    
+
     handleStatusSelect(event: any) {
         this.setState({ statusValue: event.target.value });
     }
@@ -94,7 +95,7 @@ export class CreateDefect extends React.Component<RouteComponentProps<any>, IEdi
     }
 
     handleStateSelect(event: any) {
-        this.setState({ stateValue: event.target.value });      
+        this.setState({ stateValue: event.target.value });
     }
 
     handleChangeInputActualResult(event: any) {
@@ -119,18 +120,18 @@ export class CreateDefect extends React.Component<RouteComponentProps<any>, IEdi
                 <h2 className="h2EditCreatePage">Create defect</h2>
             </div>
             <div>
-                <h3 className="hStyle">Defect name:</h3>
-                <input className="input-lg" style={{ width: "35%" }}  onChange={this.handleChangeInput} type="text" value={this.state.nameValue} />
+                <h3 className="hStyle">Defect name<span style={{ color: "red" }}>*</span>:</h3>
+                <input className="input-lg" style={{ width: "35%" }} onChange={this.handleChangeInput} type="text" value={this.state.nameValue} required/>
             </div>
             <div>
                 <h3 className="hStyle">Description:</h3>
-                <textarea style={{ width: "35%", height: "300px", fontSize: 25, padding: "7px" }} className="fa-text-height" onChange={this.handleChangeTextArea} value={this.state.textAreaValue} />
+                <textarea style={{ width: "35%", height: "300px", fontSize: 18, padding: "7px" }} className="areaStyle fa-text-height" onChange={this.handleChangeTextArea} value={this.state.textAreaValue} />
             </div>
             <div>
                 <h3 className="hStyle">Status:</h3>
-                <select className="form-control" style={{ width: "35%"}} value={this.state.statusValue} onChange={this.handleStatusSelect} >
+                <select className="form-control" style={{ width: "35%" }} value={this.state.statusValue} onChange={this.handleStatusSelect} >
                     <option value="Open">Open</option>
-                    <option value="Close">Close</option>                   
+                    <option value="Close">Close</option>
                 </select>
             </div>
             <div>
@@ -142,24 +143,25 @@ export class CreateDefect extends React.Component<RouteComponentProps<any>, IEdi
                 {this.renderPriority()}
             </div>
             <div>
-                <h3 className="hStyle">ActualResult:</h3>
-                <input className="input-lg" style={{ width: "35%" }} onChange={this.handleChangeInputActualResult} type="text" value={this.state.actualResultValue} />
+                <h3 className="hStyle">ActualResult<span style={{ color: "red" }}>*</span>:</h3>
+                <input className="input-lg" style={{ width: "35%" }} onChange={this.handleChangeInputActualResult} type="text" value={this.state.actualResultValue} required />
             </div>
             <div>
-                <h3 className="hStyle">FixResult:</h3>
-                <input className="input-lg" style={{ width: "35%" }}  onChange={this.handleChangeInputFixResult} type="text" value={this.state.fixResultValue} />
-            </div>           
+                <h3 className="hStyle">FixResult<span style={{ color: "red" }}>*</span>:</h3>
+                <input className="input-lg" style={{ width: "35%" }} onChange={this.handleChangeInputFixResult} type="text" value={this.state.fixResultValue} required/>
+            </div>
+            <p>
+                <span style={{ color: "red" }}>*</span>this field is required
+            </p>
+            <div className="text-center">
 
-            <div className="text-center">               
-
-                <div role='button'
-                    className='btn btn-primary'                    
+                <button className='btn-dark scrum-btn'
                     data-toggle="modal"
                     data-target="#confirmDeleteModal"
                     onClick={this.handleSaveButtonClick}>
                     Add element
-                </div>
-            </div>          
+                </button>
+            </div>
 
             {this.GetDeleteConfirmModal()}
         </div>;
@@ -181,7 +183,7 @@ export class CreateDefect extends React.Component<RouteComponentProps<any>, IEdi
             value={this.state.stateValue}
             className="form-control"
             name="State"
-            style={{ width: "35%" }} 
+            style={{ width: "35%" }}
             onChange={this.handleStateSelect}>
             {items}
         </select>
@@ -202,10 +204,10 @@ export class CreateDefect extends React.Component<RouteComponentProps<any>, IEdi
         return <select
             value={this.state.priorityValue}
             className="form-control"
-            style={{ width: "35%" }} 
+            style={{ width: "35%" }}
             name="Priority"
             onChange={this.handlePrioritySelect}>
             {items}
         </select>
-    }       
+    }
 }

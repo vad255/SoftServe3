@@ -10,7 +10,8 @@ namespace DAL.Models
     {
         [Key]
         public int DefectId { get; private set; }
-        
+
+        [Required(ErrorMessage = "DefectName is required")]
         public string DefectName { get; set; }
 
         [MaxLength(500)]

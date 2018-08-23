@@ -67,7 +67,7 @@ namespace ScrumMaker
                 };
             });
 
-            string connectionStr = Configuration.GetConnectionString("ScrumMakerDB2");
+            string connectionStr = Configuration.GetConnectionString("Viktor");
 
 
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionStr, b => b.UseRowNumberForPaging()));
@@ -114,6 +114,7 @@ namespace ScrumMaker
             services.AddScoped(typeof(ITeamsManager), typeof(TeamsManager));
             services.AddScoped(typeof(IChartManager), typeof(ChartManager));
             services.AddScoped(typeof(ISprintReviewManager), typeof(SprintReviewManager));
+            services.AddScoped(typeof(IDailyStandUpManager), typeof(DailyStandUpManager));
             services.AddScoped(typeof(BL.Chatting.IGlobalChatManager), typeof(BL.Chatting.GlobalChatManager));
             services.AddScoped(typeof(BL.Chatting.IRetrospectiveChatMananger), typeof(BL.Chatting.RetrospectiveChatManager));
             services.AddScoped(typeof(BL.Chatting.IPokerManager), typeof(BL.Chatting.PokerManager));
@@ -158,7 +159,7 @@ namespace ScrumMaker
                 routes.Select().Expand().Filter().OrderBy().MaxTop(100).Count();
 
                 routes.MapODataServiceRoute("odata", "odata", EdmModelBuilder.GetEdmModel());
-                
+
                 ///!!!!
                 routes.MapRoute(
                     name: "default",
@@ -166,7 +167,7 @@ namespace ScrumMaker
 
                 routes.MapSpaFallbackRoute(
                     name: "spa-fallback",
-                    defaults: new { controller = "Identity", action = "Index" });
+                    defaults: new { controller = "Home", action = "Login" });
             });
 
         }

@@ -13,12 +13,12 @@ interface IEditPageState {
     defect: Defect;
     id: string;
     nameValue: string;
-    statusValue: DefectStatus;    
-    priorityValue: DefectPriority;    
-    stateValue: DefectState;    
-    actualResultValue: string; 
+    statusValue: DefectStatus;
+    priorityValue: DefectPriority;
+    stateValue: DefectState;
+    actualResultValue: string;
     fixResultValue: string;
-    textAreaValue: string;   
+    textAreaValue: string;
 }
 
 export class EditDefect extends React.Component<RouteComponentProps<any>, IEditPageState> {
@@ -33,7 +33,7 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
             priorityValue: "",
             stateValue: "",
             actualResultValue: "",
-            fixResultValue:  ""    
+            fixResultValue: ""
         }) as any);
 
         this.handleSaveButtonClick = this.handleSaveButtonClick.bind(this);
@@ -45,14 +45,14 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
         this.handleChangeInputActualResult = this.handleChangeInputActualResult.bind(this);
         this.handleChangeInputFixResult = this.handleChangeInputFixResult.bind(this);
         this.handleOK = this.handleOK.bind(this);
-         
+
         fetch("odata/Defects?expand=()&$filter=DefectId eq " + this.state.id, {
             credentials: 'include'
         })
             .then(response => response.json() as Promise<any>)
             .then(data => {
                 let defect1 = new Defect(data["value"][0]);
-               
+
                 this.setState({
                     defect: defect1,
                     statusValue: defect1.status,
@@ -62,14 +62,12 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
                     stateValue: defect1.state,
                     actualResultValue: defect1.actualResults,
                     fixResultValue: defect1.fixResults
-                   
-                }); 
+                });
             })
-       
     }
-      
+
     handleSaveButtonClick() {
-        console.log(this.state.stateValue)
+
         fetch('odata/Defects(' + this.state.id + ')',
             {
                 method: 'PATCH',
@@ -87,46 +85,52 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
                     'State': this.state.stateValue,
                     'Status': this.state.statusValue,
                     'ActualResults': this.state.actualResultValue,
-                    'FixResults': this.state.fixResultValue                  
+                    'FixResults': this.state.fixResultValue
                 })
             });
     }
 
+
     private GetDeleteConfirmModal() {
-        return <div id="confirmDeleteModal" className="modal fade">
-            <div className="modal-dialog">
-                <div className="modal-content">
-                    <div className="modal-header  text-center" ><button className="close" type="button" data-dismiss="modal">×</button>
-                        <h4 className="modal-title">The defect "{this.state.defect.name}" was updated.</h4>
-                    </div>
-                    <div className="modal-body text-center">
-                        <button className="btn btn-default" type="button" onClick={this.handleOK} data-dismiss="modal">
-                            Ok</button>
+        if (this.state.nameValue.length != 0 && this.state.fixResultValue.length != 0 && this.state.actualResultValue.length != 0)
+            return <div id="confirmDeleteModal" className="modal fade">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header  text-center" ><button className="close" type="button" data-dismiss="modal">×</button>
+                            <h4 className="modal-title">The defect "{this.state.nameValue}" was updated.</h4>
+                        </div>
+                        <div className="modal-body text-center">
+                            <button className="btn btn-default" type="button" onClick={this.handleOK} data-dismiss="modal">
+                                Ok</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>;
+            </div>;
     }
+
     handleOK(event: any) {
         this.props.history.push('/defects');
     }
-   
+
     handleStatusSelect(event: any) {
         this.setState({ statusValue: event.target.value });
     }
+
     handlePrioritySelect(event: any) {
         this.setState({ priorityValue: event.target.value });
     }
+
     handleStateSelect(event: any) {
         this.setState({ stateValue: event.target.value });
-      //  console.log(event.target.value);
     }
+
     handleChangeInputActualResult(event: any) {
         this.setState({ actualResultValue: event.target.value });
     }
     handleChangeInputFixResult(event: any) {
         this.setState({ fixResultValue: event.target.value });
     }
+
     handleChangeInput(event: any) {
         this.setState({ nameValue: event.target.value });
     }
@@ -136,59 +140,85 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
     }
 
     public render() {
-        return <div className="text-left">
-            <div className="text-center">
-                <h2 className="h2EditCreatePage">Editing defect by Id = {this.state.id}</h2>
-            </div>
-            <div>
-                <h3 className="hStyle">Defect name:</h3>
-                <input className="input-lg" style={{ width: "35%" }}  onChange={this.handleChangeInput} type="text" value={this.state.nameValue} />
-            </div>
-            <div>
-                <h3 className="hStyle">Description:</h3>
-                <textarea style={{ width: "35%", height: "200px", fontSize: 20, padding: "7px" }} className="fa-text-height" onChange={this.handleChangeTextArea} value={this.state.textAreaValue} />
-            </div>
-            <div>
-                <h3 className="hStyle">Status:</h3>
-                <select className="form-control" style={{ width: "35%", fontSize:17 }} value={this.state.statusValue} onChange={this.handleStatusSelect} >
-                    <option value="Open">Open</option>
-                    <option value="Close">Close</option>                   
-                </select>
-            </div>
-            <div>
-                <h3 className="hStyle">State:</h3>
-                {this.renderStates()}
-            </div>
-            <div>
-                <h3 className="hStyle">Priority:</h3>
-                {this.renderPriority()}
-            </div>
-            <div>
-                <h3 className="hStyle">ActualResult:</h3>
-                <input className="input-lg" style={{ width: "35%" }} onChange={this.handleChangeInputActualResult} type="text" value={this.state.actualResultValue} />
-            </div>
-            <div>
-                <h3 className="hStyle">FixResult:</h3>
-                <input className="input-lg" style={{ width: "35%" }}  onChange={this.handleChangeInputFixResult} type="text" value={this.state.fixResultValue} />
-            </div>
-           
 
-            <div className="text-center">               
-
-                <div role='button'
-                    className='btn btn-primary'                    
-                    data-toggle="modal"
-                    data-target="#confirmDeleteModal"
-                    onClick={this.handleSaveButtonClick}>
-                    Update
+        return <form className="needs-validation" noValidate>
+            <div className="text-left">
+                <div className="text-center">
+                    <h2 className="h2EditCreatePage">Editing defect by Id = {this.state.id}</h2>
                 </div>
+                <div>
+                    <h3 className="hStyle">Defect name<span style={{ color: "red" }}>*</span>: </h3>
+                    <input className="form-control input-lg" style={{ width: "35%" }} onChange={this.handleChangeInput} type="text" value={this.state.nameValue} required />
+
+                </div>
+
+                <div>
+                    <h3 className="hStyle">Description:</h3>
+                    <textarea style={{ width: "35%", height: "200px", fontSize: 20, padding: "7px" }} className="input-lg fa-text-height" onChange={this.handleChangeTextArea} value={this.state.textAreaValue} required />
+                </div>
+                <div>
+                    <h3 className="hStyle">Status:</h3>
+                    <select className="form-control" style={{ width: "35%", fontSize: 17 }} value={this.state.statusValue} onChange={this.handleStatusSelect} >
+                        <option value="Open">Open</option>
+                        <option value="Close">Close</option>
+                    </select>
+                </div>
+                <div>
+                    <h3 className="hStyle">State:</h3>
+                    {this.renderStates()}
+                </div>
+                <div>
+                    <h3 className="hStyle">Priority:</h3>
+                    {this.renderPriority()}
+                </div>
+                <div>
+                    <h3 className="hStyle">ActualResult<span style={{ color: "red" }}>*</span>:</h3>
+                    <input className="input-lg" style={{ width: "35%" }} onChange={this.handleChangeInputActualResult} type="text" value={this.state.actualResultValue} required />
+                </div>
+                <div>
+                    <h3 className="hStyle">FixResult<span style={{ color: "red" }}>*</span>:</h3>
+                    <input className="input-lg" style={{ width: "35%" }} onChange={this.handleChangeInputFixResult} type="text" value={this.state.fixResultValue} required />
+                </div>
+                <p>
+                    <span style={{ color: "red" }}>*</span>this field is required
+            </p>
+                <div className="text-center">
+
+                    <div type="submit"
+                        className='btn btn-primary'
+                        data-toggle="modal"
+                        data-target="#confirmDeleteModal"
+                        onClick={this.handleSaveButtonClick}>
+                        Update
+                </div>
+                </div>
+
+                {this.GetDeleteConfirmModal()}
             </div>
+            {this.Listen()}
+        </form>;
 
-           
-
-            {this.GetDeleteConfirmModal()}
-        </div>;
     }
+
+    Listen() {
+        'use strict';
+        window.addEventListener('load', function () {
+
+            var forms = document.getElementsByClassName('needs-validation');
+            console.log(forms);
+
+            var validation = Array.prototype.filter.call(forms, function (form: any) {
+                form.addEventListener('submit', function (event: any) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    }
+
     private renderStates() {
         let names: string[] = [];
         for (let iterator in DefectState) {
@@ -205,11 +235,12 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
             value={this.state.stateValue}
             className="form-control"
             name="State"
-            style={{ width: "35%", fontSize: 17 }} 
+            style={{ width: "35%", fontSize: 17 }}
             onChange={this.handleStateSelect}>
             {items}
         </select>
     }
+
     private renderPriority() {
         let names: string[] = [];
         for (let iterator in DefectPriority) {
@@ -219,17 +250,16 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
 
         let items: JSX.Element[] = [];
         for (var i = 0; i < names.length; i++) {
-            items.push(<option key={i } value={names[i]}>{names[i]}</option>);
+            items.push(<option key={i} value={names[i]}>{names[i]}</option>);
         }
 
         return <select
-                   value={this.state.priorityValue}
-                   className="form-control"
-                   style={{ width: "35%", fontSize: 17 }}
-                   name="Priority"
-                   onChange={this.handlePrioritySelect}>
-                   {items}
-               </select>;
+            value={this.state.priorityValue}
+            className="form-control"
+            style={{ width: "35%", fontSize: 17 }}
+            name="Priority"
+            onChange={this.handlePrioritySelect}>
+            {items}
+        </select>;
     }
-       
 }

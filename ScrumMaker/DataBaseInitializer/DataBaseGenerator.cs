@@ -13,7 +13,7 @@ namespace DataBaseInitializer
         static IRepository<Role> _dbRoles;
         static IRepository<User> _dbUsers;
         static IRepository<Team> _dbTeams;
-        static IRepository<DailyScrumInfo> _dbDailyInfo;
+        static IRepository<DailyStandUp> _dbDailyInfo;
         static IRepository<Defect> _dbDefects;
         static IRepository<Story> _dbStories;
         static IRepository<ScrumTask> _dbTasks;
@@ -21,6 +21,7 @@ namespace DataBaseInitializer
         static IRepository<SprintStagesHistory> _dbHisories;
         static IRepository<Sprint> _dbSprints;
         static IRepository<SprintReview> _dbSprintsReviews;
+        static IRepository<Meetings> _meetings;
         private const string HASH_ADMIN = "sha1:64000:18:IKGrJDSsv5EkBegDsKvNI6fS7DyN44MP:NxzGLNDkRwyUTXoQ0gDpOsy7";
 
         public static void FillDataBase(DbContext context)
@@ -48,7 +49,22 @@ namespace DataBaseInitializer
             FillSprintsData();
             ShowStatus(95);
             FillSprintReviewsData();
+            FillMeetingsData();
             ShowStatus(100);
+        }
+
+        public static void FillMeetingsData()
+        {
+            _meetings = new Repository<Meetings>(_context);
+
+            Meetings[] meetings = new Meetings[]
+            {
+                new Meetings() { MeetingName = "Poker Planning", Description = "wqer" },
+                new Meetings() { MeetingName = "Retrospective", Description = "wqer" },
+                new Meetings() { MeetingName = "Daily Stand Up", Description = "wqer" }
+            };
+
+            AddToDatabase(meetings, _meetings);
         }
 
         public static void FillRolesData()
@@ -78,62 +94,71 @@ namespace DataBaseInitializer
                         Role = _dbRoles.GetById(1),
                         Activity = true,
                         Login = "admin",
+                        Email = "admin@admin.com",
                         Password = HASH_ADMIN
                     },
                     new User()
                     {
                         Role = _dbRoles.GetById(1),
                         Activity = true,
-                        Login = "Ivan.Nesterenko@gmail.com",
+                        Login = "Ivan",
+                        Email = "Ivan.Nesterenko@gmail.com",
                         Password = HASH_ADMIN
                     },
                     new User()
                     {
                         Role = _dbRoles.GetById(2),
                         Activity = true,
-                        Login = "Oleksandr.Petrov@gmail.com",
+                        Login = "Oleksandr",
+                        Email = "Oleksandr.Petrov@gmail.com",
                         Password = HASH_ADMIN
                     },
                     new User()
                     {
                         Role = _dbRoles.GetById(3),
                         Activity = true,
-                        Login = "Nataliya.Kozachenko@ukr.net",
+                        Login = "Nataliya",
+                        Email = "Nataliya.Kozachenko@ukr.net",
                         Password = HASH_ADMIN
                     },
                     new User()
                     {
                         Role = _dbRoles.GetById(3),
                         Activity = true,
-                        Login = "Viktor.Andrushenko@mail.ru",
+                        Login = "Viktor",
+                        Email = "Viktor.Andrushenko@mail.ru",
                         Password = HASH_ADMIN
                     },
                     new User()
                     {
                         Role = _dbRoles.GetById(3),
                         Activity = true,
-                        Login = "Mykola.Kropyvnytskiy@gmail.com",
+                        Login = "Mykola",
+                        Email = "Mykola.Kropyvnytskiy@gmail.com",
                         Password = HASH_ADMIN
                     },
                     new User()
                     {
                         Role = _dbRoles.GetById(3),
                         Activity = true,
-                        Login = "Yuriy.Savchuk@gmail.com",
+                        Login = "Yuriy",
+                        Email = "Yuriy.Savchuk@gmail.com",
                         Password = HASH_ADMIN
                     },
                     new User()
                     {
                         Role = _dbRoles.GetById(3),
                         Activity = true,
-                        Login = "Roman.Danylenko@gmail.com",
+                        Login = "Roman",
+                        Email = "Roman.Danylenko@gmail.com",
                         Password = HASH_ADMIN
                     },
                     new User()
                     {
                         Role = _dbRoles.GetById(3),
                         Activity = true,
-                        Login = "Anastasiya.Zelenska@gmail.com",
+                        Login = "Anastasiya",
+                        Email = "Anastasiya.Zelenska@gmail.com",
                         Password = HASH_ADMIN
                     },
 
@@ -142,196 +167,224 @@ namespace DataBaseInitializer
                     {
                         Role = _dbRoles.GetById(2),
                         Activity = true,
-                        Login = "Andriy.Herula@com",
+                        Login = "Andriy23",
+                        Email = "Andriy.Herula@com",
                         Password = HASH_ADMIN
                     },
                     new User()
                     {
                         Role = _dbRoles.GetById(3),
                         Activity = true,
-                        Login = "Ihor.Verbenets@ukr.net",
+                        Login = "Ihor12",
+                        Email = "Ihor.Verbenets@ukr.net",
                         Password = HASH_ADMIN
                     },
                     new User()
                     {
                         Role = _dbRoles.GetById(3),
                         Activity = true,
-                        Login = "Iryna.Revus@mail.ru",
+                        Login = "Iryna4",
+                        Email = "Iryna.Revus@mail.ru",
                         Password = HASH_ADMIN
                     },
                     new User()
                     {
                         Role = _dbRoles.GetById(3),
                         Activity = true,
-                        Login = "Myhailo.Andruchvych@gmail.com",
+                        Login = "Myhailo0",
+                        Email = "Myhailo.Andruchvych@gmail.com",
                         Password = HASH_ADMIN
                     },
                     new User()
                     {
                         Role = _dbRoles.GetById(3),
                         Activity = true,
-                        Login = "Maksym.Pereima@mail.ru",
+                        Login = "Maksym0",
+                        Email = "Maksym.Pereima@mail.ru",
                         Password = HASH_ADMIN
                     },
                     new User()
                     {
                         Role = _dbRoles.GetById(3),
                         Activity = true,
-                        Login = "Oleg.Mykytyn@gmail.com",
+                        Login = "Oleg8",
+                        Email = "Oleg.Mykytyn@gmail.com",
                         Password = HASH_ADMIN
                     },
                     new User()
                     {
                         Role = _dbRoles.GetById(3),
                         Activity = true,
-                        Login = "Ulyana.Nazaruk@mail.ru",
+                        Login = "Ulyana4",
+                        Email = "Ulyana.Nazaruk@mail.ru",
                         Password = HASH_ADMIN
                     },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Andriy.H@com",
+                    Login = "Andriy8",
+                    Email = "Andriy.H@com",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Ihor.V@ukr.net",
+                    Login = "Ihor5",
+                    Email = "Ihor.V@ukr.net",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Iryna.Re.ru",
+                    Login = "Iryna1",
+                    Email = "Iryna.Re.ru",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Myhailo.An@gmail.com",
+                    Login = "Myhailo2",
+                    Email = "Myhailo.An@gmail.com",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Maksym.Pe@mail.ru",
+                    Login = "Maksym2",
+                    Email = "Maksym.Pe@mail.ru",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Oleg.Myk@gmail.com",
+                    Login = "Oleg1",
+                    Email = "Oleg.Myk@gmail.com",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Ulyana.Na@mail.ru",
+                    Login = "Ulyana1",
+                    Email = "Ulyana.Na@mail.ru",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(2),
                     Activity = true,
-                    Login = "Andriy.Herula123@com",
+                    Login = "Andriy",
+                    Email = "Andriy.Herula123@com",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Ihor.Verbenets1423@ukr.net",
+                    Login = "Ihor",
+                    Email = "Ihor.Verbenets1423@ukr.net",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Iryna.Revus123@mail.ru",
+                    Login = "Iryna",
+                    Email = "Iryna.Revus123@mail.ru",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Myhailo.Andrucychwwrf@gmail.com",
+                    Login = "Myhailo1",
+                    Email = "Myhailo.Andrucychwwrf@gmail.com",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Maksym.reima@mail.ru",
+                    Login = "Maksym1",
+                    Email = "Maksym.reima@mail.ru",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Oleg.Mytyn@gmail.com",
+                    Login = "Oleg12",
+                    Email = "Oleg.Mytyn@gmail.com",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Ulyana.aruk@mail.ru",
+                    Login = "Ulyana2",
+                    Email = "Ulyana.aruk@mail.ru",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(2),
                     Activity = true,
-                    Login = "Andriy.rula@com",
+                    Login = "Andriy873",
+                    Email = "Andriy.rula@com",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Ihor.Venets@ukr.net",
+                    Login = "Ihor32",
+                    Email = "Ihor.Venets@ukr.net",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Iryna.Rs@mail.ru",
+                    Login = "Iryna32",
+                    Email = "Iryna.Rs@mail.ru",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Myhailo.Aruchv574ych@gmail.com",
+                    Login = "Myhailo",
+                    Email = "Myhailo.Aruchv574ych@gmail.com",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Maksym.Pe67ima@mail.ru",
+                    Login = "Maksym",
+                    Email = "Maksym.Pe67ima@mail.ru",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Oleg.Myky325n@gmail.com",
+                    Login = "Oleg",
+                    Email = "Oleg.Myky325n@gmail.com",
                     Password = HASH_ADMIN
                 },
                 new User()
                 {
                     Role = _dbRoles.GetById(3),
                     Activity = true,
-                    Login = "Ulyana.564aruk@mail.ru",
+                    Login = "Ulyana3",
+                    Email = "Ulyana.564aruk@mail.ru",
                     Password = HASH_ADMIN
                 }
             };
@@ -876,9 +929,39 @@ namespace DataBaseInitializer
 
                     new SprintStagesHistory()
                     {
-                        Begined = new DateTime(2018,06,28),
-                        Ended =  new DateTime(2018,09,24)
-                    }
+                        Begined = new DateTime(2018,06,01),
+                        Ended =  new DateTime(2018,06,15)
+                    },
+
+                     new SprintStagesHistory()
+                    {
+                        Begined = new DateTime(2018,06,16),
+                        Ended =  new DateTime(2018,06,30)
+                    },
+
+                      new SprintStagesHistory()
+                    {
+                        Begined = new DateTime(2018,07,01),
+                        Ended =  new DateTime(2018,07,13)
+                    },
+
+                       new SprintStagesHistory()
+                    {
+                        Begined = new DateTime(2018,07,14),
+                        Ended =  new DateTime(2018,07,28)
+                    },
+
+                        new SprintStagesHistory()
+                    {
+                        Begined = new DateTime(2018,07,29),
+                        Ended =  new DateTime(2018,08,17)
+                    },
+
+                         new SprintStagesHistory()
+                    {
+                        Begined = new DateTime(2018,08,18),
+                        Ended =  new DateTime(2018,08,30)
+                    },
             };
 
             AddToDatabase(sprintStagesHistories, _dbHisories);
@@ -915,17 +998,17 @@ namespace DataBaseInitializer
                     Retrospective = "",
                     Goal = "Develop the checkout process: pay for an order, pick shipping, order gift wrapping.",
                     Stage = SprintStage.Planning,
-                    History = _dbHisories.GetById(1),
+                    History = _dbHisories.GetById(2),
                     Backlog = _dbStories.GetAll().Where(s => s.Id <= 4).ToList()
                 },
-                new Sprint()
+                                new Sprint()
                 {
                     Team =  _dbTeams.GetById(3),
                     Name = "Sprint 3",
                     Retrospective = " What went well in the Sprint: finished in time. What could be improved: the code review. What will we commit to improve in the next Sprint: give more time for code review.",
                     Goal = "Implement basic shopping cart functionality including add, remove, and update quantities.",
                     Stage = SprintStage.Review,
-                    History = _dbHisories.GetById(1),
+                    History = _dbHisories.GetById(3),
                     Backlog = new List<Story>
                     {
                         stories[counter],
@@ -941,7 +1024,7 @@ namespace DataBaseInitializer
                     Retrospective = " What went well in the Sprint: finished all stories and tasks in right way. What could be improved: Sprint was not finished. What will we commit to improve in the next Sprint: monitor timely for performance of all tasks.",
                     Goal = " All stories and tasks need to be done.",
                     Stage = SprintStage.Retrospective,
-                    History = _dbHisories.GetById(1),
+                    History = _dbHisories.GetById(4),
                     Backlog = new List<Story>
                     {
                         stories[counter-4],
@@ -956,7 +1039,7 @@ namespace DataBaseInitializer
                     Retrospective = " What went well in the Sprint: all tasks were done. What could be improved: communication skiils with client. What will we commit to improve in the next Sprint: improve communcation skills",
                     Goal = "All planned tasks need to be done except: database",
                     Stage = SprintStage.Finished,
-                    History =_dbHisories.GetById(1),
+                    History =_dbHisories.GetById(5),
                     Backlog = new List<Story>
                     {
                         stories[counter],
@@ -972,7 +1055,7 @@ namespace DataBaseInitializer
                     Retrospective = "What went well in the Sprint: all tasks were done. What could be improved: communication skiils with client. What will we commit to improve in the next Sprint: improve communcation skills",
                     Goal = "Implement login page.",
                     Stage = SprintStage.Review,
-                    History = _dbHisories.GetById(2),
+                    History = _dbHisories.GetById(6),
                     Backlog = new List<Story>
                     {
                         stories[counter-3],
@@ -989,7 +1072,7 @@ namespace DataBaseInitializer
 
         public static void FillDailyScrumData()
         {
-            _dbDailyInfo = new Repository<DailyScrumInfo>(_context);
+            _dbDailyInfo = new Repository<DailyStandUp>(_context);
             _dbSprints = new Repository<Sprint>(_context);
 
             if (_dbDailyInfo.GetAll().Count() != 0)
@@ -998,19 +1081,19 @@ namespace DataBaseInitializer
 
             foreach (var item in _dbSprints.GetAll())
             {
-                List<DailyScrumInfo> infos = new List<DailyScrumInfo>()
+                List<DailyStandUp> infos = new List<DailyStandUp>()
                 {
-                    new DailyScrumInfo()
+                    new DailyStandUp()
                     {
                         Description = "DailyDescription1",
                         Сonducted = DateTime.Now - new TimeSpan(48,0,0)
                     },
-                    new DailyScrumInfo()
+                    new DailyStandUp()
                     {
                         Description = "DailyDescription2",
                         Сonducted = DateTime.Now - new TimeSpan(24,0,0)
                     },
-                    new DailyScrumInfo()
+                    new DailyStandUp()
                     {
                         Description = "DailyDescription3",
                         Сonducted = DateTime.Now
