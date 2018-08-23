@@ -73,7 +73,9 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
                 name="FeatureName"
                 type="text"
                 value={this.state.FeatureName}
-                onChange={this.handleInputChange} />
+                onChange={this.handleInputChange}
+                maxLength={30}
+                required />
 
             <h3 className="hStyle"> Owner:</h3>
             {this.renderUsers()}
@@ -105,7 +107,9 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
                 name="Description"
                 type="text"
                 value={this.state.Description}
-                onChange={this.handleInputChange} />
+                onChange={this.handleInputChange}
+                maxLength={500}
+                required />
             <div className="text-center">
                 <button
                     disabled={this.isAllFieldsFilled()}
