@@ -21,7 +21,7 @@ interface IFeatureFetchingState {
 }
 
 export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatureFetchingState> {
-
+    
     constructor() {
         super();
         this.LoadData();
@@ -50,7 +50,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
 
     public renderContent() {
         return <div>
-            <h4>{this.EditFeature()}</h4>
+            <h4>{this.state.FeatureName && this.EditFeature()}</h4>
             <h4>{this.OnDataReceived.bind(this)}</h4>
             <h4>{this.setUsers.bind(this)}</h4>
         </div>
