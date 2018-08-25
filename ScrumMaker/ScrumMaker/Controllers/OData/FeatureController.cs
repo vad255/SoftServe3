@@ -40,6 +40,8 @@ namespace ScrumMaker.Controllers
             return Ok(_featuresManager.Get(id));
         }
 
+        [RefreshToken]
+        [CookieAuthorize]
         [AcceptVerbs("PATCH", "MERGE")]
         public IActionResult Patch([FromODataUri] int key, Delta<Feature> updateFeatureRequestModel)
         {
@@ -58,21 +60,30 @@ namespace ScrumMaker.Controllers
             return Updated(feature);
         }
 
-        [AcceptVerbs("DELETE")]
-        public IActionResult Delete([FromODataUri] int key)
+        private bool FeatureExists(int key)
         {
-            try
+            return _featuresManager.GetAll().Count(e => e.Id == key) > 0;
+        }
+
+        [RefreshToken]
+        [CookieAuthorize]
+        [AcceptVerbs("DELETE")]
+        public bool Delete([FromODataUri] int key)
+        {
+            if (FeatureExists(key))
             {
                 _featuresManager.Delete(key);
-                return NoContent();
+                return false;
             }
-            catch (Exception e)
+            else
             {
-                Logger.Logger.LogError("Deleting failed.", e);
-                return BadRequest();
+
+                return true;
             }
         }
 
+        [RefreshToken]
+        [CookieAuthorize]
         [AcceptVerbs("POST")]
         public IActionResult Post([FromBody] Feature feature)
         {

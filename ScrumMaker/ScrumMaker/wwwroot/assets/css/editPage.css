@@ -10,8 +10,20 @@ textarea:focus {
     border: 1px solid blue;
 }
 
-input:invalid {    
-    border: 1px solid red;
+input:invalid {
+    border: 1px solid #ff0000;
+}
+
+textarea:invalid {
+    border: 1px solid #ff0000;
+}
+
+select:invalid {
+    border: 1px solid #ff0000;
+}
+
+.star {
+    color: #ff0000;
 }
 
 .switchSection {
@@ -42,6 +54,7 @@ input:invalid {
     width: 35%;
     height: 40px;
 }
+
 .editHead {
     text-align: center;
     margin-bottom: 20px;
