@@ -196,7 +196,7 @@ export class TaskEdit extends React.Component<RouteComponentProps<any>, IEditPag
             <div className="taskMainBlock inline-block">
                 <div>
                     <h3 className="hStyle">Summary:&nbsp;&nbsp;
-                <input className="form-control inline-block" onChange={this.handleSummaryValue} type="text" value={this.state.summaryValue} />
+                <input className="form-control inline-block" onChange={this.handleSummaryValue} type="text" value={this.state.summaryValue} required/>
                     </h3>
                 </div>
                 <div>
@@ -219,17 +219,17 @@ export class TaskEdit extends React.Component<RouteComponentProps<any>, IEditPag
             <div className="taskTimeBlock inline-block">
                 <div>
                     <h3 className="hStyle">PlannedHours:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input className="form-control inline-block" onChange={this.handlePlannedHoursValue} type="text" value={this.state.plannedHoursValue} />
+                <input className="form-control inline-block" onChange={this.handlePlannedHoursValue} type="text" value={this.state.plannedHoursValue} required />
                     </h3>
                 </div>
                 <div>
                     <h3 className="hStyle">RemainingHours:&nbsp;&nbsp;
-                <input className="form-control inline-block" onChange={this.handleRemainingHoursValue} type="text" value={this.state.remainingHoursValue} />
+                <input className="form-control inline-block" onChange={this.handleRemainingHoursValue} type="text" value={this.state.remainingHoursValue} required />
                     </h3>
                 </div>
                 <div>
                     <h3 className="hStyle">ActualHours:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input className="form-control inline-block" onChange={this.handleActualHoursValue} type="text" value={this.state.actualHoursValue} />
+                <input className="form-control inline-block" onChange={this.handleActualHoursValue} type="text" value={this.state.actualHoursValue} required />
                     </h3>
                 </div>
                 {this.getStartedBlock()}
@@ -237,7 +237,7 @@ export class TaskEdit extends React.Component<RouteComponentProps<any>, IEditPag
             </div>
             <div>
                 <h3 className="hStyle">Description:&nbsp;&nbsp;</h3>
-                <textarea style={{ width: "400px", height: "300px", fontSize: 20, padding: "10px" }} className="form-control inline-block" onChange={this.handleDescriptionValue} type="text" value={this.state.descriptionValue} />
+                <textarea style={{ width: "400px", height: "300px", fontSize: 20, padding: "10px" }} className="form-control inline-block" onChange={this.handleDescriptionValue} type="text" value={this.state.descriptionValue} required />
             </div>
             <div className="text-center">
                 <button
