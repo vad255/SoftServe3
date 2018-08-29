@@ -1,8 +1,9 @@
 import * as React from 'react';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { NavMenu } from './NavMenu';
 import { stack } from 'd3-shape';
 import { User } from './Models/User';
+import { ChatBox } from "./Chats/ChatBox";
 
 export interface LayoutProps {
     children?: React.ReactNode;
@@ -38,9 +39,10 @@ export class Layout extends React.Component<LayoutProps, MyUser> {
             $imagePreview = (<img width="35px" height="35px" alt="lorem" className="userAvatar" src={"/api/userphoto/" + this.state.Login} />);
         }
 
+
         return <div className='container-fluid'>
             <div id="headerPosition" className='header siteColor'>
-                <img src="./img/NewLogo.png" width="150" height="50" className="myLogo"/>
+                <img src="./img/NewLogo.png" width="150" height="50" className="myLogo" />
                 <div id='mySettings'>
                     <div className="navigation fontFamily" id="aColor">
                         <ul id="rigthUl">
@@ -61,7 +63,7 @@ export class Layout extends React.Component<LayoutProps, MyUser> {
                             </li>
                         </ul>
                     </div>
-                    </div>
+                </div>
             </div>
             <div className='row'>
                 <div className='col-sm-2 mainPart'>
@@ -70,6 +72,26 @@ export class Layout extends React.Component<LayoutProps, MyUser> {
                 <div className='col-sm-10 mainPart'>
                     {this.props.children}
                 </div>
+            </div>
+
+            <div className="popup-box popup-box-on">
+                <div className="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style={{ marginBottom: "0px" }}>
+                    <div className="panel panel-default">
+
+                        <div id="collapseOne" className="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <ChatBox />
+                        </div>
+                        <div className="panel-heading" role="tab" id="headingOne">
+                            <h4 className="panel-title text-center">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion"
+                                    href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Open/Close the Chat
+                                </a>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>;
     }

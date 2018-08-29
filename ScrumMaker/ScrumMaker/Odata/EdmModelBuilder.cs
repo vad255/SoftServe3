@@ -29,8 +29,6 @@ namespace ScrumMaker
                 builder.EntitySet<Calendar>("Calendar").EntityType.HasKey(c => c.CalendarId);
                 builder.EntitySet<SprintReview>("SprintReview").EntityType.HasKey(k => k.Id);
                 builder.EntitySet<DailyStandUp>("DailyStandUp").EntityType.HasKey(k => k.Id);
-
-
                 _model = builder.GetEdmModel();
             }
 
