@@ -118,7 +118,7 @@ namespace ScrumMaker
             services.AddScoped(typeof(BL.Chatting.IGlobalChatManager), typeof(BL.Chatting.GlobalChatManager));
             services.AddScoped(typeof(BL.Chatting.IRetrospectiveChatMananger), typeof(BL.Chatting.RetrospectiveChatManager));
             services.AddScoped(typeof(BL.Chatting.IPokerManager), typeof(BL.Chatting.PokerManager));
-
+            
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

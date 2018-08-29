@@ -9,7 +9,7 @@ import { User } from '../Models/User';
 export class OutputBox extends React.Component<{ messages: MessageProps[], myself: User }, any> {
 
     render() {
-        return <div id="messageWindow" className="chatMessagesOutput">
+        return <div id="messageWindow" className="boxMessagesOutput">
             {this.props.messages.map((m, i) => <Message
                 key={i}
                 msg={m}

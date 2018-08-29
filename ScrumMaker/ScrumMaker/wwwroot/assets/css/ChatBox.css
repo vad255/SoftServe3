@@ -1,0 +1,21 @@
+﻿body {
+    background-color: white;
+}
+
+.popup-box {
+    background-color: white;
+    border: 1px solid #b0b0b0;
+    bottom: 0;
+    display: none;
+    height: auto;
+    position: fixed;
+    border-radius: 10px;
+    right: 5px;
+    width: 300px;
+    font-family: 'Open Sans', sans-serif;
+    z-index: 9999;
+}
+
+.popup-box-on {
+    display: block !important;
+}
