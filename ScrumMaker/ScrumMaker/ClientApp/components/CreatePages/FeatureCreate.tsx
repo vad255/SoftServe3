@@ -68,14 +68,17 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
             <div className="text-center">
                 <h2 className="h2EditCreatePage">Create feature</h2>
             </div>
-            <h3 className="hStyle">Name:</h3>
+            <h3 className="hStyle">Name<span className="star">*</span>:</h3>
             <input className="input-lg inputField fontStyle"
                 name="FeatureName"
                 type="text" style={{ width: "35%" }}
                 value={this.state.FeatureName}
-                onChange={this.handleInputChange} />
+                onChange={this.handleInputChange}
+                minLength={3}
+                maxLength={30}
+                required />
 
-            <h3 className="hStyle"> Owner:</h3>
+            <h3 className="hStyle"> Owner<span className="star">*</span>:</h3>
             {this.renderUsers()}
             <h3 className="hStyle">State:</h3>
             {this.renderStates()}
@@ -96,16 +99,20 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
                 className="fontStyle"
                 value={this.state.SelectedStories.map(st => { return { value: st.id != undefined ? st.id : null, label: st.name != undefined ? st.name : null } })}
                 multi
-                name="Stories" style={{ width: "35%" }}
+                name="Stories"
                 closeOnSelect={!true}
                 onChange={this.handleSelectionStories}
                 options={this.state.Stories.map(st => { return { value: st.id, label: st.name } })}/>
-            <h3 className="hStyle">Description:</h3>
+            <h3 className="hStyle">Description<span className="star">*</span>:</h3>
             <textarea className="areaStyle fontStyle"
                 name="Description"
-                type="text" style={{ width: "35%" }}
+                type="text"
                 value={this.state.Description}
-                onChange={this.handleInputChange} />
+                onChange={this.handleInputChange}
+                minLength={10}
+                maxLength={500}
+                title="Enter a description that contains at least 15 characters."
+                required />
             <div className="text-center">
                 <button
                     disabled={this.isAllFieldsFilled()}
@@ -127,7 +134,7 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
     }
 
     isAllFieldsFilled() {
-        if (this.state.FeatureName == "" || this.state.OwnerUserId == -1 || this.state.Description == ""){
+        if (this.state.FeatureName == "" || this.state.OwnerUserId == -1 || this.state.Description == "" || this.state.Description.length < 15 ) {
             return true;
         }
         return false
@@ -186,6 +193,7 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
 
     private renderUsers() {
         let items: JSX.Element[] = [];
+        items.push(<option key={0} value="">Make a selection</option>);
         var users = this.state.Users;
         for (let i = 0; i < users.length; i++) {
             items.push(<option key={i + 1} value={users[i].userId}>{users[i].login}</option>);
@@ -195,7 +203,8 @@ export class FeatureCreate extends React.Component<RouteComponentProps<any>, ICr
             className="form-control fontStyle selectStyle"
             value={this.state.OwnerUserId}
             name="OwnerUserId" style={{ width: "35%" }}
-            onChange={this.handleInputChange}>
+            onChange={this.handleInputChange}
+            required >
             {items}
         </select>
     }

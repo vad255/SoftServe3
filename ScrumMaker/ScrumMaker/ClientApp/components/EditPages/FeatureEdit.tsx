@@ -21,7 +21,7 @@ interface IFeatureFetchingState {
 }
 
 export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatureFetchingState> {
-
+    
     constructor() {
         super();
         this.LoadData();
@@ -50,7 +50,7 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
 
     public renderContent() {
         return <div>
-            <h4>{this.EditFeature()}</h4>
+            <h4>{this.state.FeatureName && this.EditFeature()}</h4>
             <h4>{this.OnDataReceived.bind(this)}</h4>
             <h4>{this.setUsers.bind(this)}</h4>
         </div>
@@ -134,7 +134,8 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
                 name="FeatureName" style={{ width: "35%" }}
                 type="text"
                 value={this.state.FeatureName}
-                onChange={this.handleInputChange} />
+                onChange={this.handleInputChange}
+                required />
             <h3 className="hStyle">Owner:</h3>
             {this.state.Users && this.renderUsers()}
             <h3 className="hStyle">State:</h3>
@@ -160,7 +161,8 @@ export class FeatureEdit extends React.Component<RouteComponentProps<{}>, IFeatu
                 name="Description"
                 type="text"
                 value={this.state.Description}
-                onChange={this.handleInputChange} />
+                onChange={this.handleInputChange}
+                required />
             <div className="text-center">
                 <button
                     className="btn-dark scrum-btn"

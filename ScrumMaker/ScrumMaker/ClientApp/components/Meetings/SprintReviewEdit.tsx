@@ -113,7 +113,8 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
                     className="areaStyle fontStyle"
                     name="Rewiev"
                     type="textarea"
-                    value={this.state.Sprint.goal} />
+                    value={this.state.Sprint.goal}
+                    readOnly />
                 <br/>
                 <div>
                     <div className="col-xs-6 switchSection">
