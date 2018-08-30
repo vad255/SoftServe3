@@ -54,7 +54,7 @@ namespace ScrumMaker.Controllers
         public void SetUser([FromBody]WorkWithTeam model)
         {
 
-            int teamId = _teams.GetAll().Where(t => t.Id == model.Users.FirstOrDefault().TeamId).FirstOrDefault().Id;
+            int teamId = _teams.GetAll().Where(t => t.Name.Equals(model.TeamName)).FirstOrDefault().Id;
 
             List<User> users = _users.GetAll().Where(u => u.TeamId == teamId).ToList();
 

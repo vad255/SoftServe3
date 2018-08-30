@@ -68,26 +68,22 @@ namespace ScrumMaker.Controllers
 
             if (TeamExists(key))
             {
+                List<User> users = _users.GetAll().Where(u => key == u.TeamId).ToList();
+                foreach(var i in users)
+                {
+                    i.TeamId = null;
+                    _users.Update(i);
+                }
+
                 _teams.Delete(key);
                 _teams.Save();
+                _users.Save();
                 return false;
             }
             else
             {
-
                 return true;
             }
-
-            //try
-            //{
-            //    _manager.Delete(key);
-            //    return NoContent();
-            //}
-            //catch (Exception e)
-            //{
-            //    Logger.Logger.LogError("Deleting failed.", e);
-            //    return BadRequest();
-            //}
         }
 
         [AcceptVerbs("POST")]
