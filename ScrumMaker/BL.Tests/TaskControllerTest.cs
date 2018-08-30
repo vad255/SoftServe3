@@ -18,71 +18,71 @@ namespace UnitTests
     [TestClass]
     public class TaskControllerTest
     {
-        //[TestMethod]
-        //public void GetTasks_ReturnsOk()
-        //{
-        //    // arrange
-        //    var mockRepository = new Mock<IRepository<ScrumTask>>();
-        //    var controller = new TasksController(mockRepository.Object);
+        [TestMethod]
+        public void GetTasks_ReturnsOk()
+        {
+            // arrange
+            var mockRepository = new Mock<IRepository<ScrumTask>>();
+            var controller = new TasksController(mockRepository.Object);
 
-        //    // act
-        //    var result = controller.Get();
-        //    var okResult = result as OkObjectResult;
+            // act
+            var result = controller.Get();
+            var okResult = result as OkObjectResult;
 
-        //    // assert
-        //    Assert.IsNotNull(okResult);
-        //    Assert.AreEqual(200, okResult.StatusCode);
-        //}
+            // assert
+            Assert.IsNotNull(okResult);
+            Assert.AreEqual(200, okResult.StatusCode);
+        }
 
-        //[TestMethod]
-        //public void DeleteTasks_ReturnsBool()
-        //{
-        //    // Arrange
-        //    var mockRepository = new Mock<IRepository<ScrumTask>>();
-        //    var controller = new TasksController(mockRepository.Object);
+        [TestMethod]
+        public void DeleteTasks_ReturnsBool()
+        {
+            // Arrange
+            var mockRepository = new Mock<IRepository<ScrumTask>>();
+            var controller = new TasksController(mockRepository.Object);
 
-        //    // Act
-        //    var boolResult = controller.Delete(24);
+            // Act
+            var boolResult = controller.Delete(24);
 
-        //    // Assert
-        //    Assert.IsNotNull(boolResult);
-        //    Assert.AreEqual(true, boolResult);
-        //}
+            // Assert
+            Assert.IsNotNull(boolResult);
+            Assert.AreEqual(true, boolResult);
+        }
 
-        //[TestMethod]
-        //public void PostTasks_ReturnsCreatedODataResult()
-        //{
-        //    // Arrange
-        //    var mockRepository = new Mock<IRepository<ScrumTask>>();
-        //    var controller = new TasksController(mockRepository.Object);
-        //    ScrumTask task = new ScrumTask
-        //    {
-        //        ActualHours = 0,
-        //        Blocked = false,
-        //        Completed = null,
-        //        Description = "Set-up SVN, project folders, SharePoint, project page",
-        //        PlannedHours = 72,
-        //        RemainingHours = 72,
-        //        Started = null,
-        //        State = TaskState.ToDo,
-        //        Story = null,
-        //        StoryId = 1,
-        //        Summary = "SVN, Project Page",
-        //        TaskId = 111,
-        //        Type = TaskType.Analyses,
-        //        User = null,
-        //        UserId = 1
-        //    };
+        [TestMethod]
+        public void PostTasks_ReturnsCreatedODataResult()
+        {
+            // Arrange
+            var mockRepository = new Mock<IRepository<ScrumTask>>();
+            var controller = new TasksController(mockRepository.Object);
+            ScrumTask task = new ScrumTask
+            {
+                ActualHours = 0,
+                Blocked = false,
+                Completed = null,
+                Description = "Set-up SVN, project folders, SharePoint, project page",
+                PlannedHours = 72,
+                RemainingHours = 72,
+                Started = null,
+                State = TaskState.ToDo,
+                Story = null,
+                StoryId = 1,
+                Summary = "SVN, Project Page",
+                TaskId = 111,
+                Type = TaskType.Analyses,
+                User = null,
+                UserId = 1
+            };
 
-        //    // Act
-        //    var actionResult = controller.Post(task);
-        //    //Assert.IsNotNull(actionResult);
-        //    //CreatedODataResult<ScrumTask> result = actionResult as CreatedODataResult<ScrumTask>;
+            // Act
+            var actionResult = controller.Post(task);
+            //Assert.IsNotNull(actionResult);
+            //CreatedODataResult<ScrumTask> result = actionResult as CreatedODataResult<ScrumTask>;
 
-        //    // Assert
-        //    Assert.IsNotNull(actionResult);
-        //    Assert.IsInstanceOfType(actionResult, typeof(CreatedODataResult<ScrumTask>));
-        //}
+            // Assert
+            Assert.IsNotNull(actionResult);
+            Assert.IsInstanceOfType(actionResult, typeof(CreatedODataResult<ScrumTask>));
+        }
 
         [TestMethod]
         public void PatchTasks_ReturnsUpdatedODataResult()

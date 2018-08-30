@@ -42,6 +42,7 @@
     <None Remove="ClientApp\components\Backlog\ProductBacklog.tsx" />
     <None Remove="ClientApp\components\Backlog\SprintBacklog.tsx" />
     <None Remove="ClientApp\components\Charts\Chart.tsx" />
+    <None Remove="ClientApp\components\Chats\ChatBox.tsx" />
     <None Remove="ClientApp\components\CreatePages\CreateDefect.tsx" />
     <None Remove="ClientApp\components\CreatePages\CreateStory.tsx" />
     <None Remove="ClientApp\components\CreatePages\CreateTask.tsx" />
@@ -158,6 +159,7 @@
     <TypeScriptCompile Include="ClientApp\components\Backlog\Backlog.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Backlog\ProductBacklog.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Backlog\SprintBacklog.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Chats\ChatBox.tsx" />
     <TypeScriptCompile Include="ClientApp\components\CreatePages\CreateDefect.tsx" />
     <TypeScriptCompile Include="ClientApp\components\CreatePages\FeatureCreate.tsx" />
     <TypeScriptCompile Include="ClientApp\components\CreatePages\CreateStory.tsx" />

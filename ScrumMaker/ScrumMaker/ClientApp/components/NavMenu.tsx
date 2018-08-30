@@ -78,11 +78,6 @@ export class NavMenu extends React.Component<{}, { role: string }> {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to={'/SimpleChat'} id='coulumWidth' activeClassName='active'>
-                            Chat
-                            </NavLink>
-                    </li>
-                    <li>
                         <NavLink to={'/Calendar'} id='coulumWidth' activeClassName='active'>
                             Calendar
                             </NavLink>

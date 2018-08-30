@@ -11,10 +11,6 @@ namespace DAL
     public class DataContext : DbContext
     {
         public DataContext(DbContextOptions options) : base(options) { }
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=ScrumMaker;Trusted_Connection=True;MultipleActiveResultSets=true");
-        //}
 
         public DbSet<User> Users { get; set; }
 
@@ -48,10 +44,9 @@ namespace DAL
 
         public DbSet<RetrospectiveMessage> RetrospectiveMessages { get; set; }
 
-
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
             modelBuilder.Entity<Role>().HasIndex(x => x.Name).IsUnique();
             modelBuilder.Entity<User>().HasIndex(u => u.Login).IsUnique();
             modelBuilder.Entity<Story>().HasOne(story => story.Feature).WithMany(feature => feature.Stories);
