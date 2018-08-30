@@ -61,6 +61,7 @@ export class CreateTask extends React.Component<RouteComponentProps<any>, ICreat
         this.handleTypeValue = this.handleTypeValue.bind(this);
         this.handleStateValue = this.handleStateValue.bind(this);
         this.handleUserValue = this.handleUserValue.bind(this);
+        this.handleOkValue = this.handleOkValue.bind(this);
         this.handleCancelValue = this.handleCancelValue.bind(this);
 
         fetch("odata/stories", { credentials: 'include' })
@@ -166,8 +167,12 @@ export class CreateTask extends React.Component<RouteComponentProps<any>, ICreat
         this.setState({ task: taskNew });
     }
 
-    private handleCancelValue() {
+    private handleOkValue() {
         this.props.history.push('/tasks');
+    }
+
+    private handleCancelValue() {
+        this.props.history.push('/CreateTask');
     }
 
 
@@ -178,12 +183,12 @@ export class CreateTask extends React.Component<RouteComponentProps<any>, ICreat
             </div>
             <div className="taskMainBlock inline-block">
                 <div>
-                    <h3 className="hStyle">Summary:&nbsp;&nbsp;
-                <input className="form-control inline-block" onChange={this.handleSummaryValue} type="text" value={this.state.summaryValue} />
+                    <h3 className="hStyle">Summary <span style={{ color: "red" }}>*</span> :&nbsp;&nbsp;
+                <input className="form-control inline-block" onChange={this.handleSummaryValue} type="text" value={this.state.summaryValue} required />
                     </h3>
                 </div>
                 <div>
-                    <h3 className="hStyle">Story:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <h3 className="hStyle">Story:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <select className="form-control inline-block" onChange={this.handleStoryValue} value={this.state.storyValue}>
                             {this.state.stories.map(x => <option value={x.id}>{x.name}</option>)}
                         </select>
@@ -193,7 +198,7 @@ export class CreateTask extends React.Component<RouteComponentProps<any>, ICreat
                 {this.getState()}
 
                 <div>
-                    <h3 className="hStyle">User:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <h3 className="hStyle">User:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <select className="form-control inline-block" onChange={this.handleUserValue} value={this.state.userValue} >
                             {this.state.users.map(x => <option value={x.userId}>{x.login}</option>)}
                         </select>
@@ -202,27 +207,30 @@ export class CreateTask extends React.Component<RouteComponentProps<any>, ICreat
             </div>
             <div className="taskTimeBlock inline-block">
                 <div>
-                    <h3 className="hStyle">PlannedHours:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input className="form-control inline-block" onChange={this.handlePlannedHoursValue} type="text" value={this.state.plannedHoursValue} />
+                    <h3 className="hStyle">PlannedHours<span style={{ color: "red" }}>*</span>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input className="form-control inline-block" onChange={this.handlePlannedHoursValue} type="text" value={this.state.plannedHoursValue} required />
                     </h3>
                 </div>
                 <div>
-                    <h3 className="hStyle">RemainingHours:&nbsp;&nbsp;
-                <input className="form-control inline-block" onChange={this.handleRemainingHoursValue} type="text" value={this.state.remainingHoursValue} />
+                    <h3 className="hStyle">RemainingHours<span style={{ color: "red" }}>*</span>:&nbsp;&nbsp;
+                <input className="form-control inline-block" onChange={this.handleRemainingHoursValue} type="text" value={this.state.remainingHoursValue} required />
                     </h3>
                 </div>
                 <div>
-                    <h3 className="hStyle">ActualHours:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input className="form-control inline-block" onChange={this.handleActualHoursValue} type="text" value={this.state.actualHoursValue} />
+                    <h3 className="hStyle">ActualHours<span style={{ color: "red" }}>*</span>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input className="form-control inline-block" onChange={this.handleActualHoursValue} type="text" value={this.state.actualHoursValue} required />
                     </h3>
                 </div>
                 {this.getStartedBlock()}
                 {this.getCompletedBlock()}
             </div>
             <div>
-                <h3 className="hStyle">Description:&nbsp;&nbsp;</h3>
-                <textarea style={{ width: "400px", height: "300px", fontSize: 20, padding: "10px" }} className="form-control inline-block" onChange={this.handleDescriptionValue} type="text" value={this.state.descriptionValue} />
+                <h3 className="hStyle">Description <span style={{ color: "red" }}>*</span> :&nbsp;&nbsp;</h3>
+                <textarea style={{ width: "400px", height: "300px", fontSize: 20, padding: "10px" }} className="form-control inline-block" onChange={this.handleDescriptionValue} type="text" value={this.state.descriptionValue} required />
             </div>
+            <p>
+                <span style={{ color: "red" }}>*</span>these fields are required
+            </p>
             <div className="text-center">
                 <button
                     className="btn-dark scrum-btn"
@@ -234,7 +242,7 @@ export class CreateTask extends React.Component<RouteComponentProps<any>, ICreat
 
                 <button
                     className="btn-dark scrum-btn inline-block"
-                    onClick={this.handleCancelValue}>Discard</button>
+                    onClick={this.handleOkValue}>Discard</button>
             </div>
             {this.GetDeleteConfirmModal()}
         </div>
@@ -253,7 +261,7 @@ export class CreateTask extends React.Component<RouteComponentProps<any>, ICreat
 
         return (
             <div>
-                <h3 className="hStyle">Type:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <h3 className="hStyle">Type:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <select
                         className="form-control inline-block"
                         value={this.state.typeValue}
@@ -277,7 +285,7 @@ export class CreateTask extends React.Component<RouteComponentProps<any>, ICreat
 
         return (
             <div>
-                <h3 className="hStyle">State:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <h3 className="hStyle">State:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <select
                         className="form-control inline-block"
                         value={this.state.stateValue}
@@ -290,64 +298,81 @@ export class CreateTask extends React.Component<RouteComponentProps<any>, ICreat
     }
 
     getStartedBlock() {
-        if (this.state.stateValue.toString() == "InProgress" && this.state.remainingHoursValue >= 0 && this.state.actualHoursValue >= 0 && this.state.plannedHoursValue >=0
+        if (this.state.stateValue.toString() == "InProgress" && this.state.remainingHoursValue >= 0 && this.state.actualHoursValue >= 0 && this.state.plannedHoursValue >= 0
             || this.state.stateValue.toString() == "Done" && this.state.remainingHoursValue == 0 && this.state.actualHoursValue >= 0 && this.state.plannedHoursValue >= 0)
-        return (
-            <div>
-                <h3 className="hStyle">Started:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            return (
+                <div>
+                    <h3 className="hStyle">Started:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <div className="inline-block">
-                        <DatePicker
-                            locale="uk-ua"
-                            className="form-control"
-                            selected={this.state.task.started}
-                            dateFormat={"DD.MM.YYYY HH:mm"}
-                            onChange={this.handleStartedValue}
-                            showTimeSelect
-                            timeFormat="HH:mm"
-                            timeIntervals={15}
-                        />
-                    </div>
-                </h3>
-            </div>
-        );
+                            <DatePicker
+                                locale="uk-ua"
+                                className="form-control"
+                                selected={this.state.task.started}
+                                dateFormat={"DD.MM.YYYY HH:mm"}
+                                onChange={this.handleStartedValue}
+                                showTimeSelect
+                                timeFormat="HH:mm"
+                                timeIntervals={15}
+                            />
+                        </div>
+                    </h3>
+                </div>
+            );
     }
 
 
     getCompletedBlock() {
-        if (this.state.remainingHoursValue == 0 && this.state.stateValue.toString() == "Done" && this.state.actualHoursValue >= 0 && this.state.actualHoursValue >=0)
-        return (
-            <div>
-                <h3 className="hStyle">Completed:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        if (this.state.remainingHoursValue == 0 && this.state.stateValue.toString() == "Done" && this.state.actualHoursValue >= 0 && this.state.actualHoursValue >= 0)
+            return (
+                <div>
+                    <h3 className="hStyle">Completed:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <div className="inline-block">
-                        <DatePicker
-                            locale="uk-ua"
-                            className="form-control"
-                            selected={this.state.task.completed}
-                            dateFormat={"DD.MM.YYYY HH:mm"}
-                            onChange={this.handleCompletedValue}
-                            showTimeSelect
-                            timeFormat="HH:mm"
-                            timeIntervals={15}
-                        />
-                    </div>
-                </h3>
-            </div>
-        );
+                            <DatePicker
+                                locale="uk-ua"
+                                className="form-control"
+                                selected={this.state.task.completed}
+                                dateFormat={"DD.MM.YYYY HH:mm"}
+                                onChange={this.handleCompletedValue}
+                                showTimeSelect
+                                timeFormat="HH:mm"
+                                timeIntervals={15}
+                            />
+                        </div>
+                    </h3>
+                </div>
+            );
     }
 
     private GetDeleteConfirmModal() {
-        return <div id="confirmDeleteModal" className="modal fade">
-            <div className="modal-dialog">
-                <div className="modal-content">
-                    <div className="modal-header  text-center" ><button className="close" type="button" data-dismiss="modal">×</button>
-                        <h4 className="modal-title">The task was created.</h4>
-                    </div>
-                    <div className="modal-body text-center">
-                        <button className="btn-dark scrum-btn" type="button" data-dismiss="modal" onClick={this.handleCancelValue} >
-                            Ok</button>
+        if (this.state.summaryValue.length != 0 && this.state.descriptionValue.length != 0 && this.state.actualHoursValue.toString().length != 0 && this.state.remainingHoursValue.toString().length != 0 && this.state.plannedHoursValue.toString().length != 0) {
+            return <div id="confirmDeleteModal" className="modal fade">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header  text-center" ><button className="close" type="button" data-dismiss="modal">×</button>
+                            <h4 className="modal-title">The task was created.</h4>
+                        </div>
+                        <div className="modal-body text-center">
+                            <button className="btn-dark scrum-btn" type="button" data-dismiss="modal" onClick={this.handleOkValue} >
+                                Ok</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>;
+            </div>;
+        }
+        else {
+            return <div id="confirmDeleteModal" className="modal fade">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header  text-center" ><button className="close" type="button" data-dismiss="modal">×</button>
+                            <h4 className="modal-title">Please, fullfill requaired fields.</h4>
+                        </div>
+                        <div className="modal-body text-center">
+                            <button className="btn-dark scrum-btn" type="button" data-dismiss="modal" onClick={this.handleCancelValue} >
+                                Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </div>;
+        }
     }
 }

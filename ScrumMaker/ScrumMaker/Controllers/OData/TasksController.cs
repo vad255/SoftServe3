@@ -25,6 +25,7 @@ namespace ScrumMaker.Controllers
             _tasks = tasks;
 
         }
+
         [RefreshToken]
         [CookieAuthorize]
         [EnableQuery]
@@ -56,7 +57,7 @@ namespace ScrumMaker.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(key))
+                if (!TaskExists(key))
                 {
                     return NotFound();
                 }
@@ -69,23 +70,39 @@ namespace ScrumMaker.Controllers
             return Updated(task);
         }
 
-        private bool ProductExists(int key)
+        private bool TaskExists(int key)
         {
             return _tasks.GetAll().Count(e => e.TaskId == key) > 0;
         }
 
 
+        //[AcceptVerbs("DELETE")]
+        //public IActionResult Delete([FromODataUri] int key)
+        //{
+        //    _tasks.Delete(key);
+        //    _tasks.Save();
+        //    return NoContent();
+        //}
+
         [AcceptVerbs("DELETE")]
-        public IActionResult Delete([FromODataUri] int key)
+        public bool Delete([FromODataUri] int key)
         {
-            _tasks.Delete(key);
-            _tasks.Save();
-            return NoContent();
+            if (TaskExists(key))
+            {
+                _tasks.Delete(key);
+                _tasks.Save();
+                return false;
+            }
+            else
+            {
+
+                return true;
+            }
         }
 
 
         [AcceptVerbs("POST")]
-        public IActionResult Post([FromBody] ScrumTask task)
+        public IActionResult Post([FromBody]  ScrumTask task)
         {
             if (!ModelState.IsValid)
             {

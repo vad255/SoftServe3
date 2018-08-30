@@ -141,7 +141,7 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
 
     private renderDailyStandUpButton(sprintId: number) {
         return <button className="btn-dark scrum-btn"
-            disabled={!this.userIsScrumMaster()}
+           //    disabled={!this.userIsScrumMaster()}
                 onClick={() => this.createDailyStandUp(this.state.SprintId)}>
                 Create Stand-Up
             </button >
