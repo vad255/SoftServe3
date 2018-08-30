@@ -89,7 +89,7 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
                 })
             });
     }
-        
+
 
     private GetDeleteConfirmModal() {
         if (this.state.nameValue.length != 0 && this.state.fixResultValue.length != 0 && this.state.actualResultValue.length != 0)
@@ -140,7 +140,7 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
     }
 
     public render() {
-       
+
         return <form className="needs-validation" noValidate>
             <div className="text-left">
                 <div className="text-center">
@@ -149,7 +149,7 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
                 <div>
                     <h3 className="hStyle">Defect name<span style={{ color: "red" }}>*</span>: </h3>
                     <input className="form-control input-lg" style={{ width: "35%" }} onChange={this.handleChangeInput} type="text" value={this.state.nameValue} required />
-                   
+
                 </div>
 
                 <div>
@@ -197,7 +197,7 @@ export class EditDefect extends React.Component<RouteComponentProps<any>, IEditP
             </div>
             {this.Listen()}
         </form>;
-        
+
     }
 
     Listen() {

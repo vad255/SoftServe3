@@ -35,7 +35,7 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
     private getSprintReviewURL: string = "odata/SprintReview?$expand=sprint($expand=backlog,team($expand=members($expand=role)))&$filter=id eq ";
     private isLoading: boolean = true;
     private updateURL: string = "odata/SprintReview/";
-    
+
     public render() {
         let contents = this.isLoading
             ? <p><em>Loading...</em></p>
@@ -71,12 +71,12 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
 
     public GetTeamTable() {
         return <table className='table table-scrum table-hover td-scrum'>
-            <thead> 
+            <thead>
                 <tr>
                     <th className="well col-md-1"><b>{this.state.Sprint.team.name}</b>
                     </th>
                 </tr>
-            </thead> 
+            </thead>
             <tbody>
                 {this.state.Sprint.team.members.map(user => this.renderMember(user))}
             </tbody>
@@ -90,7 +90,7 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
                     <th colSpan={2}
                         className="well col-md-2"><b>Sprint backlog</b>
                     </th>
-                    
+
                 </tr>
                 <tr>
                     <th className="well col-md-1"><b>Story's name</b>
@@ -113,7 +113,8 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
                     className="areaStyle fontStyle"
                     name="Rewiev"
                     type="textarea"
-                    value={this.state.Sprint.goal} />
+                    value={this.state.Sprint.goal}
+                    readOnly />
                 <br/>
                 <div>
                     <div className="col-xs-6 switchSection">
@@ -130,8 +131,8 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
                                 id="normal-switch" />
                     </div>
                 </div>
-                <div className='text-center'>
-                    <button className='btn btn-disabled'
+                <div>
+                    <button className="scrum-btn btn-dark"
                         disabled={!this.userIsScrumMaster()}
                         data-toggle="modal"
                         data-target="#confirmDeleteModal">Save</button>
@@ -149,7 +150,7 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
                         <h4 className="modal-title">The review for "<i>{this.state.Sprint.name}</i>" was saved.</h4>
                     </div>
                     <div className="modal-body text-center">
-                        <button className="btn btn-disabled" type="button" data-dismiss="modal">
+                        <button className="btn-dark scrum-btn" type="button" data-dismiss="modal">
                             Ok</button>
                     </div>
                 </div>
@@ -206,14 +207,14 @@ export class SprintReviewEdit extends React.Component<RouteComponentProps<{}>, I
                 {user.login} (<b>{user.role.name}</b>)
             </td>
         </tr>
-            
+
     }
 
     private renderStory(story: Story) {
         return <tr key={story.id}>
             <td>{story.name}</td>
             {this.selectExpiredStories(story)}
-            
+
         </tr>
     }
 

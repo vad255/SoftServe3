@@ -14,7 +14,7 @@ export class Team implements IDbModel {
             this.id,
             this.name,
             <div className="dropdown">
-                <div id={this.id.toString()} role="button" data-toggle="dropdown" className="btn btn-sm btn-primary">Show Members <span className="caret"></span>
+                <div id={this.id.toString()} role="button" data-toggle="dropdown" className="btn-dark scrum-btn btn-sm">Show Members <span className="caret"></span>
                 </div>
                 <ul className="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
                 {this.members.map(u => u.renderAsDropDown())}
@@ -58,9 +58,9 @@ export class Team implements IDbModel {
 
     renderAsMenu() {
         if (this.empty)
-            return <div id="nodata" role="button" data-toggle="dropdown" className="btn btn-sm "> No Data </div>
+            return <div id="nodata" role="button" data-toggle="dropdown" className="btn-dark scrum-btn btn-sm "> No Data </div>
         return <div className="dropdown">
-            <div id={this.id.toString()} role="button" data-toggle="dropdown" className="btn btn-sm btn-primary" >
+            <div id={this.id.toString()} role="button" data-toggle="dropdown" className="btn-dark scrum-btn btn-sm" >
                 {this.name} <span className="caret"></span>
             </div>
             <ul className="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">

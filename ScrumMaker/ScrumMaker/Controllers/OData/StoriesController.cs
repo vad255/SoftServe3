@@ -32,15 +32,23 @@ namespace ScrumMaker.Controllers
         [EnableQuery]
         public IActionResult Get()
         {
-           return Ok(_stories.GetAll());
+            return Ok(_stories.GetAll());
         }
 
         [AcceptVerbs("DELETE")]
-        public IActionResult Delete([FromODataUri] int key)
+        public bool Delete([FromODataUri] int key)
         {
-            _stories.Delete(key);
-            _stories.Save();
-            return NoContent();
+            if (StoryExists(key))
+            {
+                _stories.Delete(key);
+                _stories.Save();
+                return false;
+            }
+            else
+            {
+
+                return true;
+            }
         }
 
         [AcceptVerbs("PATCH", "MERGE")]
@@ -62,7 +70,7 @@ namespace ScrumMaker.Controllers
 
             try
             {
-                 _stories.Save();
+                _stories.Save();
             }
             catch (DbUpdateConcurrencyException)
             {

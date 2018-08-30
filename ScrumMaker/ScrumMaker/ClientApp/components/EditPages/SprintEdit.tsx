@@ -1,4 +1,4 @@
-import * as React from 'react';
+﻿import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Sprint } from '../Models/Sprint';
 import { NavLink } from 'react-router-dom';
@@ -122,6 +122,7 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
                     {this.getRetrospectiveInput()}
                     {this.getButtons()}
                     {this.GetDeleteConfirmModal()}
+                    {this.GetVaildateModal()}
                 </div>
         else
             contents = <p><em>Loading...</em></p>
@@ -235,7 +236,7 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
 
         return (
             <div>
-                <h3 className="hStyle">History</h3>
+                <h3 className="hStyle" style={{ marginLeft: "100px" }}>History</h3>
 
                 <h4 className="hStyle">Begin:&nbsp;&nbsp;
                 <div className="inline-block">
@@ -298,19 +299,47 @@ export class SprintEdit extends React.Component<RouteComponentProps<{}>, ISprint
             </div>
         )
     }
+
+
+    private GetVaildateModal() {
+        return <div id="ValidateModal" className="modal fade">
+            <div className="modal-dialog">
+                <div className="modal-content">
+                    <div className="modal-header  text-center" ><button className="close" type="button" data-dismiss="modal">×</button>
+                        <h4 className="modal-title">Enter name and review, please!</h4>
+                    </div>
+                    <div className="modal-body text-center">
+                        <button className="btn-dark scrum-btn" type="button" data-dismiss="modal">
+                            Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>;
+    }
+
     getButtons() {
+
+        let dataTarget;
+
+        if (this.state.sprint.goal !== "" && this.state.sprint.name !== "") {
+            dataTarget = "#ConfirmDialog";
+        }
+        else {
+            dataTarget = "#ValidateModal";
+        }
+
         return (
             <div className="text-center">
                 <button
-                    className="btn"
+                    className="btn-dark scrum-btn"
                     data-toggle="modal"
-                    data-target="#ConfirmDialog"
+                    data-target={dataTarget}
                     role="button">Update</button>
 
                 &nbsp;&nbsp;&nbsp;&nbsp;
 
                 <button
-                    className="btn inline-block"
+                    className="btn-dark scrum-btn inline-block"
                     onClick={this.handleCancel.bind(this)}>Discard</button>
             </div>
         );

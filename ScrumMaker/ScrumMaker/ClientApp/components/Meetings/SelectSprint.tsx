@@ -121,18 +121,18 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
 
     renderSprintPlaningButton() {
         return <button onClick={() => this.props.history.push('/SprintPlaning/' + this.state.SprintId)}
-            className="btn">Sprint planning</button>
+            className="btn-dark scrum-btn">Sprint planning</button>
     }
 
     private renderSprintReviewButtons(sprintId: number) {
         var sprintReviewId = this.findSprintReview();
         if (sprintReviewId) {
-            return <button className="btn"
+            return <button className="btn-dark scrum-btn"
                 onClick={() => this.props.history.push('/SprintReviewEdit/' + sprintReviewId)}>
                 Review
             </button >
         }
-        return <button className="btn btn-disabled"
+        return <button className="btn-dark scrum-btn"
                 disabled={!this.userIsScrumMaster()}
                 onClick={() => this.createSprintReview(this.state.SprintId)}>
             Create review
@@ -140,8 +140,8 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
     }
 
     private renderDailyStandUpButton(sprintId: number) {
-        return <button className="btn"
-            //disabled={!this.userIsScrumMaster()}
+        return <button className="btn-dark scrum-btn"
+           //    disabled={!this.userIsScrumMaster()}
                 onClick={() => this.createDailyStandUp(this.state.SprintId)}>
                 Create Stand-Up
             </button >
@@ -149,7 +149,7 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
 
     renderRetrospectiveButton() {
         return <button onClick={this.handleButtonClick}
-            className="btn">Retrospective</button>
+            className="btn-dark scrum-btn">Retrospective</button>
     }
 
     handleButtonClick() {

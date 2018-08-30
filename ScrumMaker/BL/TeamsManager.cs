@@ -28,5 +28,11 @@ namespace BL
 
             return result;
         }
+
+        public void Delete(int id)
+        {
+            _unit.Teams.Delete(id);
+            _unit.Commit();
+        }
     }
 }

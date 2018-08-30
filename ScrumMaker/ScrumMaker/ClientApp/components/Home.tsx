@@ -73,10 +73,10 @@ export class Home extends React.Component<RouteComponentProps<{}>, {}> {
             <footer id="footer">
 
                 <ul className="icons">
-                    <li><a href="#" className="icon fa-twitter"><span className="label">Twitter</span></a></li>
-                    <li><a href="#" className="icon fa-facebook"><span className="label">Facebook</span></a></li>
-                    <li><a href="#" className="icon fa-instagram"><span className="label">Instagram</span></a></li>
-                    <li><a href="#" className="icon fa-envelope"><span className="label">Email</span></a></li>
+                    <li><a href="https://www.youtube.com/user/Scrumorg/videos" className="icon fa-youtube"><span className="label">Youtube</span></a></li>
+                    <li><a href="https://www.facebook.com/scrumalliance/" className="icon fa-facebook"><span className="label">Facebook</span></a></li>
+                    <li><a href="https://www.instagram.com/pashechk0" className="icon fa-instagram"><span className="label">Instagram</span></a></li>
+                    <li><a href="kolert@mail.ru" className="icon fa-envelope"><span className="label">Email</span></a></li>
                 </ul>
             </footer>
         </div>;
