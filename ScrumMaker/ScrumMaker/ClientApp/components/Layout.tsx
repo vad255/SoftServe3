@@ -11,7 +11,8 @@ export interface LayoutProps {
 
 interface MyUser {
     Login: string,
-    Photo: 'api/User/ShowPhoto'
+    Photo: 'api/User/ShowPhoto',
+    Chat: boolean
 }
 
 export class Layout extends React.Component<LayoutProps, MyUser> {
@@ -20,7 +21,8 @@ export class Layout extends React.Component<LayoutProps, MyUser> {
         super(props);
         this.state = {
             Login: '',
-            Photo: 'api/User/ShowPhoto'
+            Photo: 'api/User/ShowPhoto',
+            Chat: false
         }
 
         fetch('/getUser', {
@@ -39,6 +41,12 @@ export class Layout extends React.Component<LayoutProps, MyUser> {
             $imagePreview = (<img width="35px" height="35px" alt="lorem" className="userAvatar" src={"/api/userphoto/" + this.state.Login} />);
         }
 
+        var chat;
+        if (this.state.Chat == true) {
+            chat = <div id="collapseOne" className="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <ChatBox />
+            </div>
+        }
 
         return <div className='container-fluid'>
             <div id="headerPosition" className='header siteColor'>
@@ -46,14 +54,6 @@ export class Layout extends React.Component<LayoutProps, MyUser> {
                 <div id='mySettings'>
                     <div className="navigation fontFamily" id="aColor">
                         <ul id="rigthUl">
-                            <li><a className="aColor">Settings<span className="arrow-left"></span></a>
-                                <ul className="dropdown">
-                                    <li><Link to="/usergrid">Users</Link></li>
-                                    <li><Link to="/Stories">Stories</Link></li>
-                                    <li><Link to="/feature">Features</Link></li>
-                                    <li><Link to="/sprints">Sprints</Link></li>
-                                </ul>
-                            </li>
                             <li><a className=""> <div>{$imagePreview} {this.state.Login}</div></a>
                                 <ul className="dropdown">
                                     <li><a href="/edituser">Edit user</a></li>
@@ -77,16 +77,12 @@ export class Layout extends React.Component<LayoutProps, MyUser> {
             <div className="popup-box popup-box-on">
                 <div className="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style={{ marginBottom: "0px" }}>
                     <div className="panel panel-default">
-
-                        <div id="collapseOne" className="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                            <ChatBox />
-                        </div>
+                        {chat}
                         <div className="panel-heading" role="tab" id="headingOne">
                             <h4 className="panel-title text-center">
-                                <a role="button" data-toggle="collapse" data-parent="#accordion"
-                                    href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Open/Close the Chat
-                                </a>
+                                <button className="userbtn1" onClick={() => this.setState({
+                                    Chat: !this.state.Chat
+                                })}>Open/Close the Chat</button>
                             </h4>
                         </div>
                     </div>

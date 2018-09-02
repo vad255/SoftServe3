@@ -183,13 +183,13 @@ export class CreateTask extends React.Component<RouteComponentProps<any>, ICreat
             </div>
             <div className="taskMainBlock inline-block">
                 <div>
-                    <h3 className="hStyle">Summary <span style={{ color: "red" }}>*</span> :&nbsp;&nbsp;
-                <input className="form-control inline-block" onChange={this.handleSummaryValue} type="text" value={this.state.summaryValue} required />
+                    <h3 className="hStyle">Summary<span style={{ color: "red" }}>*</span>:
+                        <input className="form-control inline-block" id="tasksSummary" onChange={this.handleSummaryValue} type="text" value={this.state.summaryValue} required />
                     </h3>
                 </div>
                 <div>
-                    <h3 className="hStyle">Story:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <select className="form-control inline-block" onChange={this.handleStoryValue} value={this.state.storyValue}>
+                    <h3 className="hStyle">Story:
+                <select className="form-control inline-block" id="tasksStory" onChange={this.handleStoryValue} value={this.state.storyValue}>
                             {this.state.stories.map(x => <option value={x.id}>{x.name}</option>)}
                         </select>
                     </h3>
@@ -198,8 +198,8 @@ export class CreateTask extends React.Component<RouteComponentProps<any>, ICreat
                 {this.getState()}
 
                 <div>
-                    <h3 className="hStyle">User:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <select className="form-control inline-block" onChange={this.handleUserValue} value={this.state.userValue} >
+                    <h3 className="hStyle">User:
+                <select className="form-control inline-block" id="tasksUser" onChange={this.handleUserValue} value={this.state.userValue} >
                             {this.state.users.map(x => <option value={x.userId}>{x.login}</option>)}
                         </select>
                     </h3>
@@ -207,25 +207,25 @@ export class CreateTask extends React.Component<RouteComponentProps<any>, ICreat
             </div>
             <div className="taskTimeBlock inline-block">
                 <div>
-                    <h3 className="hStyle">PlannedHours<span style={{ color: "red" }}>*</span>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input className="form-control inline-block" onChange={this.handlePlannedHoursValue} type="text" value={this.state.plannedHoursValue} required />
+                    <h3 className="hStyle">PlannedHours<span style={{ color: "red" }}>*</span>:
+                <input className="form-control inline-block" id="tasksPlannedHours" onChange={this.handlePlannedHoursValue} type="text" value={this.state.plannedHoursValue} required />
                     </h3>
                 </div>
                 <div>
-                    <h3 className="hStyle">RemainingHours<span style={{ color: "red" }}>*</span>:&nbsp;&nbsp;
-                <input className="form-control inline-block" onChange={this.handleRemainingHoursValue} type="text" value={this.state.remainingHoursValue} required />
+                    <h3 className="hStyle">RemainingHours<span style={{ color: "red" }}>*</span>:
+                <input className="form-control inline-block" id="tasksRemainingHours" onChange={this.handleRemainingHoursValue} type="text" value={this.state.remainingHoursValue} required />
                     </h3>
                 </div>
                 <div>
-                    <h3 className="hStyle">ActualHours<span style={{ color: "red" }}>*</span>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input className="form-control inline-block" onChange={this.handleActualHoursValue} type="text" value={this.state.actualHoursValue} required />
+                    <h3 className="hStyle">ActualHours<span style={{ color: "red" }}>*</span>:
+                <input className="form-control inline-block" id="tasksActualHours" onChange={this.handleActualHoursValue} type="text" value={this.state.actualHoursValue} required />
                     </h3>
                 </div>
                 {this.getStartedBlock()}
                 {this.getCompletedBlock()}
             </div>
             <div>
-                <h3 className="hStyle">Description <span style={{ color: "red" }}>*</span> :&nbsp;&nbsp;</h3>
+                <h3 className="hStyle">Description <span style={{ color: "red" }}>*</span> :</h3>
                 <textarea style={{ width: "400px", height: "300px", fontSize: 20, padding: "10px" }} className="form-control inline-block" onChange={this.handleDescriptionValue} type="text" value={this.state.descriptionValue} required />
             </div>
             <p>
@@ -261,9 +261,10 @@ export class CreateTask extends React.Component<RouteComponentProps<any>, ICreat
 
         return (
             <div>
-                <h3 className="hStyle">Type:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <h3 className="hStyle">Type:
                 <select
                         className="form-control inline-block"
+                        id="tasksType"
                         value={this.state.typeValue}
                         onChange={this.handleTypeValue}>
                         {items};
@@ -285,9 +286,10 @@ export class CreateTask extends React.Component<RouteComponentProps<any>, ICreat
 
         return (
             <div>
-                <h3 className="hStyle">State:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <h3 className="hStyle">State:
                     <select
                         className="form-control inline-block"
+                        id="tasksState"
                         value={this.state.stateValue}
                         onChange={this.handleStateValue}>
                         {items};
@@ -302,8 +304,8 @@ export class CreateTask extends React.Component<RouteComponentProps<any>, ICreat
             || this.state.stateValue.toString() == "Done" && this.state.remainingHoursValue == 0 && this.state.actualHoursValue >= 0 && this.state.plannedHoursValue >= 0)
             return (
                 <div>
-                    <h3 className="hStyle">Started:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <div className="inline-block">
+                    <h3 className="hStyle">Started:
+                <div className="inline-block" id="startedTask">
                             <DatePicker
                                 locale="uk-ua"
                                 className="form-control"
@@ -325,8 +327,8 @@ export class CreateTask extends React.Component<RouteComponentProps<any>, ICreat
         if (this.state.remainingHoursValue == 0 && this.state.stateValue.toString() == "Done" && this.state.actualHoursValue >= 0 && this.state.actualHoursValue >= 0)
             return (
                 <div>
-                    <h3 className="hStyle">Completed:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <div className="inline-block">
+                    <h3 className="hStyle">Completed:
+                <div className="inline-block" id="completedTask">
                             <DatePicker
                                 locale="uk-ua"
                                 className="form-control"

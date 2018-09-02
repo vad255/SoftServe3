@@ -140,11 +140,26 @@ export class SelectSprint extends React.Component<RouteComponentProps<{}>, ISpri
     }
 
     private renderDailyStandUpButton(sprintId: number) {
-        return <button className="btn-dark scrum-btn"
-           //    disabled={!this.userIsScrumMaster()}
+        var maxSprint = 0;
+        this.state.Sprints.forEach(s => {
+            if (s.id > maxSprint) {
+                maxSprint = s.id;
+            }
+        })
+        if (sprintId == maxSprint) {
+            return <button className="btn-dark scrum-btn"
+                //    disabled={!this.userIsScrumMaster()}
                 onClick={() => this.createDailyStandUp(this.state.SprintId)}>
                 Create Stand-Up
             </button >
+        }
+        else {
+            return <button disabled className="btn-dark scrum-btn"
+                //    disabled={!this.userIsScrumMaster()}
+                onClick={() => this.createDailyStandUp(this.state.SprintId)}>
+                Create Stand-Up
+            </button >
+        }
     }
 
     renderRetrospectiveButton() {

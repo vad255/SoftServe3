@@ -133,6 +133,8 @@ export class DailyStandUpMeeting extends React.Component<{}, IUserDataFetchingSt
     }
 
     GetTasksTable(userId: number) {
+        var userTask: Task[] = this.state.tasks.filter(t => t.userId == userId);
+        userTask.forEach(t => t.userId = t.summary.length);
             var table2 = <table className='table table-scrum table-hover td-scrum'>
             <thead>
                 <tr>
@@ -155,10 +157,10 @@ export class DailyStandUpMeeting extends React.Component<{}, IUserDataFetchingSt
                     </th>
                 </tr>
             </thead>
-            <tbody>
-                    {this.state.tasks.map((t) => {
-                        if (t.userId === userId && t.started <= this.state.Conducted && t.state.toString() == "InProgress" /*|| t.userId === userId && moment().subtract('days', 1) <= t.completed && t.state.toString() == "Done"*/) {
-
+                <tbody>
+                    {userTask.map((t) => {
+                        if ( t.started <= this.state.Conducted && t.state.toString() == "InProgress" || moment().subtract('days', 1) <= t.completed && t.state.toString() == "Done")
+                        {
                             return <tr key={t.userId}>
                             <td className="well col-md-1">{t.description}
                             </td>
@@ -171,8 +173,6 @@ export class DailyStandUpMeeting extends React.Component<{}, IUserDataFetchingSt
                             {this.startedValue(t)}
                             {this.completedValue(t)}
                         </tr>
-                        } else {
-                            return null;
                     }
                 }
                 )}
@@ -180,6 +180,7 @@ export class DailyStandUpMeeting extends React.Component<{}, IUserDataFetchingSt
         </table>
 
         this.setState({ table: table2 });
+        userTask.forEach(t => t.userId = userId);
     }
 
     private renderTask(userId: number) {

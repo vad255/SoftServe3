@@ -10,12 +10,15 @@ import '../wwwroot/assets/css/TreeSubMenu.css';
 import '../wwwroot/assets/css/layoutStyle.css';
 import '../wwwroot/assets/css/SwitchImg.css';
 import '../wwwroot/assets/css/SelectStyle.css';
-import '../wwwroot/assets/css/Login.css';
+import '../ClientApp/css/login.css';
 import '../wwwroot/assets/css/Tooltips.css';
 import '../wwwroot/assets/css/modalWindow.css';
 import '../wwwroot/assets/css/multiselect.css';
 import '../wwwroot/assets/css/backlog.css';
 import '../wwwroot/assets/css/poker.css';
+import './css/registration.css';
+import './css/EditTask.css';
+
 
 
 import 'bootstrap';
