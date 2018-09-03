@@ -14,16 +14,19 @@ export class SprintBacklog {
         return <div className="col-md-12">
             <Tabs forceRenderTabPanel className="row">
                 <div className="col-md-2">
+                    <span className="sign">Sprints</span>
                     <TabList className="nav nav-tabs tabs-left ">
-                        {this.sprints.map(
-                            x => <Tab key={x.id} className="btn-dark scrum-btn tab-story">{x.name}</Tab>)
-                        }
+                        {this.sprints.map(x =>
+                            <Tab key={x.id} className="btn-dark scrum-btn tab-story">
+                                {x.name}
+                            </Tab>)}
                     </TabList>
                 </div>
                 <div className="col-md-9">
                     {this.sprints.map(x => <TabPanel key={x.id}>
                         <Tabs forceRenderTabPanel className="row">
                             <div className="col-md-3">
+                                <span className="sign">Stories</span>
                                 <TabList className="nav nav-tabs tabs-left ">
                                     {x.backlog.map(
                                         t => <Tab key={t.id
@@ -34,6 +37,7 @@ export class SprintBacklog {
                                 {x.backlog.map(t => <TabPanel key={t.id}>
                                     <Tabs forceRenderTabPanel className="row">
                                         <div className="col-md-3">
+                                            <span className="sign">Tasks</span>
                                             <TabList className="nav nav-tabs tabs-left">
                                                 {t.tasks.map(
                                                     s => <Tab key={s.taskId
@@ -41,6 +45,7 @@ export class SprintBacklog {
                                             </TabList>
                                         </div>
                                         <div id="desc-of-task">
+                                            <span className="sign">Description</span>
                                             {t.tasks.map(s => <TabPanel key={s.taskId}>
                                                 <div className="list-group-item">
                                                     {s.description}
