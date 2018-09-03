@@ -1,0 +1,39 @@
+﻿#tasksUser {
+   margin-left:73px;
+}
+
+#tasksSummary {
+    margin-left: 15px;
+}
+
+#tasksStory {
+    margin-left: 68px;
+}
+
+#tasksType {
+    margin-left: 72px;
+}
+
+#tasksState {
+    margin-left: 72px;
+}
+
+#tasksPlannedHours {
+    margin-left: 40px;
+}
+
+#tasksRemainingHours {
+    margin-left: 12px;
+}
+
+#tasksActualHours {
+    margin-left: 54px;
+}
+
+#startedTask {
+    margin-left: 120px;
+}
+
+#completedTask {
+    margin-left: 83px;
+}

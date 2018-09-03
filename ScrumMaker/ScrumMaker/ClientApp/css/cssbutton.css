@@ -35,41 +35,288 @@
 
 
 
-
-/*.userbtn {
+.userbtn1 {
     display: inline-block;
     border: none;
-    padding: 2rem 5rem;
-    margin: 7px;
-    margin-right: auto;
+    padding: 2rem 2rem;
+    margin-top: 1px;
     background: #696969;
     color: #ffffff;
     font-family: 'Times New Roman';
-    padding: 14px 32px !important;
-    font-size: 13px !important;
+    padding: 14px 22px !important;
+    font-size: 15px !important;
     cursor: pointer;
     text-align: center;
-    text-decoration: none;
     transition: background 750ms ease-in-out, transform 150ms ease;
     -webkit-appearance: none;
     -moz-appearance: none;
     width: 90%;
 }
 
-    .userbtn:hover,
-    .userbtn:focus {
+    .userbtn1:hover,
+    .userbtn1:focus {
         background: black;
     }
 
-    .userbtn:focus {
+    .userbtn1:focus {
         outline: 1px solid #fff;
         outline-offset: -4px;
     }
 
-    .userbtn:active {
-        transform: scale(1.99);
+    .userbtn1:active {
+        transform: scale(1.2);
     }
 
-td{
-    color:red;
-}*/
+
+
+
+.userbtnreg {
+    display: inline-block;
+    border: none;
+    padding: 2rem 2rem;
+    margin: 20px;
+    margin-right: auto;
+    background: #696969;
+    color: #ffffff;
+    font-family: 'Times New Roman';
+    padding: 14px 22px !important;
+    font-size: 15px !important;
+    cursor: pointer;
+    text-align: center;
+    transition: background 750ms ease-in-out, transform 150ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 30%;
+}
+
+    .userbtnreg:hover,
+    .userbtnreg:focus {
+        background: black;
+    }
+
+    .userbtnreg:focus {
+        outline: 1px solid #fff;
+        outline-offset: -4px;
+    }
+
+    .userbtnreg:active {
+        transform: scale(1.2);
+    }
+
+
+
+
+
+
+.userbtnhome1 {
+    display: inline-block;
+    border: none;
+    padding: 2rem 5rem;
+    margin-top: 14px;
+    margin-right: auto;
+    background: #696969;
+    color: #ffffff;
+    font-family: 'Times New Roman';
+    padding: 0px 22px !important;
+    font-size: 15px !important;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background 750ms ease-in-out, transform 150ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100%;
+}
+
+    .userbtnhome1:hover,
+    .userbtnhome1:focus {
+        background: black;
+    }
+
+    .userbtnhome1:focus {
+        outline: 1px solid #fff;
+        outline-offset: -4px;
+    }
+
+    .userbtnhome1:active {
+        transform: scale(1.2);
+    }
+
+
+
+
+.userbtnhome2 {
+    display: inline-block;
+    border: none;
+    padding: 2rem 5rem;
+    margin-top: 10px;
+    margin-right: auto;
+    background: #696969;
+    color: #ffffff;
+    font-family: 'Times New Roman';
+    padding: 0px 22px !important;
+    font-size: 15px !important;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background 750ms ease-in-out, transform 150ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100%;
+}
+
+    .userbtnhome2:hover,
+    .userbtnhome2:focus {
+        background: black;
+    }
+
+    .userbtnhome2:focus {
+        outline: 1px solid #fff;
+        outline-offset: -4px;
+    }
+
+    .userbtnhome2:active {
+        transform: scale(1.2);
+    }
+
+
+.userbtnhome3 {
+    display: inline-block;
+    border: none;
+    padding: 2rem 5rem;
+    margin-top: 12px;
+    margin-right: auto;
+    background: #696969;
+    color: #ffffff;
+    font-family: 'Times New Roman';
+    padding: 0px 22px !important;
+    font-size: 15px !important;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background 750ms ease-in-out, transform 150ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100%;
+}
+
+    .userbtnhome3:hover,
+    .userbtnhome3:focus {
+        background: black;
+    }
+
+    .userbtnhome3:focus {
+        outline: 1px solid #fff;
+        outline-offset: -4px;
+    }
+
+    .userbtnhome3:active {
+        transform: scale(1.2);
+    }
+
+
+.userbtnhome4 {
+    display: inline-block;
+    border: none;
+    padding: 2rem 5rem;
+    margin-top: 35px;
+    margin-right: auto;
+    background: #696969;
+    color: #ffffff;
+    font-family: 'Times New Roman';
+    padding: 0px 22px !important;
+    font-size: 15px !important;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background 750ms ease-in-out, transform 150ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100%;
+}
+
+    .userbtnhome4:hover,
+    .userbtnhome4:focus {
+        background: black;
+    }
+
+    .userbtnhome4:focus {
+        outline: 1px solid #fff;
+        outline-offset: -4px;
+    }
+
+    .userbtnhome4:active {
+        transform: scale(1.2);
+    }
+
+
+
+.userbtnhome5 {
+    display: inline-block;
+    border: none;
+    padding: 2rem 5rem;
+    margin-top: 12px;
+    margin-right: auto;
+    background: #696969;
+    color: #ffffff;
+    font-family: 'Times New Roman';
+    padding: 0px 22px !important;
+    font-size: 15px !important;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background 750ms ease-in-out, transform 150ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100%;
+}
+
+    .userbtnhome5:hover,
+    .userbtnhome5:focus {
+        background: black;
+    }
+
+    .userbtnhome5:focus {
+        outline: 1px solid #fff;
+        outline-offset: -4px;
+    }
+
+    .userbtnhome5:active {
+        transform: scale(1.2);
+    }
+
+
+
+.userbtnhome6 {
+    display: inline-block;
+    border: none;
+    padding: 2rem 5rem;
+    margin-top: 9px;
+    margin-right: auto;
+    background: #696969;
+    color: #ffffff;
+    font-family: 'Times New Roman';
+    padding: 0px 22px !important;
+    font-size: 15px !important;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background 750ms ease-in-out, transform 150ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100%;
+}
+
+    .userbtnhome6:hover,
+    .userbtnhome6:focus {
+        background: black;
+    }
+
+    .userbtnhome6:focus {
+        outline: 1px solid #fff;
+        outline-offset: -4px;
+    }
+
+    .userbtnhome6:active {
+        transform: scale(1.2);
+    }

@@ -20,7 +20,6 @@ interface Role {
 export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDataState> {
     constructor(props: any) {
         super(props);
-
         this.state = { id: 0, login: "", email: "", password: "", roles: [], ConfirmModal: false, modalMessage: "" };
         fetch('odata/roles')
             .then(response => response.json() as any)
@@ -46,7 +45,6 @@ export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDa
             : this.renderCreateForm(this.state.roles);
 
         return <div>
-            <h1>Registration</h1>
             {contents}
         </div>;
     }
@@ -86,43 +84,58 @@ export class AddUser extends React.Component<RouteComponentProps<any>, AddUserDa
                     <button className="modalBtn" onClick={this.openCloseModel}>Ok</button>
                 </Modal>
 
-                <form onSubmit={this.handleSave} method="post">
+                <form className="container" onSubmit={this.handleSave} method="post">
                     <div className="form-group row" >
+
                         <input type="hidden" name="employeeId" value={this.state.id} />
                     </div>
-                    <div className="form-group row" >
-                        <label className=" control-label col-md-12" htmlFor="Login">Login<span style={{ color: "red" }}>*</span></label>
-                        <div className="col-md-4">
-                            <input className="form-control" type="login" name="login" defaultValue={this.state.login} required maxLength={50}/>
+                    <header className="heading"> Registration</header><hr></hr>
+                    <div className="row ">
+                        <div className="col-sm-12">
+                            <div className="row">
+                                <div className="col-xs-4">
+                                    <label className="login" htmlFor="Login">Login<span style={{ color: "red" }}>*</span></label></div>
+                                <div className="col-xs-8">
+                                    <input className="form-control" type="login" name="login" id="login" defaultValue={this.state.login} required maxLength={50} />
+                                </div>
+                            </div >
+                        </div >
+                        <div className="col-sm-12">
+                            <div className="row">
+                                <div className="col-xs-4">
+                                    <label className="mail" htmlFor="Email">Email<span style={{ color: "red" }}>*</span></label></div>
+                                <div className="col-xs-8">
+                                    <input className="form-control" type="email" name="email" id="email" defaultValue={this.state.email} required maxLength={100} />
+                                </div>
+                            </div>
                         </div>
-                    </div >
-                    <div className="form-group row" >
-                        <label className=" control-label col-md-12" htmlFor="Email">Email<span style={{ color: "red" }}>*</span></label>
-                        <div className="col-md-4">
-                            <input className="form-control" type="email" name="email" defaultValue={this.state.email} required maxLength={100} />
+                        <div className="col-sm-12">
+                            <div className="row">
+                                <div className="col-xs-4">
+                                    <label className="pass" htmlFor="password" >Password<span style={{ color: "red" }}>*</span></label></div>
+                                <div className="col-xs-8">
+                                    <input className="form-control" type="password" name="password" id="password" defaultValue={this.state.password} required maxLength={100} />
+                                </div>
+                            </div>
                         </div>
-                    </div >
-                    <div className="form-group row">
-                        <label className="control-label col-md-12" htmlFor="password" >Password<span style={{ color: "red" }}>*</span></label>
-                        <div className="col-md-4">
-                            <input className="form-control" type="password" name="password" defaultValue={this.state.password} required maxLength={100}/>
+                        <div className="col-sm-12">
+                            <div className="row">
+                                <div className="col-xs-4">
+                                    <label className="role" htmlFor="roleid">Role</label></div>
+                                <div className="col-xs-8">
+                                    <select className="form-control" data-val="true" id="role" name="roleid" required>
+                                        <option value="">-- Select Role --</option>
+                                        {this.state.roles.map(x => <option value={x.RoleId}>{x.Name}</option>)}
+                                    </select>
+                                </div>
+                            </div >
                         </div>
+                        <div className="col-sm-12">
+                            <button type="submit" className="userbtnreg">Register</button>
+                            <button className="userbtnreg" onClick={this.handleCancel}>Cancel</button>
+                        </div >
                     </div>
-                    <div className="form-group row">
-                        <label className="control-label col-md-12" htmlFor="roleid">Role</label>
-                        <div className="col-md-4">
-                            <select className="form-control" data-val="true" name="roleid" required>
-                                <option value="">-- Select Role --</option>
-                                {this.state.roles.map(x => <option value={x.RoleId}>{x.Name}</option>)}
-                            </select>
-                        </div>
-                    </div >
-
-                    <div className="form-group">
-                        <button type="submit" className="btn-dark scrum-btn">Register</button>
-                        <button className="btn-dark scrum-btn" onClick={this.handleCancel}>Cancel</button>
-                    </div >
-                </form >
+                </form>
             </div>
         )
     }

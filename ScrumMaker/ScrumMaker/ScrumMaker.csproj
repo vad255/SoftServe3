@@ -124,7 +124,6 @@
     <None Include="Views\Identity\Index.cshtml" />
 
     <None Include="wwwroot\assets\css\images\arrow.svg" />
-    <None Include="wwwroot\assets\css\login.css" />
     <None Include="wwwroot\assets\css\multiselect.css" />
     <None Include="wwwroot\assets\css\navMenu.css" />
     <None Include="wwwroot\assets\css\poker.css" />
@@ -223,10 +222,6 @@
   <ItemGroup>
     <None Include="wwwroot\img\ScrumMakerLogo.jpg" />
     <None Include="wwwroot\img\______________2018_06_12____15_33_52_fdV_icon.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ClientApp\css\" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

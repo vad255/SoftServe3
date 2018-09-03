@@ -96,9 +96,9 @@ export class Login extends React.Component<RouteComponentProps<any>, LoginViewMo
                                         <a href="/ForgotPassword" className="txt1">Forgot Password?</a>
                                     </div>
                                 </div>
-                                <div className="container-login100-form-btn">
-                                    <button className="login100-form-btn">Login</button>
-                                </div>
+                                <button className="boxlogin">
+                                    Login
+                                </button>
                             </form>
                         </div>
                     </div>

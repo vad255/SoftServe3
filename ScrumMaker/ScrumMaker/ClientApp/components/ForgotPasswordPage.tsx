@@ -80,8 +80,8 @@ export class ForgotPasswordPage extends React.Component<RouteComponentProps<any>
                                     <input className="input100" type="text" name="login" placeholder="Enter user Email" />
                                     <span className="focus-input100" />
                                 </div>
-                                <div className="container-login100-form-btn">
-                                    <button className="login100-form-btn" data-target={this.state.id} data-toggle="modal">Confirm</button>
+                                <div>
+                                    <button className="boxlogin" data-target={this.state.id} data-toggle="modal">Confirm</button>
                                 </div>
                             </form>
                         </div>
